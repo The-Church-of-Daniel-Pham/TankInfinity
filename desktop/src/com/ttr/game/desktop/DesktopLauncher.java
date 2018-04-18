@@ -7,6 +7,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.ttr.TankTankRevolution;
 import com.ttr.utils.Constants;
 
+//Authors: Gokul Swaminathan
+
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();	// new config
