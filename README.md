@@ -5,7 +5,7 @@ APCS Final Project
 ## Authors
 
 * [Samuel Hunter](https://github.com/SamuelHunter)
-* Edmond Fang
+* [Edmond Fang] (https://github.com/seikurou)
 * [Daniel Pham](https://github.com/danielpham172)
 * [Gokul Swaminathan](https://github.com/JavaCafe01)
 
