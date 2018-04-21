@@ -11,13 +11,11 @@ package com.ttr.actor.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Polygon;
 import com.ttr.actor.StaticCollider;
 import com.ttr.utils.Assets;
 
 public class MapTile extends StaticCollider {
 	private ArrayList<Texture> textureList;
-	public Polygon tileHitbox;
 	
 	public static final int SIZE = Assets.manager.get(Assets.grass).getWidth();
 	public static final float CLUMPS_RATE = 0.7f;
@@ -28,7 +26,7 @@ public class MapTile extends StaticCollider {
 	public MapTile(int row, int col) {
 		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);
 		textureList = new ArrayList<Texture>();
-		tileHitbox = new Polygon();
+		super.setHitbox(super.getX(), super.getY(), (float) Math.toRadians(super.getRotation()));
 	}
 	
 	private void addTexture(Texture tex) {
