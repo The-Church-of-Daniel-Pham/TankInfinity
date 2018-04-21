@@ -27,10 +27,24 @@ public class Level extends Stage {
 		
 		MazeMaker lgen = new MazeMaker(width, height);
 		lgen.createMaze(0, 0);
+		for (int row = 35; row < 40; row++)
+		{
+			for(int col = 0; col < 5; col++)
+			{
+				lgen.getMaze()[row][col] = 0;
+			}
+		}
 		Map level = new Map(lgen.getMaze());
 		addActor(level);
-		
-		playerTank = new Tank(256, 256, 0, 0);
+//		for(int i = 0; i < lgen.getMaze()[0].length; i++)
+//		{
+//			for(int n = 0; n < lgen.getMaze().length; n++)
+//			{
+//				System.out.print(lgen.getMaze()[i][n]);
+//			}
+//			System.out.println();
+//		}
+		playerTank = new Tank(256, 256, 0, 0, lgen.getMaze());
 		addActor(playerTank);
 		
 		// replace default stage OrthographicCamera with LevelCamera

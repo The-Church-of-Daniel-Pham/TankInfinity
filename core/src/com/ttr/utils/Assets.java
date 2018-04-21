@@ -50,7 +50,8 @@ public class Assets {
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading_screen/splash.png",
 			Texture.class);
-
+	public static final AssetDescriptor<Texture> dot = new AssetDescriptor<Texture>("projectiles/dot.png",
+			Texture.class);
 	public static final AssetManager manager = new AssetManager();
 
 	public static void loadTextures() {
@@ -74,6 +75,7 @@ public class Assets {
 		manager.load(bullet);
 		manager.load(tread);
 		manager.load(gun_0);
+		manager.load(dot);
 		//System.out.println("Map textures loaded");
 	}
 
