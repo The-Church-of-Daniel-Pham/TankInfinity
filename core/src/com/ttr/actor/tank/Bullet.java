@@ -40,24 +40,24 @@ public class Bullet extends DynamicCollider {
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
 		super.setLevel(level);
-		
+
 		bulletHitbox = new Polygon();
 		brickHitboxes = new ArrayList<Polygon>();
 		vertex = new Sprite(Assets.manager.get(Assets.vertex));
-		collidesAt(0, 0, 0);	//set-up vertex arrays
+		collidesAt(0, 0, 0); // set-up vertex arrays
 	}
 
 	@Override
 	public void act(float delta) {
 		tempX = (super.getX() + (float) Math.cos(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
 		tempY = (super.getY() + (float) Math.sin(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
-		if (super.getLevel().map.inMap(tempX, tempY)) {
-			if (!collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
-				super.setY(tempY);
-				super.setX(tempX);
-			} else {
-				onCollision();
-			}
+
+		if (super.getLevel().map.inMap(tempX, tempY)
+				&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			super.setY(tempY);
+			super.setX(tempX);
+		} else {
+			onCollision();
 		}
 	}
 

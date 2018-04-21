@@ -70,6 +70,9 @@ public class Map extends Group {
 				if (tempRow < 0 || tempRow >= level.height || tempCol >= level.width || tempCol < 0) // edge
 				{
 					//handle edge vertices separately
+					MapTile border = new MapTile(layout.length - (1 + tempRow), tempCol);	// see constructor
+					border.buildBrick();
+					brickNeighbors.add(border);
 				}
 				else if (level.map.layout[tempRow][tempCol] == 1) // normal brick in bounds
 				{
