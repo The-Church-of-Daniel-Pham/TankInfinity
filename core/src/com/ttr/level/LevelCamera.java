@@ -22,7 +22,6 @@ public class LevelCamera extends OrthographicCamera implements InputProcessor{
 		this.width = width;
 		this.height = height;
 		this.chaseTank = chaseTank;
-		Gdx.input.setInputProcessor(this);
 	}
 
 	private void chase() {
@@ -99,7 +98,7 @@ public class LevelCamera extends OrthographicCamera implements InputProcessor{
 		if (keycode == Keybinds.CAMERA_VIEW_FULL_MAP && freeCamEnabled) {
 			viewFullMap();
 		}
-        return true;
+        return false;	// if returns true, multiplexer would stop
 	}
 
 	@Override
