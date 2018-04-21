@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.ttr.map.MapTile;
-import com.ttr.tank.Tank;
+import com.ttr.actor.map.MapTile;
+import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Constants;
 import com.ttr.utils.Keybinds;
 
@@ -26,9 +26,9 @@ public class LevelCamera extends OrthographicCamera implements InputProcessor{
 	}
 
 	private void chase() {
-		super.position.x = MathUtils.clamp(chaseTank.x, super.viewportWidth / 2f,
+		super.position.x = MathUtils.clamp(chaseTank.getX(), super.viewportWidth / 2f,
 				width * MapTile.SIZE - super.viewportWidth / 2f);
-		super.position.y = MathUtils.clamp(chaseTank.y, super.viewportHeight / 2f,
+		super.position.y = MathUtils.clamp(chaseTank.getY(), super.viewportHeight / 2f,
 				width * MapTile.SIZE - super.viewportHeight / 2f);
 		super.update();
 	}

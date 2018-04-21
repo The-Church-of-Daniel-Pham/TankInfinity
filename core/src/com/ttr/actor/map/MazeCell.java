@@ -1,4 +1,4 @@
-package com.ttr.map;
+package com.ttr.actor.map;
 
 /**
  * @author Daniel Pham

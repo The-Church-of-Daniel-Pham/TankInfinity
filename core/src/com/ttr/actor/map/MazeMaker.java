@@ -1,4 +1,4 @@
-package com.ttr.map;
+package com.ttr.actor.map;
 
 /**
  * @author Daniel Pham
@@ -183,6 +183,18 @@ public class MazeMaker {
 		plugHoles();		//Plug all unreachable holes
 
 		cornerRemover();	//Remove "corners"
+		
+		clearBottomLeftCorner(5);	//Clears out corner so tank doesn't spawn on bricks
+	}
+	
+	private void clearBottomLeftCorner(int size) {
+		for (int row = maze.length-size; row < maze.length; row++)	// bottom 'size' rows
+		{
+			for(int col = 0; col < size; col++)	// left 'size' columns
+			{
+				maze[row][col] = 0;
+			}
+		}
 	}
 
 	/**
