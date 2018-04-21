@@ -65,7 +65,7 @@ public class Bullet extends DynamicCollider {
 	public boolean collidesAt(float x, float y, float orientation) {
 		// set-up hitbox
 		bulletHitbox = super.getHitbox(x, y, orientation);
-		brickHitboxes = super.getLevel().map.getBrickHitboxes(super.getLevel().map
+		brickHitboxes = super.getLevel().map.getHitboxes(super.getLevel().map
 				.getBrickNeighbors(super.getLevel().map.getTileAt(x, y)[0], super.getLevel().map.getTileAt(x, y)[1]));
 		// detect collision(s)
 		for (Polygon brickHitBox : brickHitboxes) {
