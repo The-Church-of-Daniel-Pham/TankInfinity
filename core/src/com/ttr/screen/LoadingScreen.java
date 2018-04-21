@@ -37,7 +37,6 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		exitButton();
-		
 		batch.begin();
 		splash.draw(batch);
 		batch.end();
