@@ -10,134 +10,109 @@ package com.ttr.actor.tank;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Keybinds;;
 
-public class Tank extends Actor {
+public class Tank extends DynamicCollider implements InputProcessor {
 	public float gunOrientation; // in radians
-	public float tempX, tempY, tempO;	// test values to determine if move wis free from collision
+	public float tempX, tempY, tempO; // test values to determine if move is free from collision
 	private Sprite tread, gun, vertex;
 	public float gunOriginOffset = 28;
 	public static float reloadTime;
+	public static boolean noclip;
 
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2f;
 	public static final float VELOCITY = 200f;
 
-	public static float[] vertices;
-	public static Polygon hitBox;
-	public int[][] map;
-	public ArrayList<Polygon> edges;
+	public static Polygon tankHitbox;
+	public ArrayList<Polygon> brickHitboxes;
 
-	public Tank(float x, float y, float orientation, float gunOrientation, int[][] map) {
-
+	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));
 		this.gunOrientation = gunOrientation;
+		super.setLevel(level);
 
 		tread = new Sprite(Assets.manager.get(Assets.tread));
 		tread.setOriginCenter(); // set pivot of tread to center
 		gun = new Sprite(Assets.manager.get(Assets.gun_0)); // set pivot of gun to 100 pixels along width (scaled from
 															// 256 total), half of height
 		gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
-		hitBox = new Polygon();
-		this.map = map;
-		canMoveTo(0, 0, 0); // fills the instance arrays so that the hitboxes made of bullets can render
-							// properly
-
 		vertex = new Sprite(Assets.manager.get(Assets.vertex));
+
+		tankHitbox = new Polygon();
+		brickHitboxes = new ArrayList<Polygon>();
+		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
+		noclip = false;
 	}
-
-	private boolean canMoveTo(float x, float y, float orientation) {
-
+	
+	public float[] getVertices(float x, float y, float orientation) {
+		float[] vertices = new float[8];
 		Vector2 v = new Vector2((float) (160 * Math.cos(orientation)), (float) (160 * Math.sin(orientation)));
 		v.rotate(45f);
-		vertices = new float[8];
 		for (int i = 0; i < 4; i++) {
 			vertices[i * 2] = x + v.x;
 			vertices[i * 2 + 1] = y + v.y;
 			v.rotate90(1);
 		}
-		hitBox.setVertices(vertices);
-		int tankMapCol = (int) (super.getX() / 128);
-		int tankMapRow = (int) ((40 * 128 - super.getY()) / 128);
-		edges = new ArrayList<Polygon>();
-		for (int yOffset = -2; yOffset <= 2; yOffset++) {
-			for (int xOffset = -2; xOffset <= 2; xOffset++) {
-				int tempRow = tankMapRow + yOffset, tempCol = tankMapCol + xOffset;
-				// System.out.print("[" + tempRow + ", " + tempCol + "]");
-				if (tempRow > 0 && tempRow < 40 && tempCol < 40 && tempCol > 0 && map[tempRow][tempCol] == 1)// &&
-																												// !(super.getX()
-																												// ==0
-																												// &&
-																												// super.getY()
-																												// ==0))
-				{
-					int tempX = tempCol * 128, tempY = 40 * 128 - tempRow * 128; // a tile's top left coordinate, not
-																					// bottom left,
-					// due to rounding down with int tankMapRow = (int)((40*128-super.getY())/128),
-					// which "rounds back up" when converting back to world coords
-					vertices = new float[8];
-					vertices[0] = tempX;
-					vertices[1] = tempY;
-					vertices[2] = tempX;
-					vertices[3] = tempY - 128;
-					vertices[4] = tempX + 128;
-					vertices[5] = tempY - 128;
-					vertices[6] = tempX + 128;
-					vertices[7] = tempY;
-					edges.add(new Polygon(vertices));
-				}
-				// {
-				// Vector2 v = new Vector2(64f, 0);
-				// v.rotate(45f);
-				// vertices = new float[8];
-				// for(int i = 0; i < 4; i++)
-				// {
-				// vertices[i*2] = (t1+super.getX())*128+64 + v.super.getX();
-				// vertices[i*2+1] = (39-t2+super.getY())*128+64 +v.super.getY();
-				// v.rotate(90f);
-				// }
-				// edges.add(new Polygon(vertices));
-				//
-				// }
-			}
-			// System.out.println();
+		return vertices;
+	}
+
+	public Polygon getHitbox(float x, float y, float orientation) {
+		Polygon hitbox = new Polygon();
+		float[] vertices = getVertices(x, y, orientation);
+		hitbox.setVertices(vertices);
+		return hitbox;
+	}
+
+	@Override
+	public boolean collidesAt(float x, float y, float orientation) {
+		if (noclip) {
+			return true;
 		}
-		// System.out.println();
-		for (Polygon p : edges) {
+		// set-up hitboxes
+		tankHitbox = getHitbox(x, y, orientation);
+		brickHitboxes = super.getLevel().map.getBrickHitboxes(super.getLevel().map.getBrickNeighbors(super.getLevel().map.getTileAt(x,y)[0], super.getLevel().map.getTileAt(x,y)[1]));
+		// detect collision(s)
+		for (Polygon brickHitBox : brickHitboxes) {
 			for (int i = 0; i < 4; i++) {
-				// System.out.print(p.getVertices()[i*2] + " " + p.getVertices()[i*2+1]);
-				if (p.contains(hitBox.getVertices()[i * 2], hitBox.getVertices()[i * 2 + 1])) {
+				if (brickHitBox.contains(tankHitbox.getVertices()[i * 2], tankHitbox.getVertices()[i * 2 + 1])) {
 					return false;
 				}
-				if (hitBox.contains(p.getVertices()[i * 2], p.getVertices()[i * 2 + 1]))
+				if (tankHitbox.contains(brickHitBox.getVertices()[i * 2], brickHitBox.getVertices()[i * 2 + 1])) {
 					return false;
-
+				}
 			}
-			// System.out.println();
 		}
-		// System.out.println();
-
 		return true;
 	}
 
-	private void move(float delta) {
+	@Override
+	public boolean keyDown(int keycode) {
+		// toggle keys - tap only
+		// allow tank to pass through obstacles
+		if (keycode == Keybinds.TANK_TOGGLE_NOCLIP) {
+			noclip = !noclip;
+		}
+		return false; // if returns true, multiplexer would stop
+	}
 
+	private void move(float delta) {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			if (((Level) getStage()).map.inMap(tempX, tempY)
-					&& canMoveTo(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY) && collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 			}
@@ -146,8 +121,7 @@ public class Tank extends Actor {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
 			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			if (((Level) getStage()).map.inMap(tempX, tempY)
-					&& canMoveTo(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY) && collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 			}
@@ -155,13 +129,13 @@ public class Tank extends Actor {
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
-			if (canMoveTo(super.getX(), super.getY(), tempO)) {
+			if (collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CCW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) + Tank.ANGULAR_VELOCITY * delta;
-			if (canMoveTo(super.getX(), super.getY(), tempO)) {
+			if (collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 			}
 		}
@@ -189,7 +163,7 @@ public class Tank extends Actor {
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
 				getStage().addActor(new Bullet((float) (gun.getX() + 64 + 180 * Math.cos(gunOrientation)),
-						(float) (gun.getY() + 96 + 180 * Math.sin(gunOrientation)), gunOrientation));
+						(float) (gun.getY() + 96 + 180 * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
@@ -219,11 +193,11 @@ public class Tank extends Actor {
 		gun.draw(batch);
 		// draw tank's vertices
 		for (int i = 0; i < 4; i++) {
-			vertex.setPosition(hitBox.getVertices()[i * 2], hitBox.getVertices()[i * 2 + 1]);
+			vertex.setPosition(tankHitbox.getVertices()[i * 2], tankHitbox.getVertices()[i * 2 + 1]);
 			vertex.draw(batch);
 		}
 		// draw bricks' vertices
-		for (Polygon p : edges) {
+		for (Polygon p : brickHitboxes) {
 			for (int i = 0; i < 4; i++) {
 				vertex.setPosition(p.getVertices()[i * 2], p.getVertices()[i * 2 + 1]);
 				vertex.draw(batch);
@@ -231,8 +205,50 @@ public class Tank extends Actor {
 		}
 	}
 
-	public String toString() {
-		return ("(" + super.getX() + ", " + super.getY() + ") with " + Math.toRadians(super.getRotation())
-				+ " orientation");
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onCollision() {
+		//do nothing, for now
 	}
 }

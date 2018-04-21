@@ -20,4 +20,5 @@ public class Keybinds {
 	public static final int TANK_ROTATE_CW = Input.Keys.D;
 	public static final int TANK_ROTATE_CCW = Input.Keys.A;
 	public static final int TANK_FIRE_PRIMARY = Input.Buttons.LEFT;
+	public static final int TANK_TOGGLE_NOCLIP = Input.Keys.N;
 }

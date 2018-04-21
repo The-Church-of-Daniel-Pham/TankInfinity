@@ -1,5 +1,9 @@
 package com.ttr.level;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+
 /**
  * @author Samuel
  * @version April 13th 2018
@@ -19,18 +23,26 @@ public class Level extends Stage {
 	public int height;
 	public static Tank playerTank;
 	public Map map;
+	public LevelCamera camera;
 
 	public Level(int width, int height) {
 		super(new FitViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT));
 		this.width = width;
 		this.height = height;
 		
-		map = new Map(width, height);
+		map = new Map(width, height, this);
 		addActor(map);
-		playerTank = new Tank(128, 128, 0, 0, map.layout);
+		playerTank = new Tank(128, 128, 0, 0, this);
 		addActor(playerTank);
 		
 		// replace default stage OrthographicCamera with LevelCamera
-		getViewport().setCamera(new LevelCamera(width, height, playerTank));
+		camera = new LevelCamera(width, height, playerTank);
+		super.getViewport().setCamera(camera);
+		
+		// receive input from multiple sources
+		InputMultiplexer inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(camera);
+		inputMultiplexer.addProcessor(playerTank);
+		Gdx.input.setInputProcessor(inputMultiplexer);	// if receives true, stops
 	}
 }

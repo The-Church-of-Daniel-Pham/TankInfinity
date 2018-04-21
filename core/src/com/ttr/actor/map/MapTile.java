@@ -11,10 +11,11 @@ package com.ttr.actor.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.math.Polygon;
+import com.ttr.actor.LevelActor;
 import com.ttr.utils.Assets;
 
-public class MapTile extends Actor {
+public class MapTile extends LevelActor {
 	private ArrayList<Texture> textureList;
 	
 	public static final int SIZE = Assets.manager.get(Assets.grass).getWidth();
@@ -100,6 +101,26 @@ public class MapTile extends Actor {
 		{
 		addTexture(Assets.manager.get(Assets.brick));
 		}
+	}
+	
+	public float[] getVertices() {
+		float[] vertices = new float[8];
+		vertices[0] = super.getX();
+		vertices[1] = super.getY();
+		vertices[2] = super.getX() + SIZE;
+		vertices[3] = super.getY();
+		vertices[4] = super.getX() + SIZE;
+		vertices[5] = super.getY() + SIZE;
+		vertices[6] = super.getX();
+		vertices[7] = super.getY() + SIZE;
+		return vertices;
+	}
+	
+	public Polygon getHitbox() {
+		Polygon hitbox = new Polygon();
+		float[] vertices = getVertices();
+		hitbox.setVertices(vertices);
+		return hitbox;
 	}
 	
 	@Override
