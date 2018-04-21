@@ -41,7 +41,8 @@ public class Assets {
 	public static final AssetDescriptor<Texture> stone = new AssetDescriptor<Texture>("map/brick/stone.png",
 			Texture.class);
 	// Projectiles
-	public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png", Texture.class);
+	public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
+			Texture.class);
 	// Tank
 	public static final AssetDescriptor<Texture> tread = new AssetDescriptor<Texture>("tank/tank_tread.png",
 			Texture.class);
@@ -50,15 +51,15 @@ public class Assets {
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading_screen/splash.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> dot = new AssetDescriptor<Texture>("projectiles/dot.png",
-			Texture.class);
+	// Debug
+	public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png", Texture.class);
 	public static final AssetManager manager = new AssetManager();
 
 	public static void loadTextures() {
 		// menu first
 		manager.load(splash);
-		//System.out.println("Menu textures loaded");
-		
+		// System.out.println("Menu textures loaded");
+
 		// then map
 		manager.load(grass);
 		manager.load(clumps1);
@@ -75,13 +76,16 @@ public class Assets {
 		manager.load(bullet);
 		manager.load(tread);
 		manager.load(gun_0);
-		manager.load(dot);
-		//System.out.println("Map textures loaded");
+		// System.out.println("Map textures loaded");
+		
+		// then debug
+		manager.load(vertex);
+		// System.out.println("Debug textures loaded");
 	}
 
 	public static void loadAll() {
 		loadTextures();
-		//System.out.println("All loaded");
+		// System.out.println("All loaded");
 		// add more file types later
 	}
 

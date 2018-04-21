@@ -1,4 +1,4 @@
-package com.ttr.map;
+package com.ttr.actor.map;
 
 /**
  * @author Samuel
@@ -9,13 +9,16 @@ package com.ttr.map;
  */
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class Map extends Actor {
-	private static MapTile[][] map;
+public class Map extends Group {
+	public int[][] layout;
 
-	public Map(int[][] layout) {
-		map = new MapTile[layout.length][layout[0].length];
+	public Map(int width, int height) {
+		MazeMaker mazeGen = new MazeMaker(width, height);
+		mazeGen.createMaze(0, 0);
+		layout = mazeGen.getMaze();
 		for (int row = layout.length - 1; row >= 0; row--) {
 			for (int col = 0; col < layout[row].length; col++) {
 				MapTile tile = new MapTile(layout.length - (1 + row), col);
@@ -24,29 +27,27 @@ public class Map extends Actor {
 				} else if (layout[row][col] == 1) {
 					tile.buildBrick();
 				}
-				map[row][col] = tile;
+				super.addActor(tile);
 			}
 		}
 	}
 	
-	public static int getSizeX() {
-		return map[0].length * MapTile.SIZE;
+	public int getSizeX() {
+		return layout[0].length * MapTile.SIZE;
 	}
 	
-	public static int getSizeY() {
-		return map.length * MapTile.SIZE;
+	public int getSizeY() {
+		return layout.length * MapTile.SIZE;
 	}
 	
-	public static boolean isValid(float x, float y) {
+	public boolean inMap(float x, float y) {
 		return x > 0 && x < getSizeX() && y > 0 && y < getSizeY();
 	}
 
 	@Override
 	public void draw(Batch batch, float alpha) {
-		for (int row = 0; row < map.length; row++) {
-			for (int col = 0; col < map[row].length; col++) {
-				map[row][col].draw(batch);
-			}
+		for (Actor tile : super.getChildren()) {
+				tile.draw(batch, alpha);
 		}
 	}
 }

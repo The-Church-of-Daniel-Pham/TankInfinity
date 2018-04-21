@@ -3,7 +3,7 @@ package com.ttr.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.ttr.tank.Tank;
+import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Constants;
 
 public class TankReloadBar {

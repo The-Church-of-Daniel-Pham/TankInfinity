@@ -1,4 +1,4 @@
-package com.ttr.map;
+package com.ttr.actor.map;
 
 /**
  * @author Samuel
@@ -11,13 +11,11 @@ package com.ttr.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.ttr.utils.Assets;
 
-public class MapTile extends Sprite {
+public class MapTile extends Actor {
 	private ArrayList<Texture> textureList;
-	public float myX;
-	public float myY;
 	
 	public static final int SIZE = Assets.manager.get(Assets.grass).getWidth();
 	public static final float CLUMPS_RATE = 0.7f;
@@ -26,14 +24,12 @@ public class MapTile extends Sprite {
 	public static final float STONE_RATE = 0.2f;
 	
 	public MapTile(int row, int col) {
+		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);
 		textureList = new ArrayList<Texture>();
-		myX = col * MapTile.SIZE;
-		myY = row * MapTile.SIZE;
-		super.setPosition(myX, myY);
 	}
 	
 	private void addTexture(Texture tex) {
-		textureList.add(tex);	
+		textureList.add(tex);
 	}
 	
 	public void buildGrass() {
@@ -107,10 +103,9 @@ public class MapTile extends Sprite {
 	}
 	
 	@Override
-	public void draw(Batch batch) {
+	public void draw(Batch batch, float alpha) {
 		for (Texture tex : textureList) {
-			batch.draw(tex, myX, myY);
-			//System.out.println(tex.toString() + " drawn at " + myX + ", " + myY);
+			batch.draw(tex, super.getX(), super.getY());
 		}
 	}
 }
