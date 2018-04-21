@@ -80,10 +80,10 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 	
-	public ArrayList<Polygon> getBrickHitboxes(ArrayList<MapTile> tiles) {
+	public ArrayList<Polygon> getHitboxes(ArrayList<MapTile> tiles) {
 		ArrayList<Polygon> hitboxes = new ArrayList<Polygon>();
 		for (MapTile tile : tiles) {
-			hitboxes.add(tile.getHitbox());
+			hitboxes.add(tile.getHitbox(tile.getX(), tile.getY(), (float) Math.toRadians(tile.getRotation())));
 		}
 		return hitboxes;
 	}

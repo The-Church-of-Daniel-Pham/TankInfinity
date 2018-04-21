@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
-import com.ttr.actor.LevelActor;
+import com.ttr.actor.StaticCollider;
 import com.ttr.utils.Assets;
 
-public class MapTile extends LevelActor {
+public class MapTile extends StaticCollider {
 	private ArrayList<Texture> textureList;
+	public Polygon tileHitbox;
 	
 	public static final int SIZE = Assets.manager.get(Assets.grass).getWidth();
 	public static final float CLUMPS_RATE = 0.7f;
@@ -27,6 +28,7 @@ public class MapTile extends LevelActor {
 	public MapTile(int row, int col) {
 		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);
 		textureList = new ArrayList<Texture>();
+		tileHitbox = new Polygon();
 	}
 	
 	private void addTexture(Texture tex) {
@@ -103,24 +105,18 @@ public class MapTile extends LevelActor {
 		}
 	}
 	
-	public float[] getVertices() {
+	@Override
+	public float[] getVertices(float x, float y, float orientation) {
 		float[] vertices = new float[8];
-		vertices[0] = super.getX();
-		vertices[1] = super.getY();
-		vertices[2] = super.getX() + SIZE;
-		vertices[3] = super.getY();
-		vertices[4] = super.getX() + SIZE;
-		vertices[5] = super.getY() + SIZE;
-		vertices[6] = super.getX();
-		vertices[7] = super.getY() + SIZE;
+		vertices[0] = x;
+		vertices[1] = y;
+		vertices[2] = x + SIZE;
+		vertices[3] = y;
+		vertices[4] = x + SIZE;
+		vertices[5] = y + SIZE;
+		vertices[6] = x;
+		vertices[7] = y + SIZE;
 		return vertices;
-	}
-	
-	public Polygon getHitbox() {
-		Polygon hitbox = new Polygon();
-		float[] vertices = getVertices();
-		hitbox.setVertices(vertices);
-		return hitbox;
 	}
 	
 	@Override

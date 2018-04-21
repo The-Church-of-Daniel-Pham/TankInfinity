@@ -83,7 +83,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 		// set-up hitboxes
 		tankHitbox = getHitbox(x, y, orientation);
-		brickHitboxes = super.getLevel().map.getBrickHitboxes(super.getLevel().map.getBrickNeighbors(super.getLevel().map.getTileAt(x,y)[0], super.getLevel().map.getTileAt(x,y)[1]));
+		brickHitboxes = super.getLevel().map.getHitboxes(super.getLevel().map.getBrickNeighbors(super.getLevel().map.getTileAt(x,y)[0], super.getLevel().map.getTileAt(x,y)[1]));
 		// detect collision(s)
 		for (Polygon brickHitBox : brickHitboxes) {
 			for (int i = 0; i < 4; i++) {
