@@ -27,15 +27,11 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private Sprite tread, gun, vertex;
 	public float gunOriginOffset = 28;
 	public static float reloadTime;
-	public static boolean noclip;
 
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2f;
 	public static final float VELOCITY = 200f;
-
-	public static Polygon tankHitbox;
-	public ArrayList<Polygon> brickHitboxes;
 
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
@@ -50,11 +46,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 															// 256 total), half of height
 		gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
 		vertex = new Sprite(Assets.manager.get(Assets.vertex));
-
-		tankHitbox = new Polygon();
+		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
-		noclip = false;
 	}
 	
 	public float[] getVertices(float x, float y, float orientation) {
@@ -68,34 +62,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 		return vertices;
 	}
-
-	public Polygon getHitbox(float x, float y, float orientation) {
-		Polygon hitbox = new Polygon();
-		float[] vertices = getVertices(x, y, orientation);
-		hitbox.setVertices(vertices);
-		return hitbox;
-	}
-
+	
 	@Override
-	public boolean collidesAt(float x, float y, float orientation) {
-		if (noclip) {
-			return true;
-		}
-		// set-up hitboxes
-		tankHitbox = getHitbox(x, y, orientation);
-		brickHitboxes = super.getLevel().map.getHitboxes(super.getLevel().map.getBrickNeighbors(super.getLevel().map.getTileAt(x,y)[0], super.getLevel().map.getTileAt(x,y)[1]));
-		// detect collision(s)
-		for (Polygon brickHitBox : brickHitboxes) {
-			for (int i = 0; i < 4; i++) {
-				if (brickHitBox.contains(tankHitbox.getVertices()[i * 2], tankHitbox.getVertices()[i * 2 + 1])) {
-					return false;
-				}
-				if (tankHitbox.contains(brickHitBox.getVertices()[i * 2], brickHitBox.getVertices()[i * 2 + 1])) {
-					return false;
-				}
-			}
-		}
-		return true;
+	public void onCollision() {
+		//do nothing, for now
 	}
 
 	@Override
@@ -103,7 +73,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		// toggle keys - tap only
 		// allow tank to pass through obstacles
 		if (keycode == Keybinds.TANK_TOGGLE_NOCLIP) {
-			noclip = !noclip;
+			super.toggleNoclip();
 		}
 		return false; // if returns true, multiplexer would stop
 	}
@@ -112,7 +82,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			if (super.getLevel().map.inMap(tempX, tempY) && collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 			}
@@ -121,7 +91,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
 			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			if (super.getLevel().map.inMap(tempX, tempY) && collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 			}
@@ -129,13 +99,13 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
-			if (collidesAt(super.getX(), super.getY(), tempO)) {
+			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CCW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) + Tank.ANGULAR_VELOCITY * delta;
-			if (collidesAt(super.getX(), super.getY(), tempO)) {
+			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 			}
 		}
@@ -191,18 +161,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 						- gunOriginOffset * (float) Math.sin(Math.toRadians(super.getRotation())));
 		gun.setRotation((float) Math.toDegrees(gunOrientation));
 		gun.draw(batch);
-		// draw tank's vertices
-		for (int i = 0; i < 4; i++) {
-			vertex.setPosition(tankHitbox.getVertices()[i * 2], tankHitbox.getVertices()[i * 2 + 1]);
-			vertex.draw(batch);
-		}
-		// draw bricks' vertices
-		for (Polygon p : brickHitboxes) {
-			for (int i = 0; i < 4; i++) {
-				vertex.setPosition(p.getVertices()[i * 2], p.getVertices()[i * 2 + 1]);
-				vertex.draw(batch);
-			}
-		}
+		drawVertices(batch, alpha);
 	}
 
 	@Override
@@ -245,10 +204,5 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void onCollision() {
-		//do nothing, for now
 	}
 }

@@ -1,17 +1,14 @@
 package com.ttr.level;
+/**
+ * @author Samuel
+ * @version April 21st 2018
+ * 
+ * Description: Where the game takes place. Stores all actors, includes a camera. Based off of Stage.
+ * Insert enables freecam; Delete returns to chaseCam. Home views the entire Map, PageUp and PageDown zoom, and End resets zoom.
+ */
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
-
-/**
- * @author Samuel
- * @version April 13th 2018
- * 
- * Description: Demo level with Tank, Map and Camera rig. Based off of Stage. Insert enables freecam; Delete returns to chaseCam.
- * Home views the entire Map, PageUp and PageDown zoom, and End resets zoom.
- */
-
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ttr.actor.map.Map;

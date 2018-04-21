@@ -1,15 +1,12 @@
 package com.ttr.actor.map;
-
-import java.util.ArrayList;
-
 /**
  * @author Samuel
- * @version April 13th 2018
+ * @version April 21st 2018
  * 
- * Description: 2D Array of MapTiles. Constructor reads through a given array of 0's and 1's and places the corresponding MapTile.
- * To display the Map, each MapTile is drawn by iterating through them all.
+ * Description: Array of MapTiles in the layout from MazeMaker. To display the Map, each MapTile is drawn by iterating through them all.
  */
 
+import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -36,7 +33,7 @@ public class Map extends Group {
 					tile.buildBrick();
 				}
 				map[row][col] = tile;
-				super.addActor(tile);
+				super.addActor(tile);	//kinda redundant, but may come in handy later
 			}
 		}
 	}
@@ -86,7 +83,8 @@ public class Map extends Group {
 	public ArrayList<Polygon> getHitboxes(ArrayList<MapTile> tiles) {
 		ArrayList<Polygon> hitboxes = new ArrayList<Polygon>();
 		for (MapTile tile : tiles) {
-			hitboxes.add(tile.getHitbox(tile.getX(), tile.getY(), (float) Math.toRadians(tile.getRotation())));
+			tile.setHitbox(tile.getX(), tile.getY(), (float) Math.toRadians(tile.getRotation()));
+			hitboxes.add(tile.getHitbox());
 		}
 		return hitboxes;
 	}
