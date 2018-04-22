@@ -24,8 +24,9 @@ import com.ttr.utils.Keybinds;;
 public class Tank extends DynamicCollider implements InputProcessor {
 	public float gunOrientation; // in radians
 	public float tempX, tempY, tempO; // test values to determine if move is free from collision
-	private Sprite tread, gun, vertex;
+	private Sprite tread, gun;
 	public float gunOriginOffset = 28;
+	public float hitRadius = 130;
 	public static float reloadTime;
 
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
@@ -45,7 +46,6 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		gun = new Sprite(Assets.manager.get(Assets.gun_0)); // set pivot of gun to 100 pixels along width (scaled from
 															// 256 total), half of height
 		gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
-		vertex = new Sprite(Assets.manager.get(Assets.vertex));
 		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
@@ -53,7 +53,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	
 	public float[] getVertices(float x, float y, float orientation) {
 		float[] vertices = new float[8];
-		Vector2 v = new Vector2((float) (160 * Math.cos(orientation)), (float) (160 * Math.sin(orientation)));
+		Vector2 v = new Vector2((float) (hitRadius * Math.cos(orientation)), (float) (hitRadius * Math.sin(orientation)));
 		v.rotate(45f);
 		for (int i = 0; i < 4; i++) {
 			vertices[i * 2] = x + v.x;
