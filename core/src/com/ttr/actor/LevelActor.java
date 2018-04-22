@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.ttr.level.Level;
 
 public abstract class LevelActor extends Actor{
-	private Texture texture;
-	private Level level;
+	protected Texture texture;
+	protected Level level;
 	
 	public void setTexture(Texture tex) {
 		texture = tex;
