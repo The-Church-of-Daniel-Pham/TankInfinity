@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Polygon;
 import com.ttr.utils.Assets;
 
 public abstract class Collider extends LevelActor {
-	public static boolean noclip = false;
-	public Polygon hitbox;
-	public ArrayList<Polygon> brickHitboxes;
-	public Texture vertex = Assets.manager.get(Assets.vertex);;
+	protected static boolean noclip = false;
+	protected Polygon hitbox;
+	protected ArrayList<Polygon> brickHitboxes;
+	protected Texture vertex = Assets.manager.get(Assets.vertex);;
 
 	public void toggleNoclip() {
 		noclip = !noclip;
@@ -25,7 +25,7 @@ public abstract class Collider extends LevelActor {
 		return noclip;
 	}
 
-	public abstract float[] getVertices(float x, float y, float orientation);
+	public abstract float[] getVertices(float x, float y, float orientation);	//DIY
 
 	public void setHitbox(float x, float y, float orientation) {
 		hitbox = new Polygon();
@@ -47,7 +47,7 @@ public abstract class Collider extends LevelActor {
 		return brickHitboxes;
 	}
 
-	public abstract void onCollision();
+	public abstract void onCollision();	//DIY
 
 	public void drawVertices(Batch batch, float alpha) {
 		// if noclip is not enabled

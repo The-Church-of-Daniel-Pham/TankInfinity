@@ -26,14 +26,16 @@ public class Map extends Group {
 		map = new MapTile[layout.length][layout[0].length];
 		for (int row = layout.length - 1; row >= 0; row--) {
 			for (int col = 0; col < layout[row].length; col++) {
-				MapTile tile = new MapTile(layout.length - (1 + row), col);
 				if (layout[row][col] == 0) {
-					tile.buildGrass();
+					MapTile tile = new GrassTile(layout.length - (1 + row), col);	//polymorphic for simplicity in this class
+					map[row][col] = tile;
+					super.addActor(tile);	//kinda redundant, but may come in handy later
 				} else if (layout[row][col] == 1) {
-					tile.buildBrick();
+					// same as for grass, but for brick
+					MapTile tile = new BrickTile(layout.length - (1 + row), col);
+					map[row][col] = tile;
+					super.addActor(tile);
 				}
-				map[row][col] = tile;
-				super.addActor(tile);	//kinda redundant, but may come in handy later
 			}
 		}
 	}
@@ -67,9 +69,8 @@ public class Map extends Group {
 				if (tempRow < 0 || tempRow >= level.height || tempCol >= level.width || tempCol < 0) // edge
 				{
 					//handle edge vertices separately
-					MapTile border = new MapTile(layout.length - (1 + tempRow), tempCol);	// see constructor
-					border.buildBrick();
-					brickNeighbors.add(border);
+					MapTile border = new BorderTile(layout.length - (1 + tempRow), tempCol);	// see constructor
+					brickNeighbors.add(border);	//only in group for now, may add to array later
 				}
 				else if (level.map.layout[tempRow][tempCol] == 1) // normal brick in bounds
 				{
