@@ -1,8 +1,9 @@
-# TankTankRevolution
+# TankTankRevolution - Research Branch
 
-APCS Final Project
-
-Our project branch is empty, click [here](https://github.com/The-Church-of-Daniel-Pham/TankTankRevolution/tree/research) to go to the research branch.
+This is our research branch. It contains:
+* Tank movement
+* Tank firing
+* Desktop launcher
 
 ## Authors
 
@@ -14,5 +15,3 @@ Our project branch is empty, click [here](https://github.com/The-Church-of-Danie
 ## Special Thanks
 
 <a href='https://libgdx.badlogicgames.com/'><img width="250" alt='LibGDX' src='http://www.badlogicgames.com/forum/styles/libgdx/imageset/logo.png'/></a>
-
-
