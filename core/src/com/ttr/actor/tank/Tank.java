@@ -134,7 +134,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)(super.getX() + 100 * Math.cos(gunOrientation)), (float)(super.getY() +100 * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float)(super.getX() + 150 * Math.cos(gunOrientation)), (float)(super.getY() +150 * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
@@ -156,10 +156,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		tread.draw(batch);
 
 		gun.setPosition(
-				super.getX() - gun.getOriginX()
-						- gunOriginOffset * (float) Math.cos(Math.toRadians(super.getRotation())),
-				super.getY() - gun.getOriginY()
-						- gunOriginOffset * (float) Math.sin(Math.toRadians(super.getRotation())));
+				super.getX() - gun.getOriginX(), super.getY() - gun.getOriginY());
 		gun.setRotation((float) Math.toDegrees(gunOrientation));
 		gun.draw(batch);
 		drawVertices(batch, alpha);
