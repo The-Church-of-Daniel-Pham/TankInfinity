@@ -1,5 +1,7 @@
 package com.ttr.utils;
 
+import com.badlogic.gdx.Gdx;
+
 /**
  * @author Samuel
  * @version April 13th 2018
@@ -10,9 +12,12 @@ package com.ttr.utils;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Assets {
+	public static final AssetManager manager = new AssetManager();
+	
 	// Textures
 	// Grass
 	public static final AssetDescriptor<Texture> grass = new AssetDescriptor<Texture>("map/grass/grass.png",
@@ -53,8 +58,12 @@ public class Assets {
 			Texture.class);
 	// Debug
 	public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png", Texture.class);
-	public static final AssetManager manager = new AssetManager();
-
+	
+	// Sounds
+	// Bullet
+	public static final AssetDescriptor<Music> bullet_bounce = new AssetDescriptor<Music>("audio/bounce_sound.ogg", Music.class);
+	public static final AssetDescriptor<Music> bullet_bounce = new AssetDescriptor<Music>("audio/bounce_sound.ogg", Music.class);
+	
 	public static void loadTextures() {
 		// menu first
 		manager.load(splash);

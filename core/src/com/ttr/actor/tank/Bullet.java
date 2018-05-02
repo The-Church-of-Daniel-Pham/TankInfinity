@@ -23,7 +23,7 @@ public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
 	private Sound bounce_sound;
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float VELOCITY = 0;
+	public static final float VELOCITY = 800;
 	private Vector2 v;
 	public int length = 51;
 	public int width = 13;
@@ -47,7 +47,7 @@ public class Bullet extends DynamicCollider {
 		super.setLevel(level);
 		v = new Vector2(26,7);
 		collidesAt(0, 0, 0); // set-up vertex arrays
-		bounce_sound = bounce_sound = Gdx.audio.newSound(Gdx.files.internal("audio/bounce_sound.ogg"));
+		bounce_sound = Gdx.audio.newSound(Gdx.files.internal("audio/bounce_sound.ogg"));
 	}
 	
 	private void move(float delta) {
