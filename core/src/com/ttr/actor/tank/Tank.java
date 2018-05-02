@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
+import com.ttr.utils.Constants;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
@@ -28,11 +29,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private Sprite tread, gun;
 	private Sound shoot_sound, move_sound, idle_sound, move_sound2;
 	public float gunOriginOffset = 28;
-	public float hitRadius = 130;
+	public float hitRadius = 130 * Constants.SCALE_VALUE;
 	public static float reloadTime;
 	
 	private boolean isOn = false, isOn2 = false;
-
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2f;
@@ -53,10 +53,12 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		tread = new Sprite(Assets.manager.get(Assets.tread));
 		//tread.setOriginCenter(); // set pivot of tread to center
 		tread.setOrigin(117f,128f);
+		tread.setScale(Constants.SCALE_VALUE);
 		gun = new Sprite(Assets.manager.get(Assets.gun_0)); // set pivot of gun to 100 pixels along width (scaled from
 															// 256 total), half of height
 		//gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
 		gun.setOrigin(105,128);
+		gun.setScale(Constants.SCALE_VALUE);
 		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
@@ -177,7 +179,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)(super.getX() + 150 * Math.cos(gunOrientation)), (float)(super.getY() +150 * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float)((super.getX()) + 150 * Constants.SCALE_VALUE * Math.cos(gunOrientation)), (float)(super.getY() +150 * Constants.SCALE_VALUE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				shoot_sound.play();
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
@@ -198,11 +200,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		tread.setPosition(super.getX() - tread.getOriginX(), super.getY() - tread.getOriginY());
 		tread.setRotation(super.getRotation());
 		tread.draw(batch);
-
-		gun.setPosition(
-				super.getX() - gun.getOriginX(), super.getY() - gun.getOriginY());
-		gun.setRotation((float) Math.toDegrees(gunOrientation));
-		gun.draw(batch);
+		gun.setPosition(super.getX() - gun.getOriginX(), super.getY() - gun.getOriginY());
+		gun.setRotation((float) Math.toDegrees(gunOrientation));		
+		gun.draw(batch);	
 		drawVertices(batch, alpha);
 	}
 
