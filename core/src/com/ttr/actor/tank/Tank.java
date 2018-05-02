@@ -11,6 +11,7 @@ package com.ttr.actor.tank;
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
@@ -25,9 +26,12 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float gunOrientation; // in radians
 	public float tempX, tempY, tempO; // test values to determine if move is free from collision
 	private Sprite tread, gun;
+	private Sound shoot_sound, move_sound, idle_sound, move_sound2;
 	public float gunOriginOffset = 28;
 	public float hitRadius = 130;
 	public static float reloadTime;
+	
+	private boolean isOn = false, isOn2 = false;
 
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
@@ -41,6 +45,11 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
 
+		shoot_sound = Gdx.audio.newSound(Gdx.files.internal("audio/shoot_sound.ogg"));
+		move_sound = Gdx.audio.newSound(Gdx.files.internal("audio/tank_sound_improved.wav"));
+		move_sound2 = Gdx.audio.newSound(Gdx.files.internal("audio/tank_sound_improved.wav"));
+		idle_sound = Gdx.audio.newSound(Gdx.files.internal("audio/idle_sound.mp3"));
+		
 		tread = new Sprite(Assets.manager.get(Assets.tread));
 		//tread.setOriginCenter(); // set pivot of tread to center
 		tread.setOrigin(117f,128f);
@@ -81,24 +90,58 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	}
 
 	private void move(float delta) {
+		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
+				
+				if(!isOn)
+				{
+					move_sound.loop(5f);
+					isOn = true;
+				}
 			}
-
+			else
+			{
+				isOn = false;
+				move_sound.stop();
+			}
 		}
+		else
+		{
+			isOn = false;
+			move_sound.stop();
+		}
+		
+		
+
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
 			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
+				
+				if(!isOn2)
+				{
+					move_sound2.loop(5f);
+					isOn2 = true;
+				}
+			}else
+			{
+				isOn2 = false;
+				move_sound2.stop();
 			}
-
 		}
+		else
+		{
+			isOn2 = false;
+			move_sound2.stop();
+		}
+		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
@@ -123,8 +166,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		// the bottom left
 		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		getStage().getCamera().unproject(mousePos); // to world coordinates
-		gunOrientation = (float) Math.atan2((mousePos.y - super.getY()), (mousePos.x - super.getX()));
-
+		gunOrientation = (float) Math.atan2((mousePos.y - super.getY()), (mousePos.x - super.getX()));		
+		
 		// if reloadTime needs to be reduced
 		if (reloadTime > 0) {
 			reloadTime -= delta;
@@ -135,6 +178,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
 				getStage().addActor(new Bullet((float)(super.getX() + 150 * Math.cos(gunOrientation)), (float)(super.getY() +150 * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				shoot_sound.play();
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
@@ -203,4 +247,5 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 }
