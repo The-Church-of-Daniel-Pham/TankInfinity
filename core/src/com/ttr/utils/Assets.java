@@ -61,8 +61,9 @@ public class Assets {
 	
 	// Sounds
 	// Bullet
-	public static final AssetDescriptor<Music> bullet_bounce = new AssetDescriptor<Music>("audio/bounce_sound.ogg", Music.class);
-	public static final AssetDescriptor<Music> bullet_bounce = new AssetDescriptor<Music>("audio/bounce_sound.ogg", Music.class);
+	public static final AssetDescriptor<Music> bullet_fire = new AssetDescriptor<Music>("audio/bullet_fire.ogg", Music.class);
+	public static final AssetDescriptor<Music> bullet_bounce = new AssetDescriptor<Music>("audio/bullet_bounce.ogg", Music.class);
+	
 	
 	public static void loadTextures() {
 		// menu first
