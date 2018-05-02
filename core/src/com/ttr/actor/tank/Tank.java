@@ -45,10 +45,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
 
-		shoot_sound = Gdx.audio.newSound(Gdx.files.internal("audio/shoot_sound.ogg"));
-		move_sound = Gdx.audio.newSound(Gdx.files.internal("audio/tank_sound_improved.wav"));
-		move_sound2 = Gdx.audio.newSound(Gdx.files.internal("audio/tank_sound_improved.wav"));
-		idle_sound = Gdx.audio.newSound(Gdx.files.internal("audio/idle_sound.mp3"));
+		shoot_sound = (Sound) Assets.manager.get(Assets.bullet_fire);
+		move_sound = (Sound) Assets.manager.get(Assets.tank_move);	//forward
+		move_sound2 = (Sound) Assets.manager.get(Assets.tank_move);	//reverse
+		idle_sound =(Sound) Assets.manager.get(Assets.tank_idle);
 		
 		tread = new Sprite(Assets.manager.get(Assets.tread));
 		//tread.setOriginCenter(); // set pivot of tread to center

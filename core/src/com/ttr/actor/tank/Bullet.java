@@ -49,7 +49,7 @@ public class Bullet extends DynamicCollider {
 		super.setLevel(level);
 		v = new Vector2(26,7);
 		collidesAt(0, 0, 0); // set-up vertex arrays
-		bounce_sound = Gdx.audio.newSound(Gdx.files.internal("audio/bounce_sound.ogg"));
+		bounce_sound = (Sound) Assets.manager.get(Assets.bullet_bounce);
 	}
 	
 	private void move(float delta) {
