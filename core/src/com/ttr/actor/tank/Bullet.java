@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
+import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
@@ -44,6 +45,7 @@ public class Bullet extends DynamicCollider {
 		super.setRotation((float) Math.toDegrees(orientation));
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
+		super.setScale(Constants.SCALE_VALUE);
 		super.setLevel(level);
 		v = new Vector2(26,7);
 		collidesAt(0, 0, 0); // set-up vertex arrays
