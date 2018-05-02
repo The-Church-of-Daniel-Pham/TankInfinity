@@ -13,7 +13,9 @@ public abstract class DynamicCollider extends Collider{
 		// detect collision(s)
 		for (Polygon brickHitbox : super.getNeighboringBricksHitboxes()) {
 			for (int i = 0; i < 4; i++) {
-				if (brickHitbox.contains(super.getHitbox().getVertices()[i * 2], super.getHitbox().getVertices()[i * 2 + 1])) {
+				if (brickHitbox.contains(super.getHitbox().getVertices()[i * 2], super.getHitbox().getVertices()[i * 2 + 1])) 
+				{
+					
 					return true;
 				}
 				if (super.getHitbox().contains(brickHitbox.getVertices()[i * 2], brickHitbox.getVertices()[i * 2 + 1])) {

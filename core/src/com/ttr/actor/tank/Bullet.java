@@ -23,8 +23,20 @@ public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
 	private Sound bounce_sound;
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float VELOCITY = 800;
-	Vector2 v;
+	public static final float VELOCITY = 0;
+	private Vector2 v;
+	public int length = 51;
+	public int width = 13;
+	private float theta = (float) Math.atan2(width, length);
+	
+	// _______________________
+	//|                     . |
+	//|                  .    |
+	//|               . theta |
+	//|            ...........|
+	//|                       |
+	//|                       |
+	//|_______________________|
 
 	public Bullet(float x, float y, float orientation, Level level) {
 		super.setX(x);
@@ -59,16 +71,16 @@ public class Bullet extends DynamicCollider {
 	@Override
 	public float[] getVertices(float x, float y, float orientation) {
 		float[] vertices = new float[8];
-		v.setAngleRad(orientation+0.263f);
+		v.setAngleRad(orientation+theta);
 		vertices[0] = super.getX() + v.x; //* (float)Math.cos(orientation);
 		vertices[1] = super.getY() + v.y;//* (float)Math.sin(orientation);
-		v.rotateRad(2.6156f);
+		v.rotateRad((float) Math.PI - 2 * theta);
 		vertices[2] = super.getX() + v.x;// * (float)Math.cos(orientation);
 		vertices[3] = super.getY() + v.y;//* (float)Math.sin(orientation);
-		v.rotateRad(0.526f);
+		v.rotateRad(2 * theta);
 		vertices[4] = super.getX() + v.x;// * (float)Math.cos(orientation);
 		vertices[5] = super.getY() + v.y; //* (float)Math.sin(orientation);
-		v.rotateRad(2.6156f);
+		v.rotateRad((float) Math.PI - 2 * theta);
 		vertices[6] = super.getX() + v.x;// * (float)Math.cos(orientation);
 		vertices[7] = super.getY() + v.y; //* (float)Math.sin(orientation);
 		return vertices;
