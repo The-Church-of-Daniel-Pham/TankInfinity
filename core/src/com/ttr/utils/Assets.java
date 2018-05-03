@@ -1,7 +1,4 @@
 package com.ttr.utils;
-
-import com.badlogic.gdx.Gdx;
-
 /**
  * @author Samuel
  * @version April 13th 2018
@@ -12,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -63,16 +59,18 @@ public class Assets {
 
 	// Audio
 	// Bullet
-	public static final AssetDescriptor<Sound> bullet_fire = new AssetDescriptor<Sound>("audio/bullet_fire.ogg",
+	public static final AssetDescriptor<Sound> bullet_fire = new AssetDescriptor<Sound>("audio/bullet_fire_voice.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce.ogg",
+	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce_voice.wav",
 			Sound.class);
 	// Tank
-	public static final AssetDescriptor<Sound> tank_idle = new AssetDescriptor<Sound>("audio/tank_idle.mp3",
+	public static final AssetDescriptor<Sound> tank_idle = new AssetDescriptor<Sound>("audio/tank_idle_voice.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> tank_move = new AssetDescriptor<Sound>("audio/tank_move.wav",
+	public static final AssetDescriptor<Sound> tank_forward = new AssetDescriptor<Sound>("audio/tank_forward_voice.wav",
 			Sound.class);
-
+	public static final AssetDescriptor<Sound> tank_reverse = new AssetDescriptor<Sound>("audio/tank_reverse_voice.wav",
+			Sound.class);
+	
 	public static void loadTextures() {
 		// menu first
 		manager.load(splash);
@@ -106,7 +104,8 @@ public class Assets {
 		manager.load(bullet_bounce);
 		// System.out.println("Bullet audio loaded");
 		manager.load(tank_idle);
-		manager.load(tank_move);
+		manager.load(tank_forward);
+		manager.load(tank_reverse);
 		// System.out.println("Tank audio loaded");
 	}
 
