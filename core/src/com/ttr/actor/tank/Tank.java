@@ -27,9 +27,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float gunOrientation; // in radians
 	public float tempX, tempY, tempO; // test values to determine if move is free from collision
 	private Sprite tread, gun;
-	private Sound  idle_sound = (Sound) Assets.manager.get(Assets.tank_idle);
-	private Sound forward_sound = (Sound) Assets.manager.get(Assets.tank_forward);
-	private Sound reverse_sound = (Sound) Assets.manager.get(Assets.tank_reverse);
+	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
+	private Sound forward_sound = Assets.manager.get(Assets.tank_move);
+	private Sound reverse_sound = Assets.manager.get(Assets.tank_move);
 	public float gunOriginOffset = 28;
 	public float hitRadius = 130 * Constants.SCALE_VALUE;
 	public static float reloadTime;
