@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
  * Description: Simple projectile, with position and orientation. Continues along straight-line path while within Map bounds.
  */
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
@@ -22,7 +21,8 @@ import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
-	private Sound bounce_sound;
+	private Sound shoot_sound = (Sound) Assets.manager.get(Assets.bullet_fire);
+	private Sound bounce_sound = (Sound) Assets.manager.get(Assets.bullet_bounce);
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float VELOCITY = 800;
 	private Vector2 v;
@@ -49,7 +49,7 @@ public class Bullet extends DynamicCollider {
 		super.setLevel(level);
 		v = new Vector2(26,7);
 		collidesAt(0, 0, 0); // set-up vertex arrays
-		bounce_sound = (Sound) Assets.manager.get(Assets.bullet_bounce);
+		shoot_sound.play();	// play shoot sound on creation
 	}
 	
 	private void move(float delta) {
