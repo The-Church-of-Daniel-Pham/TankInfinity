@@ -45,10 +45,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
 
-		shoot_sound = (Sound) Assets.manager.get(Assets.bullet_fire);
-		move_sound = (Sound) Assets.manager.get(Assets.tank_move);	//forward
-		move_sound2 = (Sound) Assets.manager.get(Assets.tank_move);	//reverse
-		idle_sound =(Sound) Assets.manager.get(Assets.tank_idle);
+		shoot_sound = Assets.manager.get(Assets.bullet_fire);
+		move_sound = Assets.manager.get(Assets.tank_idle);	//forward
+		move_sound2 = Assets.manager.get(Assets.tank_idle);	//reverse
 		
 		tread = new Sprite(Assets.manager.get(Assets.tread));
 		//tread.setOriginCenter(); // set pivot of tread to center
@@ -102,7 +101,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				
 				if(!isOn)
 				{
-					move_sound.loop(5f);
+					move_sound.loop(.3f);
 					isOn = true;
 				}
 			}
@@ -129,7 +128,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				
 				if(!isOn2)
 				{
-					move_sound2.loop(5f);
+					move_sound2.loop(.3f);
 					isOn2 = true;
 				}
 			}else
