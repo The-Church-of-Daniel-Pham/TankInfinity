@@ -28,8 +28,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float tempX, tempY, tempO; // test values to determine if move is free from collision
 	private Sprite tread, gun;
 	private Sound  idle_sound = (Sound) Assets.manager.get(Assets.tank_idle);
-	private Sound move_forward_sound = (Sound) Assets.manager.get(Assets.tank_move_forward);
-	private Sound move_reverse_sound = (Sound) Assets.manager.get(Assets.tank_move_reverse);
+	private Sound forward_sound = (Sound) Assets.manager.get(Assets.tank_forward);
+	private Sound reverse_sound = (Sound) Assets.manager.get(Assets.tank_reverse);
 	public float gunOriginOffset = 28;
 	public float hitRadius = 130 * Constants.SCALE_VALUE;
 	public static float reloadTime;
@@ -99,20 +99,20 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				
 				if(!isOn)
 				{
-					move_forward_sound.loop(5f);
+					forward_sound.loop(5f);
 					isOn = true;
 				}
 			}
 			else
 			{
 				isOn = false;
-				move_forward_sound.stop();
+				forward_sound.stop();
 			}
 		}
 		else
 		{
 			isOn = false;
-			move_forward_sound.stop();
+			forward_sound.stop();
 		}
 		
 		
@@ -126,19 +126,19 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				
 				if(!isOn2)
 				{
-					move_reverse_sound.loop(5f);
+					reverse_sound.loop(5f);
 					isOn2 = true;
 				}
 			}else
 			{
 				isOn2 = false;
-				move_reverse_sound.stop();
+				reverse_sound.stop();
 			}
 		}
 		else
 		{
 			isOn2 = false;
-			move_reverse_sound.stop();
+			reverse_sound.stop();
 		}
 		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
