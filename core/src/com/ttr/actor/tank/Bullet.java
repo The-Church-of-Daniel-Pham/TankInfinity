@@ -21,8 +21,8 @@ import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
-	private Sound shoot_sound = (Sound) Assets.manager.get(Assets.bullet_fire);
-	private Sound bounce_sound = (Sound) Assets.manager.get(Assets.bullet_bounce);
+	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
+	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float VELOCITY = 800;
 	private Vector2 v;
