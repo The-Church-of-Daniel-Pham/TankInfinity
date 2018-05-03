@@ -90,7 +90,7 @@ public class Bullet extends DynamicCollider {
 
 	@Override
 	public void onCollision() {
-		bounce_sound.play(0.2f);
+		bounce_sound.play();
 		super.remove();
 		
 	}
