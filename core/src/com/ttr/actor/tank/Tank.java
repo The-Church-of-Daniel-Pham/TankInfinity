@@ -32,8 +32,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
 	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
 	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
-	private Sound forward_sound = Assets.manager.get(Assets.tank_move);
-	private Sound reverse_sound = Assets.manager.get(Assets.tank_move);
+	private Sound move_sound = Assets.manager.get(Assets.tank_move);
 	
 	public float tempX, tempY, tempO; // test values to determine if move is on the map
 	public float gunOrientation; // in radians
@@ -42,8 +41,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float treadOriginOffset = 4f * SCALE;
 	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
-	private boolean forwardSoundIsOn = false;
-	private boolean	reverseSoundIsOn = false;
+	private boolean moveSound = false;
+	//private boolean	reverseSoundIsOn = false;
 	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
@@ -90,29 +89,15 @@ public class Tank extends DynamicCollider implements InputProcessor {
 
 	private void move(float delta) {
 		
+		boolean moving = false;
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
-				
-				if(!forwardSoundIsOn)
-				{
-					forward_sound.loop(5f);
-					forwardSoundIsOn = true;
-				}
+				moving = true;
 			}
-			else
-			{
-				forwardSoundIsOn = false;
-				forward_sound.stop();
-			}
-		}
-		else
-		{
-			forwardSoundIsOn = false;
-			forward_sound.stop();
 		}
 		
 		
@@ -123,35 +108,33 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
-				
-				if(!reverseSoundIsOn)
-				{
-					reverse_sound.loop(5f);
-					reverseSoundIsOn = true;
-				}
-			}else
-			{
-				reverseSoundIsOn = false;
-				reverse_sound.stop();
+				moving = true;
 			}
-		}
-		else
-		{
-			reverseSoundIsOn = false;
-			reverse_sound.stop();
 		}
 		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
+				moving = true;
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CCW)) {
 			tempO = (float) Math.toRadians(super.getRotation()) + Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
+				moving = true;
 			}
+		}
+		
+		if (moving && !moveSound)
+		{
+			move_sound.loop(5f);
+			moveSound = true;
+		}
+		else if (!moving && moveSound) {
+			move_sound.stop();
+			moveSound = false;
 		}
 	}
 
