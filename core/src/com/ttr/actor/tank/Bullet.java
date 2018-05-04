@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
@@ -26,10 +27,13 @@ public class Bullet extends DynamicCollider {
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float SPEED = 800;
+	public static final float LIFETIME = 2.0f;
 	private Vector2 v;
 	public int length = 51;
 	public int width = 13;
 	private float theta = (float) Math.atan2(width, length);
+	public float age;
+
 	
 	// _______________________
 	//|                     . |
@@ -52,6 +56,7 @@ public class Bullet extends DynamicCollider {
 		v = new Vector2(26,7);
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		shoot_sound.play();	// play shoot sound on creation
+		age = 0f;
 	}
 	
 	private void move(float delta) {
@@ -74,7 +79,13 @@ public class Bullet extends DynamicCollider {
 
 	@Override
 	public void act(float delta) {
+		age += delta;
+		if (age > LIFETIME) {
+			super.remove();
+		}
+		else {
 		move(delta);
+		}
 	}
 	
 	@Override
