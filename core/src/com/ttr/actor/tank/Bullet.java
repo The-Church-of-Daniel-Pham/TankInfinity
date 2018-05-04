@@ -21,18 +21,22 @@ import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
-	public float tempX, tempY; // test values to determine if move is free from collision
-	public Vector2 velocity;
-	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
-	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float SPEED = 800;
-	public static final float LIFETIME = 2.0f;
+	public static final float LIFETIME = 4.0f;
+	public static final int MAX_BOUNCES = 3;
+	
+	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
+	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
+	
+	public float tempX, tempY; // test values to determine if move is free from collision
+	public Vector2 velocity;
 	private Vector2 v;
 	public int length = 51;
 	public int width = 13;
 	private float theta = (float) Math.atan2(width, length);
 	public float age;
+	public int bounces;
 
 	
 	// _______________________
@@ -57,6 +61,7 @@ public class Bullet extends DynamicCollider {
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		shoot_sound.play();	// play shoot sound on creation
 		age = 0f;
+		bounces = 0;
 	}
 	
 	private void move(float delta) {
@@ -75,12 +80,13 @@ public class Bullet extends DynamicCollider {
 	private void bounce(Vector2 wall) {
 		velocity.rotateRad(2 * velocity.angleRad(wall));
 		super.setRotation(velocity.angle());	//update rotation
+		bounces++; //increment bounces completed
 	}
 
 	@Override
 	public void act(float delta) {
 		age += delta;
-		if (age > LIFETIME) {
+		if (age > LIFETIME || bounces > MAX_BOUNCES) {
 			super.remove();
 		}
 		else {
@@ -110,6 +116,5 @@ public class Bullet extends DynamicCollider {
 	public void onCollision() {
 		bounce(new Vector2(1,0));
 		bounce_sound.play();
-		//super.remove();
 	}
 }
