@@ -31,7 +31,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	
 	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
 	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
-	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
+	private Sound idle_sound = Assets.manager.get(Assets.tank_idle);
 	private Sound move_sound = Assets.manager.get(Assets.tank_move);
 	
 	public float tempX, tempY, tempO; // test values to determine if move is on the map
@@ -41,9 +41,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float treadOriginOffset = 4f * SCALE;
 	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
-	private boolean moveSound = false;
-	public boolean moving;
-	//private boolean	reverseSoundIsOn = false;
+	private boolean moveSoundOn = false;
+	public boolean moving = false;
+	private boolean idleSoundOn = false;
+
 	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
@@ -155,14 +156,23 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	}
 	
 	private void sound() {
-		if (moving && !moveSound)
-		{
-			move_sound.loop(0.25f);
-			moveSound = true;
+		if (moving) {
+			idle_sound.stop();
+			idleSoundOn = false;
+			if (!moveSoundOn) {
+				move_sound.loop(0.25f);
+				moveSoundOn = true;
+			}
 		}
-		else if (!moving && moveSound) {
-			move_sound.stop();
-			moveSound = false;
+		else {	//must be idle if not moving
+			if (!idleSoundOn) {
+				idle_sound.loop(1.0f);
+				idleSoundOn = true;
+			}
+			if (moveSoundOn) {
+				move_sound.stop();
+				moveSoundOn = false;
+			}
 		}
 	}
 
