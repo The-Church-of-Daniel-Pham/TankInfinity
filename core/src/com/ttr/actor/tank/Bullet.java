@@ -21,10 +21,11 @@ import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is free from collision
+	public Vector2 velocity;
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float VELOCITY = 800;
+	public static final float SPEED = 800;
 	private Vector2 v;
 	public int length = 51;
 	public int width = 13;
@@ -43,6 +44,7 @@ public class Bullet extends DynamicCollider {
 		super.setX(x);
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));
+		velocity = new Vector2(SPEED * (float) Math.cos(orientation), SPEED * (float) Math.sin(orientation));
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
 		super.setScale(Constants.SCALE_VALUE);
@@ -53,8 +55,8 @@ public class Bullet extends DynamicCollider {
 	}
 	
 	private void move(float delta) {
-		tempX = (super.getX() + (float) Math.cos(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
-		tempY = (super.getY() + (float) Math.sin(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
+		tempX = (super.getX() + velocity.x * delta);
+		tempY = (super.getY() + velocity.y * delta);
 
 		if (super.getLevel().map.inMap(tempX, tempY)
 				&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
@@ -63,6 +65,13 @@ public class Bullet extends DynamicCollider {
 		} else {
 			onCollision();
 		}
+	}
+	
+	private void bounce(Vector2 wall) {
+		System.out.println("bullet velocity: " + velocity);
+		System.out.println("wall: " + wall);
+		velocity.rotateRad(2 * velocity.angleRad(wall));
+		System.out.println("new bullet veolcity: " + velocity);
 	}
 
 	@Override
@@ -90,8 +99,8 @@ public class Bullet extends DynamicCollider {
 
 	@Override
 	public void onCollision() {
+		bounce(new Vector2(1,0));
 		bounce_sound.play();
-		super.remove();
-		
+		//super.remove();
 	}
 }
