@@ -20,26 +20,30 @@ import com.badlogic.gdx.math.Vector3;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
-import com.ttr.utils.Constants;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
-	public float gunOrientation; // in radians
-	public float tempX, tempY, tempO; // test values to determine if move is free from collision
-	private Sprite tread, gun;
-	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
-	private Sound forward_sound = Assets.manager.get(Assets.tank_move);
-	private Sound reverse_sound = Assets.manager.get(Assets.tank_move);
-	public float gunOriginOffset = 28;
-	public float hitRadius = 130 * Constants.SCALE_VALUE;
-	public static float reloadTime;
-	
-	private boolean isOn = false, isOn2 = false;
-	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2f;
 	public static final float VELOCITY = 200f;
-
+	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
+	public static final float SCALE = 0.6f;
+	
+	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
+	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
+	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
+	private Sound forward_sound = Assets.manager.get(Assets.tank_move);
+	private Sound reverse_sound = Assets.manager.get(Assets.tank_move);
+	
+	public float tempX, tempY, tempO; // test values to determine if move is on the map
+	public float gunOrientation; // in radians
+	public float gunOriginOffset = 23f;
+	public float treadOriginOffset = 8f;
+	public float hitRadius = 130 * SCALE;
+	public static float reloadTime;
+	private boolean forwardSoundIsOn = false;
+	private boolean	reverseSoundIsOn = false;
+	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
 		super.setY(y);
@@ -47,15 +51,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
 		
-		tread = new Sprite(Assets.manager.get(Assets.tread));
-		//tread.setOriginCenter(); // set pivot of tread to center
-		tread.setOrigin(117f,128f);
-		tread.setScale(Constants.SCALE_VALUE);
-		gun = new Sprite(Assets.manager.get(Assets.gun_0)); // set pivot of gun to 100 pixels along width (scaled from
-															// 256 total), half of height
-		//gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
-		gun.setOrigin(105,128);
-		gun.setScale(Constants.SCALE_VALUE);
+		tread.setOrigin(SIZE/2f - treadOriginOffset, SIZE/2f);	// set pivot of tread
+		tread.setScale(SCALE);
+		gun.setOrigin(SIZE/2f - gunOriginOffset, SIZE/2f);	// set pivot of gun
+		gun.setScale(SCALE);
 		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
@@ -97,21 +96,21 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setY(tempY);
 				super.setX(tempX);
 				
-				if(!isOn)
+				if(!forwardSoundIsOn)
 				{
 					forward_sound.loop(5f);
-					isOn = true;
+					forwardSoundIsOn = true;
 				}
 			}
 			else
 			{
-				isOn = false;
+				forwardSoundIsOn = false;
 				forward_sound.stop();
 			}
 		}
 		else
 		{
-			isOn = false;
+			forwardSoundIsOn = false;
 			forward_sound.stop();
 		}
 		
@@ -124,20 +123,20 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setY(tempY);
 				super.setX(tempX);
 				
-				if(!isOn2)
+				if(!reverseSoundIsOn)
 				{
 					reverse_sound.loop(5f);
-					isOn2 = true;
+					reverseSoundIsOn = true;
 				}
 			}else
 			{
-				isOn2 = false;
+				reverseSoundIsOn = false;
 				reverse_sound.stop();
 			}
 		}
 		else
 		{
-			isOn2 = false;
+			reverseSoundIsOn = false;
 			reverse_sound.stop();
 		}
 		
@@ -176,7 +175,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)((super.getX()) + 150 * Constants.SCALE_VALUE * Math.cos(gunOrientation)), (float)(super.getY() +150 * Constants.SCALE_VALUE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float)((super.getX()) + 150 * SCALE * Math.cos(gunOrientation)), (float)(super.getY() +150 * SCALE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
