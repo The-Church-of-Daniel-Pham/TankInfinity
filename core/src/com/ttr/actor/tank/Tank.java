@@ -42,6 +42,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
 	private boolean moveSound = false;
+	public boolean moving;
 	//private boolean	reverseSoundIsOn = false;
 	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
@@ -88,8 +89,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	}
 
 	private void move(float delta) {
-		
-		boolean moving = false;
+		moving = false;
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
@@ -99,8 +99,6 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				moving = true;
 			}
 		}
-		
-		
 
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
 			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
@@ -125,16 +123,6 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setRotation((float) Math.toDegrees(tempO));
 				moving = true;
 			}
-		}
-		
-		if (moving && !moveSound)
-		{
-			move_sound.loop(5f);
-			moveSound = true;
-		}
-		else if (!moving && moveSound) {
-			move_sound.stop();
-			moveSound = false;
 		}
 	}
 
@@ -165,11 +153,24 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// System.out.println(reloadTime);
 		}
 	}
+	
+	private void sound() {
+		if (moving && !moveSound)
+		{
+			move_sound.loop(0.25f);
+			moveSound = true;
+		}
+		else if (!moving && moveSound) {
+			move_sound.stop();
+			moveSound = false;
+		}
+	}
 
 	@Override
 	public void act(float delta) {
 		move(delta); // tread controls
 		fire(delta); // gun controls
+		sound();
 	}
 
 	@Override

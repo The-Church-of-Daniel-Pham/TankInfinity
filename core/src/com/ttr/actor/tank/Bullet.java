@@ -23,7 +23,7 @@ public class Bullet extends DynamicCollider {
 	public static final float SCALE = 1.0f;
 	public static final float SPEED = 800f;
 	public static final float LIFETIME = 3.0f; // seconds
-	public static final int MAX_BOUNCES = 2;
+	public static final int MAX_BOUNCES = 1;
 
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
@@ -59,7 +59,7 @@ public class Bullet extends DynamicCollider {
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces
-		shoot_sound.play(); // play shoot sound on creation
+		shoot_sound.play(1.0f); // play shoot sound on creation
 	}
 
 	private void move(float delta) {
@@ -76,7 +76,7 @@ public class Bullet extends DynamicCollider {
 		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
 															// the wall
 		super.setRotation(velocity.angle()); // update rotation
-		bounce_sound.play();	// play bounce sound effect
+		bounce_sound.play(0.5f);	// play bounce sound effect
 		bounces++; // increment bounces completed
 	}
 
