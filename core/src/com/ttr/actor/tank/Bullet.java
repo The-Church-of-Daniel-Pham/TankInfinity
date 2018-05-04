@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
  */
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
@@ -58,7 +59,7 @@ public class Bullet extends DynamicCollider {
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces
-		shoot_sound.play(0.8f); // play shoot sound on creation
+		shoot_sound.play(0.7f); // play shoot sound on creation
 	}
 
 	private void move(float delta) {
@@ -116,6 +117,11 @@ public class Bullet extends DynamicCollider {
 		bounce(new Vector2(1, 0)); // currently set for horizontal wall faces, will change later
 		// appears to die on vertical collisions, what is really happening is that it
 		// collides super often, rapidly flipping direction, then passes the bounce max
-
+	}
+	
+	@Override
+	public void draw(Batch batch, float alpha) {
+		super.draw(batch, alpha);
+		drawVertices(batch, alpha);
 	}
 }

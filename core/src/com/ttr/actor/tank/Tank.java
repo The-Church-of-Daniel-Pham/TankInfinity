@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -23,47 +23,47 @@ import com.ttr.utils.Assets;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
-	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
-	public static final float ANGULAR_VELOCITY = 3.0f;
-	public static final float SPEED = 300f;
+	public static final float RATE_OF_FIRE = 1.5f; // rate of fire is inverse of reload time
+	public static final float ANGULAR_VELOCITY = 2.0f;
+	public static final float SPEED = 250f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float SCALE = 1.0f;
-	
-	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
-	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
+
+	private Texture tread = Assets.manager.get(Assets.tread);
+	private Texture gun = Assets.manager.get(Assets.gun_0);
 	private Sound engine_sound = Assets.manager.get(Assets.tank_engine);
 	private Sound tread_sound = Assets.manager.get(Assets.tank_tread);
+
+	public float bulletFireOffset = 75f * SCALE;
+	public float hitRadius = 60f * SCALE;
+	
+	public float treadOriginOffset = 4f * SCALE;
+	public float gunOriginOffset = 12f * SCALE;
+	public float treadOriginX = SIZE / 2f - treadOriginOffset;
+	public float treadOriginY = SIZE / 2f;
+	public float gunOriginX = SIZE / 2f - gunOriginOffset;
+	public float gunOriginY = SIZE / 2f;
 	
 	public float gunOrientation; // in radians
-	public float gunOriginOffset = 12f * SCALE;
-	public float bulletFireOffset = 75f * SCALE;
-	public float treadOriginOffset = 4f * SCALE;
-	public float hitRadius = 60f * SCALE;
 	public static float reloadTime;
-	private boolean treadSoundOn = false;
 	public boolean moving = false;
+	private boolean treadSoundOn = false;
 	private boolean engineSoundOn = false;
 
-	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
-		
-		tread.setOrigin(SIZE/2f - treadOriginOffset, SIZE/2f);	// set pivot of tread
-		tread.setScale(SCALE);
-		gun.setOrigin(SIZE/2f - gunOriginOffset, SIZE/2f);	// set pivot of gun
-		gun.setScale(SCALE);
-		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
 	}
-	
+
 	public float[] getVertices(float x, float y, float orientation) {
 		float[] vertices = new float[8];
-		Vector2 v = new Vector2((float) (hitRadius * Math.cos(orientation)), (float) (hitRadius * Math.sin(orientation)));
+		Vector2 v = new Vector2((float) (hitRadius * Math.cos(orientation)),
+				(float) (hitRadius * Math.sin(orientation)));
 		v.rotate(45f);
 		for (int i = 0; i < 4; i++) {
 			vertices[i * 2] = x + v.x;
@@ -72,10 +72,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 		return vertices;
 	}
-	
+
 	@Override
 	public void onCollision() {
-		//do nothing, for now
+		// do nothing, for now
 	}
 
 	@Override
@@ -93,7 +93,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
 			float tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			float tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
-			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY)
+					&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 				moving = true;
@@ -103,13 +104,14 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
 			float tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			float tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
-			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+			if (super.getLevel().map.inMap(tempX, tempY)
+					&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 				moving = true;
 			}
 		}
-		
+
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
 			float tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
@@ -136,8 +138,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		// the bottom left
 		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		getStage().getCamera().unproject(mousePos); // to world coordinates
-		gunOrientation = (float) Math.atan2((mousePos.y - super.getY()), (mousePos.x - super.getX()));		
-		
+		gunOrientation = (float) Math.atan2((mousePos.y - super.getY()), (mousePos.x - super.getX()));
+
 		// if reloadTime needs to be reduced
 		if (reloadTime > 0) {
 			reloadTime -= delta;
@@ -147,24 +149,25 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)((super.getX()) + bulletFireOffset * Math.cos(gunOrientation)), (float)(super.getY() + bulletFireOffset * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float) ((super.getX()) + bulletFireOffset * Math.cos(gunOrientation)),
+						(float) (super.getY() + bulletFireOffset * Math.sin(gunOrientation)), gunOrientation,
+						super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
 		}
 	}
-	
+
 	private void sound() {
 		if (moving) {
 			// testing to see whether leaving the engine sound on is better
-			//engine_sound.stop();
-			//engineSoundOn = false;
+			// engine_sound.stop();
+			// engineSoundOn = false;
 			if (!treadSoundOn) {
 				tread_sound.loop(0.2f);
 				treadSoundOn = true;
 			}
-		}
-		else {	//must be engine if not moving
+		} else { // not moving
 			if (!engineSoundOn) {
 				engine_sound.loop(0.6f);
 				engineSoundOn = true;
@@ -186,13 +189,12 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		// batch.begin() and batch.end() not required since stage already called its own
-		// batch
-		tread.setPosition(super.getX() - tread.getOriginX(), super.getY() - tread.getOriginY());
-		tread.setRotation(super.getRotation());
-		tread.draw(batch);
-		gun.setPosition(super.getX() - gun.getOriginX(), super.getY() - gun.getOriginY());
-		gun.setRotation((float) Math.toDegrees(gunOrientation));		
-		gun.draw(batch);	
+		batch.draw(tread, super.getX() - treadOriginX, super.getY() - treadOriginY, treadOriginX, treadOriginY,
+				tread.getWidth(), tread.getHeight(), SCALE, SCALE, super.getRotation(), 0, 0, tread.getWidth(),
+				tread.getHeight(), false, false);
+		batch.draw(gun, super.getX() - gunOriginX, super.getY() - gunOriginY, gunOriginX, gunOriginY, gun.getWidth(),
+				gun.getHeight(), SCALE, SCALE, (float) Math.toDegrees(gunOrientation), 0, 0, gun.getWidth(),
+				gun.getHeight(), false, false);
 		drawVertices(batch, alpha);
 	}
 

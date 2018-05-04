@@ -66,11 +66,4 @@ public abstract class Collider extends LevelActor {
 			}
 		}
 	}
-
-	@Override
-	public void draw(Batch batch, float alpha) {
-		// regular draw
-		super.draw(batch, alpha);
-		drawVertices(batch, alpha);
-	}
 }
