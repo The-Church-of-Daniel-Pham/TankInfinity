@@ -20,8 +20,8 @@ import com.ttr.utils.Assets;
 
 public class Bullet extends DynamicCollider {
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float SCALE = 0.5f;
-	public static final float SPEED = 800;
+	public static final float SCALE = 1.0f;
+	public static final float SPEED = 800f;
 	public static final float LIFETIME = 6.0f; // seconds
 	public static final int MAX_BOUNCES = 3;
 
@@ -31,8 +31,8 @@ public class Bullet extends DynamicCollider {
 	public float tempX, tempY; // test values to determine if move is on the map
 	public Vector2 velocity;
 	private Vector2 v; // for determining vertices of hitbox
-	public int length = 51; // of region in texture for hitbox
-	public int width = 13; // of region in texture for hitbox
+	public int length = 12; // of region in texture for hitbox
+	public int width = 4; // of region in texture for hitbox
 	private float theta = (float) Math.atan2(width, length); // see diagram, also doesn't change with scale
 	public float age; // time since creation, in seconds
 	public int bounces; // number of bounces that have occurred since creation
@@ -55,7 +55,7 @@ public class Bullet extends DynamicCollider {
 		super.setTexture(Assets.manager.get(Assets.bullet));
 		super.setScale(SCALE);
 		super.setLevel(level);
-		v = new Vector2(26 * SCALE, 7 * SCALE);
+		v = new Vector2(length * SCALE, width * SCALE);
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces

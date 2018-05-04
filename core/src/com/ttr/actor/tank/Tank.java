@@ -27,7 +27,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public static final float ANGULAR_VELOCITY = 3.0f;
 	public static final float SPEED = 300f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
-	public static final float SCALE = 0.5f;
+	public static final float SCALE = 1.0f;
 	
 	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
 	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
@@ -37,9 +37,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	
 	public float tempX, tempY, tempO; // test values to determine if move is on the map
 	public float gunOrientation; // in radians
-	public float gunOriginOffset = 23f;
-	public float treadOriginOffset = 8f;
-	public float hitRadius = 130 * SCALE;
+	public float gunOriginOffset = 12f * SCALE;
+	public float treadOriginOffset = 4f * SCALE;
+	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
 	private boolean forwardSoundIsOn = false;
 	private boolean	reverseSoundIsOn = false;
