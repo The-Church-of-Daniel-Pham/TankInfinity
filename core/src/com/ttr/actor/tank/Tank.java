@@ -38,6 +38,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float tempX, tempY, tempO; // test values to determine if move is on the map
 	public float gunOrientation; // in radians
 	public float gunOriginOffset = 12f * SCALE;
+	public float bulletFireOffset = 75f * SCALE;
 	public float treadOriginOffset = 4f * SCALE;
 	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
@@ -106,14 +107,12 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			{
 				forwardSoundIsOn = false;
 				forward_sound.stop();
-				System.out.println("move ended");
 			}
 		}
 		else
 		{
 			forwardSoundIsOn = false;
 			forward_sound.stop();
-			System.out.println("move ended");
 		}
 		
 		
@@ -177,7 +176,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)((super.getX()) + 150 * SCALE * Math.cos(gunOrientation)), (float)(super.getY() +150 * SCALE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float)((super.getX()) + bulletFireOffset * Math.cos(gunOrientation)), (float)(super.getY() + bulletFireOffset * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
