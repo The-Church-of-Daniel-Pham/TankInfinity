@@ -31,19 +31,18 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	
 	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
 	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
-	private Sound idle_sound = Assets.manager.get(Assets.tank_idle);
-	private Sound move_sound = Assets.manager.get(Assets.tank_move);
+	private Sound engine_sound = Assets.manager.get(Assets.tank_engine);
+	private Sound tread_sound = Assets.manager.get(Assets.tank_tread);
 	
-	public float tempX, tempY, tempO; // test values to determine if move is on the map
 	public float gunOrientation; // in radians
 	public float gunOriginOffset = 12f * SCALE;
 	public float bulletFireOffset = 75f * SCALE;
 	public float treadOriginOffset = 4f * SCALE;
 	public float hitRadius = 64f * SCALE;
 	public static float reloadTime;
-	private boolean moveSoundOn = false;
+	private boolean treadSoundOn = false;
 	public boolean moving = false;
-	private boolean idleSoundOn = false;
+	private boolean engineSoundOn = false;
 
 	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
@@ -92,8 +91,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private void move(float delta) {
 		moving = false;
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
-			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
-			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			float tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			float tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
@@ -102,8 +101,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
-			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
-			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			float tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			float tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
@@ -112,14 +111,14 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		}
 		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CW)) {
-			tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
+			float tempO = (float) Math.toRadians(super.getRotation()) - Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 				moving = true;
 			}
 		}
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_ROTATE_CCW)) {
-			tempO = (float) Math.toRadians(super.getRotation()) + Tank.ANGULAR_VELOCITY * delta;
+			float tempO = (float) Math.toRadians(super.getRotation()) + Tank.ANGULAR_VELOCITY * delta;
 			if (!collidesAt(super.getX(), super.getY(), tempO)) {
 				super.setRotation((float) Math.toDegrees(tempO));
 				moving = true;
@@ -157,21 +156,22 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	
 	private void sound() {
 		if (moving) {
-			idle_sound.stop();
-			idleSoundOn = false;
-			if (!moveSoundOn) {
-				move_sound.loop(0.25f);
-				moveSoundOn = true;
+			// testing to see whether leaving the engine sound on is better
+			//engine_sound.stop();
+			//engineSoundOn = false;
+			if (!treadSoundOn) {
+				tread_sound.loop(0.2f);
+				treadSoundOn = true;
 			}
 		}
-		else {	//must be idle if not moving
-			if (!idleSoundOn) {
-				idle_sound.loop(1.0f);
-				idleSoundOn = true;
+		else {	//must be engine if not moving
+			if (!engineSoundOn) {
+				engine_sound.loop(0.6f);
+				engineSoundOn = true;
 			}
-			if (moveSoundOn) {
-				move_sound.stop();
-				moveSoundOn = false;
+			if (treadSoundOn) {
+				tread_sound.stop();
+				treadSoundOn = false;
 			}
 		}
 	}

@@ -21,14 +21,13 @@ import com.ttr.utils.Assets;
 public class Bullet extends DynamicCollider {
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float SCALE = 1.0f;
-	public static final float SPEED = 800f;
+	public static final float SPEED = 1000f;
 	public static final float LIFETIME = 3.0f; // seconds
-	public static final int MAX_BOUNCES = 1;
+	public static final int MAX_BOUNCES = 3;
 
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
-
-	public float tempX, tempY; // test values to determine if move is on the map
+	
 	public Vector2 velocity;
 	private Vector2 v; // for determining vertices of hitbox
 	public int length = 12; // of region in texture for hitbox
@@ -59,12 +58,12 @@ public class Bullet extends DynamicCollider {
 		collidesAt(0, 0, 0); // set-up vertex arrays
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces
-		shoot_sound.play(1.0f); // play shoot sound on creation
+		shoot_sound.play(0.8f); // play shoot sound on creation
 	}
 
 	private void move(float delta) {
-		tempX = super.getX() + velocity.x * delta;
-		tempY = super.getY() + velocity.y * delta;
+		float tempX = super.getX() + velocity.x * delta;
+		float tempY = super.getY() + velocity.y * delta;
 
 		if (super.getLevel().map.inMap(tempX, tempY)) {
 			super.setY(tempY);

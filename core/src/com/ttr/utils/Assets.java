@@ -61,12 +61,12 @@ public class Assets {
 	// Bullet
 	public static final AssetDescriptor<Sound> bullet_fire = new AssetDescriptor<Sound>("audio/bullet_fire.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce.wav",
+	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_brick_impact.wav",
 			Sound.class);
 	// Tank
-	public static final AssetDescriptor<Sound> tank_idle = new AssetDescriptor<Sound>("audio/tank_idle.wav",
+	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> tank_move = new AssetDescriptor<Sound>("audio/tank_move.wav",
+	public static final AssetDescriptor<Sound> tank_tread = new AssetDescriptor<Sound>("audio/tank_tread.wav",
 			Sound.class);
 	
 	public static void loadTextures() {
@@ -101,8 +101,8 @@ public class Assets {
 		manager.load(bullet_fire);
 		manager.load(bullet_bounce);
 		// System.out.println("Bullet audio loaded");
-		manager.load(tank_idle);
-		manager.load(tank_move);
+		manager.load(tank_engine);
+		manager.load(tank_tread);
 		// System.out.println("Tank audio loaded");
 	}
 
