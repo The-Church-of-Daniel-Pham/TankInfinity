@@ -33,7 +33,7 @@ public class Bullet extends DynamicCollider {
 	private Vector2 v; // for determining vertices of hitbox
 	public int length = 51; // of region in texture for hitbox
 	public int width = 13; // of region in texture for hitbox
-	private float theta = (float) Math.atan2(width, length); // see diagram
+	private float theta = (float) Math.atan2(width, length); // see diagram, also doesn't change with scale
 	public float age; // time since creation, in seconds
 	public int bounces; // number of bounces that have occurred since creation
 
@@ -76,6 +76,7 @@ public class Bullet extends DynamicCollider {
 		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
 															// the wall
 		super.setRotation(velocity.angle()); // update rotation
+		bounce_sound.play();	// play bounce sound effect
 		bounces++; // increment bounces completed
 	}
 
@@ -116,6 +117,6 @@ public class Bullet extends DynamicCollider {
 		bounce(new Vector2(1, 0)); // currently set for horizontal wall faces, will change later
 		// appears to die on vertical collisions, what is really happening is that it
 		// collides super often, rapidly flipping direction, then passes the bounce max
-		bounce_sound.play();
+
 	}
 }
