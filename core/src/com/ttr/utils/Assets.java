@@ -66,7 +66,7 @@ public class Assets {
 	// Tank
 	public static final AssetDescriptor<Sound> tank_idle = new AssetDescriptor<Sound>("audio/tank_idle.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> tank_move = new AssetDescriptor<Sound>("audio/tank_move_voice.wav",
+	public static final AssetDescriptor<Sound> tank_move = new AssetDescriptor<Sound>("audio/tank_move.wav",
 			Sound.class);
 	
 	public static void loadTextures() {

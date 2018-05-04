@@ -101,18 +101,21 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				{
 					forward_sound.loop(5f);
 					isOn = true;
+					System.out.println("move playing");
 				}
 			}
 			else
 			{
 				isOn = false;
 				forward_sound.stop();
+				System.out.println("move ended");
 			}
 		}
 		else
 		{
 			isOn = false;
 			forward_sound.stop();
+			System.out.println("move ended");
 		}
 		
 		
