@@ -17,81 +17,106 @@ import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
-import com.ttr.utils.Constants;
 
 public class Bullet extends DynamicCollider {
-	public float tempX, tempY; // test values to determine if move is free from collision
+	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
+	public static final float SCALE = 1.0f;
+	public static final float SPEED = 800f;
+	public static final float LIFETIME = 6.0f; // seconds
+	public static final int MAX_BOUNCES = 3;
+
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
-	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float VELOCITY = 800;
-	private Vector2 v;
-	public int length = 51;
-	public int width = 13;
-	private float theta = (float) Math.atan2(width, length);
-	
+
+	public float tempX, tempY; // test values to determine if move is on the map
+	public Vector2 velocity;
+	private Vector2 v; // for determining vertices of hitbox
+	public int length = 12; // of region in texture for hitbox
+	public int width = 4; // of region in texture for hitbox
+	private float theta = (float) Math.atan2(width, length); // see diagram, also doesn't change with scale
+	public float age; // time since creation, in seconds
+	public int bounces; // number of bounces that have occurred since creation
+
 	// _______________________
-	//|                     . |
-	//|                  .    |
-	//|               . theta |
-	//|            ...........|
-	//|                       |
-	//|                       |
-	//|_______________________|
+	// |                     .|
+	// |                 .    |
+	// |             . theta  |
+	// |         .............|
+	// |                      |
+	// |                      |
+	// |______________________|
 
 	public Bullet(float x, float y, float orientation, Level level) {
 		super.setX(x);
 		super.setY(y);
-		super.setRotation((float) Math.toDegrees(orientation));
+		velocity = new Vector2(SPEED * (float) Math.cos(orientation), SPEED * (float) Math.sin(orientation));
+		super.setRotation(velocity.angle());
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
-		super.setScale(Constants.SCALE_VALUE);
+		super.setScale(SCALE);
 		super.setLevel(level);
-		v = new Vector2(26,7);
+		v = new Vector2(length * SCALE, width * SCALE);
 		collidesAt(0, 0, 0); // set-up vertex arrays
-		shoot_sound.play();	// play shoot sound on creation
+		age = 0f; // starts with 0 age
+		bounces = 0; // starts with 0 bounces
+		shoot_sound.play(); // play shoot sound on creation
 	}
-	
-	private void move(float delta) {
-		tempX = (super.getX() + (float) Math.cos(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
-		tempY = (super.getY() + (float) Math.sin(Math.toRadians(super.getRotation())) * Bullet.VELOCITY * delta);
 
-		if (super.getLevel().map.inMap(tempX, tempY)
-				&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+	private void move(float delta) {
+		tempX = super.getX() + velocity.x * delta;
+		tempY = super.getY() + velocity.y * delta;
+
+		if (super.getLevel().map.inMap(tempX, tempY)) {
 			super.setY(tempY);
 			super.setX(tempX);
-		} else {
-			onCollision();
 		}
+	}
+
+	private void bounce(Vector2 wall) {
+		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
+															// the wall
+		super.setRotation(velocity.angle()); // update rotation
+		bounce_sound.play();	// play bounce sound effect
+		bounces++; // increment bounces completed
 	}
 
 	@Override
 	public void act(float delta) {
-		move(delta);
+		age += delta; // add time since last update onto age
+		if (age > LIFETIME || bounces > MAX_BOUNCES) { // check if too old or too many bounces
+			super.remove(); // remove old or worn out bullet
+		} else {
+			move(delta); // move to next position
+			if (collidesAt(super.getX(), super.getY(), (float) Math.toRadians(super.getRotation()))) { // check for
+																										// collision
+				onCollision(); // react to collision
+			}
+		}
 	}
-	
+
 	@Override
 	public float[] getVertices(float x, float y, float orientation) {
 		float[] vertices = new float[8];
-		v.setAngleRad(orientation+theta);
-		vertices[0] = super.getX() + v.x; //* (float)Math.cos(orientation);
-		vertices[1] = super.getY() + v.y;//* (float)Math.sin(orientation);
+		v.setAngleRad(orientation + theta);
+		vertices[0] = super.getX() + v.x;
+		vertices[1] = super.getY() + v.y;
 		v.rotateRad((float) Math.PI - 2 * theta);
-		vertices[2] = super.getX() + v.x;// * (float)Math.cos(orientation);
-		vertices[3] = super.getY() + v.y;//* (float)Math.sin(orientation);
+		vertices[2] = super.getX() + v.x;
+		vertices[3] = super.getY() + v.y;
 		v.rotateRad(2 * theta);
-		vertices[4] = super.getX() + v.x;// * (float)Math.cos(orientation);
-		vertices[5] = super.getY() + v.y; //* (float)Math.sin(orientation);
+		vertices[4] = super.getX() + v.x;
+		vertices[5] = super.getY() + v.y;
 		v.rotateRad((float) Math.PI - 2 * theta);
-		vertices[6] = super.getX() + v.x;// * (float)Math.cos(orientation);
-		vertices[7] = super.getY() + v.y; //* (float)Math.sin(orientation);
+		vertices[6] = super.getX() + v.x;
+		vertices[7] = super.getY() + v.y;
 		return vertices;
 	}
 
 	@Override
 	public void onCollision() {
-		bounce_sound.play();
-		super.remove();
-		
+		bounce(new Vector2(1, 0)); // currently set for horizontal wall faces, will change later
+		// appears to die on vertical collisions, what is really happening is that it
+		// collides super often, rapidly flipping direction, then passes the bounce max
+
 	}
 }

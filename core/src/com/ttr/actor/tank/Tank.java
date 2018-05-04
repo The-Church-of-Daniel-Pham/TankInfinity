@@ -20,26 +20,30 @@ import com.badlogic.gdx.math.Vector3;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
-import com.ttr.utils.Constants;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
-	public float gunOrientation; // in radians
-	public float tempX, tempY, tempO; // test values to determine if move is free from collision
-	private Sprite tread, gun;
+	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
+	public static final float ANGULAR_VELOCITY = 3.0f;
+	public static final float SPEED = 300f;
+	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
+	public static final float SCALE = 1.0f;
+	
+	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
+	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
 	private Sound  idle_sound = Assets.manager.get(Assets.tank_idle);
 	private Sound forward_sound = Assets.manager.get(Assets.tank_move);
 	private Sound reverse_sound = Assets.manager.get(Assets.tank_move);
-	public float gunOriginOffset = 28;
-	public float hitRadius = 130 * Constants.SCALE_VALUE;
-	public static float reloadTime;
 	
-	private boolean isOn = false, isOn2 = false;
-	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
-	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
-	public static final float ANGULAR_VELOCITY = 2f;
-	public static final float VELOCITY = 200f;
-
+	public float tempX, tempY, tempO; // test values to determine if move is on the map
+	public float gunOrientation; // in radians
+	public float gunOriginOffset = 12f * SCALE;
+	public float treadOriginOffset = 4f * SCALE;
+	public float hitRadius = 64f * SCALE;
+	public static float reloadTime;
+	private boolean forwardSoundIsOn = false;
+	private boolean	reverseSoundIsOn = false;
+	
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
 		super.setY(y);
@@ -47,15 +51,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		this.gunOrientation = gunOrientation;
 		super.setLevel(level);
 		
-		tread = new Sprite(Assets.manager.get(Assets.tread));
-		//tread.setOriginCenter(); // set pivot of tread to center
-		tread.setOrigin(117f,128f);
-		tread.setScale(Constants.SCALE_VALUE);
-		gun = new Sprite(Assets.manager.get(Assets.gun_0)); // set pivot of gun to 100 pixels along width (scaled from
-															// 256 total), half of height
-		//gun.setOrigin(Tank.SIZE / 2f - gunOriginOffset, Tank.SIZE / 2f);
-		gun.setOrigin(105,128);
-		gun.setScale(Constants.SCALE_VALUE);
+		tread.setOrigin(SIZE/2f - treadOriginOffset, SIZE/2f);	// set pivot of tread
+		tread.setScale(SCALE);
+		gun.setOrigin(SIZE/2f - gunOriginOffset, SIZE/2f);	// set pivot of gun
+		gun.setScale(SCALE);
 		
 		brickHitboxes = new ArrayList<Polygon>();
 		collidesAt(0, 0, 0); // fills the instance arrays so that the hitboxes' vertices can render properly
@@ -91,29 +90,28 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private void move(float delta) {
 		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
-			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
+			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 				
-				if(!isOn)
+				if(!forwardSoundIsOn)
 				{
 					forward_sound.loop(5f);
-					isOn = true;
-					System.out.println("move playing");
+					forwardSoundIsOn = true;
 				}
 			}
 			else
 			{
-				isOn = false;
+				forwardSoundIsOn = false;
 				forward_sound.stop();
 				System.out.println("move ended");
 			}
 		}
 		else
 		{
-			isOn = false;
+			forwardSoundIsOn = false;
 			forward_sound.stop();
 			System.out.println("move ended");
 		}
@@ -121,26 +119,26 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		
 
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
-			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
+			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
 				
-				if(!isOn2)
+				if(!reverseSoundIsOn)
 				{
 					reverse_sound.loop(5f);
-					isOn2 = true;
+					reverseSoundIsOn = true;
 				}
 			}else
 			{
-				isOn2 = false;
+				reverseSoundIsOn = false;
 				reverse_sound.stop();
 			}
 		}
 		else
 		{
-			isOn2 = false;
+			reverseSoundIsOn = false;
 			reverse_sound.stop();
 		}
 		
@@ -179,7 +177,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float)((super.getX()) + 150 * Constants.SCALE_VALUE * Math.cos(gunOrientation)), (float)(super.getY() +150 * Constants.SCALE_VALUE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
+				getStage().addActor(new Bullet((float)((super.getX()) + 150 * SCALE * Math.cos(gunOrientation)), (float)(super.getY() +150 * SCALE * Math.sin(gunOrientation)), gunOrientation, super.getLevel()));
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);

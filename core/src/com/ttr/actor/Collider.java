@@ -11,7 +11,8 @@ public abstract class Collider extends LevelActor {
 	protected static boolean noclip = false;
 	protected Polygon hitbox;
 	protected ArrayList<Polygon> brickHitboxes;
-	protected Texture vertex = Assets.manager.get(Assets.vertex);;
+	protected Texture vertex = Assets.manager.get(Assets.vertex);
+	private final int VERTEX_SIZE = vertex.getWidth();
 
 	public void toggleNoclip() {
 		noclip = !noclip;
@@ -53,13 +54,14 @@ public abstract class Collider extends LevelActor {
 		// if noclip is not enabled
 		if (!noclip) {
 			// draw own vertices
+			// - VERTEX_SIZE/2f shifts the drawing of the vertex so that it's centered
 			for (int i = 0; i < 4; i++) {
-				batch.draw(vertex, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1]);
+				batch.draw(vertex, getHitbox().getVertices()[i * 2] - VERTEX_SIZE/2f, getHitbox().getVertices()[i * 2 + 1] - VERTEX_SIZE/2f);
 			}
 			// draw neighboring bricks' vertices
 			for (Polygon brickHitbox : brickHitboxes) {
 				for (int i = 0; i < 4; i++) {
-					batch.draw(vertex, brickHitbox.getVertices()[i * 2], brickHitbox.getVertices()[i * 2 + 1]);
+					batch.draw(vertex, brickHitbox.getVertices()[i * 2] - VERTEX_SIZE/2f, brickHitbox.getVertices()[i * 2 + 1] - VERTEX_SIZE/2f);
 				}
 			}
 		}
