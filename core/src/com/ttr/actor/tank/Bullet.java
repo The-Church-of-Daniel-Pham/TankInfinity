@@ -43,8 +43,8 @@ public class Bullet extends DynamicCollider {
 	public Bullet(float x, float y, float orientation, Level level) {
 		super.setX(x);
 		super.setY(y);
-		super.setRotation((float) Math.toDegrees(orientation));
 		velocity = new Vector2(SPEED * (float) Math.cos(orientation), SPEED * (float) Math.sin(orientation));
+		super.setRotation(velocity.angle());
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
 		super.setScale(Constants.SCALE_VALUE);
@@ -58,20 +58,18 @@ public class Bullet extends DynamicCollider {
 		tempX = (super.getX() + velocity.x * delta);
 		tempY = (super.getY() + velocity.y * delta);
 
-		if (super.getLevel().map.inMap(tempX, tempY)
-				&& !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
+		if (super.getLevel().map.inMap(tempX, tempY)) {
 			super.setY(tempY);
 			super.setX(tempX);
-		} else {
+		}
+		if (collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 			onCollision();
 		}
 	}
 	
 	private void bounce(Vector2 wall) {
-		System.out.println("bullet velocity: " + velocity);
-		System.out.println("wall: " + wall);
 		velocity.rotateRad(2 * velocity.angleRad(wall));
-		System.out.println("new bullet veolcity: " + velocity);
+		super.setRotation(velocity.angle());	//update rotation
 	}
 
 	@Override
