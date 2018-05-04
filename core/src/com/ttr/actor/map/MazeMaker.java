@@ -184,6 +184,8 @@ public class MazeMaker {
 
 		cornerRemover();	//Remove "corners"
 		
+		loneBlockRemover();
+		
 		clearBottomLeftCorner(5);	//Clears out corner so tank doesn't spawn on bricks
 	}
 	
@@ -482,6 +484,18 @@ public class MazeMaker {
 			break;
 		}
 		return count;
+	}
+	
+	private void loneBlockRemover(){
+        for (int y = 0; y < maze.length; y++){
+            for (int x = 0; x < maze[y].length; x++){
+                if (exists(x, y)){
+                    if (nearbyOpen(x, y) == 4){
+                        maze[y][x] = 0;
+                    }
+                }
+            }
+        }
 	}
 
 	/**

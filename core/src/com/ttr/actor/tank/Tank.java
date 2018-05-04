@@ -24,10 +24,10 @@ import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
-	public static final float ANGULAR_VELOCITY = 2f;
-	public static final float VELOCITY = 200f;
+	public static final float ANGULAR_VELOCITY = 3.0f;
+	public static final float SPEED = 300f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
-	public static final float SCALE = 0.6f;
+	public static final float SCALE = 0.5f;
 	
 	private Sprite tread = new Sprite(Assets.manager.get(Assets.tread)); 
 	private Sprite gun = new Sprite(Assets.manager.get(Assets.gun_0));
@@ -90,8 +90,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private void move(float delta) {
 		
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_FORWARD)) {
-			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
+			tempY = (float) (super.getY() + Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			tempX = (float) (super.getX() + Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);
@@ -117,8 +117,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		
 
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
-			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
-			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.VELOCITY * delta);
+			tempY = (float) (super.getY() - Math.sin(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
+			tempX = (float) (super.getX() - Math.cos(Math.toRadians(super.getRotation())) * Tank.SPEED * delta);
 			if (super.getLevel().map.inMap(tempX, tempY) && !collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 				super.setY(tempY);
 				super.setX(tempX);

@@ -20,7 +20,7 @@ import com.ttr.utils.Assets;
 
 public class Bullet extends DynamicCollider {
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float SCALE = 0.6f;
+	public static final float SCALE = 0.5f;
 	public static final float SPEED = 800;
 	public static final float LIFETIME = 6.0f; // seconds
 	public static final int MAX_BOUNCES = 3;
@@ -40,8 +40,8 @@ public class Bullet extends DynamicCollider {
 	// _______________________
 	// |                     .|
 	// |                 .    |
-	// |              . theta |
-	// |           ...........|
+	// |             . theta  |
+	// |         .............|
 	// |                      |
 	// |                      |
 	// |______________________|
