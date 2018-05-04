@@ -38,7 +38,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public float gunOriginOffset = 12f * SCALE;
 	public float bulletFireOffset = 75f * SCALE;
 	public float treadOriginOffset = 4f * SCALE;
-	public float hitRadius = 64f * SCALE;
+	public float hitRadius = 60f * SCALE;
 	public static float reloadTime;
 	private boolean treadSoundOn = false;
 	public boolean moving = false;
