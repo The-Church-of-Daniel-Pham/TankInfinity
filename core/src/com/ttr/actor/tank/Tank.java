@@ -99,15 +99,13 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setX(tempX);
 				moving = true;
 			}
-			//see DynamicCollider comments for the lastCollidingVertex variable
-			else if(lastCollidingVertex.equals(new Vector2(0,0))) { //do not move if collision is against brick corner
-				
-			}
-			else if(isCollisionVertical()) {
-				super.setY(tempY);
-			}
-			else {
+			else if(super.getLevel().map.inMap(tempX, getY())
+					&& !collidesAt(tempX, getY(), (float) Math.toRadians(super.getRotation()))) {
 				super.setX(tempX);
+			}
+			else if(super.getLevel().map.inMap(getX(), tempY)
+					&& !collidesAt(getX(), tempY, (float) Math.toRadians(super.getRotation()))) {
+				super.setY(tempY);
 			}
 				
 				
@@ -121,6 +119,14 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setY(tempY);
 				super.setX(tempX);
 				moving = true;
+			}
+			else if(super.getLevel().map.inMap(tempX, getY())
+					&& !collidesAt(tempX, getY(), (float) Math.toRadians(super.getRotation()))) {
+				super.setX(tempX);
+			}
+			else if(super.getLevel().map.inMap(getX(), tempY)
+					&& !collidesAt(getX(), tempY, (float) Math.toRadians(super.getRotation()))) {
+				super.setY(tempY);
 			}
 		}
 
