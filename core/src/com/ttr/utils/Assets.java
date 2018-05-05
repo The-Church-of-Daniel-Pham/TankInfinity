@@ -16,26 +16,8 @@ public class Assets {
 	public static final AssetManager manager = new AssetManager();
 
 	// Textures
-	// Grass
-	public static final AssetDescriptor<Texture> grass = new AssetDescriptor<Texture>("map/grass/grass.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> clumps1 = new AssetDescriptor<Texture>("map/grass/clumps1.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> clumps2 = new AssetDescriptor<Texture>("map/grass/clumps2.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> clumps3 = new AssetDescriptor<Texture>("map/grass/clumps3.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> flowers1 = new AssetDescriptor<Texture>("map/grass/flowers1.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> flowers2 = new AssetDescriptor<Texture>("map/grass/flowers2.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> flowers3 = new AssetDescriptor<Texture>("map/grass/flowers3.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> bushes1 = new AssetDescriptor<Texture>("map/grass/bushes1.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> bushes2 = new AssetDescriptor<Texture>("map/grass/bushes2.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> bushes3 = new AssetDescriptor<Texture>("map/grass/bushes3.png",
+	// Floor
+	public static final AssetDescriptor<Texture> floor = new AssetDescriptor<Texture>("map/floor.png",
 			Texture.class);
 	// Brick
 	public static final AssetDescriptor<Texture> brick = new AssetDescriptor<Texture>("map/brick/brick.png",
@@ -75,16 +57,7 @@ public class Assets {
 		// System.out.println("Menu textures loaded");
 
 		// then map
-		manager.load(grass);
-		manager.load(clumps1);
-		manager.load(clumps2);
-		manager.load(clumps3);
-		manager.load(flowers1);
-		manager.load(flowers2);
-		manager.load(flowers3);
-		manager.load(bushes1);
-		manager.load(bushes2);
-		manager.load(bushes3);
+		manager.load(floor);
 		manager.load(brick);
 		manager.load(stone);
 		manager.load(bullet);

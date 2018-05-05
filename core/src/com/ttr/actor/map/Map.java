@@ -33,7 +33,7 @@ public class Map extends Group {
 		for (int row = layout.length - 1; row >= 0; row--) {
 			for (int col = 0; col < layout[row].length; col++) {
 				if (layout[row][col] == 0) {
-					MapTile tile = new GrassTile(layout.length - (1 + row), col);	//polymorphic for simplicity in this class
+					MapTile tile = new FloorTile(layout.length - (1 + row), col);	//polymorphic for simplicity in this class
 					map[row][col] = tile;
 					super.addActor(tile);	//kinda redundant, but may come in handy later
 				} else if (layout[row][col] == 1) {
