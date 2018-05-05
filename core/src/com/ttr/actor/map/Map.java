@@ -94,8 +94,8 @@ public class Map extends Group {
 	 */
 	public ArrayList<MapTile> getBrickNeighbors(int row, int col) {
 		ArrayList<MapTile> brickNeighbors = new ArrayList<MapTile>();
-		for (int yOffset = -2; yOffset <= 2; yOffset++) {
-			for (int xOffset = -2; xOffset <= 2; xOffset++) {
+		for (int yOffset = -1; yOffset <= 1; yOffset++) {
+			for (int xOffset = -1; xOffset <= 1; xOffset++) {
 				int tempRow = row + yOffset;
 				int tempCol = col + xOffset;
 				if (tempRow < 0 || tempRow >= level.height || tempCol >= level.width || tempCol < 0) // edge
