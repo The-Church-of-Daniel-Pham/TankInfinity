@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
+import com.ttr.utils.AudioUtils;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
@@ -49,6 +50,11 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public boolean moving = false;
 	private boolean treadSoundOn = false;
 	private boolean engineSoundOn = false;
+	
+	private long treadSound_id;
+	private final float TREAD_VOLUME = 0.2f;
+	private final float ENGINE_VOLUME = 0.6f;
+	private final long FADE_TIME = 300000000;	//0.3 seconds
 
 	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
 		super.setX(x);
@@ -182,16 +188,16 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// engine_sound.stop();
 			// engineSoundOn = false;
 			if (!treadSoundOn) {
-				tread_sound.loop(0.2f);
+				treadSound_id = tread_sound.loop(TREAD_VOLUME);
 				treadSoundOn = true;
 			}
 		} else { // not moving
 			if (!engineSoundOn) {
-				engine_sound.loop(0.6f);
+				engine_sound.loop(ENGINE_VOLUME);
 				engineSoundOn = true;
 			}
 			if (treadSoundOn) {
-				tread_sound.stop();
+				AudioUtils.fade0ut(tread_sound, TREAD_VOLUME, FADE_TIME, treadSound_id);
 				treadSoundOn = false;
 			}
 		}
