@@ -62,8 +62,8 @@ public abstract class Collider extends LevelActor {
 			// draw own vertices
 			// - VERTEX_SIZE/2f shifts the drawing of the vertex so that it's centered
 			for (int i = 0; i < getHitbox().getVertices().length/2; i++) {
-				batch.draw(vertex, getHitbox().getVertices()[i * 2] - VERTEX_SIZE / 2f,
-						getHitbox().getVertices()[i * 2 + 1] - VERTEX_SIZE / 2f);
+				batch.draw(vertex, currentHitbox.getVertices()[i * 2] - VERTEX_SIZE / 2f,
+						currentHitbox.getVertices()[i * 2 + 1] - VERTEX_SIZE / 2f);
 			}
 			// draw neighboring bricks' vertices
 			for (Polygon brickHitbox : brickHitboxes) {
