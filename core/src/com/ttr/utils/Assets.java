@@ -19,10 +19,8 @@ public class Assets {
 	// Floor
 	public static final AssetDescriptor<Texture> floor = new AssetDescriptor<Texture>("map/floor.png",
 			Texture.class);
-	// Brick
-	public static final AssetDescriptor<Texture> brick = new AssetDescriptor<Texture>("map/brick/brick.png",
-			Texture.class);
-	public static final AssetDescriptor<Texture> stone = new AssetDescriptor<Texture>("map/brick/stone.png",
+	// Wall
+	public static final AssetDescriptor<Texture> crate = new AssetDescriptor<Texture>("map/crate.png",
 			Texture.class);
 	// Projectiles
 	public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
@@ -58,8 +56,7 @@ public class Assets {
 
 		// then map
 		manager.load(floor);
-		manager.load(brick);
-		manager.load(stone);
+		manager.load(crate);
 		manager.load(bullet);
 		manager.load(tread);
 		manager.load(gun_0);

@@ -9,6 +9,6 @@ public class BorderTile extends MapTile {
 	}
 
 	public void build() {
-		super.addTexture(Assets.manager.get(Assets.stone));	//change later
+		super.addTexture(Assets.manager.get(Assets.crate));	//change later
 	}
 }

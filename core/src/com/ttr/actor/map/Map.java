@@ -38,7 +38,7 @@ public class Map extends Group {
 					super.addActor(tile);	//kinda redundant, but may come in handy later
 				} else if (layout[row][col] == 1) {
 					// same as for grass, but for brick
-					MapTile tile = new BrickTile(layout.length - (1 + row), col);
+					MapTile tile = new WallTile(layout.length - (1 + row), col);
 					map[row][col] = tile;
 					super.addActor(tile);
 				}
