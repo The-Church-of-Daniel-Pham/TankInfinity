@@ -99,6 +99,18 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				super.setX(tempX);
 				moving = true;
 			}
+			//see DynamicCollider comments for the lastCollidingVertex variable
+			else if(lastCollidingVertex.equals(new Vector2(0,0))) { //do not move if collision is against brick corner
+				
+			}
+			else if(isCollisionVertical()) {
+				super.setY(tempY);
+			}
+			else {
+				super.setX(tempX);
+			}
+				
+				
 		}
 
 		if (Gdx.input.isKeyPressed(Keybinds.TANK_REVERSE)) {
