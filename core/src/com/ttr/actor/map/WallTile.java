@@ -8,7 +8,7 @@ public class WallTile extends MapTile {
 	}
 	
 	public void build() {
-		super.addTexture(Assets.manager.get(Assets.floor));
+		super.addTexture(Assets.manager.get(Assets.carpet));
 		super.addTexture(Assets.manager.get(Assets.crate));
 	}
 }

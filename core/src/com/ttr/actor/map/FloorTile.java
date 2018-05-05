@@ -9,6 +9,6 @@ public class FloorTile extends MapTile{
 	}
 	
 	public void build() {
-		super.addTexture(Assets.manager.get(Assets.floor));
+		super.addTexture(Assets.manager.get(Assets.carpet));
 	}
 }

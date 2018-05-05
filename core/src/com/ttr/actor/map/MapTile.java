@@ -17,7 +17,7 @@ import com.ttr.utils.Assets;
 public abstract class MapTile extends StaticCollider {
 	protected ArrayList<Texture> textureList;
 	
-	public static final int SIZE = Assets.manager.get(Assets.floor).getWidth();
+	public static final int SIZE = Assets.manager.get(Assets.carpet).getWidth();
 	
 	public MapTile(int row, int col) {
 		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);

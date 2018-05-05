@@ -17,7 +17,7 @@ public class Assets {
 
 	// Textures
 	// Floor
-	public static final AssetDescriptor<Texture> floor = new AssetDescriptor<Texture>("map/floor.png",
+	public static final AssetDescriptor<Texture> carpet = new AssetDescriptor<Texture>("map/carpet2.png",
 			Texture.class);
 	// Wall
 	public static final AssetDescriptor<Texture> crate = new AssetDescriptor<Texture>("map/crate.png",
@@ -55,7 +55,7 @@ public class Assets {
 		// System.out.println("Menu textures loaded");
 
 		// then map
-		manager.load(floor);
+		manager.load(carpet);
 		manager.load(crate);
 		manager.load(bullet);
 		manager.load(tread);

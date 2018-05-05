@@ -38,12 +38,12 @@ public class Bullet extends DynamicCollider {
 	public int bounces; // number of bounces that have occurred since creation
 
 	// _______________________
-	// | .|
-	// | . |
-	// | . theta |
-	// | .............|
-	// | |
-	// | |
+	// |_____________________.|
+	// |_________________.____|
+	// |_____________.__theta_|
+	// |_________.............|
+	// |______________________|
+	// |______________________|
 	// |______________________|
 
 	public Bullet(float x, float y, float orientation, Level level) {
@@ -82,7 +82,7 @@ public class Bullet extends DynamicCollider {
 		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
 															// the wall
 		super.setRotation(velocity.angle()); // update rotation
-		bounce_sound.play(0.5f); // play bounce sound effect
+		bounce_sound.play(0.25f); // play bounce sound effect
 		bounces++; // increment bounces completed
 	}
 
