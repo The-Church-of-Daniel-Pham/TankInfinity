@@ -17,6 +17,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
+import com.ttr.actor.map.BorderTile;
+import com.ttr.actor.map.FloorTile;
+import com.ttr.actor.map.MapTile;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
 
@@ -135,6 +138,15 @@ public class Bullet extends DynamicCollider {
 			bounce(new Vector2(1, 0)); // currently set for horizontal wall faces, will change later
 			// appears to die on vertical collisions, what is really happening is that it
 			// collides super often, rapidly flipping direction, then passes the bounce max
+		}
+		for (MapTile m : lastHitBricks) {
+			if (!(m instanceof BorderTile)) {
+				MapTile n = new FloorTile(getLevel().map.layout.length - (0 + m.getRow()), m.getCol(), getLevel()); //WHY ZERO??
+				getLevel().map.addActor(n);
+				getLevel().map.map[m.getRow()-1][m.getCol()] = n; //WHY -1
+				getLevel().map.layout[m.getRow()-1][m.getCol()] = 0; //WHY -1
+				m.remove();
+			}
 		}
 	}
 
