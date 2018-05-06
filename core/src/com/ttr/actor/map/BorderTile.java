@@ -1,11 +1,12 @@
 package com.ttr.actor.map;
 
+import com.ttr.level.Level;
 import com.ttr.utils.Assets;
 
 public class BorderTile extends MapTile {
 
-	public BorderTile(int row, int col) {
-		super(row, col);
+	public BorderTile(int row, int col, Level level) {
+		super(row, col, level);
 	}
 
 	public void build() {

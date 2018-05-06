@@ -33,12 +33,12 @@ public class Map extends Group {
 		for (int row = layout.length - 1; row >= 0; row--) {
 			for (int col = 0; col < layout[row].length; col++) {
 				if (layout[row][col] == 0) {
-					MapTile tile = new FloorTile(layout.length - (1 + row), col);	//polymorphic for simplicity in this class
+					MapTile tile = new FloorTile(layout.length - (1 + row), col, level);	//polymorphic for simplicity in this class
 					map[row][col] = tile;
 					super.addActor(tile);	//kinda redundant, but may come in handy later
 				} else if (layout[row][col] == 1) {
 					// same as for grass, but for brick
-					MapTile tile = new WallTile(layout.length - (1 + row), col);
+					MapTile tile = new WallTile(layout.length - (1 + row), col, level);
 					map[row][col] = tile;
 					super.addActor(tile);
 				}
@@ -101,7 +101,7 @@ public class Map extends Group {
 				if (tempRow < 0 || tempRow >= level.height || tempCol >= level.width || tempCol < 0) // edge
 				{
 					//handle edge vertices separately
-					MapTile border = new BorderTile(layout.length - (1 + tempRow), tempCol);	// see constructor
+					MapTile border = new BorderTile(layout.length - (1 + tempRow), tempCol, level);	// see constructor
 					brickNeighbors.add(border);	//only in group for now, may add to array later
 				}
 				else if (level.map.layout[tempRow][tempCol] == 1) // normal brick in bounds
@@ -113,19 +113,19 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 	
-	/**
-	 * 
-	 * @param tiles an ArrayList of MapTiles
-	 * @return an ArrayList of Polygons, each of which represents a tile
-	 */
-	public ArrayList<Polygon> getHitboxes(ArrayList<MapTile> tiles) {
-		ArrayList<Polygon> hitboxes = new ArrayList<Polygon>();
-		for (MapTile tile : tiles) {
-			tile.setHitbox(tile.getX(), tile.getY(), (float) Math.toRadians(tile.getRotation()));
-			hitboxes.add(tile.getHitbox());
-		}
-		return hitboxes;
-	}
+//	/**
+//	 * 
+//	 * @param tiles an ArrayList of MapTiles
+//	 * @return an ArrayList of Polygons, each of which represents a tile
+//	 */
+//	public ArrayList<Polygon> getHitboxes(ArrayList<MapTile> tiles) {
+//		ArrayList<Polygon> hitboxes = new ArrayList<Polygon>();
+//		for (MapTile tile : tiles) {
+//			tile.setHitbox(tile.getX(), tile.getY(), (float) Math.toRadians(tile.getRotation()));
+//			hitboxes.add(tile.getHitbox());
+//		}
+//		return hitboxes;
+//	}
 
 	
 	/**

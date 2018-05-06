@@ -8,7 +8,9 @@ import com.ttr.level.Level;
 public abstract class LevelActor extends Actor{
 	protected Texture texture;
 	protected Level level;
-	
+	public LevelActor(Level level) {
+		setLevel (level);
+	}
 	public void setTexture(Texture tex) {
 		texture = tex;
 	}

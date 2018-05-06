@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.level.Level;
@@ -47,6 +48,7 @@ public class Bullet extends DynamicCollider {
 	// |______________________|
 
 	public Bullet(float x, float y, float orientation, Level level) {
+		super(level);
 		super.setX(x);
 		super.setY(y);
 		velocity = new Vector2(SPEED * (float) Math.cos(orientation), SPEED * (float) Math.sin(orientation));
@@ -54,13 +56,11 @@ public class Bullet extends DynamicCollider {
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
 		super.setScale(SCALE);
-		super.setLevel(level);
 		v = new Vector2(length * SCALE, width * SCALE);
-
-		collidesAt(0, 0, 0); // set-up vertex arrays
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces
 		shoot_sound.play(0.7f); // play shoot sound on creation
+
 
 	}
 
@@ -75,6 +75,7 @@ public class Bullet extends DynamicCollider {
 		else {
 			super.setY(tempY);
 			super.setX(tempX);
+			updateHitbox();
 		}
 	}
 
@@ -98,7 +99,7 @@ public class Bullet extends DynamicCollider {
 	}
 
 	@Override
-	public float[] getVertices(float x, float y, float orientation) {
+	public Polygon getHitboxAt(float x, float y, float orientation) {
 //		float[] vertices = new float[2];
 //		Vector2 ve = new Vector2(13, 0);
 //		ve.setAngleRad(orientation);
@@ -124,7 +125,7 @@ public class Bullet extends DynamicCollider {
 		v.rotateRad((float) Math.PI - 2 * theta);
 		vertices[6] = x + v.x;
 		vertices[7] = y + v.y;
-		return vertices;
+		return new Polygon(vertices);
 	}
 
 	@Override

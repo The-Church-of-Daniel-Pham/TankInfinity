@@ -11,17 +11,26 @@ package com.ttr.actor.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Polygon;
 import com.ttr.actor.StaticCollider;
+import com.ttr.level.Level;
 import com.ttr.utils.Assets;
 
 public abstract class MapTile extends StaticCollider {
 	protected ArrayList<Texture> textureList;
-	
 	public static final int SIZE = Assets.manager.get(Assets.carpet).getWidth();
+	protected int mapRow;
+	protected int mapCol;
 	
-	public MapTile(int row, int col) {
+	/**
+	 * 
+	 * @param row
+	 * @param col
+	 */
+	public MapTile(int row, int col, Level level) {
+		super(level);
 		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);
-		super.setHitbox(super.getX(), super.getY(), (float) Math.toRadians(super.getRotation()));
+		currentHitbox = getHitboxAt(getX(), getY(), (float) Math.toRadians(super.getRotation()));
 		textureList = new ArrayList<Texture>();
 		build();
 	}
@@ -33,7 +42,7 @@ public abstract class MapTile extends StaticCollider {
 	public abstract void build();
 	
 	@Override
-	public float[] getVertices(float x, float y, float orientation) {
+	public Polygon getHitboxAt(float x, float y, float orientation) {
 		float[] vertices = new float[8];
 		vertices[0] = x;
 		vertices[1] = y;
@@ -43,7 +52,7 @@ public abstract class MapTile extends StaticCollider {
 		vertices[5] = y + SIZE;
 		vertices[6] = x;
 		vertices[7] = y + SIZE;
-		return vertices;
+		return new Polygon(vertices);
 	}
 	
 	@Override
@@ -51,5 +60,11 @@ public abstract class MapTile extends StaticCollider {
 		for (Texture tex : textureList) {
 			batch.draw(tex, super.getX(), super.getY());
 		}
+	}
+	public int getRow() {
+		return getLevel().map.getTileAt(getX(), getY())[0];
+	}
+	public int getCol() {
+		return getLevel().map.getTileAt(getX(), getY())[1];
 	}
 }
