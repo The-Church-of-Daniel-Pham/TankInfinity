@@ -12,6 +12,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ttr.actor.map.Map;
+import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Constants;
 
@@ -28,13 +29,13 @@ public class Level extends Stage {
 	 * @param height the height in tiles
 	 */
 	public Level(int width, int height) {
-		super(new FitViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT));
+		super(new FitViewport(Constants.WINDOW_WIDTH * MapTile.SIZE/128, Constants.WINDOW_HEIGHT * MapTile.SIZE/128));
 		this.width = width;
 		this.height = height;
 		
 		map = new Map(width, height, this);
 		addActor(map);
-		playerTank = new Tank(128, 128, 0, 0, this);
+		playerTank = new Tank(256, 256, 0, 0, this);
 		addActor(playerTank);
 		
 		// replace default stage OrthographicCamera with LevelCamera
