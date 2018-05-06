@@ -22,8 +22,8 @@ import com.ttr.utils.Assets;
 
 public class Bullet extends DynamicCollider {
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
-	public static final float SCALE = 1.0f;
-	public static final float SPEED = 1000;
+	public static final float SCALE = 2.0f;
+	public static final float SPEED = 800;
 	public static final float LIFETIME = 6.0f; // seconds
 	public static final int MAX_BOUNCES = 3;
 
@@ -55,7 +55,6 @@ public class Bullet extends DynamicCollider {
 		super.setRotation(velocity.angle());
 		super.setOrigin(SIZE / 2f, SIZE / 2f); // set origin to center of texture-sized square
 		super.setTexture(Assets.manager.get(Assets.bullet));
-		super.setScale(SCALE);
 		v = new Vector2(length * SCALE, width * SCALE);
 		age = 0f; // starts with 0 age
 		bounces = 0; // starts with 0 bounces
@@ -142,6 +141,6 @@ public class Bullet extends DynamicCollider {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		super.draw(batch, alpha);
-		drawVertices(batch, alpha);
+		//drawVertices(batch, alpha);
 	}
 }

@@ -15,7 +15,7 @@ public class LevelCamera extends OrthographicCamera implements InputProcessor{
 	public boolean freeCamEnabled = false;
 
 	public static final float SPEED = 2.0f;
-	public static final float MIN_ZOOM = 0.5f;
+	public static final float MIN_ZOOM = 128f/MapTile.SIZE;
 	public static final float MAX_ZOOM = 5.0f;
 
 	public LevelCamera(int width, int height, Tank chaseTank) {
@@ -34,7 +34,7 @@ public class LevelCamera extends OrthographicCamera implements InputProcessor{
 
 	private void viewFullMap() {
 		super.position.set(width * MapTile.SIZE / 2f, height * MapTile.SIZE / 2f, 0);
-		super.zoom = ((float) height * (float) MapTile.SIZE / (float) Constants.WINDOW_HEIGHT);
+		super.zoom = (height * MapTile.SIZE / super.viewportHeight);
 		super.update();
 	}
 

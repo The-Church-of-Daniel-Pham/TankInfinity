@@ -17,7 +17,7 @@ public class Assets {
 
 	// Textures
 	// Floor
-	public static final AssetDescriptor<Texture> carpet = new AssetDescriptor<Texture>("map/carpet2.png",
+	public static final AssetDescriptor<Texture> carpet = new AssetDescriptor<Texture>("map/carpet.png",
 			Texture.class);
 	// Wall
 	public static final AssetDescriptor<Texture> crate = new AssetDescriptor<Texture>("map/crate.png",

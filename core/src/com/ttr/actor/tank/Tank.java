@@ -25,11 +25,11 @@ import com.ttr.utils.AudioUtils;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
-	public static final float RATE_OF_FIRE = 1.5f; // rate of fire is inverse of reload time
+	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2.0f;
-	public static final float SPEED = 250f;
+	public static final float SPEED = 400f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
-	public static final float SCALE = 1.0f;
+	public static final float SCALE = 2.0f;
 
 	private Texture tread = Assets.manager.get(Assets.tread);
 	private Texture gun = Assets.manager.get(Assets.gun_0);
@@ -128,9 +128,11 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			updateHitbox();
 		} else if (!collidesAt(tempX, getY(), (float) Math.toRadians(super.getRotation()))) {
 			super.setX(tempX);
+			moving = true;
 			updateHitbox();
 		} else if (!collidesAt(getX(), tempY, (float) Math.toRadians(super.getRotation()))) {
 			super.setY(tempY);
+			moving = true;
 			updateHitbox();
 		}
 	}
@@ -205,10 +207,10 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	public void draw(Batch batch, float alpha) {
 		// batch.begin() and batch.end() not required since stage already called its own
 		batch.draw(tread, super.getX() - treadOriginX, super.getY() - treadOriginY, treadOriginX, treadOriginY,
-				tread.getWidth(), tread.getHeight(), SCALE, SCALE, super.getRotation(), 0, 0, tread.getWidth(),
+				tread.getWidth(), tread.getHeight(), 1, 1, super.getRotation(), 0, 0, tread.getWidth(),
 				tread.getHeight(), false, false);
 		batch.draw(gun, super.getX() - gunOriginX, super.getY() - gunOriginY, gunOriginX, gunOriginY, gun.getWidth(),
-				gun.getHeight(), SCALE, SCALE, (float) Math.toDegrees(gunOrientation), 0, 0, gun.getWidth(),
+				gun.getHeight(), 1, 1, (float) Math.toDegrees(gunOrientation), 0, 0, gun.getWidth(),
 				gun.getHeight(), false, false);
 		for(MapTile m: nearbyBricks) {
 			m.drawVertices(batch, alpha);
