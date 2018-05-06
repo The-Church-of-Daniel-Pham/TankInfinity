@@ -141,10 +141,10 @@ public class Bullet extends DynamicCollider {
 		}
 		for (MapTile m : lastHitBricks) {
 			if (!(m instanceof BorderTile)) {
-				MapTile n = new FloorTile(getLevel().map.layout.length - (0 + m.getRow()), m.getCol(), getLevel()); //WHY ZERO??
+				MapTile n = new FloorTile(getLevel().map.layout.length - (1 + m.getRow()), m.getCol(), getLevel());
 				getLevel().map.addActor(n);
-				getLevel().map.map[m.getRow()-1][m.getCol()] = n; //WHY -1
-				getLevel().map.layout[m.getRow()-1][m.getCol()] = 0; //WHY -1
+				getLevel().map.map[m.getRow()][m.getCol()] = n;
+				getLevel().map.layout[m.getRow()][m.getCol()] = 0;
 				m.remove();
 			}
 		}

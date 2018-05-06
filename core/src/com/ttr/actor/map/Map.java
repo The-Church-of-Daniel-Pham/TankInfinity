@@ -71,7 +71,7 @@ public class Map extends Group {
 		// due to rounding down with int tankMapRow = (int)((40*128-super.getY())/128),
 		// which "rounds back up" when converting back to world coords
 		int mapCol = (int) (x / MapTile.SIZE);
-		int mapRow = (int) ((level.height * MapTile.SIZE - y) / MapTile.SIZE);
+		int mapRow = (int) ((level.height * MapTile.SIZE - (y+1)) / MapTile.SIZE);
 		return new int[] {mapRow, mapCol};
 	}
 	
