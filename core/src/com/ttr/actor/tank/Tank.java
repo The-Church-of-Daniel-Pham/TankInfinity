@@ -27,7 +27,7 @@ import com.ttr.utils.Keybinds;;
 public class Tank extends DynamicCollider implements InputProcessor {
 	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
 	public static final float ANGULAR_VELOCITY = 2.0f;
-	public static final float SPEED = 400f;
+	public static final float SPEED = 500f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float SCALE = 2.0f;
 
@@ -215,7 +215,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		for(MapTile m: nearbyBricks) {
 			m.drawVertices(batch, alpha);
 		}
-		drawVertices(batch, alpha);
+		super.drawVertices(batch, alpha);
 	}
 
 	@Override

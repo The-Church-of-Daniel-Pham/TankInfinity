@@ -26,9 +26,9 @@ import com.ttr.utils.Assets;
 public class Bullet extends DynamicCollider {
 	public static final int SIZE = Assets.manager.get(Assets.bullet).getWidth();
 	public static final float SCALE = 2.0f;
-	public static final float SPEED = 800;
+	public static final float SPEED = 1000;
 	public static final float LIFETIME = 6.0f; // seconds
-	public static final int MAX_BOUNCES = 3;
+	public static final int MAX_BOUNCES = 2;
 
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
@@ -153,6 +153,6 @@ public class Bullet extends DynamicCollider {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		super.draw(batch, alpha);
-		//drawVertices(batch, alpha);
+		super.drawVertices(batch, alpha);
 	}
 }
