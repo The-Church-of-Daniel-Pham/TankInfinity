@@ -32,7 +32,7 @@ public class Level extends Stage {
 		super(new FitViewport(Constants.WINDOW_WIDTH * MapTile.SIZE/128, Constants.WINDOW_HEIGHT * MapTile.SIZE/128));
 		this.width = width;
 		this.height = height;
-		
+
 		map = new Map(width, height, this);
 		addActor(map);
 		playerTank = new Tank(256, 256, 0, 0, this);
