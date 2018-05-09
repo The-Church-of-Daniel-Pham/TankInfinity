@@ -1,5 +1,7 @@
 package com.ttr.actor.map;
 
+//import java.awt.Color;
+
 /**
  * @author Samuel
  * @version April 13th 2018
@@ -11,7 +13,10 @@ package com.ttr.actor.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.graphics.Color;
 import com.ttr.actor.StaticCollider;
 import com.ttr.level.Level;
 import com.ttr.utils.Assets;
@@ -19,8 +24,9 @@ import com.ttr.utils.Assets;
 public abstract class MapTile extends StaticCollider {
 	protected ArrayList<Texture> textureList;
 	public static final int SIZE = Assets.manager.get(Assets.carpet).getWidth();
-	protected int mapRow;
-	protected int mapCol;
+	private static final float HEALTH = 100;
+	protected float health;
+
 	
 	/**
 	 * 
@@ -32,6 +38,7 @@ public abstract class MapTile extends StaticCollider {
 		super.setPosition(col * MapTile.SIZE, row * MapTile.SIZE);
 		currentHitbox = getHitboxAt(getX(), getY(), (float) Math.toRadians(super.getRotation()));
 		textureList = new ArrayList<Texture>();
+		health = HEALTH;
 		build();
 	}
 	
@@ -60,6 +67,18 @@ public abstract class MapTile extends StaticCollider {
 		for (Texture tex : textureList) {
 			batch.draw(tex, super.getX(), super.getY());
 		}
+	
+		
+	}
+	@Override
+	public void act(float delta) {
+		if(health <= 0) {
+			getLevel().map.removeBrick(this);
+			remove();
+		}
+	}
+	public void takeDamage(float dmg) {
+		health -= dmg;
 	}
 	public int getRow() {
 		return getLevel().map.getTileAt(getX(), getY())[0];

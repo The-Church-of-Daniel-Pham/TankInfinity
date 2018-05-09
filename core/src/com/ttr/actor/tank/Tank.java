@@ -63,8 +63,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));
 		this.gunOrientation = gunOrientation;
-		
-		
+
 	}
 
 	public Polygon getHitboxAt(float x, float y, float orientation) {
@@ -120,7 +119,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	}
 
 	private void attemptTranslationTo(float tempX, float tempY) {
-		
+
 		if (!collidesAt(tempX, tempY, (float) Math.toRadians(super.getRotation()))) {
 			super.setY(tempY);
 			super.setX(tempX);
@@ -166,9 +165,15 @@ public class Tank extends DynamicCollider implements InputProcessor {
 			// debug
 			// if you can find a more elegant way to find these constants, be my guest
 			if (reloadTime <= 0) {
-				getStage().addActor(new Bullet((float) ((super.getX()) + bulletFireOffset * Math.cos(gunOrientation)),
+				Bullet b = new Bullet((float) ((super.getX()) + bulletFireOffset * Math.cos(gunOrientation)),
 						(float) (super.getY() + bulletFireOffset * Math.sin(gunOrientation)), gunOrientation,
-						super.getLevel()));
+						super.getLevel());
+				if (!b.collidesAt(b.getX(), b.getY(), (float) Math.toRadians(b.getRotation()))) {
+					getStage().addActor(b);
+				}
+				else {
+					b.remove();
+				}
 				reloadTime += 1 / Tank.RATE_OF_FIRE;
 			}
 			// System.out.println(reloadTime);
@@ -210,9 +215,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 				tread.getWidth(), tread.getHeight(), 1, 1, super.getRotation(), 0, 0, tread.getWidth(),
 				tread.getHeight(), false, false);
 		batch.draw(gun, super.getX() - gunOriginX, super.getY() - gunOriginY, gunOriginX, gunOriginY, gun.getWidth(),
-				gun.getHeight(), 1, 1, (float) Math.toDegrees(gunOrientation), 0, 0, gun.getWidth(),
-				gun.getHeight(), false, false);
-		for(MapTile m: nearbyBricks) {
+				gun.getHeight(), 1, 1, (float) Math.toDegrees(gunOrientation), 0, 0, gun.getWidth(), gun.getHeight(),
+				false, false);
+		for (MapTile m : nearbyBricks) {
 			m.drawVertices(batch, alpha);
 		}
 		super.drawVertices(batch, alpha);

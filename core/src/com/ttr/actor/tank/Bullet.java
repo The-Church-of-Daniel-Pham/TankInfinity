@@ -29,6 +29,7 @@ public class Bullet extends DynamicCollider {
 	public static final float SPEED = 1000;
 	public static final float LIFETIME = 6.0f; // seconds
 	public static final int MAX_BOUNCES = 2;
+	public static final float DAMAGE = 30;
 
 	private Sound shoot_sound = Assets.manager.get(Assets.bullet_fire);
 	private Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
@@ -135,18 +136,10 @@ public class Bullet extends DynamicCollider {
 		if (isCollisionVertical()) {
 			bounce(new Vector2(0, 1));
 		} else {
-			bounce(new Vector2(1, 0)); // currently set for horizontal wall faces, will change later
-			// appears to die on vertical collisions, what is really happening is that it
-			// collides super often, rapidly flipping direction, then passes the bounce max
+			bounce(new Vector2(1, 0));
 		}
 		for (MapTile m : lastHitBricks) {
-			if (!(m instanceof BorderTile)) {
-				MapTile n = new FloorTile(getLevel().map.layout.length - (1 + m.getRow()), m.getCol(), getLevel());
-				getLevel().map.addActor(n);
-				getLevel().map.map[m.getRow()][m.getCol()] = n;
-				getLevel().map.layout[m.getRow()][m.getCol()] = 0;
-				m.remove();
-			}
+			m.takeDamage(DAMAGE);
 		}
 	}
 
