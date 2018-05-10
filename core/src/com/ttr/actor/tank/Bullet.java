@@ -88,6 +88,8 @@ public class Bullet extends DynamicCollider {
 	@Override
 	public boolean collidesAt(float x, float y, float orientation) {
 		collidedWithWall = super.collidesAt(x, y, orientation);
+		if(noclip)
+			return false;
 		collidedWithTank = false;
 		ArrayList<Vector2> lastCollidingVertices = new ArrayList<Vector2>();
 		Tank t = getLevel().playerTank;
