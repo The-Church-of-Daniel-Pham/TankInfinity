@@ -22,7 +22,7 @@ import com.ttr.actor.DynamicCollider;
 import com.ttr.actor.map.BorderTile;
 import com.ttr.actor.map.FloorTile;
 import com.ttr.actor.map.MapTile;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.utils.Assets;
 
 public class Bullet extends DynamicCollider {

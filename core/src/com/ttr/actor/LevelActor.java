@@ -3,7 +3,7 @@ package com.ttr.actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 
 public abstract class LevelActor extends Actor{
 	protected Texture texture;

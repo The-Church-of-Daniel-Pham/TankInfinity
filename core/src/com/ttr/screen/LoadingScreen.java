@@ -15,7 +15,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.ui.AssetLoadingBar;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;

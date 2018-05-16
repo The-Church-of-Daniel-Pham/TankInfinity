@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Bullet;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.utils.Assets;
 
 public abstract class Collider extends LevelActor {

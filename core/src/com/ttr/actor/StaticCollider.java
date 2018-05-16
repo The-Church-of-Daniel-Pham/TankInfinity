@@ -1,6 +1,6 @@
 package com.ttr.actor;
 
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 
 public abstract class StaticCollider extends Collider {
 

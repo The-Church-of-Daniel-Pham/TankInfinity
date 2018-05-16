@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.map.MapTile;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 
 public abstract class DynamicCollider extends Collider {
 	public ArrayList<MapTile> lastHitBricks; //bricks from the most recent collision

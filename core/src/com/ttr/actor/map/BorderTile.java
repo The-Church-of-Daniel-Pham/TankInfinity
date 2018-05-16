@@ -1,6 +1,6 @@
 package com.ttr.actor.map;
 
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.utils.Assets;
 
 public class BorderTile extends MapTile {

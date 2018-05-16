@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.ttr.actor.DynamicCollider;
 import com.ttr.actor.map.MapTile;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.utils.Assets;
 import com.ttr.utils.AudioUtils;
 import com.ttr.utils.Keybinds;;

@@ -1,4 +1,4 @@
-package com.ttr.level;
+package com.ttr.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

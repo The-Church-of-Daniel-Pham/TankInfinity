@@ -18,7 +18,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.graphics.Color;
 import com.ttr.actor.StaticCollider;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.ttr.utils.Assets;
 
 public abstract class MapTile extends StaticCollider {

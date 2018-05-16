@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.ttr.level.Level;
+import com.ttr.stage.Level;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Map extends Group {
