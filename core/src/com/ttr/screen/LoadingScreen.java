@@ -15,7 +15,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.ttr.stage.Level;
 import com.ttr.ui.AssetLoadingBar;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
@@ -46,7 +45,7 @@ public class LoadingScreen implements Screen {
 		if (Assets.manager.update()) {
 			// Comment this out if you just want to see the progress bar. As this can be
 			// quite quick on desktop.
-			((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen(new Level(40, 40)));
+			((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 		}
 	}
 

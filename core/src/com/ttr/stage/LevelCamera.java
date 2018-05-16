@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Tank;
-import com.ttr.utils.Constants;
 import com.ttr.utils.Keybinds;
 
 public class LevelCamera extends OrthographicCamera implements InputProcessor{
