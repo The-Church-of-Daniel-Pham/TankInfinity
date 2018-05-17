@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.screen.GameScreen;
-import com.ttr.screen.MainMenuScreen;
 
 public class MainMenu extends Stage implements InputProcessor{
 	public MainMenu() {
@@ -34,7 +33,15 @@ public class MainMenu extends Stage implements InputProcessor{
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
 	        	 ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
-	            event.stop();
+	        	 event.stop();
+	         }
+	      });
+		
+		quitButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 Gdx.app.exit();
+	        	 event.stop();
 	         }
 	      });
 
