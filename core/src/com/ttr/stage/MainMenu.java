@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.screen.GameScreen;
+import com.ttr.screen.SettingsMenuScreen;
 
 public class MainMenu extends Stage implements InputProcessor{
 	public MainMenu() {
@@ -26,8 +27,9 @@ public class MainMenu extends Stage implements InputProcessor{
 		// Add widgets to the table here.
 		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
 
-		TextButton startButton = new TextButton("New Game", skin);
+		TextButton startButton = new TextButton("Start Game", skin);
 		TextButton quitButton = new TextButton("Quit Game", skin);
+		TextButton settingsButton = new TextButton("Settings", skin);
 		
 		startButton.addListener(new ClickListener() {
 	         @Override
@@ -44,11 +46,20 @@ public class MainMenu extends Stage implements InputProcessor{
 	        	 event.stop();
 	         }
 	      });
-
-		uiTable.padTop(30);
+		
+		settingsButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 ((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsMenuScreen());
+	        	 event.stop();
+	         }
+	      });
+		
 		uiTable.add(startButton).padBottom(30);
 		uiTable.row();
-		uiTable.add(quitButton); 
+		uiTable.add(quitButton).padBottom(30);
+		uiTable.row();
+		uiTable.add(settingsButton).padBottom(30); 
 		
 		return uiTable;
 	}
