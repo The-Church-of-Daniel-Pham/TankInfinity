@@ -9,7 +9,7 @@ import com.ttr.stage.MainMenu;
 public class MainMenuScreen implements Screen {
 	MainMenu mainMenu;
 	
-	public void create () {
+	public MainMenuScreen () {
 		mainMenu = new MainMenu();
 		Gdx.input.setInputProcessor(mainMenu);
 	}

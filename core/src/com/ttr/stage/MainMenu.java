@@ -14,16 +14,16 @@ import com.ttr.screen.GameScreen;
 public class MainMenu extends Stage implements InputProcessor{
 	public MainMenu() {
 		super(new ScreenViewport());
-		super.addActor(build());
+		super.addActor(buildTable());
 	}
 	
-	private Table build() {
+	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
-		Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
 
 		TextButton startButton = new TextButton("New Game", skin);
 		TextButton quitButton = new TextButton("Quit Game", skin);
@@ -31,7 +31,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		startButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 new GameScreen(new Level(40, 40));
+	        	 new GameScreen();
 	            event.stop();
 	         }
 	      });
