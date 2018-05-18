@@ -14,7 +14,6 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen (Game game) {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
-		Gdx.input.setInputProcessor(mainMenu);
 	}
 
 	public void resize (int width, int height) {

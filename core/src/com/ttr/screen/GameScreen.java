@@ -20,10 +20,8 @@ import com.ttr.ui.TankReloadBar;
 
 public class GameScreen implements Screen {
 	public Level level;
-	private Game game;
 
-	public GameScreen(Game game) {
-		this.game = game;
+	public GameScreen() {
 		level = new Level(40, 40);
 	}
 

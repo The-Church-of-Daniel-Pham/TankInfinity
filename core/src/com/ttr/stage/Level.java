@@ -7,15 +7,15 @@ package com.ttr.stage;
  * Insert enables freecam; Delete returns to chaseCam. Home views the entire Map, PageUp and PageDown zoom, and End resets zoom.
  */
 
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.ttr.TankTankRevolution;
 import com.ttr.actor.map.Map;
 import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Constants;
 
-public class Level extends Stage implements InputProcessor{
+public class Level extends Stage {
 	public int width;
 	public int height;
 	public Tank playerTank;
@@ -40,5 +40,8 @@ public class Level extends Stage implements InputProcessor{
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(width, height, playerTank);
 		super.getViewport().setCamera(camera);
+		
+		TankTankRevolution.addInput(playerTank);
+		TankTankRevolution.addInput(camera);
 	}
 }

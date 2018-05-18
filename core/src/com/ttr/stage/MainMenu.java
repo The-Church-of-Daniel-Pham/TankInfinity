@@ -18,6 +18,7 @@ public class MainMenu extends Stage implements InputProcessor{
 	public MainMenu(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
+		TankTankRevolution.addInput(this);
 		super.addActor(buildTable());
 	}
 	
