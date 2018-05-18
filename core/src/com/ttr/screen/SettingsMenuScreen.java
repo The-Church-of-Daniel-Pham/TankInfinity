@@ -1,5 +1,6 @@
 package com.ttr.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -7,13 +8,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.ttr.stage.SettingsMenu;
 
 public class SettingsMenuScreen implements Screen {
-	SettingsMenu settingsMenu;
+	public SettingsMenu settingsMenu;
+	private Game game;
 	
-	public SettingsMenuScreen () {
-		settingsMenu = new SettingsMenu();
+	public SettingsMenuScreen (Game game) {
+		this.game = game;
+		settingsMenu = new SettingsMenu(this.game);
 		Gdx.input.setInputProcessor(settingsMenu);
 	}
-
+	
 	public void resize (int width, int height) {
 		settingsMenu.getViewport().update(width, height, true);
 	}

@@ -1,5 +1,6 @@
 package com.ttr.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -7,10 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.ttr.stage.MainMenu;
 
 public class MainMenuScreen implements Screen {
-	MainMenu mainMenu;
+	public MainMenu mainMenu;
+	private Game game;
 	
-	public MainMenuScreen () {
-		mainMenu = new MainMenu();
+	public MainMenuScreen (Game game) {
+		this.game = game;
+		mainMenu = new MainMenu(this.game);
 		Gdx.input.setInputProcessor(mainMenu);
 	}
 

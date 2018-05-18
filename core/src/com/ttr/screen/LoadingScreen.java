@@ -12,9 +12,11 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.ttr.TankTankRevolution;
 import com.ttr.ui.AssetLoadingBar;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
@@ -23,19 +25,25 @@ public class LoadingScreen implements Screen {
 	private final SpriteBatch batch = new SpriteBatch();
 	private final FitViewport viewport = new FitViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 	private Sprite splash;
-
-	@Override
-	public void show() {
+	private Game game;
+	
+	public LoadingScreen(Game game) {
+		this.game = game;
 		// starts loading as soon as game switches to this screen
 		Assets.loadAll();
 		// wait until menu texture is loaded
-		Assets.manager.finishLoadingAsset(Assets.splash.fileName);
+		//Assets.manager.finishLoadingAsset(Assets.splash.fileName);
+		Assets.manager.finishLoading();
 		splash = new Sprite(Assets.manager.get(Assets.splash));
 	}
 
 	@Override
 	public void render(float delta) {
 		exitButton();
+		
+		//Clear the screen
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+				
 		batch.begin();
 		splash.draw(batch);
 		batch.end();
@@ -45,7 +53,7 @@ public class LoadingScreen implements Screen {
 		if (Assets.manager.update()) {
 			// Comment this out if you just want to see the progress bar. As this can be
 			// quite quick on desktop.
-			((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
+			game.setScreen(((TankTankRevolution)game).mainMenuScreen);
 		}
 	}
 
@@ -79,6 +87,12 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void show() {
 		// TODO Auto-generated method stub
 		
 	}

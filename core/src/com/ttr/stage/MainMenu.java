@@ -10,12 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.ttr.screen.GameScreen;
-import com.ttr.screen.SettingsMenuScreen;
+import com.ttr.TankTankRevolution;
 
 public class MainMenu extends Stage implements InputProcessor{
-	public MainMenu() {
+	private Game game;
+	
+	public MainMenu(Game game) {
 		super(new ScreenViewport());
+		this.game = game;
 		super.addActor(buildTable());
 	}
 	
@@ -34,7 +36,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		startButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+	        	 game.setScreen(((TankTankRevolution)game).gameScreen);
 	        	 event.stop();
 	         }
 	      });
@@ -50,7 +52,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		settingsButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 ((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsMenuScreen());
+	        	 game.setScreen(((TankTankRevolution)game).settingsMenuScreen);
 	        	 event.stop();
 	         }
 	      });

@@ -1,5 +1,7 @@
 package com.ttr.screen;
 
+import com.badlogic.gdx.Game;
+
 /**
  * @author Samuel
  * @version April 13th 2018
@@ -17,9 +19,11 @@ import com.ttr.ui.FrameRate;
 import com.ttr.ui.TankReloadBar;
 
 public class GameScreen implements Screen {
-	private Level level;
+	public Level level;
+	private Game game;
 
-	public GameScreen() {
+	public GameScreen(Game game) {
+		this.game = game;
 		level = new Level(40, 40);
 	}
 
