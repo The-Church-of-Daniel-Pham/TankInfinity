@@ -32,7 +32,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
 
 		TextButton returnButton = new TextButton("Return to Main Menu", skin);
-		TextButton resolutionButton = new TextButton(Constants.WINDOW_WIDTH + "x" + Constants.WINDOW_HEIGHT, skin);
+		final TextButton windowModeButton = new TextButton(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX], skin);
 		
 		returnButton.addListener(new ClickListener() {
 	         @Override
@@ -42,16 +42,18 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		resolutionButton.addListener(new ClickListener() {
+		windowModeButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 resolutionButton.setText("");
+	        	 Constants.toggleWindowMode();
+	        	 windowModeButton.setText(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX]);
 	        	 event.stop();
 	         }
 	      });
-
-		uiTable.padTop(30);
+		
 		uiTable.add(returnButton).padBottom(30);
+		uiTable.row();
+		uiTable.add(windowModeButton).padBottom(30);
 		
 		return uiTable;
 	}
