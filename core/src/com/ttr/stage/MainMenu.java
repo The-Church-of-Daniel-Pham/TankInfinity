@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.TankTankRevolution;
 
 public class MainMenu extends Stage implements InputProcessor{
-	private Game game;
+	protected Game game;
 	
 	public MainMenu(Game game) {
 		super(new ScreenViewport());
@@ -30,11 +30,11 @@ public class MainMenu extends Stage implements InputProcessor{
 		// Add widgets to the table here.
 		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
 
-		TextButton startButton = new TextButton("Start Game", skin);
-		TextButton quitButton = new TextButton("Quit Game", skin);
+		TextButton playButton = new TextButton("Play", skin);
+		TextButton quitButton = new TextButton("Quit", skin);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		
-		startButton.addListener(new ClickListener() {
+		playButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
 	        	 game.setScreen(((TankTankRevolution)game).gameScreen);
@@ -58,11 +58,11 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.add(startButton).padBottom(30);
-		uiTable.row();
-		uiTable.add(quitButton).padBottom(30);
+		uiTable.add(playButton).padBottom(30);
 		uiTable.row();
 		uiTable.add(settingsButton).padBottom(30); 
+		uiTable.row();
+		uiTable.add(quitButton).padBottom(30);
 		
 		return uiTable;
 	}

@@ -24,7 +24,6 @@ public class Constants {
 	public static void updateWindowMode() {
 		switch (Constants.WINDOW_MODE_INDEX) {
 		case 0: // if constant WINDOW_MODE is Fullscreen
-			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height); // set window size
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode()); // set fullscreen
 			break;
 		case 1: // if constant WINDOW_MODE is Windowed Borderless

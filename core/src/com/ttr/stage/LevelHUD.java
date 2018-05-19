@@ -11,18 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.TankTankRevolution;
-import com.ttr.utils.Constants;
 
-public class SettingsMenu extends Stage implements InputProcessor{
+public class LevelHUD extends Stage implements InputProcessor {
 	protected Game game;
-	
-	public SettingsMenu(Game game) {
+
+	public LevelHUD(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
 		TankTankRevolution.addInput(this);
 		super.addActor(buildTable());
 	}
-	
+
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
@@ -32,29 +31,17 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
 
 		TextButton returnButton = new TextButton("Return to Main Menu", skin);
-		final TextButton windowModeButton = new TextButton(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX], skin);
-		
+
 		returnButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(((TankTankRevolution)game).mainMenuScreen);
-	        	 event.stop();
-	         }
-	      });
-		
-		windowModeButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 Constants.toggleWindowMode();
-	        	 windowModeButton.setText(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX]);
-	        	 event.stop();
-	         }
-	      });
-		
-		uiTable.add(returnButton).padBottom(30);
-		uiTable.row();
-		uiTable.add(windowModeButton).padBottom(30);
-		
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				game.setScreen(((TankTankRevolution) game).mainMenuScreen);
+				event.stop();
+			}
+		});
+
+		uiTable.add(returnButton).top().right().padBottom(30);
+
 		return uiTable;
 	}
 }

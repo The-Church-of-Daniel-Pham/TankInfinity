@@ -30,7 +30,7 @@ public class TankTankRevolution extends Game {
 		super.setScreen(loadingScreen);
 		mainMenuScreen = new MainMenuScreen(this);
 		settingsMenuScreen = new SettingsMenuScreen(this);
-		gameScreen = new GameScreen();
+		gameScreen = new GameScreen(this);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	

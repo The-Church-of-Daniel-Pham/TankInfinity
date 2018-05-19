@@ -9,7 +9,7 @@ import com.ttr.stage.MainMenu;
 
 public class MainMenuScreen implements Screen {
 	public MainMenu mainMenu;
-	private Game game;
+	protected Game game;
 	
 	public MainMenuScreen (Game game) {
 		this.game = game;

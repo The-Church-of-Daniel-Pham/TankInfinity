@@ -25,7 +25,7 @@ public class LoadingScreen implements Screen {
 	private final SpriteBatch batch = new SpriteBatch();
 	private final FitViewport viewport = new FitViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
 	private Sprite splash;
-	private Game game;
+	protected Game game;
 	
 	public LoadingScreen(Game game) {
 		this.game = game;

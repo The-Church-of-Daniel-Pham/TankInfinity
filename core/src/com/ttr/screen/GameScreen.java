@@ -1,6 +1,16 @@
 package com.ttr.screen;
 
+
+
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.ttr.stage.Level;
+import com.ttr.stage.LevelHUD;
+import com.ttr.ui.FrameRate;
+import com.ttr.ui.TankReloadBar;
 
 /**
  * @author Samuel
@@ -10,19 +20,15 @@ import com.badlogic.gdx.Game;
  * Resizing is done through the level's viewport. Hitting escape stops the game.
  */
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.ttr.stage.Level;
-import com.ttr.ui.FrameRate;
-import com.ttr.ui.TankReloadBar;
-
 public class GameScreen implements Screen {
+	protected Game game;
 	public Level level;
+	public LevelHUD levelhud;
 
-	public GameScreen() {
+	public GameScreen(Game game) {
+		this.game = game;
 		level = new Level(40, 40);
+		levelhud = new LevelHUD(this.game);
 	}
 
     @Override
@@ -37,6 +43,12 @@ public class GameScreen implements Screen {
         //Update the stage
         level.act(delta);
 		level.draw();
+		
+		//update the hud
+		levelhud.act(delta);
+		levelhud.draw();
+		
+		//will incorporate into hud later
 		TankReloadBar.render();
 		FrameRate.render();
     }
