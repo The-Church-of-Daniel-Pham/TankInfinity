@@ -18,7 +18,6 @@ public class MainMenu extends Stage implements InputProcessor{
 	public MainMenu(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
-		TankTankRevolution.addInput(this);
 		super.addActor(buildTable());
 	}
 	
@@ -42,14 +41,6 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		quitButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 Gdx.app.exit();
-	        	 event.stop();
-	         }
-	      });
-		
 		settingsButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
@@ -58,11 +49,18 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.add(playButton).padBottom(30);
-		uiTable.row();
-		uiTable.add(settingsButton).padBottom(30); 
-		uiTable.row();
-		uiTable.add(quitButton).padBottom(30);
+		quitButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 Gdx.app.exit();
+	        	 event.stop();
+	         }
+	      });
+		
+		uiTable.defaults().width(200).height(50).pad(25);
+		uiTable.add(playButton).row();
+		uiTable.add(settingsButton).row(); 
+		uiTable.add(quitButton);
 		
 		return uiTable;
 	}

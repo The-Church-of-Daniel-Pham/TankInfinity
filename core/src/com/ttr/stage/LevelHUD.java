@@ -18,7 +18,6 @@ public class LevelHUD extends Stage implements InputProcessor {
 	public LevelHUD(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
-		TankTankRevolution.addInput(this);
 		super.addActor(buildTable());
 	}
 
@@ -40,7 +39,8 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		});
 
-		uiTable.add(returnButton).top().right().padBottom(30);
+		uiTable.defaults().width(200).height(50).pad(25);
+		uiTable.add(returnButton);
 
 		return uiTable;
 	}

@@ -19,7 +19,6 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	public SettingsMenu(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
-		TankTankRevolution.addInput(this);
 		super.addActor(buildTable());
 	}
 	
@@ -30,17 +29,10 @@ public class SettingsMenu extends Stage implements InputProcessor{
 
 		// Add widgets to the table here.
 		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
-
-		TextButton returnButton = new TextButton("Return to Main Menu", skin);
-		final TextButton windowModeButton = new TextButton(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX], skin);
 		
-		returnButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(((TankTankRevolution)game).mainMenuScreen);
-	        	 event.stop();
-	         }
-	      });
+		final TextButton windowModeButton = new TextButton(Constants.WINDOW_MODES[Constants.WINDOW_MODE_INDEX], skin);
+		TextButton applyButton = new TextButton("Apply", skin);
+		TextButton returnButton = new TextButton("Return to Main Menu", skin);
 		
 		windowModeButton.addListener(new ClickListener() {
 	         @Override
@@ -51,9 +43,26 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.add(returnButton).padBottom(30);
-		uiTable.row();
-		uiTable.add(windowModeButton).padBottom(30);
+		applyButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 Constants.updateWindowMode();
+	        	 event.stop();
+	         }
+	      });
+		
+		returnButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.setScreen(((TankTankRevolution)game).mainMenuScreen);
+	        	 event.stop();
+	         }
+	      });
+		
+		uiTable.defaults().width(200).height(50).pad(25);
+		uiTable.add(windowModeButton).row();
+		uiTable.add(applyButton).row();
+		uiTable.add(returnButton);
 		
 		return uiTable;
 	}

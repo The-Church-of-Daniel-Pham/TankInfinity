@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.ttr.TankTankRevolution;
 import com.ttr.stage.MainMenu;
 
 public class MainMenuScreen implements Screen {
@@ -15,7 +16,18 @@ public class MainMenuScreen implements Screen {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
 	}
+	
+	@Override
+	public void show() {
+		TankTankRevolution.addInput(mainMenu);
+	}
+	
+	@Override
+	public void hide() {
+		TankTankRevolution.removeInput(mainMenu);
+	}
 
+	@Override
 	public void resize (int width, int height) {
 		mainMenu.getViewport().update(width, height, true);
 	}
@@ -43,12 +55,6 @@ public class MainMenuScreen implements Screen {
 	}
 
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
 		
@@ -56,12 +62,6 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
 		// TODO Auto-generated method stub
 		
 	}

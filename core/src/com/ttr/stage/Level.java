@@ -9,7 +9,6 @@ package com.ttr.stage;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.ttr.TankTankRevolution;
 import com.ttr.actor.map.Map;
 import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Tank;
@@ -40,8 +39,5 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(width, height, playerTank);
 		super.getViewport().setCamera(camera);
-		
-		TankTankRevolution.addInput(playerTank);
-		TankTankRevolution.addInput(camera);
 	}
 }

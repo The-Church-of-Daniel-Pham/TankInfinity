@@ -18,7 +18,6 @@ public class Constants {
 	
 	public static void toggleWindowMode() {
 		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % 3;	// increase index until 3, then set back to 0
-		updateWindowMode();
 	}
 	
 	public static void updateWindowMode() {

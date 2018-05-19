@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.ttr.TankTankRevolution;
 import com.ttr.stage.Level;
 import com.ttr.stage.LevelHUD;
 import com.ttr.ui.FrameRate;
@@ -30,7 +31,26 @@ public class GameScreen implements Screen {
 		level = new Level(40, 40);
 		levelhud = new LevelHUD(this.game);
 	}
+	
+	@Override
+	public void show() {
+		TankTankRevolution.addInput(level.playerTank);
+		TankTankRevolution.addInput(level.camera);
+		TankTankRevolution.addInput(levelhud);
+	}
 
+	@Override
+	public void hide() {
+		TankTankRevolution.removeInput(level.playerTank);
+		TankTankRevolution.removeInput(level.camera);
+		TankTankRevolution.removeInput(levelhud);
+	}
+	
+    @Override
+	public void resize(int width, int height) {
+		level.getViewport().update(width, height, true);
+	}
+	
     @Override
     public void render(float delta) {
     	exitButton();
@@ -52,10 +72,6 @@ public class GameScreen implements Screen {
 		TankReloadBar.render();
 		FrameRate.render();
     }
-    @Override
-	public void resize(int width, int height) {
-		level.getViewport().update(width, height, true);
-	}
     
 	public void exitButton() {
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
@@ -78,18 +94,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void show() {
 		// TODO Auto-generated method stub
 		
 	}
