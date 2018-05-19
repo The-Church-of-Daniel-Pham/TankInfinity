@@ -11,9 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.TankTankRevolution;
+import com.ttr.utils.Assets;
 
 public class MainMenu extends Stage implements InputProcessor{
 	protected Game game;
+	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	public MainMenu(Game game) {
 		super(new ScreenViewport());
@@ -27,8 +29,6 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
-		Skin skin = new Skin(Gdx.files.internal("menu/uiskin.json"));
-
 		TextButton playButton = new TextButton("Play", skin);
 		TextButton quitButton = new TextButton("Quit", skin);
 		TextButton settingsButton = new TextButton("Settings", skin);
@@ -57,9 +57,11 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.defaults().width(200).height(50).pad(25);
-		uiTable.add(playButton).row();
-		uiTable.add(settingsButton).row(); 
+		uiTable.defaults().width(250).height(50).pad(25);
+		uiTable.add(playButton);
+		uiTable.row();
+		uiTable.add(settingsButton);
+		uiTable.row(); 
 		uiTable.add(quitButton);
 		
 		return uiTable;

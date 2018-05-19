@@ -11,6 +11,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
 	public static final AssetManager manager = new AssetManager();
@@ -49,6 +50,10 @@ public class Assets {
 	public static final AssetDescriptor<Sound> tank_tread = new AssetDescriptor<Sound>("audio/tank_tread.wav",
 			Sound.class);
 	
+	// UI
+	public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/plain-james/uiskin.json",
+			Skin.class);
+	
 	public static void loadTextures() {
 		// menu first
 		manager.load(splash);
@@ -75,10 +80,16 @@ public class Assets {
 		manager.load(tank_tread);
 		// System.out.println("Tank audio loaded");
 	}
+	
+	public static void loadUI() {
+		manager.load(skin);
+		// System.out.println("UI skin loaded");
+	}
 
 	public static void loadAll() {
 		loadTextures();
 		loadAudio();
+		loadUI();
 		// System.out.println("All loaded");
 	}
 
