@@ -10,8 +10,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.ttr.TankTankRevolution;
 import com.ttr.stage.Level;
 import com.ttr.stage.LevelHUD;
-import com.ttr.ui.FrameRate;
-import com.ttr.ui.TankReloadBar;
 
 /**
  * @author Samuel
@@ -68,10 +66,6 @@ public class PlayScreen implements Screen {
 		//update the hud
 		levelhud.act(delta);
 		levelhud.draw();
-		
-		//will incorporate into hud later
-		TankReloadBar.render();
-		FrameRate.render();
     }
     
 	public void exitButton() {
@@ -84,8 +78,6 @@ public class PlayScreen implements Screen {
 	public void dispose() {
 		level.dispose();
 		levelhud.dispose();
-		TankReloadBar.dispose();
-		FrameRate.dispose();
 	}
 
 	@Override

@@ -13,57 +13,50 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ttr.TankTankRevolution;
-import com.ttr.ui.AssetLoadingBar;
+import com.ttr.stage.Loading;
 import com.ttr.utils.Assets;
-import com.ttr.utils.Constants;
 
 public class LoadingScreen implements Screen {
-	private final SpriteBatch batch = new SpriteBatch();
-	private final FitViewport viewport = new FitViewport(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-	private Sprite splash;
+	public Loading loading;
 	protected Game game;
-	
+
 	public LoadingScreen(Game game) {
 		this.game = game;
-		// starts loading as soon as game switches to this screen
+		// starts loading everything, but not waiting to continue
 		Assets.loadAll();
-		// wait until menu texture is loaded
+		// wait until loading stage's assets are loaded
 		Assets.manager.finishLoadingAsset(Assets.splash.fileName);
-		splash = new Sprite(Assets.manager.get(Assets.splash));
+		Assets.manager.finishLoadingAsset(Assets.skin.fileName);
+		loading = new Loading(this.game);
 	}
 
 	@Override
 	public void render(float delta) {
 		exitButton();
-		
-		//Clear the screen
+
+		// Clear the screen
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				
-		batch.begin();
-		splash.draw(batch);
-		batch.end();
 
-		AssetLoadingBar.render();
-
+		//Update the stage
+    	loading.act(delta);
+    	loading.draw();
+    	
 		if (Assets.manager.update()) {
 			// create rest of screens
 			TankTankRevolution.screens.put("Main Menu", new MainMenuScreen(game));
 			TankTankRevolution.screens.put("Settings Menu", new SettingsMenuScreen(game));
-			TankTankRevolution.screens.put("Play",new PlayScreen(game));
+			TankTankRevolution.screens.put("Play", new PlayScreen(game));
 			game.setScreen(TankTankRevolution.screens.get("Main Menu"));
 		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height, true);
+		loading.getViewport().update(width, height, true);
 	}
-	
+
 	public void exitButton() {
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
@@ -72,30 +65,30 @@ public class LoadingScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		batch.dispose();
+		loading.dispose();
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

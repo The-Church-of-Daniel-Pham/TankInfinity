@@ -54,20 +54,19 @@ public class Assets {
 	public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/plain-james/uiskin.json",
 			Skin.class);
 	
-	public static void loadTextures() {
-		// menu first
+	public static void loadLoading() {
+		// load first
 		manager.load(splash);
-		// System.out.println("Menu textures loaded");
-
-		// then map
+		manager.load(skin);
+	}
+	
+	public static void loadTextures() {
 		manager.load(carpet);
 		manager.load(crate);
 		manager.load(bullet);
 		manager.load(tread);
 		manager.load(gun_0);
 		// System.out.println("Map textures loaded");
-
-		// then debug
 		manager.load(vertex);
 		// System.out.println("Debug textures loaded");
 	}
@@ -82,11 +81,12 @@ public class Assets {
 	}
 	
 	public static void loadUI() {
-		manager.load(skin);
-		// System.out.println("UI skin loaded");
+		//more later
+		// System.out.println("UI loaded");
 	}
 
 	public static void loadAll() {
+		loadLoading();
 		loadTextures();
 		loadAudio();
 		loadUI();
