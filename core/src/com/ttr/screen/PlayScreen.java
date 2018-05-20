@@ -49,6 +49,7 @@ public class PlayScreen implements Screen {
     @Override
 	public void resize(int width, int height) {
 		level.getViewport().update(width, height, true);
+		levelhud.getViewport().update(width, height, true);
 	}
 	
     @Override
@@ -82,6 +83,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void dispose() {
 		level.dispose();
+		levelhud.dispose();
 		TankReloadBar.dispose();
 		FrameRate.dispose();
 	}
