@@ -13,8 +13,8 @@ public class Constants {
 	// Window
 	public static int[] RESOLUTIONS = {1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080};
 	public static int RESOLUTION_INDEX = 8;
-	public static int WINDOW_WIDTH = 1920;
-	public static int WINDOW_HEIGHT = 1080;
+	public static int WINDOW_WIDTH = Gdx.graphics.getWidth();
+	public static int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
 	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
 	
@@ -22,18 +22,21 @@ public class Constants {
 		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % WINDOW_MODES.length;	// increase index until end, then set back to 0
 	}
 	
-	public static void updateWindowMode() {
+	public static void updateWindow() {
 		switch (WINDOW_MODE_INDEX) {
 		case 0: // if constant WINDOW_MODE is Fullscreen
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode()); // set fullscreen
+			//reset to entire screen size
+			WINDOW_WIDTH =  Gdx.graphics.getWidth();
+			WINDOW_HEIGHT = Gdx.graphics.getHeight();			
 			break;
 		case 1: // if constant WINDOW_MODE is Windowed Borderless
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true"); // set window to borderless
-			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height); // set window size
+			Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT); // set window size
 			break;
 		case 2: // if constant WINDOW_MODE is Windowed
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "false"); // set window to not-borderless
-			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height); // set window size
+			Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT); // set window size
 			break;
 		}
 	}
@@ -47,9 +50,5 @@ public class Constants {
 		}
 		WINDOW_WIDTH = RESOLUTIONS[RESOLUTION_INDEX];
 		WINDOW_HEIGHT = RESOLUTIONS[RESOLUTION_INDEX + 1];
-	}
-	
-	public static void updateResolution() {
-		Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT); 
 	}
 }

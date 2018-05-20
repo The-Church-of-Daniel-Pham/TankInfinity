@@ -38,8 +38,8 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		resolutionLabel.setAlignment(Align.right);
 		final Label resolutionValueLabel = new Label(Constants.WINDOW_WIDTH + " x " + Constants.WINDOW_HEIGHT, skin);
 		resolutionValueLabel.setAlignment(Align.center);
-		TextButton plusButton = new TextButton("+", skin);
-		TextButton minusButton = new TextButton("-", skin);
+		final TextButton plusButton = new TextButton("+", skin);
+		final TextButton minusButton = new TextButton("-", skin);
 		TextButton applyButton = new TextButton("Apply", skin);
 		TextButton returnButton = new TextButton("Return to Main Menu", skin);
 		
@@ -73,8 +73,9 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		applyButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 Constants.updateWindowMode();
-	        	 Constants.updateResolution();
+	        	 Constants.updateWindow();
+	        	 //update resolution text in the case from switching from windowed to fullscreen
+	        	 resolutionValueLabel.setText(Constants.WINDOW_WIDTH + " x " + Constants.WINDOW_HEIGHT);
 	        	 event.stop();
 	         }
 	      });

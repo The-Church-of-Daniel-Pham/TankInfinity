@@ -16,6 +16,6 @@ public class DesktopLauncher {
 		config.backgroundFPS = 0; // setting to 0 disables background fps throttling
 
 		new LwjglApplication(new TankTankRevolution(), config); // creates the openGL window
-		Constants.updateWindowMode();							// update window mode
+		Constants.updateWindow();							// update window mode and resolution
 	}
 }
