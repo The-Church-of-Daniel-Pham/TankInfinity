@@ -17,6 +17,7 @@ public class Constants {
 	public static int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
 	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
+	public static boolean VSYNC_ENABLED = false;
 	
 	public static void toggleWindowMode() {
 		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % WINDOW_MODES.length;	// increase index until end, then set back to 0
@@ -39,6 +40,7 @@ public class Constants {
 			Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT); // set window size
 			break;
 		}
+		Gdx.graphics.setVSync(VSYNC_ENABLED);
 	}
 	
 	public static void toggleResolution(boolean increment) {
@@ -50,5 +52,9 @@ public class Constants {
 		}
 		WINDOW_WIDTH = RESOLUTIONS[RESOLUTION_INDEX];
 		WINDOW_HEIGHT = RESOLUTIONS[RESOLUTION_INDEX + 1];
+	}
+	
+	public static void toggleVsync(boolean state) {
+		VSYNC_ENABLED = state;
 	}
 }

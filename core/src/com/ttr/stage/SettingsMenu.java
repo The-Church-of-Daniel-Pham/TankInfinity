@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -40,6 +41,9 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		resolutionValueLabel.setAlignment(Align.center);
 		final TextButton plusButton = new TextButton("+", skin);
 		final TextButton minusButton = new TextButton("-", skin);
+		Label vsyncLabel = new Label("Vertical Sync ", skin);
+		vsyncLabel.setAlignment(Align.right);
+		final CheckBox vsyncButton = new CheckBox("", skin);
 		TextButton applyButton = new TextButton("Apply", skin);
 		TextButton returnButton = new TextButton("Return to Main Menu", skin);
 		
@@ -70,6 +74,14 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
+		vsyncButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 Constants.toggleVsync(vsyncButton.isChecked());
+	        	 event.stop();
+	         }
+	      });
+		
 		applyButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
@@ -90,12 +102,15 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		
 		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(windowLabel).right();
-		uiTable.add(windowModeButton).width(300).colspan(3);
+		uiTable.add(windowModeButton).width(300).colspan(3).left();
 		uiTable.row();
 		uiTable.add(resolutionLabel).right();
 		uiTable.add(minusButton).width(50).spaceRight(0);
 		uiTable.add(resolutionValueLabel).width(200).spaceLeft(0).spaceRight(0);
 		uiTable.add(plusButton).width(50).spaceLeft(0);
+		uiTable.row();
+		uiTable.add(vsyncLabel).right();
+		uiTable.add(vsyncButton).width(50).colspan(3).left();
 		uiTable.row();
 		uiTable.add(applyButton).width(150).colspan(4);
 		uiTable.row();
