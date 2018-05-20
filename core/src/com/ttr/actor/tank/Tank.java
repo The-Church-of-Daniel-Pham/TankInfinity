@@ -8,7 +8,6 @@ package com.ttr.actor.tank;
  * Left click is single fire or hold for continuous fire at a limited rate.
  */
 
-import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;

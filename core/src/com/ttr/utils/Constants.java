@@ -11,17 +11,19 @@ import com.badlogic.gdx.Gdx;
 
 public class Constants {
 	// Window
+	public static int[] RESOLUTIONS = {1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080};
+	public static int RESOLUTION_INDEX = 8;
 	public static int WINDOW_WIDTH = 1920;
 	public static int WINDOW_HEIGHT = 1080;
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
-	public static int WINDOW_MODE_INDEX = 0;
+	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
 	
 	public static void toggleWindowMode() {
-		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % 3;	// increase index until 3, then set back to 0
+		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % WINDOW_MODES.length;	// increase index until end, then set back to 0
 	}
 	
 	public static void updateWindowMode() {
-		switch (Constants.WINDOW_MODE_INDEX) {
+		switch (WINDOW_MODE_INDEX) {
 		case 0: // if constant WINDOW_MODE is Fullscreen
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode()); // set fullscreen
 			break;
@@ -31,8 +33,23 @@ public class Constants {
 			break;
 		case 2: // if constant WINDOW_MODE is Windowed
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "false"); // set window to not-borderless
-			Gdx.graphics.setWindowedMode(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT); // set constant windowed size
+			Gdx.graphics.setWindowedMode(Gdx.graphics.getDisplayMode().width, Gdx.graphics.getDisplayMode().height); // set window size
 			break;
 		}
+	}
+	
+	public static void toggleResolution(boolean increment) {
+		if (RESOLUTION_INDEX > 0 && !increment) {	//if decreasing resolution
+			RESOLUTION_INDEX -= 2;
+		}
+		else if (RESOLUTION_INDEX < RESOLUTIONS.length - 2 && increment) {	//if increasing resolution
+			RESOLUTION_INDEX += 2;
+		}
+		WINDOW_WIDTH = RESOLUTIONS[RESOLUTION_INDEX];
+		WINDOW_HEIGHT = RESOLUTIONS[RESOLUTION_INDEX + 1];
+	}
+	
+	public static void updateResolution() {
+		Gdx.graphics.setWindowedMode(WINDOW_WIDTH, WINDOW_HEIGHT); 
 	}
 }

@@ -21,12 +21,12 @@ import com.ttr.ui.TankReloadBar;
  * Resizing is done through the level's viewport. Hitting escape stops the game.
  */
 
-public class GameScreen implements Screen {
+public class PlayScreen implements Screen {
 	protected Game game;
 	public Level level;
 	public LevelHUD levelhud;
 
-	public GameScreen(Game game) {
+	public PlayScreen(Game game) {
 		this.game = game;
 		level = new Level(40, 40);
 		levelhud = new LevelHUD(this.game);
@@ -34,16 +34,16 @@ public class GameScreen implements Screen {
 	
 	@Override
 	public void show() {
+		TankTankRevolution.addInput(levelhud);
 		TankTankRevolution.addInput(level.playerTank);
 		TankTankRevolution.addInput(level.camera);
-		TankTankRevolution.addInput(levelhud);
 	}
 
 	@Override
 	public void hide() {
+		TankTankRevolution.removeInput(levelhud);
 		TankTankRevolution.removeInput(level.playerTank);
 		TankTankRevolution.removeInput(level.camera);
-		TankTankRevolution.removeInput(levelhud);
 	}
 	
     @Override

@@ -11,7 +11,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.ttr.screen.GameScreen;
+import com.ttr.screen.PlayScreen;
 import com.ttr.screen.LoadingScreen;
 import com.ttr.screen.MainMenuScreen;
 import com.ttr.screen.SettingsMenuScreen;
@@ -22,7 +22,7 @@ public class TankTankRevolution extends Game {
 	public LoadingScreen loadingScreen;
 	public MainMenuScreen mainMenuScreen;
 	public SettingsMenuScreen settingsMenuScreen;
-	public GameScreen gameScreen;
+	public PlayScreen playScreen;
 	
 	@Override
 	public void create() {	
@@ -30,7 +30,7 @@ public class TankTankRevolution extends Game {
 		super.setScreen(loadingScreen);
 		mainMenuScreen = new MainMenuScreen(this);
 		settingsMenuScreen = new SettingsMenuScreen(this);
-		gameScreen = new GameScreen(this);
+		playScreen = new PlayScreen(this);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	

@@ -37,9 +37,9 @@ public class LevelHUD extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
-
-		uiTable.defaults().width(250).height(50).pad(25);
-		uiTable.add(returnButton);
+		
+		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.add(returnButton).width(300).expand().top().right();
 
 		return uiTable;
 	}

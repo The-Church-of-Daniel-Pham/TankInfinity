@@ -13,14 +13,11 @@ import com.badlogic.gdx.graphics.Texture;
  */
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ttr.actor.DynamicCollider;
-import com.ttr.actor.map.BorderTile;
-import com.ttr.actor.map.FloorTile;
 import com.ttr.actor.map.MapTile;
 import com.ttr.stage.Level;
 import com.ttr.utils.Assets;

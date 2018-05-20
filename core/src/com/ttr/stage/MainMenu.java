@@ -36,7 +36,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		playButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(((TankTankRevolution)game).gameScreen);
+	        	 game.setScreen(((TankTankRevolution)game).playScreen);
 	        	 event.stop();
 	         }
 	      });
@@ -57,7 +57,7 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.defaults().width(250).height(50).pad(25);
+		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(playButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
