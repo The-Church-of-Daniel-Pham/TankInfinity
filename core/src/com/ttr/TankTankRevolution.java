@@ -7,30 +7,24 @@ package com.ttr;
  * Description: Main game class. Starts yby setting the screen to LoadingScreen. Disposes of Assets when closed.
  */
 
+
+import java.util.HashMap;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.ttr.screen.PlayScreen;
+import com.badlogic.gdx.Screen;
 import com.ttr.screen.LoadingScreen;
-import com.ttr.screen.MainMenuScreen;
-import com.ttr.screen.SettingsMenuScreen;
 import com.ttr.utils.Assets;
 
 public class TankTankRevolution extends Game {
 	public static InputMultiplexer inputMultiplexer = new InputMultiplexer();
-	public LoadingScreen loadingScreen;
-	public MainMenuScreen mainMenuScreen;
-	public SettingsMenuScreen settingsMenuScreen;
-	public PlayScreen playScreen;
+	public static HashMap<String, Screen> screens = new HashMap<String, Screen>();;
 	
 	@Override
 	public void create() {	
-		loadingScreen = new LoadingScreen(this);
-		super.setScreen(loadingScreen);
-		mainMenuScreen = new MainMenuScreen(this);
-		settingsMenuScreen = new SettingsMenuScreen(this);
-		playScreen = new PlayScreen(this);
+		screens.put("Loading", new LoadingScreen(this));
+		super.setScreen(screens.get("Loading"));
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	

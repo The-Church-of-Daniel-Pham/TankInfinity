@@ -95,7 +95,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		returnButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(((TankTankRevolution)game).mainMenuScreen);
+	        	 game.setScreen(TankTankRevolution.screens.get("Main Menu"));
 	        	 event.stop();
 	         }
 	      });

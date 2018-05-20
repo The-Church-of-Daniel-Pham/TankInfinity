@@ -32,8 +32,7 @@ public class LoadingScreen implements Screen {
 		// starts loading as soon as game switches to this screen
 		Assets.loadAll();
 		// wait until menu texture is loaded
-		//Assets.manager.finishLoadingAsset(Assets.splash.fileName);
-		Assets.manager.finishLoading();
+		Assets.manager.finishLoadingAsset(Assets.splash.fileName);
 		splash = new Sprite(Assets.manager.get(Assets.splash));
 	}
 
@@ -52,9 +51,11 @@ public class LoadingScreen implements Screen {
 		AssetLoadingBar.render();
 
 		if (Assets.manager.update()) {
-			// Comment this out if you just want to see the progress bar. As this can be
-			// quite quick on desktop.
-			game.setScreen(((TankTankRevolution)game).mainMenuScreen);
+			// create rest of screens
+			TankTankRevolution.screens.put("Main Menu", new MainMenuScreen(game));
+			TankTankRevolution.screens.put("Settings Menu", new SettingsMenuScreen(game));
+			TankTankRevolution.screens.put("Play",new PlayScreen(game));
+			game.setScreen(TankTankRevolution.screens.get("Main Menu"));
 		}
 	}
 
