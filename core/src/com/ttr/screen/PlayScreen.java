@@ -1,8 +1,5 @@
 package com.ttr.screen;
 
-
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -21,13 +18,13 @@ import com.ttr.stage.PauseMenu;
  */
 
 public class PlayScreen implements Screen {
-	protected Game game;
+	protected TankTankRevolution game;
 	public Level level;
 	public LevelHUD levelhud;
 	public PauseMenu pauseMenu;
-	public boolean paused;
+	protected boolean paused;
 
-	public PlayScreen(Game game) {
+	public PlayScreen(TankTankRevolution game) {
 		this.game = game;
 		level = new Level(40, 40);
 		levelhud = new LevelHUD(this.game);
@@ -36,18 +33,21 @@ public class PlayScreen implements Screen {
 	
 	@Override
 	public void show() {
-		paused = false;
-		TankTankRevolution.addInput(levelhud);
-		TankTankRevolution.addInput(level.playerTank);
-		TankTankRevolution.addInput(level.camera);
+		game.addInput(levelhud);
+		game.addInput(level.playerTank);
+		game.addInput(level.camera);
+		if (paused) {
+			game.addInput(pauseMenu);
+		}
 	}
 
 	@Override
 	public void hide() {
-		TankTankRevolution.removeInput(levelhud);
-		TankTankRevolution.removeInput(level.playerTank);
-		TankTankRevolution.removeInput(level.camera);
-		TankTankRevolution.removeInput(pauseMenu);
+		game.removeInput(levelhud);
+		game.removeInput(level.playerTank);
+		game.removeInput(level.camera);
+		game.removeInput(pauseMenu);
+		paused = true;	//when leaving this screen, pause automatically for return
 	}
 	
     @Override
@@ -95,22 +95,22 @@ public class PlayScreen implements Screen {
 		level.dispose();
 		levelhud.dispose();
 	}
-
+	
 	@Override
 	public void pause() {
 		paused = true;
-		TankTankRevolution.removeInput(levelhud);
-		TankTankRevolution.removeInput(level.playerTank);
-		TankTankRevolution.removeInput(level.camera);
-		TankTankRevolution.addInput(pauseMenu);
+		game.removeInput(levelhud);
+		game.removeInput(level.playerTank);
+		game.removeInput(level.camera);
+		game.addInput(pauseMenu);
 	}
 
 	@Override
 	public void resume() {
 		paused = false;
-		TankTankRevolution.addInput(levelhud);
-		TankTankRevolution.addInput(level.playerTank);
-		TankTankRevolution.addInput(level.camera);
-		TankTankRevolution.removeInput(pauseMenu);
+		game.addInput(levelhud);
+		game.addInput(level.playerTank);
+		game.addInput(level.camera);
+		game.removeInput(pauseMenu);
 	}
 }

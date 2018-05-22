@@ -1,6 +1,5 @@
 package com.ttr.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,21 +9,21 @@ import com.ttr.stage.MainMenu;
 
 public class MainMenuScreen implements Screen {
 	public MainMenu mainMenu;
-	protected Game game;
+	protected TankTankRevolution game;
 	
-	public MainMenuScreen (Game game) {
+	public MainMenuScreen (TankTankRevolution game) {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
 	}
 	
 	@Override
 	public void show() {
-		TankTankRevolution.addInput(mainMenu);
+		game.addInput(mainMenu);
 	}
 	
 	@Override
 	public void hide() {
-		TankTankRevolution.removeInput(mainMenu);
+		game.removeInput(mainMenu);
 	}
 
 	@Override

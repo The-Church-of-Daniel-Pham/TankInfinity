@@ -8,7 +8,6 @@ package com.ttr.screen;
  * After all of the assets are loaded, it goes up to the Game and switches to GameScreen. Windows can be resized by its own viewport.
  */
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -19,9 +18,9 @@ import com.ttr.utils.Assets;
 
 public class LoadingScreen implements Screen {
 	public Loading loading;
-	protected Game game;
+	protected TankTankRevolution game;
 
-	public LoadingScreen(Game game) {
+	public LoadingScreen(TankTankRevolution game) {
 		this.game = game;
 		// starts loading everything, but not waiting to continue
 		Assets.loadAll();
@@ -45,10 +44,10 @@ public class LoadingScreen implements Screen {
     	
 		if (Assets.manager.update()) {
 			// create rest of screens
-			TankTankRevolution.screens.put("Main Menu", new MainMenuScreen(game));
-			TankTankRevolution.screens.put("Settings Menu", new SettingsMenuScreen(game));
-			TankTankRevolution.screens.put("Play", new PlayScreen(game));
-			game.setScreen(TankTankRevolution.screens.get("Main Menu"));
+			game.screens.put("Main Menu", new MainMenuScreen(game));
+			game.screens.put("Settings Menu", new SettingsMenuScreen(game));
+			game.screens.put("Play", new PlayScreen(game));
+			game.setScreen(game.screens.get("Main Menu"));
 		}
 	}
 

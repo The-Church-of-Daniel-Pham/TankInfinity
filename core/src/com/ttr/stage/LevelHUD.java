@@ -1,6 +1,5 @@
 package com.ttr.stage;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -12,18 +11,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ttr.TankTankRevolution;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Assets;
 
 public class LevelHUD extends Stage implements InputProcessor {
-	protected Game game;
+	protected TankTankRevolution game;
 	private Label fpsLabel;
 	private static float sinceChange;
 	private ProgressBar reloadBar;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(Game game) {
+	public LevelHUD(TankTankRevolution game) {
 		super(new ScreenViewport());
 		this.game = game;
 		super.addActor(buildTable());

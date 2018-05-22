@@ -1,6 +1,5 @@
 package com.ttr.stage;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,10 +16,10 @@ import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class SettingsMenu extends Stage implements InputProcessor{
-	protected Game game;
+	protected TankTankRevolution game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
-	public SettingsMenu(Game game) {
+	public SettingsMenu(TankTankRevolution game) {
 		super(new ScreenViewport());
 		this.game = game;
 		super.addActor(buildTable());
@@ -45,7 +44,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		vsyncLabel.setAlignment(Align.right);
 		final CheckBox vsyncButton = new CheckBox("", skin);
 		TextButton applyButton = new TextButton("Apply", skin);
-		TextButton returnButton = new TextButton("Return to Main Menu", skin);
+		TextButton backButton = new TextButton("Back", skin);
 		
 		windowModeButton.addListener(new ClickListener() {
 	         @Override
@@ -92,10 +91,10 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		returnButton.addListener(new ClickListener() {
+		backButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(TankTankRevolution.screens.get("Main Menu"));
+	        	 game.setScreen(game.previousScreen);
 	        	 event.stop();
 	         }
 	      });
@@ -114,7 +113,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		uiTable.row();
 		uiTable.add(applyButton).width(150).colspan(4);
 		uiTable.row();
-		uiTable.add(returnButton).width(300).colspan(4);
+		uiTable.add(backButton).width(150).colspan(4);
 		
 		return uiTable;
 	}

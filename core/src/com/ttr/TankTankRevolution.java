@@ -18,8 +18,9 @@ import com.ttr.screen.LoadingScreen;
 import com.ttr.utils.Assets;
 
 public class TankTankRevolution extends Game {
-	public static InputMultiplexer inputMultiplexer = new InputMultiplexer();
-	public static HashMap<String, Screen> screens = new HashMap<String, Screen>();;
+	public InputMultiplexer inputMultiplexer = new InputMultiplexer();
+	public HashMap<String, Screen> screens = new HashMap<String, Screen>();
+	public Screen previousScreen;
 	
 	@Override
 	public void create() {	
@@ -28,14 +29,20 @@ public class TankTankRevolution extends Game {
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
-	public static void addInput(InputProcessor input) {
+	public void addInput(InputProcessor input) {
 		inputMultiplexer.addProcessor(input);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
-	public static void removeInput(InputProcessor input) {
+	public void removeInput(InputProcessor input) {
 		inputMultiplexer.removeProcessor(input);
 		Gdx.input.setInputProcessor(inputMultiplexer);
+	}
+	
+	@Override
+	public void setScreen(Screen screen) {
+		previousScreen = super.getScreen();	//stores screen you were on before switching
+		super.setScreen(screen);	//applies switch
 	}
 	
 	@Override

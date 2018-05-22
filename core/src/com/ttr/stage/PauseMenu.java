@@ -1,6 +1,5 @@
 package com.ttr.stage;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,11 +15,11 @@ import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class PauseMenu extends Stage implements InputProcessor {
-	protected Game game;
+	protected TankTankRevolution game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private Texture black = Assets.manager.get(Assets.black);
 	
-	public PauseMenu(Game game) {
+	public PauseMenu(TankTankRevolution game) {
 		super(new ScreenViewport());
 		this.game = game;
 		Background darken = new Background(black);
@@ -51,7 +50,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		settingsButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(TankTankRevolution.screens.get("Settings Menu"));
+	        	 game.setScreen(game.screens.get("Settings Menu"));
 	        	 event.stop();
 	         }
 	      });
@@ -59,7 +58,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(TankTankRevolution.screens.get("Main Menu"));
+	        	 game.setScreen(game.screens.get("Main Menu"));
 	        	 event.stop();
 	         }
 	      });

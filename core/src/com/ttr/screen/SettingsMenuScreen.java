@@ -1,6 +1,5 @@
 package com.ttr.screen;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -10,21 +9,21 @@ import com.ttr.stage.SettingsMenu;
 
 public class SettingsMenuScreen implements Screen {
 	public SettingsMenu settingsMenu;
-	private Game game;
+	private TankTankRevolution game;
 	
-	public SettingsMenuScreen (Game game) {
+	public SettingsMenuScreen (TankTankRevolution game) {
 		this.game = game;
 		settingsMenu = new SettingsMenu(this.game);
 	}
 	
 	@Override
 	public void show() {
-		TankTankRevolution.addInput(settingsMenu);
+		game.addInput(settingsMenu);
 	}
 	
 	@Override
 	public void hide() {
-		TankTankRevolution.removeInput(settingsMenu);
+		game.removeInput(settingsMenu);
 	}
 	
 	@Override

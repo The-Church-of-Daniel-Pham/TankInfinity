@@ -1,6 +1,5 @@
 package com.ttr.stage;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -8,17 +7,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.ttr.TankTankRevolution;
 import com.ttr.actor.Background;
 import com.ttr.utils.Assets;
 
 public class Loading extends Stage implements InputProcessor {
-	protected Game game;
+	protected TankTankRevolution game;
 	private ProgressBar assetsBar;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private Texture splash = Assets.manager.get(Assets.splash);
 	
-	public Loading(Game game) {
+	public Loading(TankTankRevolution game) {
 		super(new ScreenViewport());
 		this.game = game;
 		super.addActor(new Background(splash));
