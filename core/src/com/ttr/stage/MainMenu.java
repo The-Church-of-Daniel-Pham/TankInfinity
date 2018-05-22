@@ -46,11 +46,13 @@ public class MainMenu extends Stage implements InputProcessor{
 		resumeGameButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 //new game created only if not already made, goes to existing screen
-	        	 if (game.screens.get("Play") == null) {
-	        		 game.screens.put("Play", new PlayScreen(game));
+	        	 //goes to existing screen, if it was created
+	        	 if (game.screens.get("Play") != null) {
+	        		 game.setScreen(game.screens.get("Play"));
 	        	 }
-	        	 game.setScreen(game.screens.get("Play"));
+	        	 else {
+	        		 //do nothing, there is no game to resume
+	        	 }
 	        	 event.stop();
 	         }
 	      });
