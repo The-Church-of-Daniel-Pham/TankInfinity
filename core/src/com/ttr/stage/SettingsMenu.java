@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.ttr.TankTankRevolution;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
@@ -20,7 +20,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	public SettingsMenu(TankTankRevolution game) {
-		super(new ScreenViewport());
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(buildTable());
 	}

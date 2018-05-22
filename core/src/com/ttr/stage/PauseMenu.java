@@ -1,5 +1,6 @@
 package com.ttr.stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.ttr.TankTankRevolution;
 import com.ttr.actor.Background;
 import com.ttr.utils.Assets;
@@ -20,11 +21,11 @@ public class PauseMenu extends Stage implements InputProcessor {
 	private Texture black = Assets.manager.get(Assets.black);
 	
 	public PauseMenu(TankTankRevolution game) {
-		super(new ScreenViewport());
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		Background darken = new Background(black);
 		// scale dark to fit screen
-		darken.setScale((float)Constants.WINDOW_WIDTH/black.getWidth(), (float)Constants.WINDOW_HEIGHT/black.getHeight());
+		darken.setScale((float)Gdx.graphics.getWidth()/black.getWidth(), (float)Gdx.graphics.getHeight()/black.getHeight());
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}

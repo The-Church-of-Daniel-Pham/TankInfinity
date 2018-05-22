@@ -13,6 +13,8 @@ public class Constants {
 	// Window
 	public static int[] RESOLUTIONS = {1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080};
 	public static int RESOLUTION_INDEX = 8;
+	public static final int PREFERRED_WINDOW_WIDTH = 1920;
+	public static final int PREFERRED_WINDOW_HEIGHT = 1080;
 	public static int WINDOW_WIDTH = Gdx.graphics.getWidth();
 	public static int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
@@ -28,7 +30,7 @@ public class Constants {
 		case 0: // if constant WINDOW_MODE is Fullscreen
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode()); // set fullscreen
 			//reset to entire screen size
-			WINDOW_WIDTH =  Gdx.graphics.getWidth();
+			WINDOW_WIDTH = Gdx.graphics.getWidth();
 			WINDOW_HEIGHT = Gdx.graphics.getHeight();			
 			break;
 		case 1: // if constant WINDOW_MODE is Windowed Borderless

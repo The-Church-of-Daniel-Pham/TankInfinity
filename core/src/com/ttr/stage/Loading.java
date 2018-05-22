@@ -6,10 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.ttr.TankTankRevolution;
 import com.ttr.actor.Background;
 import com.ttr.utils.Assets;
+import com.ttr.utils.Constants;
 
 public class Loading extends Stage implements InputProcessor {
 	protected TankTankRevolution game;
@@ -19,7 +20,7 @@ public class Loading extends Stage implements InputProcessor {
 	private Texture splash = Assets.manager.get(Assets.splash);
 	
 	public Loading(TankTankRevolution game) {
-		super(new ScreenViewport());
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(new Background(splash));
 		super.addActor(buildTable());

@@ -10,10 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.ttr.TankTankRevolution;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Assets;
+import com.ttr.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankTankRevolution game;
@@ -24,7 +25,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public LevelHUD(TankTankRevolution game) {
-		super(new ScreenViewport());
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(buildTable());
 	}
@@ -64,7 +65,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(fpsLabel).width(100).expand().top().left();
-		uiTable.add(pauseButton).width(300).expand().top().right();
+		uiTable.add(pauseButton).width(150).expand().top().right();
 		uiTable.row();
 		uiTable.add(reloadBar).width(400).colspan(2).expand().bottom().right();
 

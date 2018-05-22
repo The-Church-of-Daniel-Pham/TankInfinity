@@ -54,6 +54,7 @@ public class PlayScreen implements Screen {
 	public void resize(int width, int height) {
 		level.getViewport().update(width, height, true);
 		levelhud.getViewport().update(width, height, true);
+		pauseMenu.getViewport().update(width, height, true);
 	}
 	
     @Override
@@ -64,22 +65,27 @@ public class PlayScreen implements Screen {
     	Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
 				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds anti-aliasing
-
+		
+		//if more than one type of viewports are used, each's apply() must be called before drawing
+		
         //Update the stage
 		if (!paused) {
 			level.act(delta);
 		}
+		level.getViewport().apply();
 		level.draw();
 		
 		//update the hud
 		if (!paused) {
 			levelhud.act(delta);
+			levelhud.getViewport().apply();
 			levelhud.draw();
 		}
 		
 		//update the pause menu
 		if (paused) {
 			pauseMenu.act(delta);
+			pauseMenu.getViewport().apply();
 			pauseMenu.draw();
 		}
     }

@@ -8,11 +8,10 @@ package com.ttr.stage;
  */
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.ttr.actor.map.Map;
 import com.ttr.actor.map.MapTile;
 import com.ttr.actor.tank.Tank;
-import com.ttr.utils.Constants;
 
 public class Level extends Stage {
 	public int width;
@@ -27,7 +26,8 @@ public class Level extends Stage {
 	 * @param height the height in tiles
 	 */
 	public Level(int width, int height) {
-		super(new FitViewport(Constants.WINDOW_WIDTH * MapTile.SIZE/128, Constants.WINDOW_HEIGHT * MapTile.SIZE/128));
+		// world is first scaled to fit within the viewport, then the shorter dimension is lengthened to fill the viewport
+		super(new ExtendViewport(12 * MapTile.SIZE, 8 * MapTile.SIZE));
 		this.width = width;
 		this.height = height;
 
