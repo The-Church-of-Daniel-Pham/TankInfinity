@@ -34,7 +34,7 @@ public class Assets {
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> darken = new AssetDescriptor<Texture>("menu/pause/dpham.jpg",
+	public static final AssetDescriptor<Texture> black = new AssetDescriptor<Texture>("menu/pause/black.png",
 			Texture.class);
 	// Debug
 	public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
@@ -69,7 +69,7 @@ public class Assets {
 		manager.load(tread);
 		manager.load(gun_0);
 		// System.out.println("Map textures loaded");
-		manager.load(darken);
+		manager.load(black);
 		// System.out.println("Menu textures loaded");
 		manager.load(vertex);
 		// System.out.println("Debug textures loaded");

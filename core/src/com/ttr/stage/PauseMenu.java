@@ -18,16 +18,15 @@ import com.ttr.utils.Constants;
 public class PauseMenu extends Stage implements InputProcessor {
 	protected Game game;
 	private Skin skin = Assets.manager.get(Assets.skin);
-	private Texture darken = Assets.manager.get(Assets.darken);
-	private Background dark;
+	private Texture black = Assets.manager.get(Assets.black);
 	
 	public PauseMenu(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
-		dark = new Background(darken);
+		Background darken = new Background(black);
 		// scale dark to fit screen
-		dark.setScale((float)Constants.WINDOW_WIDTH/darken.getWidth(), (float)Constants.WINDOW_HEIGHT/darken.getHeight());
-		super.addActor(dark);
+		darken.setScale((float)Constants.WINDOW_WIDTH/black.getWidth(), (float)Constants.WINDOW_HEIGHT/black.getHeight());
+		super.addActor(darken);
 		super.addActor(buildTable());
 	}
 	
