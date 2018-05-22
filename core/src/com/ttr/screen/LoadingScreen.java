@@ -44,9 +44,9 @@ public class LoadingScreen implements Screen {
     	
 		if (Assets.manager.update()) {
 			// create rest of screens
-			game.screens.put("Main Menu", new MainMenuScreen(game));
-			game.screens.put("Settings Menu", new SettingsMenuScreen(game));
-			game.screens.put("Play", new PlayScreen(game));
+			game.screens.put("Main Menu", new MainMenuScreen(game));	//only one of
+			game.screens.put("Settings Menu", new SettingsMenuScreen(game));	//only one of
+			//game.screens.put("Play", new PlayScreen(game));	//new one may be created
 			game.setScreen(game.screens.get("Main Menu"));
 		}
 	}

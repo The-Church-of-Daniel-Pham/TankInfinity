@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.TankTankRevolution;
+import com.ttr.screen.PlayScreen;
 import com.ttr.utils.Assets;
 
 public class MainMenu extends Stage implements InputProcessor{
@@ -28,13 +29,27 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
-		TextButton playButton = new TextButton("Play", skin);
-		TextButton quitButton = new TextButton("Quit", skin);
+		TextButton newGameButton = new TextButton("New Game", skin);
+		TextButton resumeGameButton = new TextButton("Resume Game", skin);
 		TextButton settingsButton = new TextButton("Settings", skin);
+		TextButton quitButton = new TextButton("Quit", skin);
 		
-		playButton.addListener(new ClickListener() {
+		newGameButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.screens.put("Play", new PlayScreen(game));	//creates or replaces with a new game
+	        	 game.setScreen(game.screens.get("Play"));
+	        	 event.stop();
+	         }
+	      });
+		
+		resumeGameButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 //new game created only if not already made, goes to existing screen
+	        	 if (game.screens.get("Play") == null) {
+	        		 game.screens.put("Play", new PlayScreen(game));
+	        	 }
 	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
@@ -57,7 +72,9 @@ public class MainMenu extends Stage implements InputProcessor{
 	      });
 		
 		uiTable.defaults().width(200).height(75).space(25).center();
-		uiTable.add(playButton);
+		uiTable.add(newGameButton);
+		uiTable.row();
+		uiTable.add(resumeGameButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
 		uiTable.row(); 
