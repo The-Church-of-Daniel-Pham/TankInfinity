@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.ttr.TankTankRevolution;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Assets;
 
@@ -52,20 +51,20 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
-		TextButton returnButton = new TextButton("Return to Main Menu", skin);
+		TextButton pauseButton = new TextButton("Pause", skin);
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
 
-		returnButton.addListener(new ClickListener() {
+		pauseButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(TankTankRevolution.screens.get("Main Menu"));
+				game.getScreen().pause();
 				event.stop();
 			}
 		});
 
 		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(fpsLabel).width(100).expand().top().left();
-		uiTable.add(returnButton).width(300).expand().top().right();
+		uiTable.add(pauseButton).width(300).expand().top().right();
 		uiTable.row();
 		uiTable.add(reloadBar).width(400).colspan(2).expand().bottom().right();
 

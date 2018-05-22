@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.ttr.TankTankRevolution;
 import com.ttr.stage.Level;
 import com.ttr.stage.LevelHUD;
+import com.ttr.stage.PauseMenu;
 
 /**
  * @author Samuel
@@ -23,15 +24,19 @@ public class PlayScreen implements Screen {
 	protected Game game;
 	public Level level;
 	public LevelHUD levelhud;
+	public PauseMenu pauseMenu;
+	public boolean paused;
 
 	public PlayScreen(Game game) {
 		this.game = game;
 		level = new Level(40, 40);
 		levelhud = new LevelHUD(this.game);
+		pauseMenu = new PauseMenu(this.game);
 	}
 	
 	@Override
 	public void show() {
+		paused = false;
 		TankTankRevolution.addInput(levelhud);
 		TankTankRevolution.addInput(level.playerTank);
 		TankTankRevolution.addInput(level.camera);
@@ -42,6 +47,7 @@ public class PlayScreen implements Screen {
 		TankTankRevolution.removeInput(levelhud);
 		TankTankRevolution.removeInput(level.playerTank);
 		TankTankRevolution.removeInput(level.camera);
+		TankTankRevolution.removeInput(pauseMenu);
 	}
 	
     @Override
@@ -60,12 +66,22 @@ public class PlayScreen implements Screen {
 				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds anti-aliasing
 
         //Update the stage
-        level.act(delta);
+		if (!paused) {
+			level.act(delta);
+		}
 		level.draw();
 		
 		//update the hud
-		levelhud.act(delta);
-		levelhud.draw();
+		if (!paused) {
+			levelhud.act(delta);
+			levelhud.draw();
+		}
+		
+		//update the pause menu
+		if (paused) {
+			pauseMenu.act(delta);
+			pauseMenu.draw();
+		}
     }
     
 	public void exitButton() {
@@ -82,13 +98,19 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+		paused = true;
+		TankTankRevolution.removeInput(levelhud);
+		TankTankRevolution.removeInput(level.playerTank);
+		TankTankRevolution.removeInput(level.camera);
+		TankTankRevolution.addInput(pauseMenu);
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-		
+		paused = false;
+		TankTankRevolution.addInput(levelhud);
+		TankTankRevolution.addInput(level.playerTank);
+		TankTankRevolution.addInput(level.camera);
+		TankTankRevolution.removeInput(pauseMenu);
 	}
 }
