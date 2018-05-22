@@ -32,7 +32,9 @@ public class Assets {
 	public static final AssetDescriptor<Texture> gun_0 = new AssetDescriptor<Texture>("tank/tank_gun_0.png",
 			Texture.class);
 	// Menu
-	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading_screen/splash.png",
+	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> darken = new AssetDescriptor<Texture>("menu/pause/dpham.jpg",
 			Texture.class);
 	// Debug
 	public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
@@ -67,6 +69,8 @@ public class Assets {
 		manager.load(tread);
 		manager.load(gun_0);
 		// System.out.println("Map textures loaded");
+		manager.load(darken);
+		// System.out.println("Menu textures loaded");
 		manager.load(vertex);
 		// System.out.println("Debug textures loaded");
 	}

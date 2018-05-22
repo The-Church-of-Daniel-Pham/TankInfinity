@@ -1,4 +1,4 @@
-package com.ttr.stage;
+﻿package com.ttr.stage;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

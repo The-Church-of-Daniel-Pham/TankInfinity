@@ -2,6 +2,7 @@ package com.ttr.stage;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -10,15 +11,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ttr.TankTankRevolution;
+import com.ttr.actor.Background;
 import com.ttr.utils.Assets;
+import com.ttr.utils.Constants;
 
 public class PauseMenu extends Stage implements InputProcessor {
 	protected Game game;
 	private Skin skin = Assets.manager.get(Assets.skin);
+	private Texture darken = Assets.manager.get(Assets.darken);
+	private Background dark;
 	
 	public PauseMenu(Game game) {
 		super(new ScreenViewport());
 		this.game = game;
+		dark = new Background(darken);
+		// scale dark to fit screen
+		dark.setScale((float)Constants.WINDOW_WIDTH/darken.getWidth(), (float)Constants.WINDOW_HEIGHT/darken.getHeight());
+		super.addActor(dark);
 		super.addActor(buildTable());
 	}
 	
