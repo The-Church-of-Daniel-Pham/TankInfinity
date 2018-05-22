@@ -8,13 +8,20 @@ import com.ttr.actor.map.MapTile;
 import com.ttr.stage.Level;
 
 public abstract class DynamicCollider extends Collider {
-	public ArrayList<MapTile> lastHitBricks; //bricks from the most recent collision
-	protected Polygon collisionHitbox; //used for detecting collisions
+	/**
+	 * bricks from most recent collision
+	 */
+	public ArrayList<MapTile> lastHitBricks; 
+	/**
+	 * used for testing collisions
+	 */
+	protected Polygon collisionHitbox; 
 
-	// vertex must be of the DynamicCollider's hitbox
-	// If the program detects that a brick's corner will be inside the
-	// DynamicCollider,
-	// its magnitude is equal to zero to indicate a corner collision
+
+	/**
+	 * Contains Vector2 instances which represent the most recent vertices of this instance that have collided.
+	 * A corner collision has occurred if this array is empty but lastHitBricks isn't
+	 */
 	public ArrayList<Vector2> lastCollidingVertices; // x&y pos
 	protected ArrayList<MapTile> nearbyBricks;
 
@@ -23,7 +30,7 @@ public abstract class DynamicCollider extends Collider {
 		lastCollidingVertices = new ArrayList<Vector2>();
 		lastHitBricks = new ArrayList<MapTile>();
 		nearbyBricks = new ArrayList<MapTile>();
-		currentHitbox = new Polygon(new float[8]);
+		collisionHitbox = new Polygon(new float[8]);
 	}
 
 	public boolean collidesAt(float x, float y, float orientation) {

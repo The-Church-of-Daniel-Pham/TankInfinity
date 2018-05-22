@@ -16,7 +16,7 @@ public abstract class Collider extends LevelActor {
 
 	public Collider(Level level) {
 		super(level);
-		currentHitbox = new Polygon();
+		currentHitbox = new Polygon(new float[8]);
 	}
 
 	public void toggleNoclip() {
