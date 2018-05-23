@@ -15,7 +15,7 @@ public class Constants {
 	public static int RESOLUTION_INDEX = 8;
 	public static final int PREFERRED_WINDOW_WIDTH = RESOLUTIONS[RESOLUTION_INDEX];
 	public static final int PREFERRED_WINDOW_HEIGHT = RESOLUTIONS[RESOLUTION_INDEX+1];
-	public static int WINDOW_WIDTH = Gdx.graphics.getWidth();
+	public static int WINDOW_WIDTH = Gdx.graphics.getWidth();	//start as screen size, since starting in fullscreen
 	public static int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
 	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
