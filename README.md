@@ -13,8 +13,6 @@ APCS Final Project
 
 <a href='https://libgdx.badlogicgames.com/'><img width="250" alt='LibGDX' src='http://www.badlogicgames.com/forum/styles/libgdx/imageset/logo.png'/></a>
 
-<a href='https://opengameart.org/'><img width="250" alt='OpenGameArt' src='https://orig00.deviantart.net/34e5/f/2010/149/b/c/opengameart_banner_300x100_by_qubodup.png'/></a>
-
 ## License
 
 Tank Infinity is made available under the terms of the [MIT License](https://opensource.org/licenses/MIT).
