@@ -43,6 +43,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		Label vsyncLabel = new Label("Vertical Sync ", skin);
 		vsyncLabel.setAlignment(Align.right);
 		final CheckBox vsyncButton = new CheckBox("", skin);
+		vsyncButton.setChecked(Constants.VSYNC_ENABLED);
 		TextButton applyButton = new TextButton("Apply", skin);
 		TextButton backButton = new TextButton("Back", skin);
 		

@@ -11,15 +11,15 @@ import com.badlogic.gdx.Gdx;
 
 public class Constants {
 	// Window
-	public static int[] RESOLUTIONS = {1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080};
+	public static int[] RESOLUTIONS = {1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080, 1920, 1200, 2560, 1440, 3840, 2160};
 	public static int RESOLUTION_INDEX = 8;
-	public static final int PREFERRED_WINDOW_WIDTH = 1920;
-	public static final int PREFERRED_WINDOW_HEIGHT = 1080;
+	public static final int PREFERRED_WINDOW_WIDTH = RESOLUTIONS[RESOLUTION_INDEX];
+	public static final int PREFERRED_WINDOW_HEIGHT = RESOLUTIONS[RESOLUTION_INDEX+1];
 	public static int WINDOW_WIDTH = Gdx.graphics.getWidth();
 	public static int WINDOW_HEIGHT = Gdx.graphics.getHeight();
 	public static String[] WINDOW_MODES = {"Fullscreen", "Windowed Borderless", "Windowed"};
 	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
-	public static boolean VSYNC_ENABLED = false;
+	public static boolean VSYNC_ENABLED = true;
 	
 	public static void toggleWindowMode() {
 		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % WINDOW_MODES.length;	// increase index until end, then set back to 0
