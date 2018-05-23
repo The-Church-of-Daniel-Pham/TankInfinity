@@ -17,7 +17,7 @@ import com.badlogic.gdx.Screen;
 import com.ttr.screen.LoadingScreen;
 import com.ttr.utils.Assets;
 
-public class TankTankRevolution extends Game {
+public class TankInfinity extends Game {
 	public InputMultiplexer inputMultiplexer = new InputMultiplexer();
 	public HashMap<String, Screen> screens = new HashMap<String, Screen>();
 	public Screen previousScreen;

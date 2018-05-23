@@ -9,16 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.screen.PlayScreen;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class MainMenu extends Stage implements InputProcessor{
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
-	public MainMenu(TankTankRevolution game) {
+	public MainMenu(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(buildTable());

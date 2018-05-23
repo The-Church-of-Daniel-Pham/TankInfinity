@@ -11,20 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.actor.tank.Tank;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 	private Label fpsLabel;
 	private static float sinceChange;
 	private ProgressBar reloadBar;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(TankTankRevolution game) {
+	public LevelHUD(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(buildTable());

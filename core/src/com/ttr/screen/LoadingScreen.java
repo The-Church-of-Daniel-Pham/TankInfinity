@@ -12,15 +12,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.stage.Loading;
 import com.ttr.utils.Assets;
 
 public class LoadingScreen implements Screen {
 	public Loading loading;
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 
-	public LoadingScreen(TankTankRevolution game) {
+	public LoadingScreen(TankInfinity game) {
 		this.game = game;
 		// starts loading everything, but not waiting to continue
 		Assets.loadAll();

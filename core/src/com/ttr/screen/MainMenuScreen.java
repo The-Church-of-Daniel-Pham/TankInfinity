@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.stage.MainMenu;
 
 public class MainMenuScreen implements Screen {
 	public MainMenu mainMenu;
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 	
-	public MainMenuScreen (TankTankRevolution game) {
+	public MainMenuScreen (TankInfinity game) {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
 	}

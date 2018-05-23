@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.stage.Level;
 import com.ttr.stage.LevelHUD;
 import com.ttr.stage.PauseMenu;
@@ -18,13 +18,13 @@ import com.ttr.stage.PauseMenu;
  */
 
 public class PlayScreen implements Screen {
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 	public Level level;
 	public LevelHUD levelhud;
 	public PauseMenu pauseMenu;
 	protected boolean paused;
 
-	public PlayScreen(TankTankRevolution game) {
+	public PlayScreen(TankInfinity game) {
 		this.game = game;
 		level = new Level(40, 40);
 		levelhud = new LevelHUD(this.game);

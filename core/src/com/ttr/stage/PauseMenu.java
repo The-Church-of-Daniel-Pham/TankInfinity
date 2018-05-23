@@ -10,17 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.actor.Background;
 import com.ttr.utils.Assets;
 import com.ttr.utils.Constants;
 
 public class PauseMenu extends Stage implements InputProcessor {
-	protected TankTankRevolution game;
+	protected TankInfinity game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private Texture black = Assets.manager.get(Assets.black);
 	
-	public PauseMenu(TankTankRevolution game) {
+	public PauseMenu(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		Background darken = new Background(black);

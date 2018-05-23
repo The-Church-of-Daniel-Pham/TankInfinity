@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.ttr.TankTankRevolution;
+import com.ttr.TankInfinity;
 import com.ttr.stage.SettingsMenu;
 
 public class SettingsMenuScreen implements Screen {
 	public SettingsMenu settingsMenu;
-	private TankTankRevolution game;
+	private TankInfinity game;
 	
-	public SettingsMenuScreen (TankTankRevolution game) {
+	public SettingsMenuScreen (TankInfinity game) {
 		this.game = game;
 		settingsMenu = new SettingsMenu(this.game);
 	}
