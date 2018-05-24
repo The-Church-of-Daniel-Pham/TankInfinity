@@ -1,5 +1,10 @@
 package com.tank.media;
 
+/**
+ * @author Gokul Swaminathan
+ * @version 5.24.18
+ */
+
 import com.badlogic.gdx.audio.Music;
 
 public class MediaAudio {
