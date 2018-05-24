@@ -1,5 +1,7 @@
 package com.tank.controls;
 
-public class ControlConstants {
+import java.util.HashMap;
 
+public class ControlConstants {
+	private static final HashMap<String, Integer> DEFAULT_KEYBOARD_CONTROLS = new HashMap<String, Integer>();
 }
