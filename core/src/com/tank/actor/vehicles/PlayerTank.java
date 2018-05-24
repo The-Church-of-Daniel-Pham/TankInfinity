@@ -29,7 +29,9 @@ public class PlayerTank extends FreeTank{
 	}
 	
 	public void act(float delta) {
-		
+		if(controls.downPressed()) {
+			//applyForce
+		}
 	}
 	public void switchWeapon(int direction) {
 		
