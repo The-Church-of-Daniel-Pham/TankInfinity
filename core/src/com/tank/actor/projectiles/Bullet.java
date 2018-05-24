@@ -14,15 +14,18 @@ public class Bullet extends AbstractProjectile{
 		super(t, stat, src, x, y);
 	}
 	
+	@Override
 	public void act(float delta) {
 		
 	}
 	
+	@Override
 	public ArrayList<Polygon> getHitbox(){
 		return null;
 		
 	}
 	
+	@Override
 	public void checkCollision(Collidable other) {
 		
 	}
