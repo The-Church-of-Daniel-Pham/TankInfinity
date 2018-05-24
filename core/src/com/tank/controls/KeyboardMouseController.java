@@ -5,31 +5,79 @@ import java.util.LinkedHashMap;
 import com.badlogic.gdx.Gdx;
 
 public class KeyboardMouseController extends TankController {
-	private LinkedHashMap<String, Integer> keyMap;
+	private LinkedHashMap<String, KeyControl> keyMap;
 
 	public boolean upPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("UP"));
+		KeyControl up = keyMap.get("UP");
+		if (up.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(up.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(up.getKeyCode());
+		}
 	}
 	public boolean downPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("DOWN"));
+		KeyControl down = keyMap.get("DOWN");
+		if (down.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(down.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(down.getKeyCode());
+		}
 	}
 	public boolean rightPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("RIGHT"));
+		KeyControl right = keyMap.get("RIGHT");
+		if (right.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(right.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(right.getKeyCode());
+		}
 	}
 	public boolean leftPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("LEFT"));
+		KeyControl left = keyMap.get("LEFT");
+		if (left.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(left.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(left.getKeyCode());
+		}
 	}
 	public boolean firePressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("SHOOT"));
+		KeyControl shoot = keyMap.get("SHOOT");
+		if (shoot.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(shoot.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(shoot.getKeyCode());
+		}
 	}
 	public boolean subPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("SUB"));
+		KeyControl sub = keyMap.get("SUB");
+		if (sub.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(sub.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(sub.getKeyCode());
+		}
 	}
 	public boolean subRightPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("RSWITCH"));
+		KeyControl rSwitch = keyMap.get("RSWITCH");
+		if (rSwitch.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(rSwitch.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(rSwitch.getKeyCode());
+		}
 	}
 	public boolean subLeftPressed() {
-		return Gdx.input.isButtonPressed(keyMap.get("LSWITCH"));
+		KeyControl lSwitch = keyMap.get("LSWITCH");
+		if (lSwitch.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(lSwitch.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(lSwitch.getKeyCode());
+		}
 	}
 	public float[] moveCursor(float x, float y) {
 		return null;
