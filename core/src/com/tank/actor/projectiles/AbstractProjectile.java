@@ -34,6 +34,15 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * The stats of the projectile, which includes damage and such
 	 */
 	protected Stats stats;
+	/**
+	 * The hitbox of the Projectile's current position
+	 */
+	protected Polygon hitbox;
+	/**
+	 * The hitbox of the Projectile, presumably at a position to which the Projectile is
+	 * trying to move
+	 */
+	protected Polygon testHitbox;
 
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
@@ -80,9 +89,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            The "transparency" of the object
 	 */
 	public void draw(Batch batch, float a) {
-		batch.draw(tex, super.getX()-super.getOriginX(), super.getY()-super.getOriginY(),super.getOriginX(),super.getOriginY(), tex.getWidth(),
-				tex.getHeight(), super.getScaleX(), super.getScaleY(), super.getRotation(), 0, 0, tex.getWidth(),
-				tex.getHeight(), false, false);
+		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
+				super.getOriginY(), tex.getWidth(), tex.getHeight(), super.getScaleX(), super.getScaleY(),
+				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
 
 	/**
@@ -158,7 +167,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * 
 	 * @return The hitbox(s) of the projectile
 	 */
-	public abstract ArrayList<Polygon> getHitbox();
+	public abstract Polygon getHitboxAt(float x, float y, float direction);
 
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
@@ -167,7 +176,14 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * @param other
 	 *            The other object this object collides with
 	 */
-	public abstract void checkCollision(Collidable other);
+	public void checkCollisions(ArrayList<Collidable> other) {
+
+	}
+
+	public ArrayList<Collidable> getNeighbors() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	/**
 	 * From the Destructible interface. The damage method is used to handle the

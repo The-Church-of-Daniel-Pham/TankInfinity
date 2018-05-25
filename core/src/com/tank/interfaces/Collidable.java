@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Polygon;
 
 public interface Collidable {
-	public ArrayList<Polygon> getHitbox();
-	public void checkCollision(Collidable other);
+	public void checkCollisions(ArrayList<Collidable> other);
+	public Polygon getHitboxAt(float x, float y, float direction);
+	public ArrayList<Collidable> getNeighbors();
 }
