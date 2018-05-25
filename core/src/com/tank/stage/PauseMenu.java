@@ -1,6 +1,5 @@
 package com.tank.stage;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -25,7 +24,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		this.game = game;
 		Background darken = new Background(black);
 		// scale dark to fit screen
-		darken.setScale(((float)Gdx.graphics.getWidth())/black.getWidth(), ((float)Gdx.graphics.getHeight())/black.getHeight());
+		darken.setScale(((float)Constants.WINDOW_WIDTH)/black.getWidth(), ((float)Constants.WINDOW_HEIGHT)/black.getHeight());
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}

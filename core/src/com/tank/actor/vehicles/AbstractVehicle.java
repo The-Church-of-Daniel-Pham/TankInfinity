@@ -48,9 +48,12 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
+		velocity = new Vector2();
+		setStats();
 		vehicleList.add(this);
 	}
-
+	
+	abstract protected void setStats();
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to do.
 	 * 
