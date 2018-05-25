@@ -2,6 +2,7 @@ package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
@@ -12,13 +13,15 @@ import com.tank.controls.TankController;
 import com.tank.interfaces.Collidable;
 import com.tank.subweapons.SubWeapon;
 
-public class PlayerTank extends FreeTank {
+public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected TankController controls;
 	protected Cursor cursor;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
+	
+	public static float RATE_OF_FIRE = 1.0f;
 
 	public PlayerTank(int player, Texture tTexture, Texture gTexture, float x, float y) {
 		super(tTexture, gTexture, x, y);
@@ -73,5 +76,61 @@ public class PlayerTank extends FreeTank {
 				}
 			}
 		}
+	}
+	
+	public int getPlayerNumber() {
+		return playerNumber;
+	}
+	
+	public float getReloadTime() {
+		return 0f;	//write later
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
