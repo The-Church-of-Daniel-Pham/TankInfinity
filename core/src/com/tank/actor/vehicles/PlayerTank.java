@@ -78,40 +78,18 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
 		Vector2 v = new Vector2((float)(getWidth())/2, 0);
-<<<<<<< HEAD
 		v.setAngle(direction);
 		v.rotate(45);
-=======
-		v.setAngle(getRotation());
-		v.rotate(45);
->>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
+
 		for(int i = 0; i < 4; i++) {
 			f[i*2] = x +v.x;
 			f[i*2+1] = y + v.y;
 			v.rotate(90);
 		}
-<<<<<<< HEAD
 		return new Polygon(f);
-=======
-		a.add(new Polygon(f));
-		return a;
->>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
+
 	}
 
-<<<<<<< HEAD
-
-=======
-	public void checkCollision(Collidable other) {
-		ArrayList<Polygon> thisHitbox = this.getHitbox();
-		ArrayList<Polygon> otherHitbox = other.getHitbox();
-		for(Polygon t: thisHitbox) {
-			for(Polygon o: otherHitbox) {
-				if(Intersector.intersectPolygons(t,  o, new Polygon())) {
-					//TODO something happens
-				}
-			}
-		}
-	}
 	
 	public int getPlayerNumber() {
 		return playerNumber;
@@ -168,5 +146,4 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
->>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 }
