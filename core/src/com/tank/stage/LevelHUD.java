@@ -57,7 +57,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
 		TextButton pauseButton = new TextButton("Pause", skin);
-		Label nameLabel = new Label("PLayer " + players.get(0).getPlayerNumber(), skin);
+		Label nameLabel = new Label("Player " + players.get(0).getPlayerNumber(), skin);
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
 
 		pauseButton.addListener(new ClickListener() {

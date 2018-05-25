@@ -12,6 +12,7 @@ import com.tank.actor.ui.Cursor;
 import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
 import com.tank.interfaces.Collidable;
+import com.tank.stats.Stats;
 import com.tank.subweapons.SubWeapon;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
@@ -33,6 +34,14 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		controls = new KeyboardMouseController();
 
 	}
+	
+	@Override
+	protected void setStats() {
+		stats = new Stats();
+		stats.addStat("Acceleration", 10);
+		stats.addStat("Angular_Velocity", 2);
+		
+	}	
 
 	public PlayerTank(int player, Texture tTexture, Texture gTexture, Color color, float x, float y) {
 		super(tTexture, gTexture, color, x, y);
