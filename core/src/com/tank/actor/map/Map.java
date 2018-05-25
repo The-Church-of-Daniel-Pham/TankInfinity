@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.BorderTile;
 import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.stage.Level;

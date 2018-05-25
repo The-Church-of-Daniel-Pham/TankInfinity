@@ -59,14 +59,14 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * @param y
 	 *            The starting y of the projectile
 	 */
-	public AbstractProjectile(Texture t, Stats stat, AbstractVehicle src, float x, float y) {
+	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y) {
 		tex = t;
-		stats = stat;
 		source = src;
 		setX(x);
 		setY(y);
+		setStats();
 	}
-
+	abstract protected void setStats();
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to
 	 * do.

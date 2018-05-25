@@ -1,7 +1,7 @@
-package com.tank.actor.map;
+package com.tank.actor.map.tiles;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.tank.actor.map.tiles.WallTile;
+import com.tank.actor.map.Map;
 
 public class BorderTile extends WallTile{
 	public BorderTile(int row, int col, Map map) {

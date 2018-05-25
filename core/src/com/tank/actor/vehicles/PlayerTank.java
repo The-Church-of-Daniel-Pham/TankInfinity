@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
 import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
-import com.tank.interfaces.Collidable;
 import com.tank.stats.Stats;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
@@ -25,7 +23,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
-	
+
 	public static float RATE_OF_FIRE = 1.0f;
 	protected double timeSinceShot;
 
@@ -35,12 +33,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		controls = new KeyboardMouseController();
 
 	}
-	
+
 	@Override
 	protected void setStats() {
 		stats = new Stats();
 		stats.addStat("Acceleration", 250);
-		stats.addStat("Angular_Velocity", 100);		
+		stats.addStat("Angular_Velocity", 100);
 	}
 
 	/**
@@ -58,12 +56,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.rotateBy(delta * -1 * stats.getStatValue("Angular_Velocity"));
 		}
 		updateVelocityAndMove();
-		if(controls.firePressed()) {
+		if (controls.firePressed()) {
 			shoot();
 		}
 	}
+
 	public void shoot() {
-		getStage().addActor(new Bullet(null, null, this, getX(), getY(), getRotation()));
+		getStage().addActor(new Bullet(this, getX() + super.gunOffsetX, getY() + super.gunOffsetY, super.gunRotation));
 	}
 
 	public void switchWeapon(int direction) {
@@ -72,26 +71,25 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float)(getWidth())/2, 0);
+		Vector2 v = new Vector2((float) (getWidth()) / 2, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 
-		for(int i = 0; i < 4; i++) {
-			f[i*2] = x +v.x;
-			f[i*2+1] = y + v.y;
+		for (int i = 0; i < 4; i++) {
+			f[i * 2] = x + v.x;
+			f[i * 2 + 1] = y + v.y;
 			v.rotate(90);
 		}
 		return new Polygon(f);
 
 	}
 
-	
 	public int getPlayerNumber() {
 		return playerNumber;
 	}
-	
+
 	public float getReloadTime() {
-		return 0f;	//write later
+		return 0f; // write later
 	}
 
 	@Override
