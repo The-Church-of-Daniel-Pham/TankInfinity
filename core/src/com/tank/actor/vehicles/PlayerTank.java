@@ -14,13 +14,14 @@ import com.tank.controls.TankController;
 import com.tank.interfaces.Collidable;
 import com.tank.stats.Stats;
 import com.tank.subweapons.SubWeapon;
+import com.tank.utils.Assets;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected TankController controls;
 	protected Cursor cursor;
-	protected static Texture tTexture; 
-	protected static Texture gTexture;
+	protected static Texture tTexture = Assets.manager.get(Assets.tread);
+	protected static Texture gTexture = Assets.manager.get(Assets.gun_0);
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
@@ -28,8 +29,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	public static float RATE_OF_FIRE = 1.0f;
 	protected double timeSinceShot;
 
-	public PlayerTank(int player, float x, float y) {
-		super(x, y);
+	public PlayerTank(int player, Color color, float x, float y) {
+		super(tTexture, gTexture, color, x, y);
 		playerNumber = player;
 		controls = new KeyboardMouseController();
 
@@ -38,14 +39,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	@Override
 	protected void setStats() {
 		stats = new Stats();
-		stats.addStat("Acceleration", 10);
-		stats.addStat("Angular_Velocity", 2);
-		
-	}	
-
-	public PlayerTank(int player, Texture tTexture, Texture gTexture, Color color, float x, float y) {
-		super(tTexture, gTexture, color, x, y);
-		playerNumber = player;
+		stats.addStat("Acceleration", 250);
+		stats.addStat("Angular_Velocity", 100);		
 	}
 
 	/**
