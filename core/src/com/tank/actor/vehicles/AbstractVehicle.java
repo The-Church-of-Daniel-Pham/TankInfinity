@@ -48,7 +48,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
-		velocity = new Vector2();
+		velocity = new Vector2(0,0);
 		setStats();
 		vehicleList.add(this);
 	}
@@ -77,7 +77,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		return velocity;
 	}
 	public void updateVelocityAndMove() {
-		applyForce(stats.getStatValue("Acceleration"), getRotation());
+		//applyForce(stats.getStatValue("Acceleration"), getRotation());
 		velocity.scl(0.8f);
 		setX(getX() + velocity.x);
 		setY(getY() + velocity.y);

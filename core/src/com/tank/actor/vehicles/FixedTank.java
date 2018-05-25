@@ -23,6 +23,8 @@ public abstract class FixedTank extends AbstractVehicle {
 		super.setOrigin(x, y);
 	}
 	public void draw(Batch batch, float a) {
-		
+		batch.draw(tankTexture, super.getX()-super.getOriginX(), super.getY()-super.getOriginY(),super.getOriginX(),super.getOriginY(), tankTexture.getWidth(),
+				tankTexture.getHeight(), super.getScaleX(), super.getScaleY(), super.getRotation(), 0, 0, tankTexture.getWidth(),
+				tankTexture.getHeight(), false, false);
 	}
 }

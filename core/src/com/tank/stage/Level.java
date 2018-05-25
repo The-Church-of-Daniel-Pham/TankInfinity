@@ -1,6 +1,8 @@
 package com.tank.stage;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
@@ -29,7 +31,7 @@ public class Level extends Stage {
 		addActor(map);
 		
 		players = new ArrayList<PlayerTank>();
-		players.add(new PlayerTank(1,0,0));
+		players.add(new PlayerTank(1, Color.GREEN, 0, 0));
 		for (PlayerTank p : players) {
 			addActor(p);
 		}
