@@ -115,7 +115,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	
 	/**
 	 * From the Collidable interface.
-	 * The getHitbox method is used to get the polygons for the collision of the projectile. This will be overwritten
+	 * The getHitbox method is used to get the polygons for the collision of the object. This will be overwritten
 	 * by subclasses.
 	 * 
 	 * @return		The hitbox(s) of the projectile
