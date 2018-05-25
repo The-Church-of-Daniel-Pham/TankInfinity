@@ -19,13 +19,37 @@ import com.tank.interfaces.Teamable;
 import com.tank.stats.Stats;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable{
+<<<<<<< HEAD
 	
 	protected ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
 	protected int health;				//The health of the vehicle
 	protected int maxHealth;			//The maxHealth of the vehicle
 	protected Stats stats;				//The stats of the vehicle
 	protected Vector2 velocity;			//The velocity of the vehicle
+=======
+	/**
+	 * The health of the vehicle
+	 */
+	protected int health;				
+	/**
+	 * The maxHealth of the vehicle
+	 */
+	protected int maxHealth;			
+	/**
+	 * The stats of the vehicle
+	 */
+	protected Stats stats;				
+	/**
+	 * The velocity of the vehicle
+	 */
+	protected Vector2 velocity;			
+>>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 
+	/**
+	 * 
+	 * @param x initial x position of Vehicle
+	 * @param y initial y position of Vehicle
+	 */
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
@@ -48,7 +72,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * @param a			The "transparency" of the object
 	 */
 	public void draw(Batch batch, float a) {
-		
+
 	}
 	
 	public Vector2 getVelocity() {
@@ -134,7 +158,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	
 	/**
 	 * From the Teamable interface
-	 * The getTeam method is used to tell what team the object is in to tell if they can harm eeach other.
+	 * The getTeam method is used to tell what team the object is in to tell if they can harm each other.
 	 * 
 	 * @return		The team the object is in
 	 */

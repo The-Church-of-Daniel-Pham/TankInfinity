@@ -39,14 +39,14 @@ public class PlayerTank extends FreeTank {
 	 */
 	public void act(float delta) {
 		if (controls.downPressed()) {
-			super.applyForce(stats.getStatValue("Acceleration"), 180 + getRotation());
+			super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
 		} else if (controls.upPressed()) {
-			super.applyForce(stats.getStatValue("Acceleration"), getRotation());
+			super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
 		}
 		if (controls.leftPressed()) {
-			super.rotateBy(stats.getStatValue("Angular_Velocity"));
+			super.rotateBy(delta * stats.getStatValue("Angular_Velocity"));
 		} else if (controls.rightPressed()) {
-			super.rotateBy(-1 * stats.getStatValue("Angular_Velocity"));
+			super.rotateBy(delta * -1 * stats.getStatValue("Angular_Velocity"));
 		}
 		updateVelocityAndMove();
 		if(controls.firePressed()) {
@@ -66,13 +66,34 @@ public class PlayerTank extends FreeTank {
 		Vector2 v = new Vector2((float)(getWidth())/2, 0);
 		v.setAngle(getRotation());
 		v.rotate(45);
+<<<<<<< HEAD
 		return new Polygon(f);
+=======
+		for(int i = 0; i < 4; i++) {
+			f[i*2] = v.x;
+			f[i*2+1] = v.y;
+			v.rotate(90);
+		}
+		a.add(new Polygon(f));
+		return a;
+>>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 	}
 
 	public void checkCollision(Collidable other) {
+<<<<<<< HEAD
 		if(other instanceof WallTile || other instanceof AbstractVehicle) {
 			Intersector.intersectPolygons(this.getHitbox(), other.getHitbox(), new Polygon());
 			//TODO so now what
+=======
+		ArrayList<Polygon> thisHitbox = getHitbox();
+		ArrayList<Polygon> otherHitbox = other.getHitbox();
+		for(Polygon t: thisHitbox) {
+			for(Polygon o: otherHitbox) {
+				if(Intersector.intersectPolygons(t,  o, new Polygon())) {
+					//TODO something happens
+				}
+			}
+>>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 		}
 	}
 }
