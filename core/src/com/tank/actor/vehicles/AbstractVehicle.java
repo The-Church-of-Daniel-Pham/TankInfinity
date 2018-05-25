@@ -34,8 +34,16 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The velocity of the vehicle
 	 */
-	protected Vector2 velocity;			
-
+	protected Vector2 velocity;
+	/**
+	 * The hitbox of the Vehicle's current position
+	 */
+	protected Polygon hitbox;
+	/**
+	 * The hitbox of the Vehicle, presumably at a position to which the Vehicle is trying to move
+	 */
+	protected Polygon testHitbox;
+	
 	/**
 	 * 
 	 * @param x initial x position of Vehicle
@@ -93,15 +101,25 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * 
 	 * @return		The hitbox(s) of the projectile
 	 */
-	public abstract ArrayList<Polygon> getHitbox();
+	public abstract Polygon getHitboxAt(float x, float y, float direction);
 	
 	/**
 	 * From the Collidable interface.
 	 * The checkCollision method handles all collisions to this object. This is handled differently for each subclass
 	 * 
-	 * @param other		The other object this object collides with
+	 * @param other		The other objects this object may collide with
 	 */
-	public abstract void checkCollision(Collidable other);
+	public void checkCollisions(ArrayList<Collidable> other) {
+		
+	}
+	
+	/**
+	 * From the Colllidable interface.
+	 * Returns and ArrayList of nearby bricks and all other Collidable non-MapTile instances
+	 */
+	public ArrayList<Collidable> getNeighbors() {
+		return null;
+	}
 
 	/**
 	 * From the Destructible interface.
