@@ -15,10 +15,8 @@ public abstract class FreeTank extends AbstractVehicle {
 	protected float gunRotation;
 	protected Color color;
 
-	public FreeTank(Texture tTexture, Texture gTexture, float x, float y) {
+	public FreeTank( float x, float y) {
 		super(x, y);
-		treadTexture = tTexture;
-		gunTexture = gTexture;
 		color = null;
 	}
 	public FreeTank(Texture tTexture, Texture gTexture, Color color, float x, float y) {

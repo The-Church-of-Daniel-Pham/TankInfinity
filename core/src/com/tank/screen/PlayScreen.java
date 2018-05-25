@@ -30,7 +30,6 @@ public class PlayScreen implements Screen {
 		for (PlayerTank p : level.getPlayers()) {
 			game.addInput(p);
 		}
-		game.addInput(level.getCamera());
 		if (paused) {
 			game.addInput(pauseMenu);
 		}
@@ -42,7 +41,6 @@ public class PlayScreen implements Screen {
 		for (PlayerTank p : level.getPlayers()) {
 			game.removeInput(p);
 		}
-		game.removeInput(level.getCamera());
 		game.removeInput(pauseMenu);
 		paused = true;	//when leaving this screen, pause automatically for return
 	}
@@ -107,7 +105,6 @@ public class PlayScreen implements Screen {
 		for (PlayerTank p : level.getPlayers()) {
 			game.removeInput(p);
 		}
-		game.removeInput(level.getCamera());
 		game.addInput(pauseMenu);
 	}
 
@@ -118,7 +115,6 @@ public class PlayScreen implements Screen {
 		for (PlayerTank p : level.getPlayers()) {
 			game.addInput(p);
 		}
-		game.addInput(level.getCamera());
 		game.removeInput(pauseMenu);
 	}
 }

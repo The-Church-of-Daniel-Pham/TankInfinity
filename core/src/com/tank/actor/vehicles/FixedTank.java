@@ -9,9 +9,8 @@ public abstract class FixedTank extends AbstractVehicle {
 	protected Texture tankTexture;
 	protected Color color;
 
-	public FixedTank(Texture tex, float x, float y) {
+	public FixedTank(float x, float y) {
 		super(x, y);
-		tankTexture = tex;
 		color = null;
 	}
 	public FixedTank(Texture tex, Color color, float x, float y) {
