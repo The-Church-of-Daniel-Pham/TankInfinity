@@ -18,6 +18,8 @@ public class Assets {
 
 	// Textures
 	// Floor
+	public static final AssetDescriptor<Texture> grass0 = new AssetDescriptor<Texture>("map/grass0.png",
+			Texture.class);
 	public static final AssetDescriptor<Texture> grass1 = new AssetDescriptor<Texture>("map/grass1.png",
 			Texture.class);
 	public static final AssetDescriptor<Texture> grass2 = new AssetDescriptor<Texture>("map/grass2.png",
@@ -27,7 +29,15 @@ public class Assets {
 	public static final AssetDescriptor<Texture> grass4 = new AssetDescriptor<Texture>("map/grass4.png",
 			Texture.class);
 	// Wall
-	public static final AssetDescriptor<Texture> crate = new AssetDescriptor<Texture>("map/crate.png",
+	public static final AssetDescriptor<Texture> stone0 = new AssetDescriptor<Texture>("map/stone0.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> stone1 = new AssetDescriptor<Texture>("map/stone1.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> stone2 = new AssetDescriptor<Texture>("map/stone2.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> stone3 = new AssetDescriptor<Texture>("map/stone3.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> stone4 = new AssetDescriptor<Texture>("map/stone4.png",
 			Texture.class);
 	// Projectiles
 	public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
@@ -69,11 +79,16 @@ public class Assets {
 	}
 	
 	public static void loadTextures() {
+		manager.load(grass0);
 		manager.load(grass1);
 		manager.load(grass2);
 		manager.load(grass3);
 		manager.load(grass4);
-		manager.load(crate);
+		manager.load(stone0);
+		manager.load(stone1);
+		manager.load(stone2);
+		manager.load(stone3);
+		manager.load(stone4);
 		manager.load(bullet);
 		manager.load(tread);
 		manager.load(gun_0);
