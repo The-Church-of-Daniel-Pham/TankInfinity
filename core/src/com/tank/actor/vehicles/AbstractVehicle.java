@@ -19,14 +19,10 @@ import com.tank.interfaces.Teamable;
 import com.tank.stats.Stats;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable{
-<<<<<<< HEAD
-	
-	protected ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
-	protected int health;				//The health of the vehicle
-	protected int maxHealth;			//The maxHealth of the vehicle
-	protected Stats stats;				//The stats of the vehicle
-	protected Vector2 velocity;			//The velocity of the vehicle
-=======
+	/**
+	 * List of all abstract vehicles in existence
+	 */
+	protected static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
 	/**
 	 * The health of the vehicle
 	 */
@@ -42,8 +38,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The velocity of the vehicle
 	 */
-	protected Vector2 velocity;			
->>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
+	protected Vector2 velocity;
 
 	/**
 	 * 
@@ -103,7 +98,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * 
 	 * @return		The hitbox(s) of the projectile
 	 */
-	public abstract Polygon getHitbox();
+	public abstract ArrayList<Polygon> getHitbox();
 	
 	/**
 	 * From the Collidable interface.

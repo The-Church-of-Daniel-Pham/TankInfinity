@@ -25,7 +25,7 @@ public class Bullet extends AbstractProjectile{
 	}
 	
 	@Override
-	public Polygon getHitbox(){
+	public ArrayList<Polygon> getHitbox(){
 		return null;
 		
 	}

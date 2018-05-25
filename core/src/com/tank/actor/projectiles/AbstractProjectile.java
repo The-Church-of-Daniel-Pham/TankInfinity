@@ -158,7 +158,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * 
 	 * @return The hitbox(s) of the projectile
 	 */
-	public abstract Polygon getHitbox();
+	public abstract ArrayList<Polygon> getHitbox();
 
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
