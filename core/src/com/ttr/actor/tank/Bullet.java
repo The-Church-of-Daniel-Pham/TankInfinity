@@ -35,8 +35,8 @@ public class Bullet extends DynamicCollider {
 
 	public Vector2 velocity;
 	private Vector2 v; // for determining vertices of hitbox
-	public int length = 12; // of region in texture for hitbox
-	public int width = 4; // of region in texture for hitbox
+	private int length = 12; // of region in texture for hitbox
+	private int width = 4; // of region in texture for hitbox
 	private float theta = (float) Math.atan2(width, length); // see diagram, also doesn't change with scale
 	public float age; // time since creation, in seconds
 	public int bounces; // number of bounces that have occurred since creation
@@ -89,7 +89,7 @@ public class Bullet extends DynamicCollider {
 			return false;
 		collidedWithTank = false;
 		ArrayList<Vector2> lastCollidingVertices = new ArrayList<Vector2>();
-		Tank t = getLevel().playerTank;
+		Tank t = getLevel().playerTank1;
 		for (int i = 0; i < 4; i++) {
 			if (t.getHitbox().contains(collisionHitbox.getVertices()[i * 2],
 					collisionHitbox.getVertices()[i * 2 + 1])) {
@@ -172,7 +172,7 @@ public class Bullet extends DynamicCollider {
 				m.takeDamage(DAMAGE);
 			}
 		} else if (collidedWithTank) {
-			Tank t = getLevel().playerTank;
+			Tank t = getLevel().playerTank1;
 			float[] tankV = t.getHitbox().getVertices();
 			float vX = lastCollidingVertices.get(0).x;
 			float vY = lastCollidingVertices.get(0).y;

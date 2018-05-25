@@ -16,7 +16,7 @@ import com.ttr.actor.tank.Tank;
 public class Level extends Stage {
 	public int width;
 	public int height;
-	public Tank playerTank;
+	public Tank playerTank1;
 	public Map map;
 	public LevelCamera camera;
 
@@ -33,11 +33,11 @@ public class Level extends Stage {
 
 		map = new Map(width, height, this);
 		addActor(map);
-		playerTank = new Tank(256, 256, 0, 0, this);
-		addActor(playerTank);
+		playerTank1 = new Tank("Player 1", 256, 256, 0, 0, this);
+		addActor(playerTank1);
 		
 		// replace default stage OrthographicCamera with LevelCamera
-		camera = new LevelCamera(width, height, playerTank);
+		camera = new LevelCamera(width, height, playerTank1);
 		super.getViewport().setCamera(camera);
 	}
 }

@@ -18,15 +18,17 @@ import com.ttr.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankInfinity game;
+	protected Tank player;
 	private Label fpsLabel;
 	private static float sinceChange;
 	private ProgressBar reloadBar;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(TankInfinity game) {
+	public LevelHUD(TankInfinity game, Tank player) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
+		this.player = player;
 		super.addActor(buildTable());
 	}
 
@@ -40,8 +42,8 @@ public class LevelHUD extends Stage implements InputProcessor {
         }
         
         //update reload bar
-		float completion = Tank.reloadTime / (1 / Tank.RATE_OF_FIRE); // reload time out of max reload time (inverse of
-																	// rate of fire)
+		float completion = player.reloadTime / (1 / Tank.RATE_OF_FIRE); 
+		// reload time out of max reload time (inverse of rate of fire)
 		reloadBar.setValue(completion);
 	}
 
@@ -53,6 +55,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
 		TextButton pauseButton = new TextButton("Pause", skin);
+		Label nameLabel = new Label(player.name, skin);
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
 
 		pauseButton.addListener(new ClickListener() {
@@ -63,11 +66,13 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		});
 
-		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.defaults().width(200).height(75).pad(25).center();
 		uiTable.add(fpsLabel).width(100).expand().top().left();
 		uiTable.add(pauseButton).width(150).expand().top().right();
 		uiTable.row();
-		uiTable.add(reloadBar).width(400).colspan(2).expand().bottom().right();
+		uiTable.add(nameLabel).expandX().bottom().left();
+		uiTable.row();
+		uiTable.add(reloadBar).width(300).expandX().bottom().left();
 
 		return uiTable;
 	}

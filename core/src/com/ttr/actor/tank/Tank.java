@@ -24,9 +24,9 @@ import com.ttr.utils.AudioUtils;
 import com.ttr.utils.Keybinds;;
 
 public class Tank extends DynamicCollider implements InputProcessor {
-	public static final float RATE_OF_FIRE = 2.0f; // rate of fire is inverse of reload time
-	public static final float ANGULAR_VELOCITY = 3.0f;
-	public static final float SPEED = 600f;
+	public static final float RATE_OF_FIRE = 1.0f; // rate of fire is inverse of reload time
+	public static final float ANGULAR_VELOCITY = 2.0f;
+	public static final float SPEED = 500f;
 	public static final int SIZE = Assets.manager.get(Assets.tread).getWidth();
 	public static final float SCALE = 2.0f;
 
@@ -35,18 +35,19 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private Sound engine_sound = Assets.manager.get(Assets.tank_engine);
 	private Sound tread_sound = Assets.manager.get(Assets.tank_tread);
 
-	public float bulletFireOffset = 75f * SCALE;
-	public float hitRadius = 60f * SCALE;
+	private float bulletFireOffset = 75f * SCALE;
+	private float hitRadius = 60f * SCALE;
 
-	public float treadOriginOffset = 4f * SCALE;
-	public float gunOriginOffset = 12f * SCALE;
-	public float treadOriginX = SIZE / 2f - treadOriginOffset;
-	public float treadOriginY = SIZE / 2f;
-	public float gunOriginX = SIZE / 2f - gunOriginOffset;
-	public float gunOriginY = SIZE / 2f;
+	private float treadOriginOffset = 4f * SCALE;
+	private float gunOriginOffset = 12f * SCALE;
+	private float treadOriginX = SIZE / 2f - treadOriginOffset;
+	private float treadOriginY = SIZE / 2f;
+	private float gunOriginX = SIZE / 2f - gunOriginOffset;
+	private float gunOriginY = SIZE / 2f;
 
+	public String name;
 	public float gunOrientation; // in radians
-	public static float reloadTime;
+	public float reloadTime;
 	public boolean moving = false;
 	private boolean treadSoundOn = false;
 	private boolean engineSoundOn = false;
@@ -56,8 +57,9 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private final float ENGINE_VOLUME = 0.6f;
 	private final long FADE_TIME = 300000000; // 0.3 seconds
 
-	public Tank(float x, float y, float orientation, float gunOrientation, Level level) {
+	public Tank(String name, float x, float y, float orientation, float gunOrientation, Level level) {
 		super(level);
+		this.name = name;
 		super.setX(x);
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));

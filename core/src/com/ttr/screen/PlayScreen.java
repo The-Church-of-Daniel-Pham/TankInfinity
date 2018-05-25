@@ -27,14 +27,14 @@ public class PlayScreen implements Screen {
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
 		level = new Level(40, 40);
-		levelhud = new LevelHUD(this.game);
+		levelhud = new LevelHUD(this.game, level.playerTank1);
 		pauseMenu = new PauseMenu(this.game);
 	}
 	
 	@Override
 	public void show() {
 		game.addInput(levelhud);
-		game.addInput(level.playerTank);
+		game.addInput(level.playerTank1);
 		game.addInput(level.camera);
 		if (paused) {
 			game.addInput(pauseMenu);
@@ -44,7 +44,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void hide() {
 		game.removeInput(levelhud);
-		game.removeInput(level.playerTank);
+		game.removeInput(level.playerTank1);
 		game.removeInput(level.camera);
 		game.removeInput(pauseMenu);
 		paused = true;	//when leaving this screen, pause automatically for return
@@ -107,7 +107,7 @@ public class PlayScreen implements Screen {
 	public void pause() {
 		paused = true;
 		game.removeInput(levelhud);
-		game.removeInput(level.playerTank);
+		game.removeInput(level.playerTank1);
 		game.removeInput(level.camera);
 		game.addInput(pauseMenu);
 	}
@@ -116,7 +116,7 @@ public class PlayScreen implements Screen {
 	public void resume() {
 		paused = false;
 		game.addInput(levelhud);
-		game.addInput(level.playerTank);
+		game.addInput(level.playerTank1);
 		game.addInput(level.camera);
 		game.removeInput(pauseMenu);
 	}
