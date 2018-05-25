@@ -100,6 +100,7 @@ public class PlayScreen implements Screen {
 	public void dispose() {
 		level.dispose();
 		levelhud.dispose();
+		pauseMenu.dispose();
 	}
 	
 	@Override
