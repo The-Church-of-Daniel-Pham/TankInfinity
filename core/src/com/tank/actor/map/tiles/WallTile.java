@@ -13,9 +13,6 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		super(row, col, map);
 	}
 	
-	public void checkCollision(Collidable other) {
-		
-	}
 
 	@Override
 	public void build() {
@@ -23,9 +20,7 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		
 	}
 	
-	@Override
-	public ArrayList<Polygon> getHitbox() {
-		ArrayList<Polygon> a = new ArrayList<Polygon>();
+	public Polygon getHitbox() {
 		float[] f = new float[8];
 		f[0] = getX();
 		f[1] = getY();
@@ -35,8 +30,25 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		f[5] = getY() + SIZE;
 		f[6] = getX();
 		f[7] = getY() + SIZE;
-		a.add(new Polygon(f));
-		return a;
+		return new Polygon(f);
+	}
+
+	@Override
+	public void checkCollisions(ArrayList<Collidable> other) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Polygon getHitboxAt(float x, float y, float direction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Collidable> getNeighbors() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

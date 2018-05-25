@@ -16,19 +16,16 @@ public class WallTile extends AbstractMapTile implements Collidable{
 		return null;
 	}
 
-	@Override
 	public void checkCollisions(ArrayList<Collidable> other) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public ArrayList<Collidable> getNeighbors() {
 		// TODO Auto-generated method stub
 		return null;

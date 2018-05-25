@@ -38,7 +38,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The velocity of the vehicle
 	 */
-<<<<<<< HEAD
 	protected Vector2 velocity;
 	/**
 	 * The hitbox of the Vehicle's current position
@@ -49,10 +48,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected Polygon testHitbox;
 	
-=======
-	protected Vector2 velocity;
-
->>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 	/**
 	 * 
 	 * @param x initial x position of Vehicle
