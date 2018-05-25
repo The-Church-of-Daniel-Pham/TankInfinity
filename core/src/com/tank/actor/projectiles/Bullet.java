@@ -19,14 +19,17 @@ public class Bullet extends AbstractProjectile{
 		
 	}
 	
-	@Override
-	public ArrayList<Polygon> getHitbox(){
-		return null;
-		
-	}
 	
 	@Override
-	public void checkCollision(Collidable other) {
+	public void checkCollisions(ArrayList<Collidable> other) {
 		
 	}
+
+	@Override
+	public Polygon getHitboxAt(float x, float y, float direction) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

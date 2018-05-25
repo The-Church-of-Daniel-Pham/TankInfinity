@@ -48,30 +48,18 @@ public class PlayerTank extends FreeTank {
 		selectedWeapon += direction;
 	}
 
-	public ArrayList<Polygon> getHitbox() {
-		ArrayList<Polygon> a = new ArrayList<Polygon>();
+	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
 		Vector2 v = new Vector2((float)(getWidth())/2, 0);
-		v.setAngle(getRotation());
+		v.setAngle(direction);
 		v.rotate(45);
 		for(int i = 0; i < 4; i++) {
-			f[i*2] = v.x;
-			f[i*2+1] = v.y;
+			f[i*2] = x +v.x;
+			f[i*2+1] = y + v.y;
 			v.rotate(90);
 		}
-		a.add(new Polygon(f));
-		return a;
+		return new Polygon(f);
 	}
 
-	public void checkCollision(Collidable other) {
-		ArrayList<Polygon> thisHitbox = getHitbox();
-		ArrayList<Polygon> otherHitbox = other.getHitbox();
-		for(Polygon t: thisHitbox) {
-			for(Polygon o: otherHitbox) {
-				if(Intersector.intersectPolygons(t,  o, new Polygon())) {
-					//TODO something happens
-				}
-			}
-		}
-	}
+
 }
