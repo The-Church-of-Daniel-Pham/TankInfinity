@@ -20,6 +20,7 @@ import com.tank.stats.Stats;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable{
 	
+	protected ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
 	protected int health;				//The health of the vehicle
 	protected int maxHealth;			//The maxHealth of the vehicle
 	protected Stats stats;				//The stats of the vehicle
@@ -28,6 +29,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
+		vehicleList.add(this);
 	}
 
 	/**
@@ -77,7 +79,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * 
 	 * @return		The hitbox(s) of the projectile
 	 */
-	public abstract ArrayList<Polygon> getHitbox();
+	public abstract Polygon getHitbox();
 	
 	/**
 	 * From the Collidable interface.
@@ -116,6 +118,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * The destroy method is used to handle removing the object from the stage
 	 */
 	public void destroy() {
+		vehicleList.remove(this);
 		super.remove();
 	}
 	
