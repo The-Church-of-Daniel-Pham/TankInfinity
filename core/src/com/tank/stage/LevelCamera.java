@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.tank.actor.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.vehicles.PlayerTank;
 
 public class LevelCamera extends OrthographicCamera implements InputProcessor {

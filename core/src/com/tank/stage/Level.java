@@ -1,12 +1,11 @@
 package com.tank.stage;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.tank.actor.tiles.AbstractMapTile;
+import com.tank.actor.map.Map;
+import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.vehicles.PlayerTank;
 
 public class Level extends Stage {
@@ -37,6 +36,14 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(width, height, players);
 		super.getViewport().setCamera(camera);
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
 	}
 	
 	public ArrayList<PlayerTank> getPlayers() {
