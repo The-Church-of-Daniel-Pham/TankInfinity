@@ -16,9 +16,20 @@ public class AbstractUI extends Actor {
 		setY(y);
 	}
 
+	/**
+	 * The act method is shared by all Actors. It tells what the actor is going to do.
+	 * 
+	 * @param delta		Time since last called.
+	 */
 	public void act(float delta) {
 		
 	}
+	/**
+	 * The draw method is shared by all Actors. This is called to draw the actor onto the stage.
+	 * 
+	 * @param batch		The object used to draw the textures and objects onto the screen
+	 * @param a			The "transparency" of the object
+	 */
 	public void draw(Batch batch, float a) {
 		
 	}
