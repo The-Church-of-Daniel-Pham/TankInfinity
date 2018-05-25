@@ -53,10 +53,10 @@ public class Map extends Group {
 	public void setTilesVisibility(int minRow, int minCol, int maxRow, int maxCol, boolean vis) {
 		minRow--; minCol--; maxRow++; maxCol++;
 		if(maxRow > level.height-1) {
-			maxRow = 39;
+			maxRow = level.height-1;
 		}
 		if(maxCol > level.height-1) {
-			maxCol = 39;
+			maxCol = level.height-1;
 		}
 		if(minRow < 0) {
 			minRow = 0;
