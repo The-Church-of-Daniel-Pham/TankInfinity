@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
+import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
 import com.tank.interfaces.Collidable;
 import com.tank.subweapons.SubWeapon;
@@ -17,6 +18,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected TankController controls;
 	protected Cursor cursor;
+	protected static Texture tTexture; 
+	protected static Texture gTexture;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
@@ -24,9 +27,10 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	public static float RATE_OF_FIRE = 1.0f;
 	protected double timeSinceShot;
 
-	public PlayerTank(int player, Texture tTexture, Texture gTexture, float x, float y) {
-		super(tTexture, gTexture, x, y);
+	public PlayerTank(int player, float x, float y) {
+		super(x, y);
 		playerNumber = player;
+		controls = new KeyboardMouseController();
 
 	}
 

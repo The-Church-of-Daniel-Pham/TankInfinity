@@ -50,15 +50,16 @@ public class Map extends Group {
 	}
 
 	public void setTilesVisibility(int minRow, int minCol, int maxRow, int maxCol, boolean vis) {
+		// can us clamp later on
 		minRow--;
 		minCol--;
 		maxRow++;
 		maxCol++;
-		if (maxRow > level.getHeight() - 1) {
-			maxRow = level.getHeight() - 1;
+		if (maxRow > level.getMapHeight() - 1) {
+			maxRow = level.getMapHeight() - 1;
 		}
-		if (maxCol > level.getHeight() - 1) {
-			maxCol = level.getHeight() - 1;
+		if (maxCol > level.getMapWidth() - 1) {
+			maxCol = level.getMapWidth() - 1;
 		}
 		if (minRow < 0) {
 			minRow = 0;
@@ -102,7 +103,7 @@ public class Map extends Group {
 		// due to rounding down with int tankMapRow = (int)((40*128-super.getY())/128),
 		// which "rounds back up" when converting back to world coords
 		int mapCol = (int) (x / AbstractMapTile.SIZE);
-		int mapRow = (int) ((level.getHeight() * AbstractMapTile.SIZE - (y + 1)) / AbstractMapTile.SIZE);
+		int mapRow = (int) ((level.getMapHeight() * AbstractMapTile.SIZE - (y + 1)) / AbstractMapTile.SIZE);
 		return new int[] { mapRow, mapCol };
 	}
 
@@ -134,7 +135,7 @@ public class Map extends Group {
 			for (int xOffset = -1; xOffset <= 1; xOffset++) {
 				int tempRow = row + yOffset;
 				int tempCol = col + xOffset;
-				if (tempRow < 0 || tempRow >= level.getHeight() || tempCol >= level.getWidth() || tempCol < 0) // edge
+				if (tempRow < 0 || tempRow >= level.getMapHeight() || tempCol >= level.getMapWidth() || tempCol < 0) // edge
 				{
 					// handle edge vertices separately
 					AbstractMapTile border = new BorderTile(layout.length - (1 + tempRow), tempCol, this); // see
