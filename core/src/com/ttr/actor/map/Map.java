@@ -50,6 +50,26 @@ public class Map extends Group {
 		}
 	}
 
+	public void setTilesVisibility(int minRow, int minCol, int maxRow, int maxCol, boolean vis) {
+		minRow--; minCol--; maxRow++; maxCol++;
+		if(maxRow > level.height-1) {
+			maxRow = 39;
+		}
+		if(maxCol > level.height-1) {
+			maxCol = 39;
+		}
+		if(minRow < 0) {
+			minRow = 0;
+		}
+		if(minCol < 0) {
+			minCol = 0;
+		}
+		for(int r = minRow; r <= maxRow; r++) {
+			for(int c = minCol; c <= maxCol; c++) {
+				map[r][c].inView = vis;
+			}
+		}
+	}
 	/**
 	 * 
 	 * @return the width, in pixels

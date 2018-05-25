@@ -21,8 +21,8 @@ public abstract class MapTile extends StaticCollider {
 	public static final int SIZE = Assets.manager.get(Assets.grass0).getWidth();
 	private static final float HEALTH = 100;
 	protected float health;
+	public boolean inView = false;
 
-	
 	/**
 	 * 
 	 * @param row
@@ -36,13 +36,13 @@ public abstract class MapTile extends StaticCollider {
 		health = HEALTH;
 		build();
 	}
-	
+
 	protected void addTexture(Texture tex) {
 		textureList.add(tex);
 	}
-	
+
 	public abstract void build();
-	
+
 	@Override
 	public Polygon getHitboxAt(float x, float y, float orientation) {
 		float[] vertices = new float[8];
@@ -56,28 +56,33 @@ public abstract class MapTile extends StaticCollider {
 		vertices[7] = y + SIZE;
 		return new Polygon(vertices);
 	}
-	
+
 	@Override
 	public void draw(Batch batch, float alpha) {
-		for (Texture tex : textureList) {
-			batch.draw(tex, super.getX(), super.getY());
+		if (inView) {
+			for (Texture tex : textureList) {
+				batch.draw(tex, super.getX(), super.getY());
+			}
 		}
-	
-		
+
 	}
+
 	@Override
 	public void act(float delta) {
-		if(health <= 0) {
+		if (health <= 0) {
 			getLevel().map.removeBrick(this);
 			remove();
 		}
 	}
+
 	public void takeDamage(float dmg) {
 		health -= dmg;
 	}
+
 	public int getRow() {
 		return getLevel().map.getTileAt(getX(), getY())[0];
 	}
+
 	public int getCol() {
 		return getLevel().map.getTileAt(getX(), getY())[1];
 	}

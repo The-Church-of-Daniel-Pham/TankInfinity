@@ -44,6 +44,8 @@ public class Tank extends DynamicCollider implements InputProcessor {
 	private float treadOriginY = SIZE / 2f;
 	private float gunOriginX = SIZE / 2f - gunOriginOffset;
 	private float gunOriginY = SIZE / 2f;
+	private int tankRow = -1, tankCol = -1;
+	private int[] oldRC = new int[4]; //the stored minrow, mincol, maxrow, maxcol
 
 	public String name;
 	public float gunOrientation; // in radians
@@ -64,7 +66,24 @@ public class Tank extends DynamicCollider implements InputProcessor {
 		super.setY(y);
 		super.setRotation((float) Math.toDegrees(orientation));
 		this.gunOrientation = gunOrientation;
-
+	}
+	
+	public void updateTiles() {
+		int[] f = level.map.getTileAt(getX(), getY());
+		if(tankRow != f[0] || tankCol != f[1]) {
+			level.map.setTilesVisibility(oldRC[0], oldRC[1], oldRC[2], oldRC[3], false);
+			Vector3 minV = getStage().getCamera().unproject(new Vector3(0,0,0));
+			Vector3 maxV = getStage().getCamera().unproject(new Vector3(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),0));
+			int[] min = level.map.getTileAt(minV.x, minV.y);
+			int[] max = level.map.getTileAt(maxV.x, maxV.y);
+			level.map.setTilesVisibility(min[0], min[1], max[0], max[1], true);
+			oldRC[0] = min[0];
+			oldRC[1] = min[1];
+			oldRC[2] = max[0];
+			oldRC[3] = max[1];
+			tankRow = f[0];
+			tankCol = f[1];
+		}
 	}
 
 	public Polygon getHitboxAt(float x, float y, float orientation) {
@@ -204,6 +223,7 @@ public class Tank extends DynamicCollider implements InputProcessor {
 
 	@Override
 	public void act(float delta) {
+		updateTiles();
 		move(delta); // tread controls
 		fire(delta); // gun controls
 		sound();
