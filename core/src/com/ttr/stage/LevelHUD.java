@@ -25,7 +25,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public LevelHUD(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(buildTable());
 	}
@@ -48,7 +48,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);

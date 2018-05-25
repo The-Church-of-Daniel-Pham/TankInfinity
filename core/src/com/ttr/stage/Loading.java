@@ -20,7 +20,7 @@ public class Loading extends Stage implements InputProcessor {
 	private Texture splash = Assets.manager.get(Assets.splash);
 	
 	public Loading(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		super.addActor(new Background(splash));
 		super.addActor(buildTable());
@@ -34,7 +34,7 @@ public class Loading extends Stage implements InputProcessor {
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
 		assetsBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);

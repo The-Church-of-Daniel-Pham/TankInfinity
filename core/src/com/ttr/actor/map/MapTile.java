@@ -18,7 +18,7 @@ import com.ttr.utils.Assets;
 
 public abstract class MapTile extends StaticCollider {
 	protected ArrayList<Texture> textureList;
-	public static final int SIZE = Assets.manager.get(Assets.carpet).getWidth();
+	public static final int SIZE = Assets.manager.get(Assets.grass1).getWidth();
 	private static final float HEALTH = 100;
 	protected float health;
 

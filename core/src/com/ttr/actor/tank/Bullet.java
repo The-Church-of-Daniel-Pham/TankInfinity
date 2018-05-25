@@ -191,6 +191,6 @@ public class Bullet extends DynamicCollider {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		super.draw(batch, alpha);
-		super.drawVertices(batch, alpha);
+		//super.drawVertices(batch, alpha);
 	}
 }

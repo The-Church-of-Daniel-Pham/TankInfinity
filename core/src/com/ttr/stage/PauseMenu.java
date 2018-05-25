@@ -21,7 +21,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 	private Texture black = Assets.manager.get(Assets.black);
 	
 	public PauseMenu(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_HEIGHT, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		Background darken = new Background(black);
 		// scale dark to fit screen
@@ -33,7 +33,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
 		TextButton resumeButton = new TextButton("Resume", skin);

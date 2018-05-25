@@ -30,10 +30,8 @@ public abstract class Collider extends LevelActor {
 	public boolean getNoclip() {
 		return noclip;
 	}
-	
 
 	public abstract Polygon getHitboxAt(float x, float y, float orientation); // DIY
-
 
 	public Polygon getHitbox() {
 		return currentHitbox;
@@ -55,7 +53,6 @@ public abstract class Collider extends LevelActor {
 
 	public void drawVertices(Batch batch, float alpha) {
 		// if noclip is not enabled
-		
 		if (!noclip) {
 			// draw own vertices
 			// - VERTEX_SIZE/2f shifts the drawing of the vertex so that it's centered
@@ -63,14 +60,7 @@ public abstract class Collider extends LevelActor {
 				batch.draw(vertex, currentHitbox.getVertices()[i * 2] - VERTEX_SIZE / 2f,
 						currentHitbox.getVertices()[i * 2 + 1] - VERTEX_SIZE / 2f);
 			}
-			// draw neighboring bricks' vertices
-			// for (Polygon brickHitbox : brickHitboxes) {
-			// for (int i = 0; i < 4; i++) {
-			// batch.draw(vertex, brickHitbox.getVertices()[i * 2] - VERTEX_SIZE / 2f,
-			// brickHitbox.getVertices()[i * 2 + 1] - VERTEX_SIZE / 2f);
-			// }
-			// }
 		}
-		
+
 	}
 }

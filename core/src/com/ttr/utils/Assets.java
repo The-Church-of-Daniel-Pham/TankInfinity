@@ -18,7 +18,13 @@ public class Assets {
 
 	// Textures
 	// Floor
-	public static final AssetDescriptor<Texture> carpet = new AssetDescriptor<Texture>("map/carpet.png",
+	public static final AssetDescriptor<Texture> grass1 = new AssetDescriptor<Texture>("map/grass1.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> grass2 = new AssetDescriptor<Texture>("map/grass2.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> grass3 = new AssetDescriptor<Texture>("map/grass3.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> grass4 = new AssetDescriptor<Texture>("map/grass4.png",
 			Texture.class);
 	// Wall
 	public static final AssetDescriptor<Texture> crate = new AssetDescriptor<Texture>("map/crate.png",
@@ -63,7 +69,10 @@ public class Assets {
 	}
 	
 	public static void loadTextures() {
-		manager.load(carpet);
+		manager.load(grass1);
+		manager.load(grass2);
+		manager.load(grass3);
+		manager.load(grass4);
 		manager.load(crate);
 		manager.load(bullet);
 		manager.load(tread);
