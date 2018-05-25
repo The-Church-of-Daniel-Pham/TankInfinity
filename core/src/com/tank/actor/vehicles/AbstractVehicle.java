@@ -20,6 +20,10 @@ import com.tank.stats.Stats;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable{
 	/**
+	 * List of all abstract vehicles in existence
+	 */
+	protected static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
+	/**
 	 * The health of the vehicle
 	 */
 	protected int health;				
@@ -34,6 +38,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The velocity of the vehicle
 	 */
+<<<<<<< HEAD
 	protected Vector2 velocity;
 	/**
 	 * The hitbox of the Vehicle's current position
@@ -44,6 +49,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected Polygon testHitbox;
 	
+=======
+	protected Vector2 velocity;
+
+>>>>>>> branch 'master' of https://github.com/The-Church-of-Daniel-Pham/TankInfinity.git
 	/**
 	 * 
 	 * @param x initial x position of Vehicle
@@ -52,8 +61,12 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
+		velocity = new Vector2();
+		setStats();
+		vehicleList.add(this);
 	}
-
+	
+	abstract protected void setStats();
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to do.
 	 * 
@@ -150,6 +163,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * The destroy method is used to handle removing the object from the stage
 	 */
 	public void destroy() {
+		vehicleList.remove(this);
 		super.remove();
 	}
 	

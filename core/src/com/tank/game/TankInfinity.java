@@ -1,33 +1,44 @@
 package com.tank.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import java.util.HashMap;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
+import com.tank.screen.LoadingScreen;
+import com.tank.utils.Assets;
 
-public class TankInfinity extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+public class TankInfinity extends Game {
+	public InputMultiplexer inputMultiplexer = new InputMultiplexer();
+	public HashMap<String, Screen> screens = new HashMap<String, Screen>();
+	public Screen previousScreen;
 	
 	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+	public void create() {	
+		screens.put("Loading", new LoadingScreen(this));
+		super.setScreen(screens.get("Loading"));
+		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
-
-	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	
+	public void addInput(InputProcessor input) {
+		inputMultiplexer.addProcessor(input);
+		Gdx.input.setInputProcessor(inputMultiplexer);
+	}
+	
+	public void removeInput(InputProcessor input) {
+		inputMultiplexer.removeProcessor(input);
+		Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
 	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	public void setScreen(Screen screen) {
+		previousScreen = super.getScreen();	//stores screen you were on before switching
+		super.setScreen(screen);	//applies switch
+	}
+	
+	@Override
+	public void dispose() {
+		Assets.dispose();
 	}
 }
