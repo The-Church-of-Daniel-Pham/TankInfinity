@@ -41,8 +41,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Friction", 97);	//(fraction out of 100)^delta to scale velocity by
 		stats.addStat("Acceleration", 100);
 		stats.addStat("Max_Speed", 20);
-		stats.addStat("Angular_Acceleration", 25);
-		stats.addStat("Max_Angular_Speed", 5);
+		stats.addStat("Angular_Acceleration", 100);
+		stats.addStat("Max_Angular_Speed", 50);
 	}
 
 	/**
@@ -55,12 +55,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.applyLimitedForce(delta * stats.getStatValue("Acceleration"), getRotation(), stats.getStatValue("Max_Speed"));
 		}
 		if (controls.leftPressed()) {
-			super.applyLimitedForce(delta * stats.getStatValue("Angular_Acceleration"), getRotation() + 90, stats.getStatValue("Max_Angular_Speed"));
+			super.applyLimitedAngularForce(delta * stats.getStatValue("Angular_Acceleration"), stats.getStatValue("Max_Angular_Speed"));
 		} else if (controls.rightPressed()) {
-			super.applyLimitedForce(delta * stats.getStatValue("Angular_Acceleration"), getRotation() - 90, stats.getStatValue("Max_Angular_Speed"));
+			super.applyLimitedAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"), stats.getStatValue("Max_Angular_Speed"));
 		}
+		super.applyFriction(delta);
+		super.updateVelocityAndMove();
 		super.pointGunToMouse();
-		updateVelocityAndMove(delta);
 		if (controls.firePressed()) {
 			shoot();
 		}
