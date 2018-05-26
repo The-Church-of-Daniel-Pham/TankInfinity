@@ -14,6 +14,7 @@ public abstract class FreeTank extends AbstractVehicle {
 	protected float gunOffsetY;
 	protected float gunPivotX;
 	protected float gunPivotY;
+	protected float bulletOffset;
 	protected float gunRotation;
 	protected Color color;
 
@@ -30,7 +31,7 @@ public abstract class FreeTank extends AbstractVehicle {
 		super.setOrigin(treadTexture.getWidth()/2,treadTexture.getHeight()/2);
 		this.color = color;
 	}
-
+	public abstract void setBulletOffset();
 	public void setGunOffset(float x, float y) {
 		gunOffsetX = x;
 		gunOffsetY = y;

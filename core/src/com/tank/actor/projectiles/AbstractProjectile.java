@@ -75,8 +75,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            Time since last called.
 	 */
 	public void act(float delta) {
-		super.setX(getX() + velocity.x);
-		super.setY(getY() + velocity.y);
+		super.setX(getX() + delta * velocity.x);
+		super.setY(getY() + delta * velocity.y);
 	}
 
 	/**

@@ -18,6 +18,8 @@ public class Bullet extends AbstractProjectile{
 		super(playerTexture, src, x, y);
 		Vector2 v = new Vector2(stats.getStatValue("Bullet_Speed"), 0);
 		velocity = v.setAngle(direction);
+		setRotation(direction);
+		setOrigin(playerTexture.getWidth()/2, playerTexture.getHeight()/2);
 	}
 	
 

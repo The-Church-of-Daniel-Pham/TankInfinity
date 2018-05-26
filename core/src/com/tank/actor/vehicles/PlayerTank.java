@@ -33,16 +33,17 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.setGunPivotY(treadTexture.getHeight() / 2);
 		playerNumber = player;
 		controls = new KeyboardMouseController();
+		setBulletOffset();
 	}
 
 	@Override
 	protected void setStats() {
 		stats = new Stats();
-		stats.addStat("Friction", 96);	//(fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 35);
-		stats.addStat("Max_Speed", 15);
+		stats.addStat("Friction", 96); // (fraction out of 100)^delta to scale velocity by
+		stats.addStat("Acceleration", 1000);
+		stats.addStat("Max_Speed", 0); // used for?
 		stats.addStat("Angular_Friction", 98);
-		stats.addStat("Angular_Acceleration", 3);
+		stats.addStat("Angular_Acceleration", 250);
 		stats.addStat("Max_Angular_Speed", 4);
 	}
 
@@ -61,15 +62,18 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.applyAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"));
 		}
 		super.applyFriction(delta);
-		super.updateVelocityAndMove();
+		super.updateVelocityAndMove(delta);
 		super.pointGunToMouse();
-		if (controls.firePressed()) {
-			shoot();
-		}
+	}
+
+	public void setBulletOffset() {
+		bulletOffset = 135;
 	}
 
 	public void shoot() {
-		getStage().addActor(new Bullet(this, getX() + super.gunOffsetX, getY() + super.gunOffsetY, super.gunRotation));
+		Vector2 v = new Vector2(bulletOffset, 0);
+		v.setAngle(getGunRotation());
+		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation));
 	}
 
 	public void switchWeapon(int direction) {
@@ -119,7 +123,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
+		if (button == 0)
+			shoot();
 		return false;
 	}
 
