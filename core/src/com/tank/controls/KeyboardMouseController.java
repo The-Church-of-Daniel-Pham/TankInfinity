@@ -14,7 +14,7 @@ public class KeyboardMouseController extends TankController {
 		keyMap.put("DOWN", new KeyControl(Input.Keys.S,0));
 		keyMap.put("RIGHT", new KeyControl(Input.Keys.D,0));
 		keyMap.put("LEFT", new KeyControl(Input.Keys.A,0));
-		keyMap.put("SHOOT", new KeyControl(Input.Buttons.LEFT,0));
+		keyMap.put("SHOOT", new KeyControl(Input.Buttons.LEFT,1));
 		keyMap.put("SUB", new KeyControl(Input.Buttons.RIGHT,0));
 		keyMap.put("RSHIFT", new KeyControl(Input.Keys.E,0));
 		keyMap.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
