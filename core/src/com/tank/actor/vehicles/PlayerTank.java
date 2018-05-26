@@ -38,8 +38,10 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	@Override
 	protected void setStats() {
 		stats = new Stats();
-		stats.addStat("Acceleration", 150);
-		stats.addStat("Angular_Velocity", 150);
+		stats.addStat("Acceleration", 100);
+		stats.addStat("Max_Speed", 20);
+		stats.addStat("Angular_Acceleration", 25);
+		stats.addStat("Max_Angular_Speed", 5);
 	}
 
 	/**
@@ -47,14 +49,14 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	 */
 	public void act(float delta) {
 		if (controls.downPressed()) {
-			super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
+			super.applyLimitedForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation(), stats.getStatValue("Max_Speed"));
 		} else if (controls.upPressed()) {
-			super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
+			super.applyLimitedForce(delta * stats.getStatValue("Acceleration"), getRotation(), stats.getStatValue("Max_Speed"));
 		}
 		if (controls.leftPressed()) {
-			super.applyForce(delta * stats.getStatValue("Angular_Velocity"), getRotation() + 90);
+			super.applyLimitedForce(delta * stats.getStatValue("Angular_Acceleration"), getRotation() + 90, stats.getStatValue("Max_Angular_Speed"));
 		} else if (controls.rightPressed()) {
-			super.applyForce(delta * stats.getStatValue("Angular_Velocity"), getRotation() - 90);
+			super.applyLimitedForce(delta * stats.getStatValue("Angular_Acceleration"), getRotation() - 90, stats.getStatValue("Max_Angular_Speed"));
 		}
 		super.pointGunToMouse();
 		updateVelocityAndMove();
