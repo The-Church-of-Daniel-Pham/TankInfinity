@@ -1,8 +1,10 @@
 package com.tank.actor.vehicles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class FreeTank extends AbstractVehicle {
 
@@ -17,6 +19,7 @@ public abstract class FreeTank extends AbstractVehicle {
 
 	public FreeTank(float x, float y) {
 		super(x, y);
+		super.setOrigin(treadTexture.getWidth()/2,treadTexture.getHeight()/2);
 		color = null;
 	}
 
@@ -24,6 +27,7 @@ public abstract class FreeTank extends AbstractVehicle {
 		super(x, y);
 		treadTexture = tTexture;
 		gunTexture = gTexture;
+		super.setOrigin(treadTexture.getWidth()/2,treadTexture.getHeight()/2);
 		this.color = color;
 	}
 
@@ -79,6 +83,13 @@ public abstract class FreeTank extends AbstractVehicle {
 
 	public float getGunRotation() {
 		return gunRotation;
+	}
+	
+	public void pointGunToMouse() {
+		gunRotation = 0;
+		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		getStage().getCamera().unproject(mousePos); // to world coordinates
+		gunRotation = (float) Math.toDegrees( Math.atan2((mousePos.y - getY()), (mousePos.x - getX())));
 	}
 
 	public void draw(Batch batch, float a) {
