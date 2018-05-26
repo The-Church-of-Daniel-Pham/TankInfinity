@@ -100,13 +100,15 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	}
 
 	public void updateVelocityAndMove() {
+		velocity.rotate(angularVelocity);
 		setX(getX() + velocity.x);
 		setY(getY() + velocity.y);
-		setRotation(velocity.angle() + angularVelocity);
+		setRotation(velocity.angle());
 	}
 
 	public void applyFriction(float delta) {
 		velocity.scl((float) Math.pow((100f - stats.getStatValue("Friction")) / 100f, delta));
+		angularVelocity *= (float) Math.pow((100f - stats.getStatValue("Angular_Friction")) / 100f, delta);
 	}
 
 	public void applyForce(Vector2 acceleration) {

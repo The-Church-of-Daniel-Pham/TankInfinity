@@ -38,11 +38,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	@Override
 	protected void setStats() {
 		stats = new Stats();
-		stats.addStat("Friction", 97);	//(fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 100);
-		stats.addStat("Max_Speed", 20);
-		stats.addStat("Angular_Acceleration", 100);
-		stats.addStat("Max_Angular_Speed", 50);
+		stats.addStat("Friction", 95);	//(fraction out of 100)^delta to scale velocity by
+		stats.addStat("Acceleration", 60);
+		stats.addStat("Max_Speed", 15);
+		stats.addStat("Angular_Friction", 97);
+		stats.addStat("Angular_Acceleration", 25);
+		stats.addStat("Max_Angular_Speed", 4);
 	}
 
 	/**
