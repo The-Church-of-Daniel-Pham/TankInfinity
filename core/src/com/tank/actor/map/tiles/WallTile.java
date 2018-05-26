@@ -1,14 +1,12 @@
 package com.tank.actor.map.tiles;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.tank.actor.map.Map;
 import com.tank.interfaces.Collidable;
+import com.tank.utils.Assets;
 
 public class WallTile extends AbstractMapTile implements Collidable {
-	protected static Texture tex;
-	
 	public WallTile(int row, int col, Map map) {
 		super(row, col, map);
 	}
@@ -16,8 +14,20 @@ public class WallTile extends AbstractMapTile implements Collidable {
 
 	@Override
 	public void build() {
-		// TODO Auto-generated method stub
-		
+		super.addTexture(Assets.manager.get(Assets.grass0));
+		double rand = Math.random();
+		if (rand < 0.25) {
+			super.addTexture(Assets.manager.get(Assets.stone1));
+		}
+		else if (rand < 0.5) {
+			super.addTexture(Assets.manager.get(Assets.stone2));
+		}
+		else if (rand < 0.75) {
+			super.addTexture(Assets.manager.get(Assets.stone3));
+		}
+		else {
+			super.addTexture(Assets.manager.get(Assets.stone4));
+}
 	}
 	
 	public Polygon getHitbox() {
