@@ -38,6 +38,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	@Override
 	protected void setStats() {
 		stats = new Stats();
+		stats.addStat("Friction", 97);	//(fraction out of 100)^delta to scale velocity by
 		stats.addStat("Acceleration", 100);
 		stats.addStat("Max_Speed", 20);
 		stats.addStat("Angular_Acceleration", 25);
@@ -59,7 +60,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.applyLimitedForce(delta * stats.getStatValue("Angular_Acceleration"), getRotation() - 90, stats.getStatValue("Max_Angular_Speed"));
 		}
 		super.pointGunToMouse();
-		updateVelocityAndMove();
+		updateVelocityAndMove(delta);
 		if (controls.firePressed()) {
 			shoot();
 		}
