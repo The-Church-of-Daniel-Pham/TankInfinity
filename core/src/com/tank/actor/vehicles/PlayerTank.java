@@ -39,10 +39,10 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected void setStats() {
 		stats = new Stats();
 		stats.addStat("Friction", 96);	//(fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 50);
+		stats.addStat("Acceleration", 35);
 		stats.addStat("Max_Speed", 15);
 		stats.addStat("Angular_Friction", 98);
-		stats.addStat("Angular_Acceleration", 20);
+		stats.addStat("Angular_Acceleration", 3);
 		stats.addStat("Max_Angular_Speed", 4);
 	}
 
@@ -51,14 +51,14 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	 */
 	public void act(float delta) {
 		if (controls.downPressed()) {
-			super.applyLimitedForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation(), stats.getStatValue("Max_Speed"));
+			super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
 		} else if (controls.upPressed()) {
-			super.applyLimitedForce(delta * stats.getStatValue("Acceleration"), getRotation(), stats.getStatValue("Max_Speed"));
+			super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
 		}
 		if (controls.leftPressed()) {
-			super.applyLimitedAngularForce(delta * stats.getStatValue("Angular_Acceleration"), stats.getStatValue("Max_Angular_Speed"));
+			super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration"));
 		} else if (controls.rightPressed()) {
-			super.applyLimitedAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"), stats.getStatValue("Max_Angular_Speed"));
+			super.applyAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"));
 		}
 		super.applyFriction(delta);
 		super.updateVelocityAndMove();
