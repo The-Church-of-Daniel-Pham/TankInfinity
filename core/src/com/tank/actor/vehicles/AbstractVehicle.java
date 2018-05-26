@@ -97,6 +97,20 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		v.setAngle(dir);
 		velocity.add(v);
 	}
+	public void applyLimitedForce(Vector2 acceleration, float lim) {
+		Vector2 comp = new Vector2(1,0);
+		comp.setAngle(acceleration.angle());
+		if (velocity.dot(comp) < lim) {
+			applyForce(acceleration);
+		}
+	}
+	public void applyLimitedForce(float mag, float dir, float lim) {
+		Vector2 comp = new Vector2(1,0);
+		comp.setAngle(dir);
+		if (velocity.dot(comp) < lim) {
+			applyForce(mag, dir);
+		}
+	}
 	public int getStat(String stat) {
 		return stats.getStatValue(stat);
 	}
