@@ -68,7 +68,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * @param delta		Time since last called.
 	 */
 	public void act(float delta) {
-		updateVelocityAndMove();
+		updateVelocityAndMove(delta);
 	}
 	
 	/**
@@ -84,7 +84,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public Vector2 getVelocity() {
 		return velocity;
 	}
-	public void updateVelocityAndMove() {
+	public void updateVelocityAndMove(float delta) {
+		velocity.scl((float) Math.pow((100f-stats.getStatValue("Friction"))/100f, delta));
 		setX(getX() + velocity.x);
 		setY(getY() + velocity.y);
 		setRotation(velocity.angle());
