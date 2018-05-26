@@ -11,11 +11,13 @@ public abstract class FixedTank extends AbstractVehicle {
 
 	public FixedTank(float x, float y) {
 		super(x, y);
+		super.setOrigin(tankTexture.getWidth()/2,tankTexture.getHeight()/2 );
 		color = null;
 	}
 	public FixedTank(Texture tex, Color color, float x, float y) {
 		super(x, y);
 		tankTexture = tex;
+		super.setOrigin(tankTexture.getWidth()/2,tankTexture.getHeight()/2 );
 		this.color = color;
 	}
 	

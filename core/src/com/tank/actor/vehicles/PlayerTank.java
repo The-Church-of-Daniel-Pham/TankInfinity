@@ -29,16 +29,17 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public PlayerTank(int player, Color color, float x, float y) {
 		super(tTexture, gTexture, color, x, y);
+		super.setGunPivotX(treadTexture.getWidth() / 2 - 12);
+		super.setGunPivotY(treadTexture.getHeight() / 2);
 		playerNumber = player;
 		controls = new KeyboardMouseController();
-
 	}
 
 	@Override
 	protected void setStats() {
 		stats = new Stats();
-		stats.addStat("Acceleration", 250);
-		stats.addStat("Angular_Velocity", 100);
+		stats.addStat("Acceleration", 150);
+		stats.addStat("Angular_Velocity", 150);
 	}
 
 	/**
@@ -51,10 +52,11 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
 		}
 		if (controls.leftPressed()) {
-			super.rotateBy(delta * stats.getStatValue("Angular_Velocity"));
+			super.applyForce(delta * stats.getStatValue("Angular_Velocity"), getRotation() + 90);
 		} else if (controls.rightPressed()) {
-			super.rotateBy(delta * -1 * stats.getStatValue("Angular_Velocity"));
+			super.applyForce(delta * stats.getStatValue("Angular_Velocity"), getRotation() - 90);
 		}
+		super.pointGunToMouse();
 		updateVelocityAndMove();
 		if (controls.firePressed()) {
 			shoot();

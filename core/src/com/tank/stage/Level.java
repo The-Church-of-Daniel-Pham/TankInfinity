@@ -31,7 +31,7 @@ public class Level extends Stage {
 		addActor(map);
 		
 		players = new ArrayList<PlayerTank>();
-		players.add(new PlayerTank(1, Color.GREEN, 0, 0));
+		players.add(new PlayerTank(1, Color.GREEN, AbstractMapTile.SIZE/2, AbstractMapTile.SIZE/2));
 		for (PlayerTank p : players) {
 			addActor(p);
 		}
