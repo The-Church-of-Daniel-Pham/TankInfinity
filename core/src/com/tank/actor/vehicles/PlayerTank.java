@@ -18,8 +18,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected TankController controls;
 	protected Cursor cursor;
-	protected static Texture tTexture = Assets.manager.get(Assets.tread);
-	protected static Texture gTexture = Assets.manager.get(Assets.gun_0);
+	protected static Texture tTexture = Assets.manager.get(Assets.tread_red);
+	protected static Texture gTexture = Assets.manager.get(Assets.gun_red);
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;

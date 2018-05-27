@@ -36,9 +36,29 @@ public class Assets {
 	public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
 			Texture.class);
 	// Tank
-	public static final AssetDescriptor<Texture> tread = new AssetDescriptor<Texture>("tank/tank_tread.png",
+	public static final AssetDescriptor<Texture> tread_red = new AssetDescriptor<Texture>("tank/tank_tread_red.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> gun_0 = new AssetDescriptor<Texture>("tank/tank_gun_0.png",
+	public static final AssetDescriptor<Texture> gun_red = new AssetDescriptor<Texture>("tank/tank_gun_red.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> tread_blue = new AssetDescriptor<Texture>("tank/tank_tread_blue.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> gun_blue = new AssetDescriptor<Texture>("tank/tank_gun_blue.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> tread_green = new AssetDescriptor<Texture>("tank/tank_tread_green.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> gun_green = new AssetDescriptor<Texture>("tank/tank_gun_green.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> tread_yellow = new AssetDescriptor<Texture>("tank/tank_tread_yellow.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> gun_yellow = new AssetDescriptor<Texture>("tank/tank_gun_yellow.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> tread_purple = new AssetDescriptor<Texture>("tank/tank_tread_purple.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> gun_purple = new AssetDescriptor<Texture>("tank/tank_gun_purple.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> tread_tan = new AssetDescriptor<Texture>("tank/tank_tread_tan.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
 			Texture.class);
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
@@ -82,10 +102,22 @@ public class Assets {
 		manager.load(stone2);
 		manager.load(stone3);
 		manager.load(stone4);
-		manager.load(bullet);
-		manager.load(tread);
-		manager.load(gun_0);
 		// System.out.println("Map textures loaded");
+		manager.load(bullet);
+		// System.out.println("Projectile textures loaded");
+		manager.load(tread_red);
+		manager.load(gun_red);
+		manager.load(tread_blue);
+		manager.load(gun_blue);
+		manager.load(tread_green);
+		manager.load(gun_green);
+		manager.load(tread_yellow);
+		manager.load(gun_yellow);
+		manager.load(tread_purple);
+		manager.load(gun_purple);
+		manager.load(tread_tan);
+		manager.load(gun_tan);
+		// System.out.println("Tank textures loaded");
 		manager.load(black);
 		// System.out.println("Menu textures loaded");
 		manager.load(vertex);
