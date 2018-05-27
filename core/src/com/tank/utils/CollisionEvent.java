@@ -1,5 +1,6 @@
 package com.tank.utils;
 
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.interfaces.Collidable;
@@ -53,51 +54,34 @@ public class CollisionEvent {
 	}
 
 	/**
-	 * Precondition: x and y are not inside c
+	 * Precondition: the ray formed by pre and post intersect c
 	 * 
 	 * @param c
 	 *            The object whose wall collides with the corner of another. The
 	 *            corner is given by (x, y)
-	 * @param x
-	 *            the x-coordinate of the corner before it collides
-	 * @param y
-	 *            the y-coordinate of the corner before it collides
-	 * @return The Vector2 which represents the wall on 'c' that was hit
+	 * @param pre
+	 *            the coordinates of the corner before the corner collides
+	 * @param post
+	 *            the coordinates of the corner after the corner collides
+	 * @return The Vector2 which represents the magnitude/direction of the wall on
+	 *         'c' that was hit
 	 */
-	public static Vector2 getWallVector(Collidable c, float x, float y) {
-		float[] h = c.getHitbox().getVertices();
-		if (c instanceof AbstractMapTile) {
-			if (y <= h[7] && y >= h[1]) {
-				if ((new Vector2(x, y)).dst(6, 7) < (new Vector2(x, y)).dst(4, 5))
-					return new Vector2(h[0] - h[6], h[1] - h[7]);
-				else {
-					return new Vector2(h[2] - h[4], h[3] - h[5]);
-				}
-			} else {
-				if ((new Vector2(x, y)).dst(0, 1) < (new Vector2(x, y)).dst(6, 7)) {
-					return new Vector2(h[0] - h[2], h[1] - h[3]);
-				} else {
-					return new Vector2(h[6] - h[4], h[7] - h[5]);
-				}
+	public static Vector2 getWallVector(Collidable c, Vector2 pre, Vector2 post) {
+		float[] f = c.getHitbox().getVertices();
+		Vector2[] points = new Vector2[f.length / 2];
+		for (int i = 0; i < points.length; i++) {
+			points[i] = new Vector2(f[i * 2], f[i * 2 + 1]);
+		}
+		for (int i = 0; i < points.length; i++) {
+			// define the coordinates of the ray (point1, point2) that describe one side of
+			// c
+			Vector2 sidePoint1 = points[i % points.length]; // point 1
+			Vector2 sidePoint2 = points[(i + 1) % points.length]; // point 2
+			if (Intersector.intersectLines(pre, post, sidePoint1, sidePoint2, new Vector2())) { // last parameter not
+																								// used
+				return sidePoint2.cpy().sub(sidePoint1);
 			}
 		}
-		Vector2 side1ToXY = new Vector2(x - h[0], y - h[1]);
-		Vector2 side2ToXY = new Vector2(x - h[6], y - h[7]);
-		Vector2 side1 = new Vector2(h[0] - h[2], h[1] - h[3]);
-		Vector2 side2 = new Vector2(h[6] - h[4], h[7] - h[5]);
-		if (side1ToXY.angle(side1) * side2ToXY.angle(side2) < 0) {
-			if ((new Vector2(x, y)).dst(6, 7) < (new Vector2(x, y)).dst(4, 5))
-				return new Vector2(h[0] - h[6], h[1] - h[7]);
-			else {
-				return new Vector2(h[2] - h[4], h[3] - h[5]);
-			}
-		} else {
-			if ((new Vector2(x, y)).dst(0, 1) < (new Vector2(x, y)).dst(6, 7)) {
-				return side1;
-			} else {
-				return side2;
-			}
-
-		}
+		return null; //if no collision found
 	}
 }

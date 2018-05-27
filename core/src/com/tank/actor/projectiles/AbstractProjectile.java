@@ -194,8 +194,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
 					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(c, hitbox.getVertices()[i * 2],
-							hitbox.getVertices()[i * 2 + 1]);
+					Vector2 wall = CollisionEvent.getWallVector(c,
+							new Vector2(hitbox.getVertices()[i * 2], hitbox.getVertices()[i * 2 + 1]),
+							new Vector2(testHitbox.getVertices()[i * 2], testHitbox.getVertices()[i * 2 + 1]));
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
 				}
