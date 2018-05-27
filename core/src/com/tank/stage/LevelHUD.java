@@ -44,7 +44,7 @@ public class LevelHUD extends Stage implements InputProcessor {
         }
         
         //update reload bar
-		float completion = players.get(0).getReloadTime() / (1 / PlayerTank.RATE_OF_FIRE); 
+		float completion = players.get(0).getReloadTime() / (1f / players.get(0).getStat("Rate_Of_Fire")); 
 		// reload time out of max reload time (inverse of rate of fire)
 		reloadBar.setValue(completion);
 	}

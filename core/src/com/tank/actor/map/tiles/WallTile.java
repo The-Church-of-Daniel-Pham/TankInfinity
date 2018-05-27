@@ -7,8 +7,11 @@ import com.tank.interfaces.Collidable;
 import com.tank.utils.Assets;
 
 public class WallTile extends AbstractMapTile implements Collidable {
+	protected final Polygon hitbox;
 	public WallTile(int row, int col, Map map) {
+		//TODO set position to x/y coords
 		super(row, col, map);
+		hitbox = generateHitbox();
 	}
 	
 
@@ -30,7 +33,7 @@ public class WallTile extends AbstractMapTile implements Collidable {
 }
 	}
 	
-	public Polygon getHitbox() {
+	public Polygon generateHitbox() {
 		float[] f = new float[8];
 		f[0] = getX();
 		f[1] = getY();
@@ -59,6 +62,12 @@ public class WallTile extends AbstractMapTile implements Collidable {
 	public ArrayList<Collidable> getNeighbors() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public Polygon getHitbox() {
+		return hitbox;
 	}
 
 }

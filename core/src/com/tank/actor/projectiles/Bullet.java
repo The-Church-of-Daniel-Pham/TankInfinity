@@ -35,10 +35,7 @@ public class Bullet extends AbstractProjectile{
 	}
 	
 	
-	@Override
-	public void checkCollisions(ArrayList<Collidable> other) {
-		
-	}
+
 
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {

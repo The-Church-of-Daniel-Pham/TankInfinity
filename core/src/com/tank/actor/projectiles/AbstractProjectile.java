@@ -16,6 +16,7 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.stats.Stats;
+import com.tank.utils.CollisionEvent;
 
 public abstract class AbstractProjectile extends Actor implements Collidable, Destructible {
 	/**
@@ -43,7 +44,11 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * trying to move
 	 */
 	protected Polygon testHitbox;
-
+	/**
+	 * stores the collision events that have been recorded in the current frame
+	 */
+	protected ArrayList<CollisionEvent> collisions;
+	
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
 	 * variables
@@ -65,6 +70,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		setX(x);
 		setY(y);
 		setStats();
+		collisions = new ArrayList<CollisionEvent>();
 	}
 	abstract protected void setStats();
 	/**
@@ -177,12 +183,39 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            The other object this object collides with
 	 */
 	public void checkCollisions(ArrayList<Collidable> other) {
-
+		collisions.clear(); // remove collisions calculated from a different frame
+		float[] testVertices = testHitbox.getVertices(); // vertices of this instance's hitbox
+		// check each Collidable object against this instance
+		for (Collidable c : other) {
+			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
+																	// with this instance
+			for (int i = 0; i < 4; i++) {
+				// check for wall collision by checking if the corners of this instance are
+				// contained within another Collidable object
+				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
+					// generate the wall associated with the collision
+					Vector2 wall = CollisionEvent.getWallVector(c, hitbox.getVertices()[i * 2],
+							hitbox.getVertices()[i * 2 + 1]);
+					// create new wall collision event
+					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
+				}
+				// check for corner collision by checking if the corners of another Collidable
+				// object are contained within this instance
+				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
+					// create new corner collision event
+					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION,
+							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+				}
+			}
+		}
 	}
 
 	public ArrayList<Collidable> getNeighbors() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Polygon getHitbox() {
+		return hitbox;
 	}
 
 	/**
