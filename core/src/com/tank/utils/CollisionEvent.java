@@ -77,7 +77,7 @@ public class CollisionEvent {
 			// c
 			Vector2 sidePoint1 = points[i % points.length]; // point 1
 			Vector2 sidePoint2 = points[(i + 1) % points.length]; // point 2
-			if (Intersector.intersectLines(pre, post, sidePoint1, sidePoint2, new Vector2())) { // last parameter not
+			if (Intersector.intersectSegments(pre, post, sidePoint1, sidePoint2, new Vector2())) { // last parameter not
 																								// used
 				return sidePoint2.cpy().sub(sidePoint1);
 			}
