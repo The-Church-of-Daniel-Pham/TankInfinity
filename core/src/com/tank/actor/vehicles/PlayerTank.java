@@ -24,7 +24,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected int selectedWeapon;
 	protected int playerNumber;
 
-	public static float RATE_OF_FIRE = 1.0f;
 	protected double timeSinceShot;
 
 	public PlayerTank(int player, Color color, float x, float y) {
@@ -33,7 +32,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.setGunPivotY(treadTexture.getHeight() / 2);
 		playerNumber = player;
 		controls = new KeyboardMouseController();
-		setBulletOffset();
+		timeSinceShot = 0;
 	}
 
 	@Override
@@ -45,6 +44,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 250);
 		stats.addStat("Max_Angular_Speed", 4);
+		stats.addStat("Rate_Of_Fire", 1);
 	}
 
 	/**
@@ -62,16 +62,18 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 			super.applyAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"));
 		}
 		super.applyFriction(delta);
-		super.updateVelocityAndMove(delta);
+		super.move(delta);
 		super.pointGunToMouse();
-	}
-
-	public void setBulletOffset() {
-		bulletOffset = 135;
+		if (controls.firePressed() && timeSinceShot > 1.0 / stats.getStatValue("Rate_Of_Fire")) {
+			shoot();
+			timeSinceShot = 0;
+		} else {
+			timeSinceShot += delta;
+		}
 	}
 
 	public void shoot() {
-		Vector2 v = new Vector2(bulletOffset, 0);
+		Vector2 v = new Vector2(AbstractVehicle.TANKGUNLENGTH, 0);
 		v.setAngle(getGunRotation());
 		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation));
 	}
@@ -123,8 +125,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (button == 0)
-			shoot();
 		return false;
 	}
 
