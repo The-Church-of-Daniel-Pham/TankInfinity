@@ -23,11 +23,34 @@ public class LevelCamera extends OrthographicCamera {
 	}
 	
 	private void chase() {
-		super.position.x = MathUtils.clamp(players.get(0).tank.getX(), super.viewportWidth / 2f,
-				width * AbstractMapTile.SIZE - super.viewportWidth / 2f);
-		super.position.y = MathUtils.clamp(players.get(0).tank.getY(), super.viewportHeight / 2f,
-				width * AbstractMapTile.SIZE - super.viewportHeight / 2f);
-		super.update();
+		int count = 0;
+		float maxX = 0;
+		float maxY = 0;
+		float minX = 0;
+		float minY = 0;
+		for (Player player : players) {
+			if (!player.tank.isDestroyed()) {
+				if (count == 0) {
+					maxX = minX = player.tank.getX();
+					maxY = minY = player.tank.getY();
+				}
+				else {
+					maxX = Math.max(maxX, player.tank.getX());
+					maxY = Math.max(maxY, player.tank.getY());
+					minX = Math.min(minX, player.tank.getX());
+					minY = Math.min(minY, player.tank.getY());
+				}
+				count += 1;
+			}
+		}
+		
+		if (count > 0) {
+			super.position.x = MathUtils.clamp((minX + maxX) / 2, super.viewportWidth / 2f,
+					width * AbstractMapTile.SIZE - super.viewportWidth / 2f);
+			super.position.y = MathUtils.clamp((minY + maxY) / 2, super.viewportHeight / 2f,
+					width * AbstractMapTile.SIZE - super.viewportHeight / 2f);
+			super.update();
+		}
 	}
 	
 	@Override
