@@ -70,10 +70,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	}
 	
 	private void initiliazeTanks() {
-		int space = 0;
+		int space = 256;
 		for (Player p : game.players) {
 			p.tank.setRotation(90);
-			p.tank.setPosition(128 + space, 128);
+			p.tank.setPosition(128 + space, 128 + 256);
 			space += 256;
 		}
 	}

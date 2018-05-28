@@ -14,7 +14,7 @@ public class Constants {
 	public static int WINDOW_MODE_INDEX = 0;	//start in fullscreen
 	public static boolean VSYNC_ENABLED = true;
 	public static final int LEVEL1_WIDTH = 8;
-	public static final int LEVEL1_HEIGHT = 4;
+	public static final int LEVEL1_HEIGHT = 6;
 	
 	public static void toggleWindowMode() {
 		WINDOW_MODE_INDEX = (WINDOW_MODE_INDEX + 1) % WINDOW_MODES.length;	// increase index until end, then set back to 0

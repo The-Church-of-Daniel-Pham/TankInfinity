@@ -202,20 +202,18 @@ public class MazeMaker {
 	
 	public void addBorder(int size) {
 		size = MathUtils.clamp(size, 0, Math.min(maze.length, maze[0].length));
-		int[][] temp = new int[maze.length + 2 * size][maze[0].length + 2 * size];
-		for (int row = 0; row < temp.length; row++)
+		for (int row = 0; row < maze.length; row++)
 		{
-			for(int col = 0; col <  temp[row].length; col++)
+			for (int col = 0; col <  maze[row].length; col++)
 			{
-				if (row < size || row >= temp.length - size || col < size || col >= temp[row].length - size) {
-					temp[row][col] = 2;
+				if (row < size || row >= maze.length - size || col < size || col >= maze[row].length - size) {
+					maze[row][col] = 2;
 				}
 				else {
-					temp[row][col] = maze[row - size][col - size];	//offset by size up and right
+					maze[row][col] = maze[row][col];
 				}
 			}
 		}
-		maze = temp;
 	}
 
 	/**
