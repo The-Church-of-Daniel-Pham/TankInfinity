@@ -45,10 +45,11 @@ public class LevelCamera extends OrthographicCamera {
 		}
 		
 		if (count > 0) {
-			super.position.x = MathUtils.clamp((minX + maxX) / 2, super.viewportWidth / 2f,
-					width * AbstractMapTile.SIZE - super.viewportWidth / 2f);
-			super.position.y = MathUtils.clamp((minY + maxY) / 2, super.viewportHeight / 2f,
-					width * AbstractMapTile.SIZE - super.viewportHeight / 2f);
+			super.zoom = Math.max(1.0f, Math.max((maxX - minX) / (super.viewportWidth), (maxY - minY) / (super.viewportHeight)) + 0.2f);
+			super.position.x = MathUtils.clamp((minX + maxX) / 2, (super.viewportWidth * zoom) / 2f,
+					width * AbstractMapTile.SIZE - (super.viewportWidth * zoom) / 2f);
+			super.position.y = MathUtils.clamp((minY + maxY) / 2, (super.viewportHeight * zoom) / 2f,
+					height * AbstractMapTile.SIZE - (super.viewportHeight * zoom) / 2f);
 			super.update();
 		}
 	}
