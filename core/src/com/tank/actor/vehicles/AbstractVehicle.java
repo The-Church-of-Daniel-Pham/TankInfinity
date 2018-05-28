@@ -13,10 +13,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.WallTile;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
 import com.tank.screen.PlayScreen;
+import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.CollisionEvent;
 
@@ -28,7 +31,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * List of all abstract vehicles in existence
 	 */
-	protected static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
+	public static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
 	/**
 	 * The health of the vehicle
 	 */
@@ -228,9 +231,18 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	public ArrayList<Collidable> getNeighbors() {
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
+		int[] gridCoords = ((Level)getStage()).getMap().getTileAt(getX(), getY());
+		ArrayList<AbstractMapTile> a =((Level)getStage()).getMap().getBrickNeighbors(gridCoords[0], gridCoords[1]);
+		for(AbstractMapTile m: a) {
+			if(m instanceof WallTile) {
+				neighbors.add((WallTile)m);
+			}
+		}
+		neighbors.addAll(AbstractVehicle.vehicleList);
+		neighbors.remove(this);
 		// get AbstractMapTiles from current row/col with radius 1
 		// add instances of WallTile to neighbors
-		// place all items in vehicleList into neighbors
+		// place all items in vehicleList into neighbors, them remove this instance from neighbors
 		// don't worry about bullet collisions; the bullet itself worries about tanks
 		return neighbors;
 	}
