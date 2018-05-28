@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
+import com.tank.utils.Assets;
 
 public abstract class FreeTank extends AbstractVehicle {
 	protected Texture treadTexture;
 	protected Texture gunTexture;
+	protected Texture debug = Assets.manager.get(Assets.vertex);
 	protected float gunOffsetX;
 	protected float gunOffsetY;
 	protected float gunPivotX;
@@ -15,18 +17,31 @@ public abstract class FreeTank extends AbstractVehicle {
 	protected float bulletOffset;
 	protected float gunRotation;
 
+	public FreeTank(float x, float y) {
+		super(x, y);
+		initiliazeCustom("default", "default");
+		initiliazeHitbox();
+		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
+		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
+	}
+
 	public FreeTank(float x, float y, String tColor, String gColor) {
 		super(x, y);
 		initiliazeCustom(tColor, gColor);
-		treadTexture = super.custom.getTexture("tread");
-		gunTexture = super.custom.getTexture("gun");
+		initiliazeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
+	}
+	
+	protected void initiliazeHitbox() {
+		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 	
 	protected void initiliazeCustom(String tColor, String gColor) {
 		custom.addCustom("tread", tColor);
 		custom.addCustom("gun", gColor);
+		treadTexture = super.custom.getTexture("tread");
+		gunTexture = super.custom.getTexture("gun");
 	}
 
 	public void setGunOffset(float x, float y) {
@@ -97,5 +112,10 @@ public abstract class FreeTank extends AbstractVehicle {
 		batch.draw(gunTexture, super.getX() - gunPivotX, super.getY() - gunPivotY, gunPivotX, gunPivotY,
 				gunTexture.getWidth(), gunTexture.getHeight(), 1, 1, gunRotation, 0, 0, gunTexture.getWidth(),
 				gunTexture.getHeight(), false, false);
+		for (int i = 0; i < 4; i++) {
+			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
+					debug.getWidth(), debug.getHeight(), 1, 1, 0, 0, 0, debug.getWidth(), debug.getHeight(), false,
+					false);
+		}
 	}
 }

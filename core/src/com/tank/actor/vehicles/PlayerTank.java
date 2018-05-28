@@ -87,7 +87,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (getWidth()) / 2, 0);
+		Vector2 v = new Vector2((float) (super.treadTexture.getWidth()) / 2, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 

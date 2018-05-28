@@ -12,13 +12,20 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
+import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.CollisionEvent;
 
 public abstract class AbstractProjectile extends Actor implements Collidable, Destructible {
+	/**
+	 * List of all projectiles
+	 */
+	public static ArrayList<AbstractProjectile> projectileList = new ArrayList<AbstractProjectile>();
 	/**
 	 * The texture of the projectile.
 	 */
@@ -71,6 +78,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		setY(y);
 		setStats();
 		collisions = new ArrayList<CollisionEvent>();
+		projectileList.add(this);
 	}
 	abstract protected void setStats();
 	/**
@@ -178,6 +186,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
 	 * collisions to this object. This is handled differently for each subclass
+	 * Uses testHitbox to check collisions.
 	 * 
 	 * @param other
 	 *            The other object this object collides with
@@ -194,8 +203,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
 					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(c, hitbox.getVertices()[i * 2],
-							hitbox.getVertices()[i * 2 + 1]);
+					Vector2 wall = CollisionEvent.getWallVector(c,
+							new Vector2(hitbox.getVertices()[i * 2], hitbox.getVertices()[i * 2 + 1]),
+							new Vector2(testHitbox.getVertices()[i * 2], testHitbox.getVertices()[i * 2 + 1]));
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
 				}
@@ -211,8 +221,21 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	}
 
 	public ArrayList<Collidable> getNeighbors() {
-		// TODO Auto-generated method stub
-		return null;
+		//get neighboring bricks. instances of  WallTile get added to neighbors
+		//add all vehicles to neighbors
+		//add all bullets to neighbors, then remove this instance
+		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
+		int[] gridCoords = ((Level)getStage()).getMap().getTileAt(getX(), getY());
+		ArrayList<AbstractMapTile> a =((Level)getStage()).getMap().getBrickNeighbors(gridCoords[0], gridCoords[1]);
+		for(AbstractMapTile m: a) {
+			if(m instanceof WallTile) {
+				neighbors.add((WallTile)m);
+			}
+		}
+		neighbors.addAll(AbstractVehicle.vehicleList);
+		neighbors.addAll(AbstractProjectile.projectileList);
+		neighbors.remove(this);
+		return neighbors;
 	}
 	public Polygon getHitbox() {
 		return hitbox;
@@ -249,6 +272,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * the object from the stage
 	 */
 	public void destroy() {
+		projectileList.remove(this);
 		this.remove();
 	}
 

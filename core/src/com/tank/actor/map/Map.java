@@ -35,14 +35,14 @@ public class Map extends Group {
 		for (int row = layout.length - 1; row >= 0; row--) {
 			for (int col = 0; col < layout[row].length; col++) {
 				if (layout[row][col] == 0) {
-					AbstractMapTile tile = new FloorTile(layout.length - (1 + row), col, this); // polymorphic for
+					AbstractMapTile tile = new FloorTile(row, col, this); // polymorphic for
 																								// simplicity
 					// in this class
 					map[row][col] = tile;
 					super.addActor(tile); // kinda redundant, but may come in handy later
 				} else if (layout[row][col] == 1) {
 					// same as for grass, but for brick
-					AbstractMapTile tile = new WallTile(layout.length - (1 + row), col, this);
+					AbstractMapTile tile = new WallTile(row, col, this);
 					map[row][col] = tile;
 					super.addActor(tile);
 				}
@@ -101,10 +101,8 @@ public class Map extends Group {
 	 *         given pixel coordinates lie on
 	 */
 	public int[] getTileAt(float x, float y) {
-		// due to rounding down with int tankMapRow = (int)((40*128-super.getY())/128),
-		// which "rounds back up" when converting back to world coords
 		int mapCol = (int) (x / AbstractMapTile.SIZE);
-		int mapRow = (int) ((level.getMapHeight() * AbstractMapTile.SIZE - (y + 1)) / AbstractMapTile.SIZE);
+		int mapRow = (int) (y / AbstractMapTile.SIZE);
 		return new int[] { mapRow, mapCol };
 	}
 
@@ -139,7 +137,7 @@ public class Map extends Group {
 				if (tempRow < 0 || tempRow >= level.getMapHeight() || tempCol >= level.getMapWidth() || tempCol < 0) // edge
 				{
 					// handle edge vertices separately
-					AbstractMapTile border = new BorderTile(layout.length - (1 + tempRow), tempCol, this); // see
+					AbstractMapTile border = new BorderTile(tempRow, tempCol, this); // see
 																											// constructor
 					brickNeighbors.add(border); // only in group for now, may add to array later
 				} else if (layout[tempRow][tempCol] == 1) // normal brick in bounds
@@ -153,7 +151,7 @@ public class Map extends Group {
 
 	public void removeBrick(AbstractMapTile m) {
 		if (!(m instanceof BorderTile)) {
-			AbstractMapTile n = new FloorTile(layout.length - (1 + m.getRow()), m.getCol(), this);
+			AbstractMapTile n = new FloorTile(m.getRow(), m.getCol(), this);
 			addActor(n);
 			map[m.getRow()][m.getCol()] = n;
 			layout[m.getRow()][m.getCol()] = 0;
