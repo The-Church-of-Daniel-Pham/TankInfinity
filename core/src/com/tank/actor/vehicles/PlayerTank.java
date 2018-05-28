@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
+import com.tank.controls.ControlConstants;
 import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
 import com.tank.subweapons.SubWeapon;
@@ -26,15 +27,17 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected float reloadTime;
 	
-	public PlayerTank() {
+	public PlayerTank(int playerNumber) {
 		super(0, 0, "default", "default");	// defaults
+		this.playerNumber = playerNumber;
 		initializeStats();
-		controls = new KeyboardMouseController();
+		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 	}
 
-	public PlayerTank(float x, float y, String tColor, String gColor) {
+	public PlayerTank(float x, float y, int playerNumber, String tColor, String gColor) {
 		super(x, y, tColor, gColor);
+		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = new KeyboardMouseController();
 		reloadTime = 0;

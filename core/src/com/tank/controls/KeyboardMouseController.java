@@ -10,14 +10,12 @@ public class KeyboardMouseController extends TankController {
 	
 	public KeyboardMouseController() {
 		keyMap = new LinkedHashMap<String, KeyControl>();
-		keyMap.put("UP", new KeyControl(Input.Keys.W,0));
-		keyMap.put("DOWN", new KeyControl(Input.Keys.S,0));
-		keyMap.put("RIGHT", new KeyControl(Input.Keys.D,0));
-		keyMap.put("LEFT", new KeyControl(Input.Keys.A,0));
-		keyMap.put("SHOOT", new KeyControl(Input.Buttons.LEFT,1));
-		keyMap.put("SUB", new KeyControl(Input.Buttons.RIGHT,0));
-		keyMap.put("RSHIFT", new KeyControl(Input.Keys.E,0));
-		keyMap.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
+		keyMap.putAll(ControlConstants.DEFAULT_KEYBOARD_CONTROLS);
+	}
+	
+	public KeyboardMouseController(LinkedHashMap<String, KeyControl> keys) {
+		keyMap = new LinkedHashMap<String, KeyControl>();
+		keyMap.putAll(keys);
 	}
 
 	public boolean upPressed() {
