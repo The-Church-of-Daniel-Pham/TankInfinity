@@ -6,8 +6,6 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
-import com.tank.actor.projectiles.AbstractProjectile;
-import com.tank.actor.vehicles.AbstractVehicle;
 
 
 public class Level extends Stage {
