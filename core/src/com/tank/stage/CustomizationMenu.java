@@ -25,10 +25,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		AbstractVehicle.vehicleList.clear();
 		AbstractProjectile.projectileList.clear();
 		// create players
-		this.game.players.add(new Player("Player 1", "red"));
-		this.game.players.add(new Player("Player 2", "blue"));
-		this.game.players.add(new Player("Player 3", "green"));
-		this.game.players.add(new Player("Player 4", "yellow"));
+		this.game.players.add(new Player("Player 1", 1, "red"));
+		this.game.players.add(new Player("Player 2", 2, "blue"));
+		this.game.players.add(new Player("Player 3", 3, "green"));
+		this.game.players.add(new Player("Player 4", 4, "yellow"));
 		super.addActor(buildTable());
 	}
 
