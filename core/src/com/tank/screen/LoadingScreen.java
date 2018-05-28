@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.stage.Loading;
 import com.tank.utils.Assets;
@@ -35,10 +36,12 @@ public class LoadingScreen implements Screen {
     	loading.draw();
     	
 		if (Assets.manager.update()) {
+			// create first player
+			game.players.add(new Player("Player 1"));
 			// create rest of screens
-			game.screens.put("Main Menu", new MainMenuScreen(game));	//only one of
-			game.screens.put("Settings Menu", new SettingsMenuScreen(game));	//only one of
-			//game.screens.put("Play", new PlayScreen(game));	//new one may be created
+			game.screens.put("Main Menu", new MainMenuScreen(game));
+			game.screens.put("Customization Menu", new CustomizationMenuScreen(game));
+			game.screens.put("Settings Menu", new SettingsMenuScreen(game));
 			game.setScreen(game.screens.get("Main Menu"));
 		}
 	}

@@ -1,7 +1,6 @@
 package com.tank.stage;
 
 import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,21 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
-import com.tank.actor.vehicles.PlayerTank;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankInfinity game;
-	protected ArrayList<PlayerTank> players;
+	protected ArrayList<Player> players;
 	private Label fpsLabel;
 	private static float sinceChange;
 	private ProgressBar reloadBar;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(TankInfinity game, ArrayList<PlayerTank> players) {
+	public LevelHUD(TankInfinity game, ArrayList<Player> players) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
 		this.players = players;
@@ -44,7 +43,7 @@ public class LevelHUD extends Stage implements InputProcessor {
         }
         
         //update reload bar
-		float completion = players.get(0).getReloadTime() / (1f / players.get(0).getStat("Rate_Of_Fire")); 
+		float completion = players.get(0).tank.getReloadTime() / (1f / players.get(0).tank.getStatValue("Rate_Of_Fire")); 
 		// reload time out of max reload time (inverse of rate of fire)
 		reloadBar.setValue(completion);
 	}
@@ -57,7 +56,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
 		TextButton pauseButton = new TextButton("Pause", skin);
-		Label nameLabel = new Label("Player " + players.get(0).getPlayerNumber(), skin);
+		Label nameLabel = new Label(players.get(0).getName(), skin);
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
 
 		pauseButton.addListener(new ClickListener() {

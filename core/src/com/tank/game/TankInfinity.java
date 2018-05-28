@@ -1,5 +1,6 @@
 package com.tank.game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -13,9 +14,11 @@ public class TankInfinity extends Game {
 	public InputMultiplexer inputMultiplexer = new InputMultiplexer();
 	public HashMap<String, Screen> screens = new HashMap<String, Screen>();
 	public Screen previousScreen;
+	public ArrayList<Player> players;
 	
 	@Override
 	public void create() {	
+		players = new ArrayList<Player>();
 		screens.put("Loading", new LoadingScreen(this));
 		super.setScreen(screens.get("Loading"));
 		Gdx.input.setInputProcessor(inputMultiplexer);

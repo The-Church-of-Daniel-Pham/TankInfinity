@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.tank.actor.vehicles.PlayerTank;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
@@ -19,16 +19,16 @@ public class PlayScreen implements Screen {
 
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
-		level = new Level(40, 40);
-		levelhud = new LevelHUD(this.game, level.getPlayers());
+		level = new Level(this.game, 40, 40);
+		levelhud = new LevelHUD(this.game, this.game.players);
 		pauseMenu = new PauseMenu(this.game);
 	}
 	
 	@Override
 	public void show() {
 		game.addInput(levelhud);
-		for (PlayerTank p : level.getPlayers()) {
-			game.addInput(p);
+		for (Player p : this.game.players) {
+			game.addInput(p.tank);
 		}
 		if (paused) {
 			game.addInput(pauseMenu);
@@ -38,8 +38,8 @@ public class PlayScreen implements Screen {
 	@Override
 	public void hide() {
 		game.removeInput(levelhud);
-		for (PlayerTank p : level.getPlayers()) {
-			game.removeInput(p);
+		for (Player p : this.game.players) {
+			game.removeInput(p.tank);
 		}
 		game.removeInput(pauseMenu);
 		paused = true;	//when leaving this screen, pause automatically for return
@@ -102,8 +102,8 @@ public class PlayScreen implements Screen {
 	public void pause() {
 		paused = true;
 		game.removeInput(levelhud);
-		for (PlayerTank p : level.getPlayers()) {
-			game.removeInput(p);
+		for (Player p : game.players) {
+			game.removeInput(p.tank);
 		}
 		game.addInput(pauseMenu);
 	}
@@ -112,8 +112,8 @@ public class PlayScreen implements Screen {
 	public void resume() {
 		paused = false;
 		game.addInput(levelhud);
-		for (PlayerTank p : level.getPlayers()) {
-			game.addInput(p);
+		for (Player p : game.players) {
+			game.addInput(p.tank);
 		}
 		game.removeInput(pauseMenu);
 	}

@@ -2,48 +2,51 @@ package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
 import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
-import com.tank.stats.Stats;
 import com.tank.subweapons.SubWeapon;
-import com.tank.utils.Assets;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
-
+	/**
+	 * used for spawning bullets the correct distance away from Vehicle's center
+	 */
+	public static final int TANK_GUN_LENGTH = 135;	//probably redundant, check free tank
+	
 	protected TankController controls;
 	protected Cursor cursor;
-	protected static Texture tTexture = Assets.manager.get(Assets.tread_red);
-	protected static Texture gTexture = Assets.manager.get(Assets.gun_red);
+	protected String tColor;
+	protected String gColor;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
 
-	protected double timeSinceShot;
-
-	public PlayerTank(int player, Color color, float x, float y) {
-		super(tTexture, gTexture, color, x, y);
-		super.setGunPivotX(treadTexture.getWidth() / 2 - 12);
-		super.setGunPivotY(treadTexture.getHeight() / 2);
-		playerNumber = player;
+	protected float timeSinceShot;
+	
+	public PlayerTank() {
+		super(0, 0, "default", "default");	// defaults
+		initializeStats();
 		controls = new KeyboardMouseController();
 		timeSinceShot = 0;
 	}
 
-	@Override
-	protected void setStats() {
-		stats = new Stats();
+	public PlayerTank(float x, float y, String tColor, String gColor) {
+		super(x, y, tColor, gColor);
+		initializeStats();
+		controls = new KeyboardMouseController();
+		timeSinceShot = 0;
+		super.setGunOffsetX(12);
+		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
+	}
+	
+	protected void initializeStats() {
 		stats.addStat("Friction", 96); // (fraction out of 100)^delta to scale velocity by
 		stats.addStat("Acceleration", 1000);
-		stats.addStat("Max_Speed", 0); // used for?
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 250);
-		stats.addStat("Max_Angular_Speed", 4);
 		stats.addStat("Rate_Of_Fire", 1);
 	}
 
@@ -73,7 +76,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	}
 
 	public void shoot() {
-		Vector2 v = new Vector2(AbstractVehicle.TANKGUNLENGTH, 0);
+		Vector2 v = new Vector2(TANK_GUN_LENGTH, 0);
 		v.setAngle(getGunRotation());
 		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation));
 	}
@@ -102,7 +105,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	}
 
 	public float getReloadTime() {
-		return 0f; // write later
+		return timeSinceShot; // write later
 	}
 
 	@Override

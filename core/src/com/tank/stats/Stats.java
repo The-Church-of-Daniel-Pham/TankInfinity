@@ -9,8 +9,8 @@ public class Stats {
 		stats = new LinkedHashMap<String, Integer>();
 	}
 
-	public void addStat(String stat, Integer i) {
-		stats.put(stat, i);
+	public void addStat(String stat, Integer val) {
+		stats.put(stat, val);
 	}
 	
 	public int getStatValue(String stat) {
