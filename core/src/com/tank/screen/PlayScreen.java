@@ -9,6 +9,7 @@ import com.tank.game.TankInfinity;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
 import com.tank.stage.PauseMenu;
+import com.tank.utils.Constants;
 
 public class PlayScreen implements Screen {
 	protected TankInfinity game;
@@ -19,7 +20,7 @@ public class PlayScreen implements Screen {
 
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
-		level = new Level(this.game, 40, 40);
+		level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
 		levelhud = new LevelHUD(this.game, this.game.players);
 		pauseMenu = new PauseMenu(this.game);
 	}
