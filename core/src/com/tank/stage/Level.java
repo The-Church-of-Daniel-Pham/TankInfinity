@@ -1,18 +1,16 @@
 package com.tank.stage;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
-import com.tank.actor.vehicles.PlayerTank;
+import com.tank.game.Player;
+import com.tank.game.TankInfinity;
 
 public class Level extends Stage {
+	protected TankInfinity game;
 	protected int mapWidth;
 	protected int mapHeight;
-	protected ArrayList<PlayerTank> players;
 	protected Map map;
 	protected LevelCamera camera;
 
@@ -21,23 +19,22 @@ public class Level extends Stage {
 	 * @param mapWidth the width of the map in tiles
 	 * @param mapHeight the height of the map in tiles
 	 */
-	public Level(int mapWidth, int mapHeight) {
+	public Level(TankInfinity game, int mapWidth, int mapHeight) {
 		// world is first scaled to fit within the viewport, then the shorter dimension is lengthened to fill the viewport
 		super(new ExtendViewport(12 * AbstractMapTile.SIZE, 8 * AbstractMapTile.SIZE));
+		this.game = game;
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
 		
-		players = new ArrayList<PlayerTank>();
-		players.add(new PlayerTank(1, Color.GREEN, AbstractMapTile.SIZE/2, AbstractMapTile.SIZE/2));
-		for (PlayerTank p : players) {
-			addActor(p);
+		for (Player p : game.players) {
+			addActor(p.tank);
 		}
 		
 		// replace default stage OrthographicCamera with LevelCamera
-		camera = new LevelCamera(mapWidth, mapHeight, players);
+		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
 	}
 	
@@ -47,10 +44,6 @@ public class Level extends Stage {
 	
 	public int getMapHeight() {
 		return mapHeight;
-	}
-	
-	public ArrayList<PlayerTank> getPlayers() {
-		return players;
 	}
 	
 	public LevelCamera getCamera() {

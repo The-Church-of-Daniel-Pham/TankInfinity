@@ -8,7 +8,6 @@ package com.tank.actor.vehicles;
  * AI.
  */
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -16,15 +15,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
-import com.tank.screen.PlayScreen;
+import com.tank.stats.Customization;
 import com.tank.stats.Stats;
 import com.tank.utils.CollisionEvent;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable {
-	/**
-	 * used for spawning bullets the correct distance away from Vehicle's center
-	 */
-	public static final int TANKGUNLENGTH = 135;
 	/**
 	 * List of all abstract vehicles in existence
 	 */
@@ -41,6 +36,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * The stats of the vehicle
 	 */
 	protected Stats stats;
+	/**
+	 * The customization of the vehicle
+	 */
+	protected Customization custom;
 	/**
 	 * The velocity of the vehicle
 	 */
@@ -73,9 +72,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public AbstractVehicle(float x, float y) {
 		setX(x);
 		setY(y);
+		stats = new Stats();
+		custom = new Customization();
 		velocity = new Vector2(0, 0);
 		angularVelocity = 0;
-		setStats();
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
 	}
@@ -83,7 +83,28 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * Set Vehicle statistics unique to each tank type
 	 */
-	abstract protected void setStats();
+	public void setStat(String stat, int val) {
+		stats.addStat(stat, val);
+	}
+	
+	/**
+	 * Set Vehicle customization unique to each tank type
+	 */
+	public void setCustom(String cust, String val) {
+		custom.addCustom(cust, val);
+	}
+	
+	public int getStatValue(String stat) {
+		return stats.getStatValue(stat);
+	}
+	
+	public String getCustom(String cust) {
+		return custom.getCustomValue(cust);
+	}
+	
+	public void cycleCustom(String cust, int n) {
+		custom.cycleCustom(cust, n);
+	}
 
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to
@@ -166,10 +187,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		if (angularVelocity < lim) {
 			applyAngularForce(acceleration);
 		}
-	}
-
-	public int getStat(String stat) {
-		return stats.getStatValue(stat);
 	}
 
 	/**

@@ -1,13 +1,11 @@
 package com.tank.actor.vehicles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector3;
 
 public abstract class FreeTank extends AbstractVehicle {
-
 	protected Texture treadTexture;
 	protected Texture gunTexture;
 	protected float gunOffsetX;
@@ -16,20 +14,19 @@ public abstract class FreeTank extends AbstractVehicle {
 	protected float gunPivotY;
 	protected float bulletOffset;
 	protected float gunRotation;
-	protected Color color;
 
-	public FreeTank(float x, float y) {
+	public FreeTank(float x, float y, String tColor, String gColor) {
 		super(x, y);
-		super.setOrigin(treadTexture.getWidth()/2,treadTexture.getHeight()/2);
-		color = null;
+		initiliazeCustom(tColor, gColor);
+		treadTexture = super.custom.getTexture("tread");
+		gunTexture = super.custom.getTexture("gun");
+		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
+		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
 	}
-
-	public FreeTank(Texture tTexture, Texture gTexture, Color color, float x, float y) {
-		super(x, y);
-		treadTexture = tTexture;
-		gunTexture = gTexture;
-		super.setOrigin(treadTexture.getWidth()/2,treadTexture.getHeight()/2);
-		this.color = color;
+	
+	protected void initiliazeCustom(String tColor, String gColor) {
+		custom.addCustom("tread", tColor);
+		custom.addCustom("gun", gColor);
 	}
 
 	public void setGunOffset(float x, float y) {
@@ -85,12 +82,12 @@ public abstract class FreeTank extends AbstractVehicle {
 	public float getGunRotation() {
 		return gunRotation;
 	}
-	
+
 	public void pointGunToMouse() {
 		gunRotation = 0;
 		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		getStage().getCamera().unproject(mousePos); // to world coordinates
-		gunRotation = (float) Math.toDegrees( Math.atan2((mousePos.y - getY()), (mousePos.x - getX())));
+		gunRotation = (float) Math.toDegrees(Math.atan2((mousePos.y - getY()), (mousePos.x - getX())));
 	}
 
 	public void draw(Batch batch, float a) {
