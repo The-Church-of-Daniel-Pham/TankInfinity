@@ -11,6 +11,8 @@ package com.tank.utils.mapgenerator;
 
 import java.util.*;
 
+import com.badlogic.gdx.math.MathUtils;
+
 public class MazeMaker {
 	private int[][] maze;		//The map
 	ArrayList<MazeCell> path;		//An array list to keep track of where the pointer is and its path. This is in replacement of recursion.
@@ -185,11 +187,10 @@ public class MazeMaker {
 		cornerRemover();	//Remove "corners"
 		
 		loneBlockRemover();
-		
-		clearBottomLeftCorner(5);	//Clears out corner so tank doesn't spawn on bricks
 	}
 	
-	private void clearBottomLeftCorner(int size) {
+	public void clearBottomLeftCorner(int size) {
+		size = MathUtils.clamp(size, 0, Math.min(maze.length, maze[0].length));
 		for (int row = 0; row < size; row++)	// bottom 'size' rows
 		{
 			for(int col = 0; col < size; col++)	// left 'size' columns
@@ -197,6 +198,24 @@ public class MazeMaker {
 				maze[row][col] = 0;
 			}
 		}
+	}
+	
+	public void addBorder(int size) {
+		size = MathUtils.clamp(size, 0, Math.min(maze.length, maze[0].length));
+		int[][] temp = new int[maze.length + 2 * size][maze[0].length + 2 * size];
+		for (int row = 0; row < temp.length; row++)
+		{
+			for(int col = 0; col <  temp[row].length; col++)
+			{
+				if (row < size || row >= temp.length - size || col < size || col >= temp[row].length - size) {
+					temp[row][col] = 2;
+				}
+				else {
+					temp[row][col] = maze[row - size][col - size];	//offset by size up and right
+				}
+			}
+		}
+		maze = temp;
 	}
 
 	/**

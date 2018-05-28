@@ -2,6 +2,7 @@ package com.tank.actor.map;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.BorderTile;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Map extends Group {
 	private int[][] layout;
-	private final int borderSize = 1;
 	public AbstractMapTile[][] map;
 	protected Level level;
 
@@ -29,22 +29,31 @@ public class Map extends Group {
 	 */
 	public Map(int width, int height, Level level) {
 		this.level = level;
-		MazeMaker mazeGen = new MazeMaker(height - borderSize, width - borderSize);
+		MazeMaker mazeGen = new MazeMaker(height, width);
 		mazeGen.createMaze(0, 0);
+		mazeGen.clearBottomLeftCorner(2);	//Clears out corner so tank doesn't spawn on bricks
+		mazeGen.addBorder(1);
 		layout = mazeGen.getMaze();
+		
+		for (int[] row : layout) {
+			for (int i : row) {
+				System.out.print(i);
+			}
+			System.out.println();
+		}
+		
 		map = new AbstractMapTile[height][width];
-		for (int row = map.length - 1; row >= 0; row--) {
-			for (int col = 0; col <= map[row].length - 1; col++) {
+		for (int row = 0; row < map.length; row++) {
+			for (int col = 0; col < map[row].length; col++) {
 				AbstractMapTile tile = null;
-				if (row >= map.length - 1 - borderSize || row < borderSize || col >= map.length - 1 - borderSize
-						|| col < borderSize) { // edge
-					tile = new BorderTile(row, col, this);
-				} else if (layout[row][col] == 0) {
+				if (layout[row][col] == 0) {
 					// polymorphic for simplicity
 					tile = new FloorTile(row, col, this);
 				} else if (layout[row][col] == 1) {
-					// same as for grass, but for brick
 					tile = new WallTile(row, col, this);
+				}
+				if (layout[row][col] == 2) {
+					tile = new BorderTile(row, col, this);
 				}
 				map[row][col] = tile;
 				super.addActor(tile);// kinda redundant, but may come in handy later
@@ -130,19 +139,13 @@ public class Map extends Group {
 	 * @return an ArrayList of MapTiles of all bricks within two tiles of the given
 	 *         tile
 	 */
-	public ArrayList<AbstractMapTile> getBrickNeighbors(int row, int col) {
+	public ArrayList<AbstractMapTile> getWallNeighbors(int row, int col) {
 		ArrayList<AbstractMapTile> brickNeighbors = new ArrayList<AbstractMapTile>();
 		for (int yOffset = -1; yOffset <= 1; yOffset++) {
 			for (int xOffset = -1; xOffset <= 1; xOffset++) {
-				int tempRow = row + yOffset;
-				int tempCol = col + xOffset;
-				if (tempRow < 0 || tempRow >= level.getMapHeight() || tempCol >= level.getMapWidth() || tempCol < 0) // edge
-				{
-					// handle edge vertices separately
-					AbstractMapTile border = new BorderTile(tempRow, tempCol, this); // see
-																						// constructor
-					brickNeighbors.add(border); // only in group for now, may add to array later
-				} else if (layout[tempRow][tempCol] == 1) // normal brick in bounds
+				int tempRow = MathUtils.clamp(row + yOffset, 0, map.length - 1);
+				int tempCol = MathUtils.clamp(col + xOffset, 0, map[row].length - 1);
+				if (map[tempRow][tempCol] instanceof WallTile)
 				{
 					brickNeighbors.add(map[tempRow][tempCol]);
 				}
@@ -151,7 +154,7 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 
-	public void removeBrick(AbstractMapTile m) {
+	public void removeWall(AbstractMapTile m) {
 		if (!(m instanceof BorderTile)) {
 			AbstractMapTile n = new FloorTile(m.getRow(), m.getCol(), this);
 			addActor(n);
