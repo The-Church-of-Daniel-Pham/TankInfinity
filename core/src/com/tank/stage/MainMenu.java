@@ -28,6 +28,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
+		uiTable.defaults().width(200).height(75).space(25).center();
 
 		// Add widgets to the table here.
 		TextButton newGameButton = new TextButton("New Game", skin);
@@ -84,7 +85,6 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(newGameButton);
 		uiTable.row();
 		uiTable.add(resumeGameButton);

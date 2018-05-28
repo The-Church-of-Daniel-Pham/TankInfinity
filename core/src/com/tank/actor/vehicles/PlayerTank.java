@@ -24,20 +24,20 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected int selectedWeapon;
 	protected int playerNumber;
 
-	protected float timeSinceShot;
+	protected float reloadTime;
 	
 	public PlayerTank() {
 		super(0, 0, "default", "default");	// defaults
 		initializeStats();
 		controls = new KeyboardMouseController();
-		timeSinceShot = 0;
+		reloadTime = 0;
 	}
 
 	public PlayerTank(float x, float y, String tColor, String gColor) {
 		super(x, y, tColor, gColor);
 		initializeStats();
 		controls = new KeyboardMouseController();
-		timeSinceShot = 0;
+		reloadTime = 0;
 		super.setGunOffsetX(12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 	}
@@ -67,11 +67,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.applyFriction(delta);
 		super.move(delta);
 		super.pointGunToMouse();
-		if (controls.firePressed() && timeSinceShot > 1.0 / stats.getStatValue("Rate_Of_Fire")) {
+		if (controls.firePressed() && reloadTime < 0.01) {	//if almsot done reloading, allow for rounding
+			reloadTime = 1.0f / stats.getStatValue("Rate_Of_Fire");
 			shoot();
-			timeSinceShot = 0;
-		} else {
-			timeSinceShot += delta;
+		}
+		else if (reloadTime > 0){
+			reloadTime -= delta;
 		}
 	}
 
@@ -105,7 +106,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	}
 
 	public float getReloadTime() {
-		return timeSinceShot; // write later
+		return reloadTime;
 	}
 
 	@Override
