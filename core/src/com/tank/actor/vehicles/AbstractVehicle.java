@@ -12,10 +12,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.WallTile;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
 import com.tank.stats.Customization;
+import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.CollisionEvent;
 
@@ -23,7 +26,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * List of all abstract vehicles in existence
 	 */
-	protected static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
+	public static ArrayList<AbstractVehicle> vehicleList = new ArrayList<AbstractVehicle>();
 	/**
 	 * The health of the vehicle
 	 */
@@ -79,6 +82,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
 	}
+	
+	abstract void initiliazeHitbox();
 
 	/**
 	 * Set Vehicle statistics unique to each tank type
@@ -142,10 +147,25 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            Time since last called.
 	 */
 	public void move(float delta) {
-		velocity.rotate(delta * angularVelocity);
-		setX(getX() + velocity.x * delta);
-		setY(getY() + velocity.y * delta);
-		setRotation(getRotation() + delta * angularVelocity);
+		float tAngle = getRotation() + delta * angularVelocity;
+		float tX = getX() + velocity.x * delta;
+		float tY = getY() + velocity.y * delta;
+		if(canMoveTo(tX, tY, tAngle)) {
+			velocity.rotate(tAngle - getRotation());
+			setRotation(tAngle);
+			super.setPosition(tX, tY);
+			hitbox = testHitbox;
+		}
+//		velocity.rotate(delta * angularVelocity);
+//		setX(getX() + velocity.x * delta);
+//		setY(getY() + velocity.y * delta);
+//		setRotation(getRotation() + delta * angularVelocity);
+	}
+
+	public boolean canMoveTo(float x, float y, float orientation) {
+		testHitbox = getHitboxAt(x, y, orientation);
+		checkCollisions(getNeighbors());
+		return collisions.size() == 0;
 	}
 
 	public void applyFriction(float delta) {
@@ -200,7 +220,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
-	 * collisions to this object. This is handled differently for each subclass
+	 * collisions to this object. This is handled differently for each subclass.
+	 * Uses testHitbox to check collisions.
 	 * 
 	 * @param other
 	 *            The other objects this object may collide with
@@ -217,8 +238,9 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
 					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(c, hitbox.getVertices()[i * 2],
-							hitbox.getVertices()[i * 2 + 1]);
+					Vector2 wall = CollisionEvent.getWallVector(c,
+							new Vector2(hitbox.getVertices()[i * 2], hitbox.getVertices()[i * 2 + 1]),
+							new Vector2(testHitbox.getVertices()[i * 2], testHitbox.getVertices()[i * 2 + 1]));
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
 				}
@@ -244,9 +266,19 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	public ArrayList<Collidable> getNeighbors() {
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
+		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
+		ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getBrickNeighbors(gridCoords[0], gridCoords[1]);
+		for (AbstractMapTile m : a) {
+			if (m instanceof WallTile) {
+				neighbors.add((WallTile) m);
+			}
+		}
+		neighbors.addAll(AbstractVehicle.vehicleList);
+		neighbors.remove(this);
 		// get AbstractMapTiles from current row/col with radius 1
 		// add instances of WallTile to neighbors
-		// place all items in vehicleList into neighbors
+		// place all items in vehicleList into neighbors, them remove this instance from
+		// neighbors
 		// don't worry about bullet collisions; the bullet itself worries about tanks
 		return neighbors;
 	}

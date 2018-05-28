@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.tank.actor.vehicles.PlayerTank;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.stage.MainMenu;
 
@@ -14,6 +16,9 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen (TankInfinity game) {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
+		// create first player
+		this.game.players.add(new Player("Player 1"));
+		this.game.players.get(0).tank = new PlayerTank(128, 128, "green", "blue");
 	}
 	
 	@Override

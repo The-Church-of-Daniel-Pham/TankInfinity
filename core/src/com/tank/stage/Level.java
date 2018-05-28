@@ -6,6 +6,9 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.vehicles.AbstractVehicle;
+
 
 public class Level extends Stage {
 	protected TankInfinity game;
@@ -33,6 +36,9 @@ public class Level extends Stage {
 			addActor(p.tank);
 		}
 		
+		AbstractVehicle.vehicleList.clear();
+		AbstractProjectile.projectileList.clear();
+		
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
@@ -48,5 +54,9 @@ public class Level extends Stage {
 	
 	public LevelCamera getCamera() {
 		return camera;
+	}
+	
+	public Map getMap() {
+		return map;
 	}
 }

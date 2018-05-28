@@ -36,8 +36,6 @@ public class LoadingScreen implements Screen {
     	loading.draw();
     	
 		if (Assets.manager.update()) {
-			// create first player
-			game.players.add(new Player("Player 1"));
 			// create rest of screens
 			game.screens.put("Main Menu", new MainMenuScreen(game));
 			game.screens.put("Customization Menu", new CustomizationMenuScreen(game));
