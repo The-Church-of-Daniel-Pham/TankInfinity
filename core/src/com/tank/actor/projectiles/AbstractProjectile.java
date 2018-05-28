@@ -186,6 +186,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
 	 * collisions to this object. This is handled differently for each subclass
+	 * Uses testHitbox to check collisions.
 	 * 
 	 * @param other
 	 *            The other object this object collides with
