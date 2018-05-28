@@ -12,9 +12,10 @@ import com.tank.utils.mapgenerator.MazeMaker;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Map extends Group {
-	public int[][] layout;
+	private int[][] layout;
+	private final int borderSize = 1;
 	public AbstractMapTile[][] map;
-	public Level level;
+	protected Level level;
 
 	/**
 	 * Creates a new randomly generated map of size width tiles and height tiles
@@ -28,24 +29,25 @@ public class Map extends Group {
 	 */
 	public Map(int width, int height, Level level) {
 		this.level = level;
-		MazeMaker mazeGen = new MazeMaker(width, height);
+		MazeMaker mazeGen = new MazeMaker(height - borderSize, width - borderSize);
 		mazeGen.createMaze(0, 0);
 		layout = mazeGen.getMaze();
-		map = new AbstractMapTile[layout.length][layout[0].length];
-		for (int row = layout.length - 1; row >= 0; row--) {
-			for (int col = 0; col < layout[row].length; col++) {
-				if (layout[row][col] == 0) {
-					AbstractMapTile tile = new FloorTile(row, col, this); // polymorphic for
-																								// simplicity
-					// in this class
-					map[row][col] = tile;
-					super.addActor(tile); // kinda redundant, but may come in handy later
+		map = new AbstractMapTile[height][width];
+		for (int row = map.length - 1; row >= 0; row--) {
+			for (int col = 0; col <= map[row].length - 1; col++) {
+				AbstractMapTile tile = null;
+				if (row >= map.length - 1 - borderSize || row < borderSize || col >= map.length - 1 - borderSize
+						|| col < borderSize) { // edge
+					tile = new BorderTile(row, col, this);
+				} else if (layout[row][col] == 0) {
+					// polymorphic for simplicity
+					tile = new FloorTile(row, col, this);
 				} else if (layout[row][col] == 1) {
 					// same as for grass, but for brick
-					AbstractMapTile tile = new WallTile(row, col, this);
-					map[row][col] = tile;
-					super.addActor(tile);
+					tile = new WallTile(row, col, this);
 				}
+				map[row][col] = tile;
+				super.addActor(tile);// kinda redundant, but may come in handy later
 			}
 		}
 	}
@@ -80,7 +82,7 @@ public class Map extends Group {
 	 * @return the width, in pixels
 	 */
 	public int getSizeX() {
-		return layout[0].length * AbstractMapTile.SIZE;
+		return map[0].length * AbstractMapTile.SIZE;
 	}
 
 	/**
@@ -88,7 +90,7 @@ public class Map extends Group {
 	 * @return the height, in pixels
 	 */
 	public int getSizeY() {
-		return layout.length * AbstractMapTile.SIZE;
+		return map.length * AbstractMapTile.SIZE;
 	}
 
 	/**
@@ -138,7 +140,7 @@ public class Map extends Group {
 				{
 					// handle edge vertices separately
 					AbstractMapTile border = new BorderTile(tempRow, tempCol, this); // see
-																											// constructor
+																						// constructor
 					brickNeighbors.add(border); // only in group for now, may add to array later
 				} else if (layout[tempRow][tempCol] == 1) // normal brick in bounds
 				{
