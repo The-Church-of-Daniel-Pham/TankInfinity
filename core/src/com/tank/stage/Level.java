@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.PlayerTank;
 
 public class Level extends Stage {
@@ -29,6 +31,9 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
+		
+		AbstractVehicle.vehicleList.clear();
+		AbstractProjectile.projectileList.clear();
 		
 		players = new ArrayList<PlayerTank>();
 		players.add(new PlayerTank(1, Color.GREEN, AbstractMapTile.SIZE/2, AbstractMapTile.SIZE/2));
@@ -55,5 +60,9 @@ public class Level extends Stage {
 	
 	public LevelCamera getCamera() {
 		return camera;
+	}
+	
+	public Map getMap() {
+		return map;
 	}
 }
