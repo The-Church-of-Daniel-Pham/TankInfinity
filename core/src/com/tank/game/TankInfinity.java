@@ -36,8 +36,10 @@ public class TankInfinity extends Game {
 	
 	@Override
 	public void setScreen(Screen screen) {
-		previousScreen = super.getScreen();	//stores screen you were on before switching
-		super.setScreen(screen);	//applies switch
+		if (screen != null) {
+			previousScreen = super.getScreen();	//stores screen you were on before switching
+			super.setScreen(screen);	//applies switch
+		}
 	}
 	
 	@Override

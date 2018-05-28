@@ -96,7 +96,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * Set Vehicle customization unique to each tank type
 	 */
 	public void setCustom(String cust, String val) {
-		custom.addCustom(cust, val);
+		custom.setCustom(cust, val);
 	}
 	
 	public int getStatValue(String stat) {

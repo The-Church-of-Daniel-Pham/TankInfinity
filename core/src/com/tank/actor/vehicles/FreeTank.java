@@ -38,8 +38,8 @@ public abstract class FreeTank extends AbstractVehicle {
 	}
 	
 	protected void initiliazeCustom(String tColor, String gColor) {
-		custom.addCustom("tread", tColor);
-		custom.addCustom("gun", gColor);
+		custom.setCustom("tread", tColor);
+		custom.setCustom("gun", gColor);
 		treadTexture = super.custom.getTexture("tread");
 		gunTexture = super.custom.getTexture("gun");
 	}
@@ -106,6 +106,9 @@ public abstract class FreeTank extends AbstractVehicle {
 	}
 
 	public void draw(Batch batch, float a) {
+		//update textures from customization
+		treadTexture = super.custom.getTexture("tread");
+		gunTexture = super.custom.getTexture("gun");
 		batch.draw(treadTexture, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), treadTexture.getWidth(), treadTexture.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, treadTexture.getWidth(), treadTexture.getHeight(), false, false);

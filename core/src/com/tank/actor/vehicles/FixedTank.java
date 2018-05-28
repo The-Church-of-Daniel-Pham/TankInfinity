@@ -12,17 +12,19 @@ public abstract class FixedTank extends AbstractVehicle {
 		initiliazeHitbox();
 		super.setOrigin(tankTexture.getWidth() / 2, tankTexture.getHeight() / 2);
 	}
-	
+
 	protected void initiliazeCustom(String color) {
-		super.custom.addCustom("tank", color);
+		super.custom.setCustom("tank", color);
 		tankTexture = super.custom.getTexture("tank");
 	}
-	
+
 	protected void initiliazeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 
 	public void draw(Batch batch, float a) {
+		// update textures from customization
+		tankTexture = super.custom.getTexture("tank");
 		batch.draw(tankTexture, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), tankTexture.getWidth(), tankTexture.getHeight(),
 				super.getScaleX(), super.getScaleY(), super.getRotation(), 0, 0, tankTexture.getWidth(),
