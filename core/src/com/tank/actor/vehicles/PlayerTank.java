@@ -40,6 +40,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
+		super.setGunOffsetX(-12);
+		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 	}
 
 	public PlayerTank(float x, float y, int playerNumber, String tColor, String gColor) {
@@ -49,7 +51,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		initializeStats();
 		controls = new KeyboardMouseController();
 		reloadTime = 0;
-		super.setGunOffsetX(12);
+		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 	}
 	
