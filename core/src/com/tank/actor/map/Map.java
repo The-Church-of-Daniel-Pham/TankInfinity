@@ -31,19 +31,11 @@ public class Map extends Group {
 		this.level = level;
 		MazeMaker mazeGen = new MazeMaker(height, width);
 		mazeGen.createMaze(0, 0);
-		mazeGen.clearBottomLeftCorner(2);	//Clears out corner so tank doesn't spawn on bricks
+		mazeGen.clearBottomLeftCorner(5);	//Clears out corner so tank doesn't spawn on bricks
 		mazeGen.addBorder(1);
 		layout = mazeGen.getMaze();
-		
-		for (int[] row : layout) {
-			for (int i : row) {
-				System.out.print(i);
-			}
-			System.out.println();
-		}
-		
 		map = new AbstractMapTile[height][width];
-		for (int row = 0; row < map.length; row++) {
+		for (int row = map.length - 1; row >= 0; row--) {
 			for (int col = 0; col < map[row].length; col++) {
 				AbstractMapTile tile = null;
 				if (layout[row][col] == 0) {
