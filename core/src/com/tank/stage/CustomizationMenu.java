@@ -56,7 +56,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		continueButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 initiliazeTankPositions();
+	        	 initiliazeTanks();
 	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
@@ -69,9 +69,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		return uiTable;
 	}
 	
-	private void initiliazeTankPositions() {
+	private void initiliazeTanks() {
 		int space = 0;
 		for (Player p : game.players) {
+			p.tank.setRotation(90);
 			p.tank.setPosition(128 + space, 128);
 			space += 256;
 		}
