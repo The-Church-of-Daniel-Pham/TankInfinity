@@ -3,6 +3,7 @@ package com.tank.actor.vehicles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.tank.utils.Assets;
 
@@ -102,7 +103,9 @@ public abstract class FreeTank extends AbstractVehicle {
 		batch.draw(treadTexture, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), treadTexture.getWidth(), treadTexture.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, treadTexture.getWidth(), treadTexture.getHeight(), false, false);
-		batch.draw(gunTexture, super.getX() - gunPivotX, super.getY() - gunPivotY, gunPivotX, gunPivotY,
+		Vector2 gunOffsets = new Vector2(gunOffsetX, gunOffsetY);
+		gunOffsets.rotate(super.getRotation());
+		batch.draw(gunTexture, super.getX() - gunPivotX + gunOffsets.x, super.getY() - gunPivotY + gunOffsets.y, gunPivotX, gunPivotY,
 				gunTexture.getWidth(), gunTexture.getHeight(), 1, 1, gunRotation, 0, 0, gunTexture.getWidth(),
 				gunTexture.getHeight(), false, false);
 		for (int i = 0; i < 4; i++) {
