@@ -8,6 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
@@ -20,6 +22,8 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	public CustomizationMenu(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
+		AbstractVehicle.vehicleList.clear();
+		AbstractProjectile.projectileList.clear();
 		// create players
 		this.game.players.add(new Player("Player 1", "red"));
 		this.game.players.add(new Player("Player 2", "blue"));

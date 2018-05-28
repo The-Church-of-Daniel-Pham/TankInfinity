@@ -35,9 +35,7 @@ public class Level extends Stage {
 		for (Player p : game.players) {
 			addActor(p.tank);
 		}
-		
-		AbstractVehicle.vehicleList.clear();
-		AbstractProjectile.projectileList.clear();
+
 		
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);

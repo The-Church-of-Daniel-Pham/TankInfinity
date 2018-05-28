@@ -82,7 +82,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
 	}
-	
+
 	abstract void initiliazeHitbox();
 
 	/**
@@ -91,22 +91,22 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public void setStat(String stat, int val) {
 		stats.addStat(stat, val);
 	}
-	
+
 	/**
 	 * Set Vehicle customization unique to each tank type
 	 */
 	public void setCustom(String cust, String val) {
 		custom.setCustom(cust, val);
 	}
-	
+
 	public int getStatValue(String stat) {
 		return stats.getStatValue(stat);
 	}
-	
+
 	public String getCustom(String cust) {
 		return custom.getCustomValue(cust);
 	}
-	
+
 	public void cycleCustom(String cust, int n) {
 		custom.cycleCustom(cust, n);
 	}
@@ -150,16 +150,16 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
-		if(canMoveTo(tX, tY, tAngle)) {
+		if (canMoveTo(tX, tY, tAngle)) {
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
 		}
-//		velocity.rotate(delta * angularVelocity);
-//		setX(getX() + velocity.x * delta);
-//		setY(getY() + velocity.y * delta);
-//		setRotation(getRotation() + delta * angularVelocity);
+		// velocity.rotate(delta * angularVelocity);
+		// setX(getX() + velocity.x * delta);
+		// setY(getY() + velocity.y * delta);
+		// setRotation(getRotation() + delta * angularVelocity);
 	}
 
 	public boolean canMoveTo(float x, float y, float orientation) {
@@ -273,7 +273,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				neighbors.add((WallTile) m);
 			}
 		}
-		neighbors.addAll(AbstractVehicle.vehicleList);
+		neighbors.addAll(vehicleList);
 		neighbors.remove(this);
 		// get AbstractMapTiles from current row/col with radius 1
 		// add instances of WallTile to neighbors
