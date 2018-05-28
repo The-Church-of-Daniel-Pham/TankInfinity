@@ -19,15 +19,17 @@ public abstract class FreeTank extends AbstractVehicle {
 
 	public FreeTank(float x, float y) {
 		super(x, y);
-		initiliazeCustom("default", "default");
+		treadTexture = Assets.manager.get(Assets.tread_default);
+		gunTexture = Assets.manager.get(Assets.gun_default);
 		initiliazeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
 	}
 
-	public FreeTank(float x, float y, String tColor, String gColor) {
+	public FreeTank(float x, float y, Texture tt, Texture gt) {
 		super(x, y);
-		initiliazeCustom(tColor, gColor);
+		treadTexture = tt;
+		gunTexture = gt;
 		initiliazeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
@@ -35,13 +37,6 @@ public abstract class FreeTank extends AbstractVehicle {
 	
 	protected void initiliazeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
-	}
-	
-	protected void initiliazeCustom(String tColor, String gColor) {
-		custom.setCustom("tread", tColor);
-		custom.setCustom("gun", gColor);
-		treadTexture = super.custom.getTexture("tread");
-		gunTexture = super.custom.getTexture("gun");
 	}
 
 	public void setGunOffset(float x, float y) {
@@ -97,18 +92,13 @@ public abstract class FreeTank extends AbstractVehicle {
 	public float getGunRotation() {
 		return gunRotation;
 	}
-
-	public void pointGunToMouse() {
-		gunRotation = 0;
-		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		getStage().getCamera().unproject(mousePos); // to world coordinates
-		gunRotation = (float) Math.toDegrees(Math.atan2((mousePos.y - getY()), (mousePos.x - getX())));
+	
+	public void pointGunToPoint(float x, float y) {
+		gunRotation = (float) Math.toDegrees(Math.atan2((y - getY()), (x - getX())));
 	}
 
 	public void draw(Batch batch, float a) {
 		//update textures from customization
-		treadTexture = super.custom.getTexture("tread");
-		gunTexture = super.custom.getTexture("gun");
 		batch.draw(treadTexture, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), treadTexture.getWidth(), treadTexture.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, treadTexture.getWidth(), treadTexture.getHeight(), false, false);

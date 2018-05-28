@@ -40,10 +40,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected Stats stats;
 	/**
-	 * The customization of the vehicle
-	 */
-	protected Customization custom;
-	/**
 	 * The velocity of the vehicle
 	 */
 	protected Vector2 velocity;
@@ -76,7 +72,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		setX(x);
 		setY(y);
 		stats = new Stats();
-		custom = new Customization();
 		velocity = new Vector2(0, 0);
 		angularVelocity = 0;
 		vehicleList.add(this);
@@ -92,23 +87,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		stats.addStat(stat, val);
 	}
 
-	/**
-	 * Set Vehicle customization unique to each tank type
-	 */
-	public void setCustom(String cust, String val) {
-		custom.setCustom(cust, val);
-	}
-
 	public int getStatValue(String stat) {
 		return stats.getStatValue(stat);
-	}
-
-	public String getCustom(String cust) {
-		return custom.getCustomValue(cust);
-	}
-
-	public void cycleCustom(String cust, int n) {
-		custom.cycleCustom(cust, n);
 	}
 
 	/**
