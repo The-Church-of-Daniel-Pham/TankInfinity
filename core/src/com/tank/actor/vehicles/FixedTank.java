@@ -2,20 +2,23 @@ package com.tank.actor.vehicles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.tank.utils.Assets;
 
 public abstract class FixedTank extends AbstractVehicle {
 	protected Texture tankTexture;
 
-	public FixedTank(float x, float y, String color) {
+	public FixedTank(float x, float y) {
 		super(x, y);
-		initiliazeCustom(color);
+		tankTexture = Assets.manager.get(Assets.tread_default);;
 		initiliazeHitbox();
 		super.setOrigin(tankTexture.getWidth() / 2, tankTexture.getHeight() / 2);
 	}
-
-	protected void initiliazeCustom(String color) {
-		super.custom.setCustom("tank", color);
-		tankTexture = super.custom.getTexture("tank");
+	
+	public FixedTank(float x, float y, Texture t) {
+		super(x, y);
+		tankTexture = t;
+		initiliazeHitbox();
+		super.setOrigin(tankTexture.getWidth() / 2, tankTexture.getHeight() / 2);
 	}
 
 	protected void initiliazeHitbox() {
@@ -24,7 +27,6 @@ public abstract class FixedTank extends AbstractVehicle {
 
 	public void draw(Batch batch, float a) {
 		// update textures from customization
-		tankTexture = super.custom.getTexture("tank");
 		batch.draw(tankTexture, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), tankTexture.getWidth(), tankTexture.getHeight(),
 				super.getScaleX(), super.getScaleY(), super.getRotation(), 0, 0, tankTexture.getWidth(),

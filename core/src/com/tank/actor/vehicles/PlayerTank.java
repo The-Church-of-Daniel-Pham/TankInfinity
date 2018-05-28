@@ -1,14 +1,19 @@
 package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.KeyboardMouseController;
 import com.tank.controls.TankController;
+import com.tank.stats.Customization;
 import com.tank.subweapons.SubWeapon;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
@@ -24,11 +29,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
+	protected Customization custom;
 
 	protected float reloadTime;
 	
 	public PlayerTank(int playerNumber) {
-		super(0, 0, "default", "default");	// defaults
+		super(0, 0);	// defaults
+		initializeCustom("default", "default");
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
@@ -36,7 +43,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	}
 
 	public PlayerTank(float x, float y, int playerNumber, String tColor, String gColor) {
-		super(x, y, tColor, gColor);
+		super(x, y);
+		initializeCustom(tColor, gColor);
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = new KeyboardMouseController();
@@ -51,6 +59,16 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 250);
 		stats.addStat("Rate_Of_Fire", 1);
+	}
+	
+	protected void initializeCustom(String tColor, String gColor) {
+		custom = new Customization();
+		custom.setCustom("tread", tColor);
+		custom.setCustom("gun", gColor);
+		treadTexture = custom.getTexture("tread");
+		gunTexture = custom.getTexture("gun");
+		this.tColor = tColor;
+		this.gColor = gColor;
 	}
 
 	/**
@@ -69,7 +87,10 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		}
 		super.applyFriction(delta);
 		super.move(delta);
-		super.pointGunToMouse();
+		//Gun Pointing
+		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		getStage().getCamera().unproject(mousePos); // to world coordinates
+		super.pointGunToPoint(mousePos.x, mousePos.y);
 		if (controls.firePressed() && reloadTime < 0.01) {	//if almsot done reloading, allow for rounding
 			reloadTime = 1.0f / stats.getStatValue("Rate_Of_Fire");
 			shoot();
@@ -102,6 +123,25 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		}
 		return new Polygon(f);
 
+	}
+	
+	/**
+	 * Set Vehicle customization unique to each player tank type
+	 */
+	public void setCustom(String cust, String val) {
+		custom.setCustom(cust, val);
+		gunTexture = custom.getTexture("gun");
+		treadTexture = custom.getTexture("tread");
+	}
+
+	public String getCustom(String cust) {
+		return custom.getCustomValue(cust);
+	}
+
+	public void cycleCustom(String cust, int n) {
+		custom.cycleCustom(cust, n);
+		gunTexture = custom.getTexture("gun");
+		treadTexture = custom.getTexture("tread");
 	}
 
 	public int getPlayerNumber() {
