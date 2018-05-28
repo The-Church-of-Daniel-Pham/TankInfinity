@@ -29,6 +29,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
+		uiTable.defaults().width(200).height(75).space(25).center();
 
 		// Add widgets to the table here.
 		Label windowLabel = new Label("Window Mode ", skin);
@@ -100,7 +101,6 @@ public class SettingsMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.defaults().width(200).height(75).space(25).center();
 		uiTable.add(windowLabel).right();
 		uiTable.add(windowModeButton).width(300).colspan(3).left();
 		uiTable.row();
