@@ -3,21 +3,28 @@ package com.tank.stats;
 import java.util.LinkedHashMap;
 import com.badlogic.gdx.graphics.Texture;
 import com.tank.utils.Assets;
-import com.tank.utils.LinkyList;
+import com.tank.utils.CycleList;
 
 public class Customization {
 	private LinkedHashMap<String, String> custom;
-	private LinkyList treads;
-	private LinkyList guns;
+	private CycleList treads;
+	private CycleList guns;
 
 	public Customization() {
 		custom = new LinkedHashMap<String, String>();
-		treads = new LinkyList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0);
-		guns = new LinkyList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0);
+		treads = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
+		guns = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
 	}
 
-	public void addCustom(String cust, String val) {
-		custom.put(cust, val);
+	public void setCustom(String cust, String val) {
+		if (cust.equals("tread")) {
+			treads.setCurrent(val);
+			custom.put(cust, val);
+		}
+		else if (cust.equals("gun")) {
+			guns.setCurrent(val);
+			custom.put(cust, val);
+		}
 	}
 
 	public String getCustomValue(String cust) {
@@ -30,10 +37,12 @@ public class Customization {
 	
 	public void cycleCustom(String cust, int n) {
 		if (cust.equals("tread")) {
-			
+			treads.cycleBy(n);
+			custom.put(cust, (String) treads.getCurrent());
 		}
 		else if (cust.equals("gun")) {
-			
+			guns.cycleBy(n);
+			custom.put(cust, (String) guns.getCurrent());
 		}
 	}
 

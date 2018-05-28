@@ -22,17 +22,26 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	public CustomizationMenu(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
+		// create players
+		this.game.players.add(new Player("Player 1"));
+		this.game.players.add(new Player("Player 2"));
+		this.game.players.add(new Player("Player 3"));
+		this.game.players.add(new Player("Player 4"));
 		super.addActor(buildTable());
 	}
 
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
-		
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(200).height(75).space(25).center();
+		
 		// Add widgets to the table here.
 		for (final Player p : game.players) {
+			Table playerTable = new Table();
+			playerTable.setDebug(false);
+			playerTable.defaults().width(200).height(75).space(25).center();
+			
 			Label playerLabel = new Label(p.getName(), skin);
 			playerLabel.setAlignment(Align.center);
 			Label treadColorLabel = new Label("Tread Color ", skin);
@@ -53,6 +62,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 				public void clicked(InputEvent event, float x, float y) {
 					p.tank.cycleCustom("tread", 1);
 					treadColorValueLabel.setText(p.tank.getCustom("tread"));
+					System.out.println(p.tank.getCustom("tread"));
 					event.stop();
 				}
 			});
@@ -70,7 +80,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					p.tank.cycleCustom("gun", 1);
-					treadColorValueLabel.setText(p.tank.getCustom("gun"));
+					gunColorValueLabel.setText(p.tank.getCustom("gun"));
 					event.stop();
 				}
 			});
@@ -79,23 +89,24 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					p.tank.cycleCustom("gun", -1);
-					treadColorValueLabel.setText(p.tank.getCustom("gun"));
+					gunColorValueLabel.setText(p.tank.getCustom("gun"));
 					event.stop();
 				}
 			});
 			
-			uiTable.add(playerLabel).colspan(4);
-			uiTable.row();
-			uiTable.add(treadColorLabel).width(200);
-			uiTable.add(leftTreadButton).width(50).spaceRight(0);
-			uiTable.add(treadColorValueLabel).width(200).spaceLeft(0).spaceRight(0);
-			uiTable.add(rightTreadButton).width(50).spaceLeft(0);
-			uiTable.row();
-			uiTable.add(gunColorLabel).width(200);
-			uiTable.add(leftGunButton).width(50).spaceRight(0);
-			uiTable.add(gunColorValueLabel).width(200).spaceLeft(0).spaceRight(0);
-			uiTable.add(rightGunButton).width(50).spaceLeft(0);
-			uiTable.row();
+			playerTable.add(playerLabel).colspan(4);
+			playerTable.row();
+			playerTable.add(treadColorLabel).width(150);
+			playerTable.add(leftTreadButton).width(50).spaceRight(0);
+			playerTable.add(treadColorValueLabel).width(100).spaceLeft(0).spaceRight(0);
+			playerTable.add(rightTreadButton).width(50).spaceLeft(0);
+			playerTable.row();
+			playerTable.add(gunColorLabel).width(150);
+			playerTable.add(leftGunButton).width(50).spaceRight(0);
+			playerTable.add(gunColorValueLabel).width(100).spaceLeft(0).spaceRight(0);
+			playerTable.add(rightGunButton).width(50).spaceLeft(0);
+			
+			uiTable.add(playerTable).expand();
 		}
 		
 		TextButton backButton = new TextButton("Back", skin);
@@ -106,8 +117,29 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	        	 event.stop();
 	         }
 	      });
-		uiTable.add(backButton).width(150).colspan(4);
+		
+		TextButton continueButton = new TextButton("Continue", skin);
+		continueButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 initiliazeTankPositions();
+	        	 game.setScreen(game.screens.get("Play"));
+	        	 event.stop();
+	         }
+	      });
+		
+		uiTable.row();
+		uiTable.add(backButton).width(150).colspan(2).expand().bottom().left();
+		uiTable.add(continueButton).colspan(2).expand().bottom().right();
 
 		return uiTable;
+	}
+	
+	private void initiliazeTankPositions() {
+		int space = 0;
+		for (Player p : game.players) {
+			p.tank.setPosition(128 + space, 128);
+			space += 256;
+		}
 	}
 }

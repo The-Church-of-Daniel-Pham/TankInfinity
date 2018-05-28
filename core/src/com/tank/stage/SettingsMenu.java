@@ -106,7 +106,7 @@ public class SettingsMenu extends Stage implements InputProcessor{
 		uiTable.row();
 		uiTable.add(resolutionLabel).right();
 		uiTable.add(minusButton).width(50).spaceRight(0);
-		uiTable.add(resolutionValueLabel).width(200).spaceLeft(0).spaceRight(0);
+		uiTable.add(resolutionValueLabel).spaceLeft(0).spaceRight(0);
 		uiTable.add(plusButton).width(50).spaceLeft(0);
 		uiTable.row();
 		uiTable.add(vsyncLabel).right();
