@@ -122,9 +122,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.applyFriction(delta);
 		super.move(delta);
 		// Gun Pointing
-		for (int i = 0; i < 8; i++) {
-			System.out.println(getStage().getCamera().frustum.planePoints[i]);
-		}
 		if ((cursorPos = controls.getCursor(cursorPos)) != null) {
 			Vector3 cursorPos = getStage().getCamera().unproject(this.cursorPos.cpy()); // to world coordinates
 			cursorPos.x = MathUtils.clamp(cursorPos.x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
