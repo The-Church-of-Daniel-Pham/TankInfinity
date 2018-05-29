@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 
@@ -33,6 +34,7 @@ public class Level extends Stage {
 		for (Player p : game.players) {
 			addActor(p.tank);
 		}
+		addActor(new BasicEnemy(1500, 1500));
 
 		
 		// replace default stage OrthographicCamera with LevelCamera
