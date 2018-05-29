@@ -54,10 +54,10 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	}
 	
 	protected void initializeStats() {
-		stats.addStat("Friction", 96); // (fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 1000);
+		stats.addStat("Friction", 95); // (fraction out of 100)^delta to scale velocity by
+		stats.addStat("Acceleration", 1200);
 		stats.addStat("Angular_Friction", 98);
-		stats.addStat("Angular_Acceleration", 250);
+		stats.addStat("Angular_Acceleration", 300);
 		stats.addStat("Rate_Of_Fire", 1);
 	}
 	
@@ -91,6 +91,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		getStage().getCamera().unproject(mousePos); // to world coordinates
 		super.pointGunToPoint(mousePos.x, mousePos.y);
+		//Firing
 		if (controls.firePressed() && reloadTime < 0.01) {	//if almsot done reloading, allow for rounding
 			reloadTime = 1.0f / stats.getStatValue("Rate_Of_Fire");
 			shoot();

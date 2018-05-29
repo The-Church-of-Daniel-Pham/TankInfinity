@@ -12,9 +12,7 @@ public class LevelCamera extends OrthographicCamera {
 	protected ArrayList<Player> players;
 	protected boolean freeCamEnabled;
 
-	public static final float SPEED = 0;
-	public static final float MIN_ZOOM = 0;
-	public static final float MAX_ZOOM = 0;
+	public static final float BORDER_ZOOM = 0.5f;
 	
 	public LevelCamera(int width, int height, ArrayList<Player> players) {
 		this.width = width;
@@ -45,7 +43,7 @@ public class LevelCamera extends OrthographicCamera {
 		}
 		
 		if (count > 0) {
-			super.zoom = Math.max(1.0f, Math.max((maxX - minX) / (super.viewportWidth), (maxY - minY) / (super.viewportHeight)) + 0.2f);
+			super.zoom = Math.max(1.0f, Math.max((maxX - minX) / (super.viewportWidth), (maxY - minY) / (super.viewportHeight)) + BORDER_ZOOM);
 			super.position.x = MathUtils.clamp((minX + maxX) / 2, (super.viewportWidth * zoom) / 2f,
 					width * AbstractMapTile.SIZE - (super.viewportWidth * zoom) / 2f);
 			super.position.y = MathUtils.clamp((minY + maxY) / 2, (super.viewportHeight * zoom) / 2f,

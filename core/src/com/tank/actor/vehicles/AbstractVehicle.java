@@ -8,6 +8,7 @@ package com.tank.actor.vehicles;
  * AI.
  */
 import java.util.ArrayList;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -17,9 +18,9 @@ import com.tank.actor.map.tiles.WallTile;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
-import com.tank.stats.Customization;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
+import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public abstract class AbstractVehicle extends Actor implements Collidable, Destructible, Teamable {
@@ -60,7 +61,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * stores the collision events that have been recorded in the current frame
 	 */
 	protected ArrayList<CollisionEvent> collisions;
-
+	protected Texture debug = Assets.manager.get(Assets.vertex);
+	
 	/**
 	 * 
 	 * @param x
@@ -78,7 +80,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		collisions = new ArrayList<CollisionEvent>();
 	}
 
-	abstract void initiliazeHitbox();
+	protected abstract void initiliazeHitbox();
 
 	/**
 	 * Set Vehicle statistics unique to each tank type
@@ -114,6 +116,14 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public void draw(Batch batch, float a) {
 
 	}
+	
+	public void drawVertices(Batch batch, float a) {
+		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
+			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
+					debug.getWidth(), debug.getHeight(), 1, 1, 0, 0, 0, debug.getWidth(), debug.getHeight(), false,
+					false);
+		}
+	}
 
 	public Vector2 getVelocity() {
 		return velocity;
@@ -134,6 +144,18 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
 			super.setPosition(tX, tY);
+			hitbox = testHitbox;
+		}
+		else if (!canMoveTo(tX, getY(), getRotation())) {
+			velocity.rotate(tAngle - getRotation());
+			setRotation(tAngle);
+			super.setX(tX);
+			hitbox = testHitbox;
+		}
+		else if (!canMoveTo(getX(), tY, getRotation())) {
+			velocity.rotate(tAngle - getRotation());
+			setRotation(tAngle);
+			super.setY(tY);
 			hitbox = testHitbox;
 		}
 		// velocity.rotate(delta * angularVelocity);
