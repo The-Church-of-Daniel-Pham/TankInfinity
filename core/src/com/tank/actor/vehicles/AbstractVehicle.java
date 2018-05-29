@@ -62,7 +62,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
-	
+
 	/**
 	 * 
 	 * @param x
@@ -79,9 +79,9 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
 	}
-	
+
 	public abstract void reset();
-	
+
 	protected abstract void initializeHitbox();
 
 	/**
@@ -118,7 +118,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public void draw(Batch batch, float a) {
 
 	}
-	
+
 	public void drawVertices(Batch batch, float a) {
 		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
 			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
@@ -142,22 +142,20 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
-		
-		//translation
+
+		// translation
 		if (canMoveTo(tX, tY, getRotation())) {
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
-		}
-		else if (canMoveTo(tX, getY(), getRotation())) {
+		} else if (canMoveTo(tX, getY(), getRotation())) {
 			super.setX(tX);
 			hitbox = testHitbox;
-		}
-		else if (canMoveTo(getX(), tY, getRotation())) {
+		} else if (canMoveTo(getX(), tY, getRotation())) {
 			super.setY(tY);
 			hitbox = testHitbox;
 		}
-		
-		//rotation
+
+		// rotation
 		if (canMoveTo(getX(), getY(), tAngle)) {
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
@@ -219,17 +217,17 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
 					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(c,
-							new Vector2(hitbox.getVertices()[i * 2], hitbox.getVertices()[i * 2 + 1]),
-							new Vector2(testHitbox.getVertices()[i * 2], testHitbox.getVertices()[i * 2 + 1]));
+					Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
 					// create new wall collision event
-					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
+					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
+							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
 				}
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
 				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
 					// create new corner collision event
-					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION,
+					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
+					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
 				}
 			}

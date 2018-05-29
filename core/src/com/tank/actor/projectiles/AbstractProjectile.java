@@ -113,6 +113,14 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
 		}
+		else {
+			for(CollisionEvent e: collisions) {
+				if(e.getCollisionType() == CollisionEvent.WALL_COLLISION && e.getWall() != null) {
+					bounce(e.getWall());
+					break;
+				}
+			}
+		}
 	}
 	
 	public boolean canMoveTo(float x, float y, float orientation) {
@@ -234,22 +242,22 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		for (Collidable c : other) {
 			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
 																	// with this instance
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < testVertices.length / 2; i++) {
 				// check for wall collision by checking if the corners of this instance are
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
 					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(c,
-							new Vector2(hitbox.getVertices()[i * 2], hitbox.getVertices()[i * 2 + 1]),
-							new Vector2(testHitbox.getVertices()[i * 2], testHitbox.getVertices()[i * 2 + 1]));
+					Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
 					// create new wall collision event
-					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall));
+					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
+							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
 				}
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
 				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
 					// create new corner collision event
-					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION,
+					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
+					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
 				}
 			}
