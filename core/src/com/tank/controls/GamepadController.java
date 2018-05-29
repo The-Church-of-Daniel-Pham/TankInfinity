@@ -1,6 +1,6 @@
 package com.tank.controls;
-
 import java.util.LinkedHashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -200,9 +200,8 @@ public class GamepadController extends TankController {
 	}
 
 	public Vector3 getCursor(Vector3 oldCursor) {
-		if (controller == null) {
+		if (controller == null) 
 			return null;
-		}
 		KeyControl vertical = keyMap.get("CURSOR-V");
 		KeyControl horizontal = keyMap.get("CURSOR-H");
 	
