@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
 import com.tank.controls.ControlConstants;
@@ -23,8 +24,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected TankController controls;
 	protected Cursor cursor;
 	protected Vector3 cursorPos;
-	protected String tColor;
-	protected String gColor;
+	protected String color;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
@@ -34,7 +34,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public PlayerTank(int playerNumber) {
 		super(0, 0); // defaults
-		initializeCustom("default", "default");
+		initializeCustom("default");
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
@@ -46,9 +46,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 	}
 
-	public PlayerTank(float x, float y, int playerNumber, String tColor, String gColor) {
+	public PlayerTank(float x, float y, int playerNumber, String color) {
 		super(x, y);
-		initializeCustom(tColor, gColor);
+		initializeCustom(color);
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
@@ -68,19 +68,18 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Rate_Of_Fire", 1);
 	}
 
-	protected void initializeCustom(String tColor, String gColor) {
+	protected void initializeCustom(String color) {
 		custom = new Customization();
-		custom.setCustom("tread", tColor);
-		custom.setCustom("gun", gColor);
+		custom.setCustom("tank color", color);
 		treadTexture = custom.getTexture("tread");
 		gunTexture = custom.getTexture("gun");
-		this.tColor = tColor;
-		this.gColor = gColor;
+		this.color = color;
 	}
 
-	private void setMapPosition(int row, int col) {
-		int[] newPos = ((Level) getStage()).getMap().getTileAt(row, col);
-		super.setPosition(newPos[0], newPos[1]);
+	public void setMapPosition(int row, int col) {
+		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		super.setPosition(x, y);
 	}
 
 	/**
