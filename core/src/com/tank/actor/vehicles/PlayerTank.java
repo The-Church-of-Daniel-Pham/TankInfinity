@@ -3,6 +3,7 @@ package com.tank.actor.vehicles;
 import java.util.ArrayList;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -121,8 +122,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.applyFriction(delta);
 		super.move(delta);
 		// Gun Pointing
+		for (int i = 0; i < 8; i++) {
+			System.out.println(getStage().getCamera().frustum.planePoints[i]);
+		}
 		if ((cursorPos = controls.getCursor(cursorPos)) != null) {
 			Vector3 cursorPos = getStage().getCamera().unproject(this.cursorPos.cpy()); // to world coordinates
+			cursorPos.x = MathUtils.clamp(cursorPos.x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
+			cursorPos.y = MathUtils.clamp(cursorPos.y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
 			cursor.setPosition(cursorPos.x, cursorPos.y);
 			super.pointGunToPoint(cursorPos.x, cursorPos.y);
 		}
