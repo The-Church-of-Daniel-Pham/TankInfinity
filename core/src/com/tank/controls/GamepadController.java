@@ -1,4 +1,5 @@
 package com.tank.controls;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -9,14 +10,23 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GamepadController extends TankController {
 	public Controller controller;
-	private float sensitivity = 30;
+	private float sensitivity = 20f;
+	private float nullZone = 0.2f;
 	private LinkedHashMap<String, KeyControl> keyMap;
 	private float tolerance = 0.75f;
+	private static ArrayList<Controller> inUse = new ArrayList<Controller>();
 
-	public GamepadController() {
+	public GamepadController() throws Exception {
 		keyMap = new LinkedHashMap<String, KeyControl>();
 		keyMap.putAll(ControlConstants.DEFAULT_GAMEPAD_CONTROLS);
-		controller = Controllers.getControllers().first();
+		for (Controller controller : Controllers.getControllers()) {
+			if (!inUse.contains(controller)) {
+				this.controller = controller;
+				inUse.add(controller);
+				break;
+			}
+		}
+		if (controller == null) throw new Exception("No more controllers");
 	}
 
 	public void setTolerance(float tol) {
@@ -204,8 +214,10 @@ public class GamepadController extends TankController {
 			return null;
 		KeyControl vertical = keyMap.get("CURSOR-V");
 		KeyControl horizontal = keyMap.get("CURSOR-H");
-	
-		return new Vector3(oldCursor.x + sensitivity * controller.getAxis(horizontal.getKeyCode()),
-				oldCursor.y + sensitivity * controller.getAxis(vertical.getKeyCode()), 0);
+		float newX = oldCursor.x;
+		float newY = oldCursor.y;
+		if (Math.abs(controller.getAxis(horizontal.getKeyCode())) > nullZone) newX += sensitivity * controller.getAxis(horizontal.getKeyCode());
+		if (Math.abs(controller.getAxis(vertical.getKeyCode())) > nullZone) newY += sensitivity * controller.getAxis(vertical.getKeyCode());
+		return new Vector3(newX, newY, 0);
 	}
 }

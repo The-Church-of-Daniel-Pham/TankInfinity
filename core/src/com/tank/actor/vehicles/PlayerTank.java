@@ -2,6 +2,7 @@ package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -40,6 +41,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		reloadTime = 0;
 		selectedWeapon = 0;
 		cursorPos = new Vector3(getX(), getY(), 0);
+		cursor = new Cursor();
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 	}
@@ -49,10 +51,11 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		initializeCustom(tColor, gColor);
 		this.playerNumber = playerNumber;
 		initializeStats();
-		controls = new KeyboardMouseController();
+		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
 		cursorPos = new Vector3(getX(), getY(), 0);
+		cursor = new Cursor();
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 	}
@@ -103,6 +106,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		//Gun Pointing
 		if ((cursorPos = controls.getCursor(cursorPos)) != null) {
 			Vector3 cursorPos = getStage().getCamera().unproject(this.cursorPos.cpy()); // to world coordinates
+			cursor.setPosition(cursorPos.x, cursorPos.y);
 			super.pointGunToPoint(cursorPos.x, cursorPos.y);
 		}
 		//Firing
@@ -113,6 +117,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		else if (reloadTime > 0){
 			reloadTime -= delta;
 		}
+	}
+	
+	@Override
+	public void draw(Batch batch, float a) {
+		super.draw(batch, a);
+		cursor.draw(batch, a);
 	}
 
 	public void shoot() {

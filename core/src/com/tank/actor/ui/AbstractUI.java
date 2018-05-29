@@ -24,6 +24,7 @@ public class AbstractUI extends Actor {
 	public void act(float delta) {
 		
 	}
+	
 	/**
 	 * The draw method is shared by all Actors. This is called to draw the actor onto the stage.
 	 * 

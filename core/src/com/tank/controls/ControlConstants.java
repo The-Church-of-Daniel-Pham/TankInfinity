@@ -56,14 +56,29 @@ public class ControlConstants {
 	}
 	
 	private static void makeDefaultPlayer2() {
-		playerControls.put(2, new GamepadController());
+		try {
+			playerControls.put(2, new GamepadController());
+		}
+		catch (Exception e) {
+			playerControls.put(2, new KeyboardMouseController());
+		}
 	}
 
 	private static void makeDefaultPlayer3() {
-		playerControls.put(3, new GamepadController());
+		try {
+			playerControls.put(3, new GamepadController());
+		}
+		catch (Exception e) {
+			playerControls.put(3, new KeyboardMouseController());
+		}
 	}
 	
 	private static void makeDefaultPlayer4() {
-		playerControls.put(4, new GamepadController());
+		try {
+			playerControls.put(4, new GamepadController());
+		}
+		catch (Exception e) {
+			playerControls.put(4, new KeyboardMouseController());
+		}
 	}
 }
