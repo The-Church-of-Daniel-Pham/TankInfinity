@@ -13,8 +13,21 @@ import com.tank.utils.mapgenerator.MazeMaker;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Map extends Group {
+	/**
+	 * Double integer array where the indices indicate the row and column of a tile
+	 * [row][col] and the value indicates the type of tile. The origin is in the
+	 * bottom left corner.
+	 */
 	private int[][] layout;
+	/**
+	 * Double array where the indices indicate the row and column of a tile
+	 * [row][col] and the value points to the tile object in that location. The
+	 * origin is in the bottom left corner.
+	 */
 	public AbstractMapTile[][] map;
+	/**
+	 * Used to point to the higher level object which implements this instance
+	 */
 	protected Level level;
 
 	/**
@@ -28,31 +41,52 @@ public class Map extends Group {
 	 *            the Level to which the Map belongs
 	 */
 	public Map(int width, int height, Level level) {
+		// create level pointer
 		this.level = level;
-		MazeMaker mazeGen = new MazeMaker(height, width);
-		mazeGen.createMaze(0, 0);
-		mazeGen.clearBottomLeftCorner(5);	//Clears out corner so tank doesn't spawn on bricks
-		mazeGen.addBorder(1);
-		layout = mazeGen.getMaze();
+		// maze generation
+		MazeMaker mazeGen = new MazeMaker(height, width); // create maze maker object in order to create a maze
+		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
+		mazeGen.clearBottomLeftCorner(5); // Clears out corner so tank doesn't spawn on bricks
+		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
+		layout = mazeGen.getMaze(); // create layout pointer
+		// using layout, create tile objects and store in its own double array
 		map = new AbstractMapTile[height][width];
 		for (int row = map.length - 1; row >= 0; row--) {
 			for (int col = 0; col < map[row].length; col++) {
 				AbstractMapTile tile = null;
-				if (layout[row][col] == 0) {
+				if (layout[row][col] == 0) { // layout values of 0 = floor tile
 					// polymorphic for simplicity
 					tile = new FloorTile(row, col, this);
-				} else if (layout[row][col] == 1) {
+				} else if (layout[row][col] == 1) {// layout values of 1 = wall tile
 					tile = new WallTile(row, col, this);
 				}
-				if (layout[row][col] == 2) {
+				if (layout[row][col] == 2) { // layout values of 2 = border tile
 					tile = new BorderTile(row, col, this);
 				}
-				map[row][col] = tile;
+				map[row][col] = tile; // store new object in array
 				super.addActor(tile);// kinda redundant, but may come in handy later
 			}
 		}
 	}
 
+	/**
+	 * Sets the visibility of the tiles within the rectangular grid indicated by the
+	 * first four parameters to the fifth parameter. Used for more efficient
+	 * rendering, but still not that efficient. The method automatically extends the
+	 * range of each of the four parameters by one.
+	 * 
+	 * @param minRow
+	 *            The upper bound of the grid
+	 * @param minCol
+	 *            The left bound of the grid
+	 * @param maxRow
+	 *            The lower bound of the grid
+	 * @param maxCol
+	 *            The right bound of the grid
+	 * @param vis
+	 *            If true, sets the tiles in the defined grid to be visible,
+	 *            otherwise sets them to not be visible (rendered)
+	 */
 	public void setTilesVisibility(int minRow, int minCol, int maxRow, int maxCol, boolean vis) {
 		// can us clamp later on
 		minRow--;
@@ -137,8 +171,7 @@ public class Map extends Group {
 			for (int xOffset = -1; xOffset <= 1; xOffset++) {
 				int tempRow = MathUtils.clamp(row + yOffset, 0, map.length - 1);
 				int tempCol = MathUtils.clamp(col + xOffset, 0, map[0].length - 1);
-				if (map[tempRow][tempCol] instanceof WallTile)
-				{
+				if (map[tempRow][tempCol] instanceof WallTile) {
 					brickNeighbors.add(map[tempRow][tempCol]);
 				}
 			}
