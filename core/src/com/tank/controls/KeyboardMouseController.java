@@ -89,7 +89,7 @@ public class KeyboardMouseController extends TankController {
 			return Gdx.input.isButtonPressed(lSwitch.getKeyCode());
 		}
 	}
-	public Vector3 getCursor() {
+	public Vector3 getCursor(Vector3 oldCursor) {
 		return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 	}
 }

@@ -11,5 +11,5 @@ public abstract class TankController {
 	public abstract boolean subPressed();
 	public abstract boolean subRightPressed();
 	public abstract boolean subLeftPressed();
-	public abstract Vector3 getCursor();
+	public abstract Vector3 getCursor(Vector3 oldCursor);
 }
