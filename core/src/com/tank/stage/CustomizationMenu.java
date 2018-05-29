@@ -25,10 +25,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		AbstractVehicle.vehicleList.clear();
 		AbstractProjectile.projectileList.clear();
 		// create players
-		this.game.players.add(new Player("Player 1", 1, "red"));
-		this.game.players.add(new Player("Player 2", 2, "blue"));
-		this.game.players.add(new Player("Player 3", 3, "green"));
-		this.game.players.add(new Player("Player 4", 4, "yellow"));
+		this.game.players.add(new Player("Player 1", 1, "red", 1, 1));
+		this.game.players.add(new Player("Player 2", 2, "blue", 1, 2));
+		this.game.players.add(new Player("Player 3", 3, "green", 1, 3));
+		this.game.players.add(new Player("Player 4", 4, "yellow", 1, 4));
 		super.addActor(buildTable());
 	}
 
@@ -56,7 +56,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		continueButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 initiliazeTanks();
 	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
@@ -67,14 +66,5 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		uiTable.add(continueButton).colspan(2).expand().bottom().right();
 
 		return uiTable;
-	}
-	
-	private void initiliazeTanks() {
-		int space = 256;
-		for (Player p : game.players) {
-			p.tank.reset();
-			p.tank.setPosition(128 + space, 128 + 256);
-			space += 256;
-		}
 	}
 }

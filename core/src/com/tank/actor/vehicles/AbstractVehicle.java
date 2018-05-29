@@ -80,8 +80,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		collisions = new ArrayList<CollisionEvent>();
 	}
 
-	public abstract void reset();
-
 	protected abstract void initializeHitbox();
 
 	/**
