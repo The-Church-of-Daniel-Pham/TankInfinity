@@ -12,7 +12,7 @@ import com.tank.utils.Assets;
 public class Bullet extends AbstractProjectile {
 	private static Texture playerTexture = Assets.manager.get(Assets.bullet);
 	private static Texture enemyTexture;
-	private static float angle = (float)Math.toDegrees(Math.atan((double)6/25));
+	private static float angle;	//angle between diagonal of rectangle and its base
 
 	private static Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
     private static final float BOUNCE_VOLUME = 1f;
@@ -23,6 +23,9 @@ public class Bullet extends AbstractProjectile {
 		velocity = v.setAngle(direction);
 		setRotation(direction);
 		setOrigin(playerTexture.getWidth() / 2, playerTexture.getHeight() / 2);
+		setWidth(25);
+		setHeight(6);
+		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
 	protected void initializeHitbox() {
@@ -43,7 +46,7 @@ public class Bullet extends AbstractProjectile {
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2(25,6);
+		Vector2 v = new Vector2(getWidth(), getHeight());
 		v.setAngle(direction);
 		v.rotate(angle);
 		f[0] = x+ v.x;

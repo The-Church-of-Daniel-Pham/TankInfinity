@@ -1,8 +1,7 @@
 package com.tank.controls;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
@@ -10,10 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GamepadController extends TankController {
 	public Controller controller;
-	private float sensitivity = 20f;
-	private float nullZone = 0.2f;
 	private LinkedHashMap<String, KeyControl> keyMap;
-	private float tolerance = 0.75f;
+	private float deadzone = 0.25f;
+	private float sensitivity = 15f;
 	private static ArrayList<Controller> inUse = new ArrayList<Controller>();
 
 	public GamepadController() throws Exception {
@@ -29,8 +27,12 @@ public class GamepadController extends TankController {
 		if (controller == null) throw new Exception("No more controllers");
 	}
 
-	public void setTolerance(float tol) {
-		tolerance = tol;
+	public void setDeadzone(float d) {
+		deadzone = d;
+	}
+	
+	public void setSensitivity(float s) {
+		sensitivity = s;
 	}
 
 	public boolean upPressed() {
@@ -43,10 +45,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (up.getDirection() < 0) {
-				return (controller.getAxis(up.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(up.getKeyCode()) <= -deadzone);
 			}
 			else if (up.getDirection() > 0) {
-				return (controller.getAxis(up.getKeyCode()) >= tolerance);
+				return (controller.getAxis(up.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -63,10 +65,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (down.getDirection() < 0) {
-				return (controller.getAxis(down.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(down.getKeyCode()) <= -deadzone);
 			}
 			else if (down.getDirection() > 0) {
-				return (controller.getAxis(down.getKeyCode()) >= tolerance);
+				return (controller.getAxis(down.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -83,10 +85,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (right.getDirection() < 0) {
-				return (controller.getAxis(right.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(right.getKeyCode()) <= -deadzone);
 			}
 			else if (right.getDirection() > 0) {
-				return (controller.getAxis(right.getKeyCode()) >= tolerance);
+				return (controller.getAxis(right.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -103,10 +105,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (left.getDirection() < 0) {
-				return (controller.getAxis(left.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(left.getKeyCode()) <= -deadzone);
 			}
 			else if (left.getDirection() > 0) {
-				return (controller.getAxis(left.getKeyCode()) >= tolerance);
+				return (controller.getAxis(left.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -124,10 +126,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (shoot.getDirection() < 0) {
-				return (controller.getAxis(shoot.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(shoot.getKeyCode()) <= -deadzone);
 			}
 			else if (shoot.getDirection() > 0) {
-				return (controller.getAxis(shoot.getKeyCode()) >= tolerance);
+				return (controller.getAxis(shoot.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -144,10 +146,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (sub.getDirection() < 0) {
-				return (controller.getAxis(sub.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(sub.getKeyCode()) <= -deadzone);
 			}
 			else if (sub.getDirection() > 0) {
-				return (controller.getAxis(sub.getKeyCode()) >= tolerance);
+				return (controller.getAxis(sub.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -164,10 +166,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (rSwitch.getDirection() < 0) {
-				return (controller.getAxis(rSwitch.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(rSwitch.getKeyCode()) <= -deadzone);
 			}
 			else if (rSwitch.getDirection() > 0) {
-				return (controller.getAxis(rSwitch.getKeyCode()) >= tolerance);
+				return (controller.getAxis(rSwitch.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -184,10 +186,10 @@ public class GamepadController extends TankController {
 		}
 		else {
 			if (lSwitch.getDirection() < 0) {
-				return (controller.getAxis(lSwitch.getKeyCode()) <= -tolerance);
+				return (controller.getAxis(lSwitch.getKeyCode()) <= -deadzone);
 			}
 			else if (lSwitch.getDirection() > 0) {
-				return (controller.getAxis(lSwitch.getKeyCode()) >= tolerance);
+				return (controller.getAxis(lSwitch.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -216,8 +218,8 @@ public class GamepadController extends TankController {
 		KeyControl horizontal = keyMap.get("CURSOR-H");
 		float newX = oldCursor.x;
 		float newY = oldCursor.y;
-		if (Math.abs(controller.getAxis(horizontal.getKeyCode())) > nullZone) newX += sensitivity * controller.getAxis(horizontal.getKeyCode());
-		if (Math.abs(controller.getAxis(vertical.getKeyCode())) > nullZone) newY += sensitivity * controller.getAxis(vertical.getKeyCode());
+		if (Math.abs(controller.getAxis(horizontal.getKeyCode())) > 1 - deadzone) newX += sensitivity * controller.getAxis(horizontal.getKeyCode());
+		if (Math.abs(controller.getAxis(vertical.getKeyCode())) > 1 - deadzone) newY += sensitivity * controller.getAxis(vertical.getKeyCode());
 		return new Vector3(newX, newY, 0);
 	}
 }

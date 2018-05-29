@@ -14,7 +14,6 @@ import com.tank.controls.TankController;
 import com.tank.media.MediaSound;
 import com.tank.stats.Customization;
 import com.tank.subweapons.SubWeapon;
-import com.tank.stage.Level;
 import com.tank.utils.Assets;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
@@ -22,7 +21,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	 * used for spawning bullets the correct distance away from Vehicle's center
 	 */
 	public static final int TANK_GUN_LENGTH = 135; // probably redundant, check free tank
-
+	private static float angle;	//angle between diagonal of rectangle and its base
+	
 	protected TankController controls;
 	protected Cursor cursor;
 	protected Vector3 cursorPos;
@@ -36,10 +36,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	private final float ENGINE_VOLUME = 0.6f;
     private final float SHOOT_VOLUME = 0.6f;
 
-	private MediaSound engine_sound, tread_sound, shoot_sound;
+	private MediaSound engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
+	private MediaSound tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
+	private MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);;
 
-	private boolean treadSoundOn;
-	private boolean engineSoundOn;
+	private boolean treadSoundOn = false;
+	private boolean engineSoundOn = false;
 
 	private final int SOME_CONSTANT = 1000;
 	private final int THRESH = 20;
@@ -58,11 +60,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		cursor = new Cursor();
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
-        engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
-        tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
-        shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);
-        treadSoundOn = false;
-        engineSoundOn = false;
+		setWidth(80);
+		setHeight(90);
+		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
 	public PlayerTank(float x, float y, int playerNumber, String color) {
@@ -77,6 +77,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		cursor = new Cursor();
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
+		setWidth(80);
+		setHeight(90);
+		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
 	protected void initializeStats() {
@@ -175,17 +178,21 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (super.treadTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2(getWidth(), getHeight());
 		v.setAngle(direction);
-		v.rotate(45);
-
-		for (int i = 0; i < 4; i++) {
-			f[i * 2] = x + v.x;
-			f[i * 2 + 1] = y + v.y;
-			v.rotate(90);
-		}
+		v.rotate(angle);
+		f[0] = x+ v.x;
+		f[1] = y +v.y;
+		v.rotate(180-2*angle);
+		f[2] = x + v.x;
+		f[3] = y + v.y;
+		v.rotate(2*angle);
+		f[4] = x + v.x;
+		f[5] = y + v.y;
+		v.rotate(180-2*angle);
+		f[6] = x + v.x;
+		f[7] = y + v.y;
 		return new Polygon(f);
-
 	}
 
 	/**
