@@ -18,16 +18,16 @@ public class ControlConstants {
 		DEFAULT_KEYBOARD_CONTROLS.put("RSHIFT", new KeyControl(Input.Keys.E,0));
 		DEFAULT_KEYBOARD_CONTROLS.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
 		
-		DEFAULT_GAMEPAD_CONTROLS.put("UP", new KeyControl(XboxMapping.L_STICK_VERTICAL_AXIS, 1, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", new KeyControl(XboxMapping.L_STICK_VERTICAL_AXIS, 1, -1));
-		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", new KeyControl(XboxMapping.L_STICK_HORIZONTAL_AXIS, 1, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", new KeyControl(XboxMapping.L_STICK_HORIZONTAL_AXIS, 1, -1));
-		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-H", new KeyControl(XboxMapping.R_STICK_HORIZONTAL_AXIS, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-V", new KeyControl(XboxMapping.R_STICK_VERTICAL_AXIS, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", new KeyControl(XboxMapping.R_TRIGGER, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.L_TRIGGER, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.R_BUMPER, 0));
-		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.L_BUMPER, 0));
+		DEFAULT_GAMEPAD_CONTROLS.put("UP", new KeyControl(XboxMapping.AXIS_LEFT_Y, 1, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", new KeyControl(XboxMapping.AXIS_LEFT_Y, 1, -1));
+		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", new KeyControl(XboxMapping.AXIS_LEFT_X, 1, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", new KeyControl(XboxMapping.AXIS_LEFT_X, 1, -1));
+		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-H", new KeyControl(XboxMapping.AXIS_RIGHT_X, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-V", new KeyControl(XboxMapping.AXIS_RIGHT_Y, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", new KeyControl(XboxMapping.AXIS_RIGHT_TRIGGER, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.AXIS_LEFT_TRIGGER, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.BUTTON_RB, 0));
+		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.BUTTON_LB, 0));
 		
 		makeDefaultPlayer1();
 		makeDefaultPlayer2();
