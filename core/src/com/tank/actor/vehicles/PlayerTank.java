@@ -21,6 +21,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	
 	protected TankController controls;
 	protected Cursor cursor;
+	protected Vector3 cursorPos;
 	protected String tColor;
 	protected String gColor;
 	protected ArrayList<SubWeapon> subWeapons;
@@ -38,6 +39,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
+		cursorPos = new Vector3(getX(), getY(), 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 	}
@@ -50,6 +52,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		controls = new KeyboardMouseController();
 		reloadTime = 0;
 		selectedWeapon = 0;
+		cursorPos = new Vector3(getX(), getY(), 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 	}
@@ -98,9 +101,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.applyFriction(delta);
 		super.move(delta);
 		//Gun Pointing
-		if (controls.getCursor() != null) {
-			Vector3 cursorPos = controls.getCursor();
-			getStage().getCamera().unproject(cursorPos); // to world coordinates
+		if ((cursorPos = controls.getCursor(cursorPos)) != null) {
+			Vector3 cursorPos = getStage().getCamera().unproject(this.cursorPos.cpy()); // to world coordinates
 			super.pointGunToPoint(cursorPos.x, cursorPos.y);
 		}
 		//Firing

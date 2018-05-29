@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 
 public class ControlConstants {
 	public static final LinkedHashMap<String, KeyControl> DEFAULT_KEYBOARD_CONTROLS = new LinkedHashMap<String, KeyControl>();
-	public static final LinkedHashMap<String, Integer> DEFAULT_GAMEPAD_CONTROLS = new LinkedHashMap<String, Integer>();
+	public static final LinkedHashMap<String, KeyControl> DEFAULT_GAMEPAD_CONTROLS = new LinkedHashMap<String, KeyControl>();
 	public static LinkedHashMap<Integer, TankController> playerControls = new LinkedHashMap<Integer, TankController>();
 	
 	static {
@@ -18,14 +18,16 @@ public class ControlConstants {
 		DEFAULT_KEYBOARD_CONTROLS.put("RSHIFT", new KeyControl(Input.Keys.E,0));
 		DEFAULT_KEYBOARD_CONTROLS.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
 		
-		DEFAULT_GAMEPAD_CONTROLS.put("UP", XboxMapping.L_STICK_VERTICAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", XboxMapping.L_STICK_VERTICAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", XboxMapping.L_STICK_HORIZONTAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", XboxMapping.L_STICK_HORIZONTAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", XboxMapping.R_TRIGGER);
-		DEFAULT_GAMEPAD_CONTROLS.put("SUB", XboxMapping.L_TRIGGER);
-		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", XboxMapping.R_BUMPER);
-		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", XboxMapping.L_BUMPER);
+		DEFAULT_GAMEPAD_CONTROLS.put("UP", new KeyControl(XboxMapping.L_STICK_VERTICAL_AXIS, 1, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", new KeyControl(XboxMapping.L_STICK_VERTICAL_AXIS, 1, -1));
+		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", new KeyControl(XboxMapping.L_STICK_HORIZONTAL_AXIS, 1, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", new KeyControl(XboxMapping.L_STICK_HORIZONTAL_AXIS, 1, -1));
+		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-H", new KeyControl(XboxMapping.R_STICK_HORIZONTAL_AXIS, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-V", new KeyControl(XboxMapping.R_STICK_VERTICAL_AXIS, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", new KeyControl(XboxMapping.R_TRIGGER, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.L_TRIGGER, 1));
+		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.R_BUMPER, 0));
+		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.L_BUMPER, 0));
 		
 		makeDefaultPlayer1();
 		makeDefaultPlayer2();
