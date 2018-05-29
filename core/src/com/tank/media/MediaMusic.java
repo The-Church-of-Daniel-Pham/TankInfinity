@@ -54,6 +54,11 @@ public class MediaMusic {
         music.setVolume(volume);
     }
 
+    public MediaMusic itself()
+    {
+        return this;
+    }
+
     public void stop() {
         music.stop();
     }
@@ -68,7 +73,7 @@ public class MediaMusic {
                     float ratio = Math.max((float) (time - (System.nanoTime() - startTime)) / time, 0);
                     setVolume(volume * ratio);
                 }
-                stop();
+                itself().stop();
             }
         }.start();
     }

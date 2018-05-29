@@ -7,6 +7,7 @@ package com.tank.actor.projectiles;
  */
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
@@ -17,6 +18,7 @@ import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
+import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -61,6 +63,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
+    private MediaSound bounce_sound;
 	
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
@@ -76,8 +79,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            The starting x of the projectile
 	 * @param y
 	 *            The starting y of the projectile
+     * @param bounce
+     *            The sound for the bounce
+     * @param BOUNCE_VOLUME
+     *            The volume of the bounce
 	 */
-	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y) {
+	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y, Sound bounce, final float BOUNCE_VOLUME) {
 		tex = t;
 		source = src;
 		setX(x);
@@ -86,6 +93,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		initializeHitbox();
 		collisions = new ArrayList<CollisionEvent>();
 		projectileList.add(this);
+		bounce_sound = new MediaSound(bounce, BOUNCE_VOLUME);
 	}
 	
 	protected abstract void initializeHitbox();
@@ -114,6 +122,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			hitbox = testHitbox;
 		}
 		else {
+            bounce_sound.play();
 			boolean destroyed = false;
 			for(CollisionEvent e: collisions) {
 				if(e.getWall() == null) {
