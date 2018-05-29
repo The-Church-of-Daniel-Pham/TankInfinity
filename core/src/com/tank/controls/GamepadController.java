@@ -119,6 +119,7 @@ public class GamepadController extends TankController {
 		if (controller == null) {
 			return false;
 		}
+		testButtons();
 		return controller.getAxis(keyMap.get("SHOOT")) == -1;
 	}
 
@@ -141,6 +142,18 @@ public class GamepadController extends TankController {
 			return false;
 		}
 		return controller.getButton(keyMap.get("LSWITCH"));
+	}
+	
+	public void testButtons() {
+		for (int i = 0; i < 100; i++) {
+			if (controller.getButton(i)) System.out.println("Pressed Button " + i);
+		}
+		for (int i = 0; i < 100; i++) {
+			if (Math.abs(controller.getAxis(i)) > 0.3) System.out.println("Axis " + i + " moved: " + controller.getAxis(i));
+		}
+		for (int i = 0; i< 100; i++) {
+			if (!controller.getPov(i).equals(PovDirection.center)) System.out.println("POV " + i + ": " + controller.getPov(i).toString());
+		}
 	}
 
 	public Vector3 getCursor() {
