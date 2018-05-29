@@ -1,5 +1,7 @@
 package com.tank.controls;
 
+import com.badlogic.gdx.math.Vector3;
+
 public abstract class TankController {
 	public abstract boolean upPressed();
 	public abstract boolean downPressed();
@@ -9,5 +11,5 @@ public abstract class TankController {
 	public abstract boolean subPressed();
 	public abstract boolean subRightPressed();
 	public abstract boolean subLeftPressed();
-	public abstract float[] moveCursor(float x, float y);
+	public abstract Vector3 getCursor();
 }
