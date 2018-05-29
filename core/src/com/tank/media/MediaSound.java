@@ -11,6 +11,7 @@ public class MediaSound {
 
     private Sound sound;
     private float volume;
+    private long mediaId;
 
     public MediaSound(Sound sound, float volume) {
         this.sound = sound;
@@ -22,62 +23,59 @@ public class MediaSound {
     }
 
     public long loop() {
-        return sound.loop();
+
+        mediaId = sound.loop();
+        return mediaId;
     }
 
     public long loop(float vol) {
-        return sound.loop(vol);
+        volume = vol;
+        mediaId = sound.loop(vol);
+        return mediaId;
     }
 
     public void pause() {
         sound.pause();
     }
 
-    public void pause(long id) {
-        sound.pause(id);
-    }
-
     public long play() {
-        return sound.play(volume);
+        mediaId = sound.play(volume);
+        return mediaId;
     }
 
     public void resume() {
         sound.resume();
     }
 
-    public void resume(long id) {
-        sound.resume(id);
+    public void setLooping(boolean isLooping) {
+        sound.setLooping(mediaId, isLooping);
     }
 
-    public void setLooping(long id, boolean isLooping) {
-        sound.setLooping(id, isLooping);
-    }
-
-    public void setVolume(long id, float vol) {
+    public void setVolume(float vol) {
 
         volume = vol;
-        sound.setVolume(id, vol);
+        sound.setVolume(mediaId, vol);
     }
 
     public void stop() {
         sound.stop();
     }
 
-    public void stop(long id) {
-        sound.stop(id);
+    public MediaSound itself() {
+        return this;
     }
 
     public void fade(final long time) {
         new Thread() {
             @Override
             public void run() {
-                long id = play();
+                play();
                 long startTime = System.nanoTime();
                 while (System.nanoTime() - startTime <= time) {
                     float ratio = Math.max((float) (time - (System.nanoTime() - startTime)) / time, 0);
-                    setVolume(id, volume * ratio);
+                    setVolume(volume * ratio);
                 }
-                stop();
+                itself().stop();
             }
         }.start();
     }
@@ -92,5 +90,9 @@ public class MediaSound {
 
     public float getVolume() {
         return volume;
+    }
+
+    public long getMediaId() {
+        return mediaId;
     }
 }

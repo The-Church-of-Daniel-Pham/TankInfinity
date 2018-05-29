@@ -11,9 +11,11 @@ import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.ui.Cursor;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.TankController;
+import com.tank.media.MediaSound;
 import com.tank.stats.Customization;
 import com.tank.subweapons.SubWeapon;
 import com.tank.stage.Level;
+import com.tank.utils.Assets;
 
 public class PlayerTank extends FreeTank implements InputProcessor {
 	/**
@@ -30,6 +32,18 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected int playerNumber;
 	protected Customization custom;
 
+	private final float TREAD_VOLUME = 0.2f;
+	private final float ENGINE_VOLUME = 0.6f;
+    private final float SHOOT_VOLUME = 0.6f;
+
+	private MediaSound engine_sound, tread_sound, shoot_sound;
+
+	private boolean treadSoundOn;
+	private boolean engineSoundOn;
+
+	private final int SOME_CONSTANT = 1000;
+	private final int THRESH = 20;
+
 	protected float reloadTime;
 
 	public PlayerTank(int playerNumber) {
@@ -44,6 +58,11 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		cursor = new Cursor();
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
+        engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
+        tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
+        shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);
+        treadSoundOn = false;
+        engineSoundOn = false;
 	}
 
 	public PlayerTank(float x, float y, int playerNumber, String color) {
@@ -111,7 +130,31 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		} else if (reloadTime > 0) {
 			reloadTime -= delta;
 		}
+
+		playSoundEffects();
 	}
+
+    public void playSoundEffects() {
+        if (!engineSoundOn) {
+            engine_sound.play();
+            engine_sound.loop();
+            engineSoundOn = true;
+        }
+
+        if (getVelocity().len() > 0 && !treadSoundOn) {
+            tread_sound.play();
+            tread_sound.setVolume((getVelocity().len()) / (getVelocity().len() + SOME_CONSTANT));
+            treadSoundOn = true;
+        }
+        else if (treadSoundOn) {
+            tread_sound.setVolume((getVelocity().len()) / (getVelocity().len() + SOME_CONSTANT));
+        }
+
+        if (getVelocity().len() <= THRESH) {
+            treadSoundOn = false;
+            tread_sound.stop();
+        }
+    }
 
 	@Override
 	public void draw(Batch batch, float a) {
@@ -123,6 +166,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		Vector2 v = new Vector2(TANK_GUN_LENGTH, 0);
 		v.setAngle(getGunRotation());
 		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation));
+		shoot_sound.play();
 	}
 
 	public void switchWeapon(int direction) {

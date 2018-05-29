@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.badlogic.gdx.audio.Sound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
@@ -13,8 +14,11 @@ public class Bullet extends AbstractProjectile {
 	private static Texture enemyTexture;
 	private static float angle = (float)Math.toDegrees(Math.atan((double)6/25));
 
+	private static Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
+    private static final float BOUNCE_VOLUME = 1f;
+
 	public Bullet(AbstractVehicle src, float x, float y, float direction) {
-		super(playerTexture, src, x, y);
+		super(playerTexture, src, x, y, bounce_sound, BOUNCE_VOLUME);
 		Vector2 v = new Vector2(stats.getStatValue("Bullet_Speed"), 0);
 		velocity = v.setAngle(direction);
 		setRotation(direction);
