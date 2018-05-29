@@ -11,6 +11,7 @@ import com.tank.utils.Assets;
 public class Bullet extends AbstractProjectile {
 	private static Texture playerTexture = Assets.manager.get(Assets.bullet);
 	private static Texture enemyTexture;
+	private static float angle = (float)Math.toDegrees(Math.atan((double)6/25));
 
 	public Bullet(AbstractVehicle src, float x, float y, float direction) {
 		super(playerTexture, src, x, y);
@@ -38,15 +39,20 @@ public class Bullet extends AbstractProjectile {
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (playerTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2(25,6);
 		v.setAngle(direction);
-		v.rotate(45);
-
-		for (int i = 0; i < 4; i++) {
-			f[i * 2] = x + v.x;
-			f[i * 2 + 1] = y + v.y;
-			v.rotate(90);
-		}
+		v.rotate(angle);
+		f[0] = x+ v.x;
+		f[1] = y +v.y;
+		v.rotate(180-2*angle);
+		f[2] = x + v.x;
+		f[3] = y + v.y;
+		v.rotate(2*angle);
+		f[4] = x + v.x;
+		f[5] = y + v.y;
+		v.rotate(180-2*angle);
+		f[6] = x + v.x;
+		f[7] = y + v.y;
 		return new Polygon(f);
 	}
 }

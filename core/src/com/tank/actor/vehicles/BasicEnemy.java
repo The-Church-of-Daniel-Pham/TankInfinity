@@ -46,7 +46,6 @@ public class BasicEnemy extends FixedTank {
 		//System.out.println(direction + "," + moveForward);
 	}
 
-	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		

@@ -12,13 +12,12 @@ import com.tank.utils.Assets;
 public class WallTile extends AbstractMapTile implements Collidable {
 	protected final Polygon hitbox;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
-	
+
 	public WallTile(int row, int col, Map map) {
-		//TODO set position to x/y coords
 		super(row, col, map);
 		hitbox = initializeHitbox();
 	}
-	
+
 	public void drawVertices(Batch batch, float a) {
 		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
 			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
@@ -31,25 +30,22 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		super.draw(batch, a);
 		drawVertices(batch, a);
 	}
-	
+
 	@Override
 	public void build() {
 		super.addTexture(Assets.manager.get(Assets.grass0));
 		double rand = Math.random();
 		if (rand < 0.25) {
 			super.addTexture(Assets.manager.get(Assets.stone1));
-		}
-		else if (rand < 0.5) {
+		} else if (rand < 0.5) {
 			super.addTexture(Assets.manager.get(Assets.stone2));
-		}
-		else if (rand < 0.75) {
+		} else if (rand < 0.75) {
 			super.addTexture(Assets.manager.get(Assets.stone3));
-		}
-		else {
+		} else {
 			super.addTexture(Assets.manager.get(Assets.stone4));
-}
+		}
 	}
-	
+
 	public Polygon initializeHitbox() {
 		float[] f = new float[8];
 		f[0] = getX();
@@ -66,7 +62,7 @@ public class WallTile extends AbstractMapTile implements Collidable {
 	@Override
 	public void checkCollisions(ArrayList<Collidable> other) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -80,7 +76,6 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public Polygon getHitbox() {

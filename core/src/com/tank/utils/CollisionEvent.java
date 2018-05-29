@@ -140,11 +140,9 @@ public class CollisionEvent {
 			Vector2 sidePoint1 = wPoints[i % wPoints.length]; // point 1
 			Vector2 sidePoint2 = wPoints[(i + 1) % wPoints.length]; // point 2
 			if (Intersector.intersectSegments(p1p2, q1, sidePoint1, sidePoint2, new Vector2()) || Intersector.intersectSegments(p1p2, q2, sidePoint1, sidePoint2, new Vector2())) {
-				System.out.println(sidePoint2.cpy().sub(sidePoint1));
 				return sidePoint2.cpy().sub(sidePoint1);
 			}
 		}
-		System.out.println("woops");
 		return null;
 	}
 }

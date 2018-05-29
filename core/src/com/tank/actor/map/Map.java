@@ -136,7 +136,7 @@ public class Map extends Group {
 		for (int yOffset = -1; yOffset <= 1; yOffset++) {
 			for (int xOffset = -1; xOffset <= 1; xOffset++) {
 				int tempRow = MathUtils.clamp(row + yOffset, 0, map.length - 1);
-				int tempCol = MathUtils.clamp(col + xOffset, 0, map[row].length - 1);
+				int tempCol = MathUtils.clamp(col + xOffset, 0, map[0].length - 1);
 				if (map[tempRow][tempCol] instanceof WallTile)
 				{
 					brickNeighbors.add(map[tempRow][tempCol]);
