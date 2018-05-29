@@ -17,14 +17,12 @@ public class Customization {
 	}
 
 	public void setCustom(String cust, String val) {
-		if (cust.equals("tread")) {
+		if (cust.equals("tank color")) {
 			treads.setCurrent(val);
-			custom.put(cust, val);
-		}
-		else if (cust.equals("gun")) {
 			guns.setCurrent(val);
 			custom.put(cust, val);
 		}
+
 	}
 
 	public String getCustomValue(String cust) {
@@ -36,19 +34,16 @@ public class Customization {
 	}
 	
 	public void cycleCustom(String cust, int n) {
-		if (cust.equals("tread")) {
+		if (cust.equals("tank color")) {
 			treads.cycleBy(n);
-			custom.put(cust, (String) treads.getCurrent());
-		}
-		else if (cust.equals("gun")) {
 			guns.cycleBy(n);
-			custom.put(cust, (String) guns.getCurrent());
+			custom.put(cust, (String) treads.getCurrent());
 		}
 	}
 
-	public Texture getTexture(String cust) {
-		String val = getCustomValue(cust);
-		if (cust.equals("tread")) {
+	public Texture getTexture(String name) {
+		String val = getCustomValue("tank color");
+		if (name.equals("tread")) {
 			if (val.equals("red")) {
 				return Assets.manager.get(Assets.tread_red);
 			}
@@ -71,7 +66,7 @@ public class Customization {
 				return Assets.manager.get(Assets.tread_default);
 			}
 		}
-		else if (cust.equals("gun")) {
+		else if (name.equals("gun")) {
 			if (val.equals("red")) {
 				return Assets.manager.get(Assets.gun_red);
 			}
