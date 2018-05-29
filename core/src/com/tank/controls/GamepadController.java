@@ -3,86 +3,151 @@ package com.tank.controls;
 import java.util.LinkedHashMap;
 
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.ControllerListener;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.controllers.mappings.Xbox;
 import com.badlogic.gdx.math.Vector3;
 
 public class GamepadController extends TankController {
-	public Controller game;
-	private final int id;
-	private boolean connected;
+	public Controller controller;
 	private LinkedHashMap<String, Integer> keyMap;
 
-	public GamepadController(int id) {
-		this.id = id;
-		connected = false;
+	public GamepadController() {
 		keyMap = new LinkedHashMap<String, Integer>();
 		keyMap.putAll(ControlConstants.DEFAULT_GAMEPAD_CONTROLS);
-	}
-
-	public int getID() {
-		return id;
+		controller = Controllers.getControllers().first();
+		
+//		Controllers.addListener(new ControllerListener() {
+//			public int indexOf(Controller controller) {
+//				return Controllers.getControllers().indexOf(controller, true);
+//			}
+//
+//			@Override
+//			public void connected(Controller controller) {
+//				System.out.println("connected " + controller.getName());
+//				int i = 0;
+//				for (Controller c : Controllers.getControllers()) {
+//					System.out.println("#" + i++ + ": " + c.getName());
+//				}
+//			}
+//
+//			@Override
+//			public void disconnected(Controller controller) {
+//				System.out.println("disconnected " + controller.getName());
+//				int i = 0;
+//				for (Controller c : Controllers.getControllers()) {
+//					System.out.println("#" + i++ + ": " + c.getName());
+//				}
+//				if (Controllers.getControllers().size == 0)
+//					System.out.println("No controllers attached");
+//			}
+//
+//			@Override
+//			public boolean buttonDown(Controller controller, int buttonIndex) {
+//				System.out.println("#" + indexOf(controller) + ", button " + buttonIndex + " down");
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean buttonUp(Controller controller, int buttonIndex) {
+//				System.out.println("#" + indexOf(controller) + ", button " + buttonIndex + " up");
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean axisMoved(Controller controller, int axisIndex, float value) {
+//				System.out.println("#" + indexOf(controller) + ", axis " + axisIndex + ": " + value);
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean povMoved(Controller controller, int povIndex, PovDirection value) {
+//				System.out.println("#" + indexOf(controller) + ", pov " + povIndex + ": " + value);
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean xSliderMoved(Controller controller, int sliderIndex, boolean value) {
+//				System.out.println("#" + indexOf(controller) + ", x slider " + sliderIndex + ": " + value);
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean ySliderMoved(Controller controller, int sliderIndex, boolean value) {
+//				System.out.println("#" + indexOf(controller) + ", y slider " + sliderIndex + ": " + value);
+//				return false;
+//			}
+//
+//			@Override
+//			public boolean accelerometerMoved(Controller controller, int accelerometerIndex, Vector3 value) {
+//				// not printing this as we get to many values
+//				return false;
+//			}
+//		});
 	}
 
 	public boolean upPressed() {
-		if (connected) {
-			return game.getAxis(keyMap.get("UP")) == -1;
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("UP")) == -1;
 	}
 
 	public boolean downPressed() {
-		if (connected) {
-			return game.getAxis(keyMap.get("DOWN")) == 1;
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("DOWN")) == 1;
 	}
 
 	public boolean rightPressed() {
-		if (connected) {
-			return game.getAxis(keyMap.get("RIGHT")) == 1;
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("RIGHT")) == 1;
 	}
 
 	public boolean leftPressed() {
-		if (connected) {
-			return game.getAxis(keyMap.get("LEFT")) == -1;
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("LEFT")) == -1;
 	}
 
 	public boolean firePressed() {
-		if (connected) {
-			return game.getButton(keyMap.get("SHOOT"));
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("SHOOT")) == -1;
 	}
 
 	public boolean subPressed() {
-		if (connected) {
-			return game.getButton(keyMap.get("SUB"));
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getAxis(keyMap.get("SUB")) == 1;
 	}
 
 	public boolean subRightPressed() {
-		if (connected) {
-			return game.getButton(keyMap.get("RSWITCH"));
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getButton(keyMap.get("RSWITCH"));
 	}
 
 	public boolean subLeftPressed() {
-		if (connected) {
-			return game.getButton(keyMap.get("LSWITCH"));
+		if (controller == null) {
+			return false;
 		}
-		return false;
+		return controller.getButton(keyMap.get("LSWITCH"));
 	}
 
 	public Vector3 getCursor() {
-		if (connected) {
-			return new Vector3(game.getAxis(Xbox.R_STICK_HORIZONTAL_AXIS), game.getAxis(Xbox.R_STICK_VERTICAL_AXIS), 0);
+		if (controller == null) {
+			return null;
 		}
-		return null;
+		return new Vector3(controller.getAxis(Xbox.R_STICK_HORIZONTAL_AXIS),
+				controller.getAxis(Xbox.R_STICK_VERTICAL_AXIS), 0);
 	}
 }

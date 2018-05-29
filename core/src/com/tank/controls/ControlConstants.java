@@ -2,7 +2,6 @@ package com.tank.controls;
 
 import java.util.LinkedHashMap;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.controllers.mappings.Xbox;
 
 public class ControlConstants {
 	public static final LinkedHashMap<String, KeyControl> DEFAULT_KEYBOARD_CONTROLS = new LinkedHashMap<String, KeyControl>();
@@ -19,14 +18,14 @@ public class ControlConstants {
 		DEFAULT_KEYBOARD_CONTROLS.put("RSHIFT", new KeyControl(Input.Keys.E,0));
 		DEFAULT_KEYBOARD_CONTROLS.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
 		
-		DEFAULT_GAMEPAD_CONTROLS.put("UP", Xbox.L_STICK_VERTICAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", Xbox.L_STICK_VERTICAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", Xbox.L_STICK_HORIZONTAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", Xbox.L_STICK_HORIZONTAL_AXIS);
-		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", Xbox.R_TRIGGER);
-		DEFAULT_GAMEPAD_CONTROLS.put("SUB", Xbox.L_TRIGGER);
-		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", Xbox.R_BUMPER);
-		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", Xbox.L_BUMPER);
+		DEFAULT_GAMEPAD_CONTROLS.put("UP", XboxMapping.L_STICK_VERTICAL_AXIS);
+		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", XboxMapping.L_STICK_VERTICAL_AXIS);
+		DEFAULT_GAMEPAD_CONTROLS.put("RIGHT", XboxMapping.L_STICK_HORIZONTAL_AXIS);
+		DEFAULT_GAMEPAD_CONTROLS.put("LEFT", XboxMapping.L_STICK_HORIZONTAL_AXIS);
+		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", XboxMapping.R_TRIGGER);
+		DEFAULT_GAMEPAD_CONTROLS.put("SUB", XboxMapping.L_TRIGGER);
+		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", XboxMapping.R_BUMPER);
+		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", XboxMapping.L_BUMPER);
 		
 		makeDefaultPlayer1();
 		makeDefaultPlayer2();
@@ -55,14 +54,14 @@ public class ControlConstants {
 	}
 	
 	private static void makeDefaultPlayer2() {
-		playerControls.put(2, new GamepadController(2));
+		playerControls.put(2, new GamepadController());
 	}
 
 	private static void makeDefaultPlayer3() {
-		playerControls.put(3, new GamepadController(3));
+		playerControls.put(3, new GamepadController());
 	}
 	
 	private static void makeDefaultPlayer4() {
-		playerControls.put(4, new GamepadController(4));
+		playerControls.put(4, new GamepadController());
 	}
 }
