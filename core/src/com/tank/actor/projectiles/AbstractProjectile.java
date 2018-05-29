@@ -116,6 +116,10 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		else {
 			boolean destroyed = false;
 			for(CollisionEvent e: collisions) {
+				if(e.getWall() == null) {
+					destroy();
+					break;
+				}
 				if(e.getCollidable() instanceof Bullet) {
 					((Bullet)e.getCollidable()).destroy();
 					destroyed = true;
@@ -322,7 +326,6 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * the object from the stage
 	 */
 	public void destroy() {
-		System.out.println("pay your respects");
 		projectileList.remove(this);
 		super.remove();
 	}
