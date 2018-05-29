@@ -1,9 +1,8 @@
 package com.tank.controls;
 
 import java.util.LinkedHashMap;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Vector3;
 
 public class KeyboardMouseController extends TankController {
 	private LinkedHashMap<String, KeyControl> keyMap;
@@ -90,7 +89,7 @@ public class KeyboardMouseController extends TankController {
 			return Gdx.input.isButtonPressed(lSwitch.getKeyCode());
 		}
 	}
-	public float[] moveCursor(float x, float y) {
-		return null;
+	public Vector3 getCursor() {
+		return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 	}
 }

@@ -19,7 +19,7 @@ public abstract class FreeTank extends AbstractVehicle {
 		super(x, y);
 		treadTexture = Assets.manager.get(Assets.tread_default);
 		gunTexture = Assets.manager.get(Assets.gun_default);
-		initiliazeHitbox();
+		initializeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
 	}
@@ -28,12 +28,12 @@ public abstract class FreeTank extends AbstractVehicle {
 		super(x, y);
 		treadTexture = tt;
 		gunTexture = gt;
-		initiliazeHitbox();
+		initializeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);
 	}
 	
-	protected void initiliazeHitbox() {
+	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 

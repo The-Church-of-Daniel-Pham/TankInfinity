@@ -79,8 +79,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
 	}
-
-	protected abstract void initiliazeHitbox();
+	
+	public abstract void reset();
+	
+	protected abstract void initializeHitbox();
 
 	/**
 	 * Set Vehicle statistics unique to each tank type
@@ -140,28 +142,27 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
-		if (canMoveTo(tX, tY, tAngle)) {
-			velocity.rotate(tAngle - getRotation());
-			setRotation(tAngle);
+		
+		//translation
+		if (canMoveTo(tX, tY, getRotation())) {
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
 		}
-		else if (!canMoveTo(tX, getY(), getRotation())) {
-			velocity.rotate(tAngle - getRotation());
-			setRotation(tAngle);
+		else if (canMoveTo(tX, getY(), getRotation())) {
 			super.setX(tX);
 			hitbox = testHitbox;
 		}
-		else if (!canMoveTo(getX(), tY, getRotation())) {
-			velocity.rotate(tAngle - getRotation());
-			setRotation(tAngle);
+		else if (canMoveTo(getX(), tY, getRotation())) {
 			super.setY(tY);
 			hitbox = testHitbox;
 		}
-		// velocity.rotate(delta * angularVelocity);
-		// setX(getX() + velocity.x * delta);
-		// setY(getY() + velocity.y * delta);
-		// setRotation(getRotation() + delta * angularVelocity);
+		
+		//rotation
+		if (canMoveTo(getX(), getY(), tAngle)) {
+			velocity.rotate(tAngle - getRotation());
+			setRotation(tAngle);
+			hitbox = testHitbox;
+		}
 	}
 
 	public boolean canMoveTo(float x, float y, float orientation) {
@@ -189,28 +190,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		angularVelocity += acceleration;
 	}
 
-	public void applyLimitedForce(Vector2 acceleration, float lim) {
-		Vector2 comp = new Vector2(1, 0);
-		comp.setAngle(acceleration.angle());
-		if (velocity.dot(comp) < lim) {
-			applyForce(acceleration);
-		}
-	}
-
-	public void applyLimitedForce(float mag, float dir, float lim) {
-		Vector2 comp = new Vector2(1, 0);
-		comp.setAngle(dir);
-		if (velocity.dot(comp) < lim) {
-			applyForce(mag, dir);
-		}
-	}
-
-	public void applyLimitedAngularForce(float acceleration, float lim) {
-		if (angularVelocity < lim) {
-			applyAngularForce(acceleration);
-		}
-	}
-
 	/**
 	 * From the Collidable interface. The getHitbox method is used to get the
 	 * polygons for the collision of the object. This will be overwritten by
@@ -235,7 +214,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		for (Collidable c : other) {
 			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
 																	// with this instance
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < testVertices.length / 2; i++) {
 				// check for wall collision by checking if the corners of this instance are
 				// contained within another Collidable object
 				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {

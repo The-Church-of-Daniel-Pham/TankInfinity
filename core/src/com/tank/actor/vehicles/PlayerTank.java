@@ -1,7 +1,6 @@
 package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -38,6 +37,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
+		selectedWeapon = 0;
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 	}
@@ -49,6 +49,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		initializeStats();
 		controls = new KeyboardMouseController();
 		reloadTime = 0;
+		selectedWeapon = 0;
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 	}
@@ -70,6 +71,15 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		this.tColor = tColor;
 		this.gColor = gColor;
 	}
+	
+	public void reset() {
+		reloadTime = 0;
+		selectedWeapon = 0;
+		super.velocity = new Vector2(0, 0);
+		super.angularVelocity = 0;
+		super.setRotation(90);
+		super.gunRotation = 90;
+	}
 
 	/**
 	 * updates the velocity based on user input and tank stats
@@ -88,9 +98,11 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		super.applyFriction(delta);
 		super.move(delta);
 		//Gun Pointing
-		Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-		getStage().getCamera().unproject(mousePos); // to world coordinates
-		super.pointGunToPoint(mousePos.x, mousePos.y);
+		if (controls.getCursor() != null) {
+			Vector3 cursorPos = controls.getCursor();
+			getStage().getCamera().unproject(cursorPos); // to world coordinates
+			super.pointGunToPoint(cursorPos.x, cursorPos.y);
+		}
 		//Firing
 		if (controls.firePressed() && reloadTime < 0.01) {	//if almsot done reloading, allow for rounding
 			reloadTime = 1.0f / stats.getStatValue("Rate_Of_Fire");
