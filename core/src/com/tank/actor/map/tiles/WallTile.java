@@ -28,7 +28,9 @@ public class WallTile extends AbstractMapTile implements Collidable {
 
 	public void draw(Batch batch, float a) {
 		super.draw(batch, a);
-		drawVertices(batch, a);
+		if (inView) {
+			drawVertices(batch, a);
+		}
 	}
 
 	@Override

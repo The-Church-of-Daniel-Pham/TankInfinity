@@ -13,7 +13,7 @@ public abstract class AbstractMapTile extends Actor {
 	protected int row;
 	protected int col;
 	protected Map map;
-	public boolean inView = true;
+	public boolean inView = false;
 	private static final float HEALTH = 100;
 	public static final int SIZE = Assets.manager.get(Assets.grass0).getWidth();
 

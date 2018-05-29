@@ -69,47 +69,23 @@ public class Map extends Group {
 		}
 	}
 
-	/**
-	 * Sets the visibility of the tiles within the rectangular grid indicated by the
-	 * first four parameters to the fifth parameter. Used for more efficient
-	 * rendering, but still not that efficient. The method automatically extends the
-	 * range of each of the four parameters by one.
-	 * 
-	 * @param minRow
-	 *            The upper bound of the grid
-	 * @param minCol
-	 *            The left bound of the grid
-	 * @param maxRow
-	 *            The lower bound of the grid
-	 * @param maxCol
-	 *            The right bound of the grid
-	 * @param vis
-	 *            If true, sets the tiles in the defined grid to be visible,
-	 *            otherwise sets them to not be visible (rendered)
-	 */
-	public void setTilesVisibility(int minRow, int minCol, int maxRow, int maxCol, boolean vis) {
-		// can us clamp later on
-		minRow--;
-		minCol--;
-		maxRow++;
-		maxCol++;
-		if (maxRow > level.getMapHeight() - 1) {
-			maxRow = level.getMapHeight() - 1;
-		}
-		if (maxCol > level.getMapWidth() - 1) {
-			maxCol = level.getMapWidth() - 1;
-		}
-		if (minRow < 0) {
-			minRow = 0;
-		}
-		if (minCol < 0) {
-			minCol = 0;
-		}
+	public void setFrustrumTilesVisible(int border) {
+		int[] bottomLeft = getTileAt(getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[0].y);
+		int[] topRight =  getTileAt(getStage().getCamera().frustum.planePoints[2].x, getStage().getCamera().frustum.planePoints[2].y);
+		int minRow = MathUtils.clamp(bottomLeft[0] - border, 0, map.length - 1);
+		int maxRow = MathUtils.clamp(topRight[0] + border, 0, map.length - 1);
+		int minCol = MathUtils.clamp(bottomLeft[1] - border, 0, map[0].length - 1);
+		int maxCol = MathUtils.clamp(topRight[1] + border, 0, map[0].length - 1);
 		for (int r = minRow; r <= maxRow; r++) {
 			for (int c = minCol; c <= maxCol; c++) {
-				map[r][c].inView = vis;
+				map[r][c].inView = true;
 			}
 		}
+	}
+	
+	@Override
+	public void act(float delta) {
+		setFrustrumTilesVisible(2);
 	}
 
 	/**
@@ -135,11 +111,11 @@ public class Map extends Group {
 	 * @param y
 	 *            the y position in pixels
 	 * @return an integer array of size 2 {row, col} that represents the tile the
-	 *         given pixel coordinates lie on
+	 *         given pixel coordinates lie on, clamped within the map
 	 */
 	public int[] getTileAt(float x, float y) {
-		int mapCol = (int) (x / AbstractMapTile.SIZE);
-		int mapRow = (int) (y / AbstractMapTile.SIZE);
+		int mapRow = MathUtils.clamp((int) (y / AbstractMapTile.SIZE), 0, map.length - 1);
+		int mapCol = MathUtils.clamp((int) (x / AbstractMapTile.SIZE), 0, map[0].length - 1);
 		return new int[] { mapRow, mapCol };
 	}
 
