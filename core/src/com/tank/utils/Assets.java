@@ -64,6 +64,8 @@ public class Assets {
 			Texture.class);
 	public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
 			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs = new AssetDescriptor<Texture>("tank/crosshairs.png",
+			Texture.class);
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
 			Texture.class);
@@ -123,6 +125,7 @@ public class Assets {
 		manager.load(gun_purple);
 		manager.load(tread_tan);
 		manager.load(gun_tan);
+		manager.load(crosshairs);
 		// System.out.println("Tank textures loaded");
 		manager.load(black);
 		// System.out.println("Menu textures loaded");
