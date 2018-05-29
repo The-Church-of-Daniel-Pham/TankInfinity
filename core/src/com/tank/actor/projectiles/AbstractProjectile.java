@@ -107,19 +107,25 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
-		if (canMoveTo(tX, tY, tAngle)) {
+		if (!isDestroyed() && canMoveTo(tX, tY, tAngle)) {
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
 		}
 		else {
+			boolean destroyed = false;
 			for(CollisionEvent e: collisions) {
+				if(e.getCollidable() instanceof Bullet) {
+					((Bullet)e.getCollidable()).destroy();
+					destroyed = true;
+				}
 				if(e.getCollisionType() == CollisionEvent.WALL_COLLISION && e.getWall() != null) {
 					bounce(e.getWall());
 					break;
 				}
 			}
+			if (destroyed) destroy();
 		}
 	}
 	
@@ -316,8 +322,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * the object from the stage
 	 */
 	public void destroy() {
+		System.out.println("pay your respects");
 		projectileList.remove(this);
-		this.remove();
+		super.remove();
 	}
 
 	/**
