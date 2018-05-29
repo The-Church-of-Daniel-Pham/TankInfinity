@@ -1,0 +1,6 @@
+In \TankInfinity
+Shift + Right Click -> Open PowerShell window here
+
+.\gradlew desktop:dist
+
+Jar is at \TankInfinity\desktop\build\libs
