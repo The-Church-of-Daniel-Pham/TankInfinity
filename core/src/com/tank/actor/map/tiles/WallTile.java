@@ -1,6 +1,9 @@
 package com.tank.actor.map.tiles;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.tank.actor.map.Map;
 import com.tank.interfaces.Collidable;
@@ -8,13 +11,27 @@ import com.tank.utils.Assets;
 
 public class WallTile extends AbstractMapTile implements Collidable {
 	protected final Polygon hitbox;
+	protected Texture debug = Assets.manager.get(Assets.vertex);
+	
 	public WallTile(int row, int col, Map map) {
 		//TODO set position to x/y coords
 		super(row, col, map);
-		hitbox = generateHitbox();
+		hitbox = initializeHitbox();
 	}
 	
+	public void drawVertices(Batch batch, float a) {
+		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
+			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
+					debug.getWidth(), debug.getHeight(), 1, 1, 0, 0, 0, debug.getWidth(), debug.getHeight(), false,
+					false);
+		}
+	}
 
+	public void draw(Batch batch, float a) {
+		super.draw(batch, a);
+		drawVertices(batch, a);
+	}
+	
 	@Override
 	public void build() {
 		super.addTexture(Assets.manager.get(Assets.grass0));
@@ -33,7 +50,7 @@ public class WallTile extends AbstractMapTile implements Collidable {
 }
 	}
 	
-	public Polygon generateHitbox() {
+	public Polygon initializeHitbox() {
 		float[] f = new float[8];
 		f[0] = getX();
 		f[1] = getY();

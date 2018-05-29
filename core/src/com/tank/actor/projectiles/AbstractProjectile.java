@@ -19,6 +19,7 @@ import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
+import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public abstract class AbstractProjectile extends Actor implements Collidable, Destructible {
@@ -34,6 +35,10 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * The velocity of the projectile, giving direction and speed
 	 */
 	protected Vector2 velocity;
+	/**
+	 * The angular velocity of the vehicle
+	 */
+	protected float angularVelocity;
 	/**
 	 * The source of the projectile, from some tank
 	 */
@@ -55,6 +60,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * stores the collision events that have been recorded in the current frame
 	 */
 	protected ArrayList<CollisionEvent> collisions;
+	protected Texture debug = Assets.manager.get(Assets.vertex);
 	
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
@@ -77,9 +83,13 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		setX(x);
 		setY(y);
 		setStats();
+		initializeHitbox();
 		collisions = new ArrayList<CollisionEvent>();
 		projectileList.add(this);
 	}
+	
+	protected abstract void initializeHitbox();
+	
 	abstract protected void setStats();
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to
@@ -88,9 +98,27 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * @param delta
 	 *            Time since last called.
 	 */
+	@Override
 	public void act(float delta) {
-		super.setX(getX() + delta * velocity.x);
-		super.setY(getY() + delta * velocity.y);
+		move(delta);
+	}
+
+	public void move(float delta) {
+		float tAngle = getRotation() + delta * angularVelocity;
+		float tX = getX() + velocity.x * delta;
+		float tY = getY() + velocity.y * delta;
+		if (canMoveTo(tX, tY, tAngle)) {
+			velocity.rotate(tAngle - getRotation());
+			setRotation(tAngle);
+			super.setPosition(tX, tY);
+			hitbox = testHitbox;
+		}
+	}
+	
+	public boolean canMoveTo(float x, float y, float orientation) {
+		testHitbox = getHitboxAt(x, y, orientation);
+		checkCollisions(getNeighbors());
+		return collisions.size() == 0;
 	}
 
 	/**
@@ -108,6 +136,14 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
 
+	public void drawVertices(Batch batch, float a) {
+		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
+			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
+					debug.getWidth(), debug.getHeight(), 1, 1, 0, 0, 0, debug.getWidth(), debug.getHeight(), false,
+					false);
+		}
+	}
+	
 	/**
 	 * The getVelocity method returns the velocity of the projectile
 	 * 
