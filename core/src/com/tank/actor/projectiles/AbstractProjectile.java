@@ -86,13 +86,13 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 * @param BOUNCE_VOLUME
 	 *            The volume of the bounce
 	 */
-	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y, Sound bounce,
+	public AbstractProjectile(Texture t, AbstractVehicle src, Stats stat, float x, float y, Sound bounce,
 			final float BOUNCE_VOLUME) {
 		tex = t;
 		source = src;
+		stats = stat;
 		setX(x);
 		setY(y);
-		setStats();
 		initializeHitbox();
 		collisions = new ArrayList<CollisionEvent>();
 		projectileList.add(this);
@@ -100,8 +100,6 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	}
 
 	protected abstract void initializeHitbox();
-
-	abstract protected void setStats();
 
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to

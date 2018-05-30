@@ -18,9 +18,9 @@ public class Bullet extends AbstractProjectile {
     private static final float BOUNCE_VOLUME = 0.5f;
     private int bounceCount = 0;
 
-	public Bullet(AbstractVehicle src, float x, float y, float direction) {
-		super(playerTexture, src, x, y, bounce_sound, BOUNCE_VOLUME);
-		Vector2 v = new Vector2(stats.getStatValue("Bullet_Speed"), 0);
+	public Bullet(AbstractVehicle src, Stats stats, float x, float y, float direction) {
+		super(playerTexture, src, stats, x, y, bounce_sound, BOUNCE_VOLUME);
+		Vector2 v = new Vector2(stats.getStatValue("Projectile Speed"), 0);
 		velocity = v.setAngle(direction);
 		setRotation(direction);
 		setOrigin(playerTexture.getWidth() / 2, playerTexture.getHeight() / 2);
@@ -32,20 +32,16 @@ public class Bullet extends AbstractProjectile {
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
-
-	@Override
-	protected void setStats() {
-		stats = new Stats();
-		stats.addStat("Bullet_Speed", 700);
-	}
 	
 	@Override
 	public void bounce(Vector2 wall) {
 		bounceCount += 1;
-		if (bounceCount <= 3)
+		if (bounceCount <= stats.getStatValue("Max Bounce"))
 			super.bounce(wall);
-		else
+		else {
 			super.destroy();
+			source.changeBulletCount(-1);
+		}
 	}
 
 	public void draw(Batch batch, float a) {
