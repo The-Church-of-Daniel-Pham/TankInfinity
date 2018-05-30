@@ -83,6 +83,20 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> crosshairs_tan = new AssetDescriptor<Texture>("ui/cursor/crosshairs_tan.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_default = new AssetDescriptor<Texture>("ui/tank/tank_preview_default.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_red = new AssetDescriptor<Texture>("ui/tank/tank_preview_red.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_blue = new AssetDescriptor<Texture>("ui/tank/tank_preview_blue.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_green = new AssetDescriptor<Texture>("ui/tank/tank_preview_green.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_yellow = new AssetDescriptor<Texture>("ui/tank/tank_preview_yellow.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_purple = new AssetDescriptor<Texture>("ui/tank/tank_preview_purple.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tank_preview_tan = new AssetDescriptor<Texture>("ui/tank/tank_preview_tan.png",
+            Texture.class);
     // Menu
     public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
             Texture.class);
@@ -151,6 +165,13 @@ public class Assets {
         manager.load(crosshairs_yellow);
         manager.load(crosshairs_purple);
         manager.load(crosshairs_tan);
+        manager.load(tank_preview_default);
+        manager.load(tank_preview_red);
+        manager.load(tank_preview_blue);
+        manager.load(tank_preview_green);
+        manager.load(tank_preview_yellow);
+        manager.load(tank_preview_purple);
+        manager.load(tank_preview_tan);
         // System.out.println("UI textures loaded");
         manager.load(black);
         // System.out.println("Menu textures loaded");
