@@ -1,12 +1,14 @@
 package com.tank.utils.pathfinding;
 
 import java.util.*;
+
+import com.badlogic.gdx.math.Vector2;
 public class PathfindingUtil
 {
-    public static LinkedList<Node> pathfinding(int[][] map, int sRow, int sCol, int eRow, int eCol){
+    public static LinkedList<Vector2> pathfinding(int[][] map, int sRow, int sCol, int eRow, int eCol){
         ArrayList<Node> queue = new ArrayList<Node>();
         ArrayList<Node> checked = new ArrayList<Node>();
-        LinkedList<Node> path = null;
+        LinkedList<Vector2> path = null;
         Node start = new Node(sRow, sCol, 0, null);
         Node end = new Node(eRow, eCol, 0, null);
         queue.add(start);
@@ -16,11 +18,11 @@ public class PathfindingUtil
             Node checking = selectNode(queue, end);
             if (checking.equals(end)){
                 found = true;
-                path = new LinkedList<Node>();
-                path.addFirst(checking);
+                path = new LinkedList<Vector2>();
+                path.addFirst(new Vector2(checking.getRow(), checking.getCol()));
                 while(checking.getPrevious() != null){
                     checking = checking.getPrevious();
-                    path.addFirst(checking);
+                    path.addFirst(new Vector2(checking.getRow(), checking.getCol()));
                 }
             }
             else{
