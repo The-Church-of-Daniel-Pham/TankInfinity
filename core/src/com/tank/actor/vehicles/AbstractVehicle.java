@@ -78,6 +78,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		angularVelocity = 0;
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
+		maxHealth = 100;
+		health = maxHealth;
 	}
 
 	protected abstract void initializeHitbox();
@@ -137,6 +139,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            Time since last called.
 	 */
 	public boolean move(float delta) {
+		if (isDestroyed())
+			return false;
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
@@ -154,8 +158,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			} else if (canMoveTo(getX(), tY, getRotation())) {
 				super.setY(tY);
 				hitbox = testHitbox;
-			}
-			else {
+			} else {
 				velocity.scl((float) Math.pow(0.01f, delta));
 			}
 		}
@@ -167,8 +170,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				setRotation(tAngle);
 				hitbox = testHitbox;
 				moved = true;
-			}
-			else {
+			} else {
 				angularVelocity *= (float) Math.pow(0.01f, delta);
 			}
 		}
@@ -302,6 +304,14 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		health += heal;
 		if (health > maxHealth)
 			health = maxHealth;
+	}
+
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public int getHealth() {
+		return health;
 	}
 
 	/**
