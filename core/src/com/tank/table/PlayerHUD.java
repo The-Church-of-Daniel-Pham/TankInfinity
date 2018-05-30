@@ -33,7 +33,9 @@ public class PlayerHUD extends Table{
 	}
 	
 	public void update() {
-		float completion = player.tank.getReloadTime() / (1f / player.tank.getStatValue("Fire Rate"));
+		int fireRate = player.tank.getStatValue("Fire Rate");
+		float maxReload = 2.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+		float completion = player.tank.getReloadTime() / (maxReload);
 		// reload time out of max reload time (inverse of rate of fire)
 		//System.out.println(completion);
 		reloadBar.setValue(completion);
