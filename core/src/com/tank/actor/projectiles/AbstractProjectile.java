@@ -122,7 +122,6 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			hitbox = testHitbox;
 		}
 		else {
-            bounce_sound.play();
 			boolean destroyed = false;
 			for(CollisionEvent e: collisions) {
 				if(e.getWall() == null) {
@@ -222,6 +221,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public void bounce(Vector2 wall) {
 		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
 		// the wall
+
+		bounce_sound.play();
+
 		super.setRotation(velocity.angle()); // update rotation
 
 	}
