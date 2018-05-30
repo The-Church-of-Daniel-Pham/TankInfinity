@@ -17,6 +17,7 @@ public class ControlConstants {
 		DEFAULT_KEYBOARD_CONTROLS.put("SUB", new KeyControl(Input.Buttons.RIGHT,1));
 		DEFAULT_KEYBOARD_CONTROLS.put("RSHIFT", new KeyControl(Input.Keys.E,0));
 		DEFAULT_KEYBOARD_CONTROLS.put("LSHIFT", new KeyControl(Input.Keys.Q,0));
+		DEFAULT_KEYBOARD_CONTROLS.put("PAUSE", new KeyControl(Input.Keys.ESCAPE,0));
 		
 		DEFAULT_GAMEPAD_CONTROLS.put("UP", new KeyControl(XboxMapping.AXIS_LEFT_Y, 1, -1));
 		DEFAULT_GAMEPAD_CONTROLS.put("DOWN", new KeyControl(XboxMapping.AXIS_LEFT_Y, 1, 1));
@@ -28,6 +29,7 @@ public class ControlConstants {
 		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.AXIS_LEFT_TRIGGER, 1, 1));
 		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.BUTTON_RB, 0));
 		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.BUTTON_LB, 0));
+		DEFAULT_GAMEPAD_CONTROLS.put("PAUSE", new KeyControl(XboxMapping.BUTTON_BACK, 0));
 		
 		makeDefaultPlayer1();
 		makeDefaultPlayer2();

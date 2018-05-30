@@ -19,7 +19,7 @@ public class PlayScreen implements Screen {
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
 		level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
-		levelhud = new LevelHUD(this.game, this.game.players);
+		levelhud = new LevelHUD(this.game);
 		pauseMenu = new PauseMenu(this.game);
 	}
 	
