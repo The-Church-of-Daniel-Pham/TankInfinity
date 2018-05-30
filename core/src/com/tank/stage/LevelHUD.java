@@ -25,11 +25,21 @@ public class LevelHUD extends Stage implements InputProcessor {
 	public LevelHUD(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
+		//cursors
+		for (Player p : game.players) {
+			if (p.isEnabled()) {
+				p.initializeCursor();
+				addActor(p.cursor);
+			}
+		}
+		//ui table
 		super.addActor(buildTable());
 	}
 
 	@Override
 	public void act(float delta) {
+		super.act(delta);
+		
 		//pause by key input, only from player 1
 		if (game.players.get(0).controls.pausePressed()) {
 			game.getScreen().pause();
