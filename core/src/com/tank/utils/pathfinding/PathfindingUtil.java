@@ -35,7 +35,7 @@ public class PathfindingUtil
         return path;
     }
 
-    public static void checkAdjacentNodes(int[][] map, ArrayList<Node> queue, ArrayList<Node> checked, Node checking){
+    private static void checkAdjacentNodes(int[][] map, ArrayList<Node> queue, ArrayList<Node> checked, Node checking){
         int[] rowChanges = {0, 1, 0, -1};
         int[] colChanges = {1, 0, -1, 0};
 
@@ -80,15 +80,15 @@ public class PathfindingUtil
         }
     }
 
-    public static boolean isOpenSpace(int[][] map, int row, int col){
+    private static boolean isOpenSpace(int[][] map, int row, int col){
         return (isOnMap(map, row, col) && map[row][col] == 0);
     }
 
-    public static boolean isOnMap(int[][] map, int row, int col){
+    private static boolean isOnMap(int[][] map, int row, int col){
         return (row >= 0 && row < map.length && col >= 0 && col < map[row].length);
     }
 
-    public static Node selectNode(ArrayList<Node> queue, Node end){
+    private static Node selectNode(ArrayList<Node> queue, Node end){
         Node best = null;
         double distance = 0;
         for (Node node : queue){

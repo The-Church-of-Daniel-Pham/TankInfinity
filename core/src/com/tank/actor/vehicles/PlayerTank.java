@@ -29,7 +29,7 @@ public class PlayerTank extends FreeTank {
 
 	private MediaSound engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
 	private MediaSound tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
-	private MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);;
+	private MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);
 
 	private boolean treadSoundOn = false;
 	private boolean engineSoundOn = false;
@@ -73,6 +73,8 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 300);
 		stats.addStat("Rate_Of_Fire", 1);
+		stats.addStat("Accuracy", 50);
+		stats.addStat("Spread", 40);
 	}
 
 	public void setMapPosition(int row, int col) {
@@ -144,8 +146,13 @@ public class PlayerTank extends FreeTank {
 
 	public void shoot() {
 		Vector2 v = new Vector2(TANK_GUN_LENGTH, 0);
+		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
+		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
+		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
+		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
+		if (Math.random() < 0.5) randomAngle *= -1;
 		v.setAngle(getGunRotation());
-		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation));
+		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, super.gunRotation + randomAngle));
 		shoot_sound.play();
 	}
 
@@ -178,5 +185,10 @@ public class PlayerTank extends FreeTank {
 
 	public float getReloadTime() {
 		return reloadTime;
+	}
+	
+	@Override
+	public String getTeam() {
+		return "PLAYERS";
 	}
 }

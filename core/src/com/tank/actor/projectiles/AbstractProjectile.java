@@ -18,13 +18,14 @@ import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
+import com.tank.interfaces.Teamable;
 import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
-public abstract class AbstractProjectile extends Actor implements Collidable, Destructible {
+public abstract class AbstractProjectile extends Actor implements Collidable, Destructible, Teamable {
 	/**
 	 * List of all projectiles
 	 */
@@ -261,25 +262,32 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		float[] testVertices = testHitbox.getVertices(); // vertices of this instance's hitbox
 		// check each Collidable object against this instance
 		for (Collidable c : other) {
-			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
-																	// with this instance
-			for (int i = 0; i < testVertices.length / 2; i++) {
-				// check for wall collision by checking if the corners of this instance are
-				// contained within another Collidable object
-				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
-					// generate the wall associated with the collision
-					Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
-					// create new wall collision event
-					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
-							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
-				}
-				// check for corner collision by checking if the corners of another Collidable
-				// object are contained within this instance
-				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
-					// create new corner collision event
-					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
-					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
-							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+			boolean canCollide = true;
+			if (c instanceof Teamable) {
+				Teamable teamObject = (Teamable)c;
+				canCollide = !(teamObject.getTeam() != null && getTeam() != null && getTeam().equals(teamObject.getTeam()));
+			}
+			if (canCollide) {
+				float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
+																		// with this instance
+				for (int i = 0; i < testVertices.length / 2; i++) {
+					// check for wall collision by checking if the corners of this instance are
+					// contained within another Collidable object
+					if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
+						// generate the wall associated with the collision
+						Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
+						// create new wall collision event
+						collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
+								new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					}
+					// check for corner collision by checking if the corners of another Collidable
+					// object are contained within this instance
+					if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
+						// create new corner collision event
+						Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
+						collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
+								new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+					}
 				}
 			}
 		}
@@ -349,5 +357,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	public boolean isDestroyed() {
 		return (getStage() == null);
+	}
+	
+	public String getTeam() {
+		if (source != null)
+			return source.getTeam();
+		else
+			return null;
 	}
 }
