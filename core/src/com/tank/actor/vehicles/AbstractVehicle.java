@@ -82,8 +82,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
-		maxHealth = 10;
-		health = maxHealth;
 	}
 
 	protected abstract void initializeHitbox();
@@ -257,7 +255,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public float randomShootAngle() {
 		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
 		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
-		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
+		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + (stats.getStatValue("Stability") * 60.0f)));
 		if (accuracy < 0.25) accuracy = 0.25;
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
@@ -266,9 +264,11 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	
 	public Stats createBulletStats() {
 		Stats bulletStats = new Stats();
-		bulletStats.addStat("Projectile Speed", stats.getStatValue("Projectile Speed"));
+		bulletStats.addStat("Damage", stats.getStatValue("Damage"));
+		bulletStats.addStat("Projectile Speed", (int)(75 * Math.sqrt(stats.getStatValue("Projectile Speed"))));
 		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
 		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));
+		bulletStats.addStat("Lifetime", stats.getStatValue("Lifetime"));
 		return bulletStats;
 	}
 	

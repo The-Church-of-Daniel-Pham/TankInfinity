@@ -56,13 +56,16 @@ public class Cursor extends AbstractUI {
 	
 	@Override
 	public void act(float delta) {
-		if (screenPos != null)
-			screenPos = player.controls.getCursor(screenPos);
-		else {screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
+		if (!player.tank.isDestroyed()) {
+			if (screenPos != null)
+				screenPos = player.controls.getCursor(screenPos);
+			else {
+				screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
+			}
+			hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
+			stagePos = player.tank.getStage().getCamera().unproject(screenPos.cpy()); // to world coordinates
+			setPosition(hudPos.x, hudPos.y);
 		}
-		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
-		stagePos = player.tank.getStage().getCamera().unproject(screenPos.cpy()); // to world coordinates
-		setPosition(hudPos.x, hudPos.y);
 	}
 	
 	public void draw(Batch batch, float a) {
