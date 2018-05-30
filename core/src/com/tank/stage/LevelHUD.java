@@ -30,6 +30,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 			if (p.isEnabled()) {
 				p.initializeCursor();
 				addActor(p.cursor);
+				p.cursor.moveOnStageTo(p.tank.getX(), p.tank.getY());
 			}
 		}
 		//ui table
