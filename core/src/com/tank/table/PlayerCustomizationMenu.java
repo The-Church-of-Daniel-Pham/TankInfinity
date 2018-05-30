@@ -1,11 +1,14 @@
 package com.tank.table;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
 import com.tank.utils.Assets;
@@ -34,11 +37,8 @@ public class PlayerCustomizationMenu  extends Table{
 		
 		Label playerLabel = new Label(player.getName(), skin);
 		playerLabel.setAlignment(Align.center);
-
-		Label colorLabel = new Label("Color ", skin);
-		colorLabel.setAlignment(Align.right);
-		final Label colorValueLabel = new Label(player.custom.getCustomValue("tank color"), skin);
-		colorValueLabel.setAlignment(Align.center);
+		
+		final Image tankPreviewImage = new Image(player.custom.getTexture("preview"));
 		final TextButton rightButton = new TextButton(">", skin);
 		final TextButton leftButton = new TextButton("<", skin);
 		final TextButton disableButton = new TextButton("Disable", skin);
@@ -47,7 +47,7 @@ public class PlayerCustomizationMenu  extends Table{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				player.custom.cycleCustom("tank color", 1);
-				colorValueLabel.setText(player.custom.getCustomValue("tank color"));
+				tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
 				event.stop();
 			}
 		});
@@ -56,7 +56,7 @@ public class PlayerCustomizationMenu  extends Table{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				player.custom.cycleCustom("tank color", -1);
-				colorValueLabel.setText(player.custom.getCustomValue("tank color"));
+				tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
 				event.stop();
 			}
 		});
@@ -71,14 +71,13 @@ public class PlayerCustomizationMenu  extends Table{
 			}
 		});
 		
-		super.add(playerLabel).colspan(4);
+		super.add(playerLabel).colspan(3);
 		super.row();
-		super.add(colorLabel).width(150);
-		super.add(leftButton).width(50).spaceRight(0);
-		super.add(colorValueLabel).width(100).spaceLeft(0).spaceRight(0);
-		super.add(rightButton).width(50).spaceLeft(0);
+		super.add(leftButton).width(50);
+		super.add(tankPreviewImage).width(200).height(200);
+		super.add(rightButton).width(50);
 		super.row();
-		super.add(disableButton);
+		super.add(disableButton).colspan(3);
 		changed = false;
 	}
 	

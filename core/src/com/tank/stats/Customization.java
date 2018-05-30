@@ -7,19 +7,16 @@ import com.tank.utils.CycleList;
 
 public class Customization {
 	private LinkedHashMap<String, String> custom;
-	private CycleList treads;
-	private CycleList guns;
+	private CycleList colors;
 
 	public Customization() {
 		custom = new LinkedHashMap<String, String>();
-		treads = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
-		guns = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
+		colors = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
 	}
 
 	public void setCustom(String cust, String val) {
 		if (cust.equals("tank color")) {
-			treads.setCurrent(val);
-			guns.setCurrent(val);
+			colors.setCurrent(val);
 			custom.put(cust, val);
 		}
 
@@ -35,9 +32,8 @@ public class Customization {
 	
 	public void cycleCustom(String cust, int n) {
 		if (cust.equals("tank color")) {
-			treads.cycleBy(n);
-			guns.cycleBy(n);
-			custom.put(cust, (String) treads.getCurrent());
+			colors.cycleBy(n);
+			custom.put(cust, (String) colors.getCurrent());
 		}
 	}
 
@@ -110,6 +106,29 @@ public class Customization {
 			}
 			else {
 				return Assets.manager.get(Assets.crosshairs_default);
+			}
+		}
+		else if (name.equals("preview")) {
+			if (val.equals("red")) {
+				return Assets.manager.get(Assets.tank_preview_red);
+			}
+			else if (val.equals("blue")) {
+				return Assets.manager.get(Assets.tank_preview_blue);
+			}
+			else if (val.equals("green")) {
+				return Assets.manager.get(Assets.tank_preview_green);
+			}
+			else if (val.equals("yellow")) {
+				return Assets.manager.get(Assets.tank_preview_yellow);
+			}
+			else if (val.equals("purple")) {
+				return Assets.manager.get(Assets.tank_preview_purple);
+			}
+			else if (val.equals("tan")) {
+				return Assets.manager.get(Assets.tank_preview_tan);
+			}
+			else {
+				return Assets.manager.get(Assets.tank_preview_default);
 			}
 		}
 		return null;	//not found
