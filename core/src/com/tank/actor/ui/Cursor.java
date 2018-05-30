@@ -3,35 +3,67 @@ package com.tank.actor.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.tank.game.Player;
 import com.tank.utils.Assets;
 
 public class Cursor extends AbstractUI {
+	protected Vector3 screenPos;
+	protected Vector3 hudPos;
+	protected Vector3 stagePos;
+	
+	protected Player player;
+	protected Stage stage;	//stage underneath, which teh  cursor is virtually "on"
 	protected Color color;
 
-	protected Texture tex;
+	protected static Texture tex = Assets.manager.get(Assets.crosshairs);;
 
-	public Cursor() {
+	public Cursor(Player player, Stage stage) {
 		super(false, true, 0, 0);
-		tex = Assets.manager.get(Assets.crosshairs);
+		this.player = player;
+		this.stage = stage;
 		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
 	
 	public Cursor(Texture t, float x, float y) {
 		super(false, true, x, y);
 		tex = t;
+		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
 
-	public void act(float delta) {
-		
+	public void moveOnStageTo(float x, float y) {
+		Vector2 screenCoor = stage.stageToScreenCoordinates(new Vector2(x, y));
+		super.setPosition(screenCoor.x, screenCoor.y);
 	}
+	
+	public Vector3 getScreenPos() {
+		return screenPos;
+	}
+	
+	public Vector3 getStagePos() {
+		return stagePos;
+	}
+	
+	@Override
+	public void act(float delta) {
+		screenPos = player.controls.getCursor(new Vector3 (getX(), getY(), 0));
+		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
+		stagePos = stage.getCamera().unproject(screenPos); // to world coordinates
+		setPosition(hudPos.x, hudPos.y);
+	}
+	
 	public void draw(Batch batch, float a) {
 		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), tex.getWidth(), tex.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
+	
 	public void setColor(Color col) {
 		
 	}
+	
 	public Color getColor() {
 		return color;
 	}

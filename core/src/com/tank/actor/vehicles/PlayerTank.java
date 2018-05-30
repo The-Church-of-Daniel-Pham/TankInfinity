@@ -1,36 +1,27 @@
 package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.projectiles.Bullet;
-import com.tank.actor.ui.Cursor;
-import com.tank.controls.ControlConstants;
-import com.tank.controls.TankController;
+import com.tank.game.Player;
 import com.tank.media.MediaSound;
-import com.tank.stats.Customization;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
 
-public class PlayerTank extends FreeTank implements InputProcessor {
+public class PlayerTank extends FreeTank {
 	/**
 	 * used for spawning bullets the correct distance away from Vehicle's center
 	 */
 	public static final int TANK_GUN_LENGTH = 135; // probably redundant, check free tank
 	private static float angle;	//angle between diagonal of rectangle and its base
 	
-	protected TankController controls;
-	protected Cursor cursor;
-	protected Vector3 cursorPos;
+	protected Player player;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
-	protected Customization custom;
 
 	private final float TREAD_VOLUME = 0.2f;
 	private final float ENGINE_VOLUME = 0.6f;
@@ -48,15 +39,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	protected float reloadTime;
 
-	public PlayerTank(int playerNumber) {
+	public PlayerTank(int playerNumber, Player player) {
 		super(0, 0); // defaults
 		this.playerNumber = playerNumber;
+		this.player = player;
 		initializeStats();
-		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursor = new Cursor();
-		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 		setWidth(80);
@@ -64,15 +53,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
-	public PlayerTank(int playerNumber, float x, float y) {
+	public PlayerTank(int playerNumber, Player player, float x, float y) {
 		super(x, y);
 		this.playerNumber = playerNumber;
+		this.player = player;
 		initializeStats();
-		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursor = new Cursor();
-		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 		setWidth(80);
@@ -93,38 +80,29 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
 		super.setPosition(x, y);
 	}
-	
-	public void centerCursor() {
-		Vector2 screenCoor = getStage().stageToScreenCoordinates(new Vector2(getX(), getY()));
-		cursorPos = new Vector3(screenCoor.x, screenCoor.y, 0);
-	}
 
 	/**
 	 * updates the velocity based on user input and tank stats
 	 */
 	public void act(float delta) {
-		if (controls.downPressed()) {
+		if (player.controls.downPressed()) {
 			super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
-		} else if (controls.upPressed()) {
+		} else if (player.controls.upPressed()) {
 			super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
 		}
-		if (controls.leftPressed()) {
+		if (player.controls.leftPressed()) {
 			super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration"));
-		} else if (controls.rightPressed()) {
+		} else if (player.controls.rightPressed()) {
 			super.applyAngularForce(-1 * delta * stats.getStatValue("Angular_Acceleration"));
 		}
 		super.applyFriction(delta);
 		super.move(delta);
 		// Gun Pointing
-		if ((cursorPos = controls.getCursor(cursorPos)) != null) {
-			Vector3 cursorPos = getStage().getCamera().unproject(this.cursorPos.cpy()); // to world coordinates
-			cursorPos.x = MathUtils.clamp(cursorPos.x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
-			cursorPos.y = MathUtils.clamp(cursorPos.y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
-			cursor.setPosition(cursorPos.x, cursorPos.y);
-			super.pointGunToPoint(cursorPos.x, cursorPos.y);
+		if (player.cursor.getStagePos() != null) {
+			super.pointGunToPoint(player.cursor.getStagePos().x, player.cursor.getStagePos().y);
 		}
 		// Firing
-		if (controls.firePressed() && reloadTime < 0.01) { // if almsot done reloading, allow for rounding
+		if (player.controls.firePressed() && reloadTime < 0.01) { // if almost done reloading, allow for rounding
 			reloadTime = 1.0f / stats.getStatValue("Rate_Of_Fire");
 			shoot();
 		} else if (reloadTime > 0) {
@@ -159,10 +137,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	@Override
 	public void draw(Batch batch, float a) {
-		treadTexture = custom.getTexture("tread");
-		gunTexture = custom.getTexture("gun");
+		treadTexture = player.custom.getTexture("tread");
+		gunTexture = player.custom.getTexture("gun");
 		super.draw(batch, a);
-		cursor.draw(batch, a);
 	}
 
 	public void shoot() {
@@ -194,10 +171,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		f[7] = y + v.y;
 		return new Polygon(f);
 	}
-	
-	public void setCustom(Customization custom) {
-		this.custom = custom;
-	}
 
 	public int getPlayerNumber() {
 		return playerNumber;
@@ -205,52 +178,5 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public float getReloadTime() {
 		return reloadTime;
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

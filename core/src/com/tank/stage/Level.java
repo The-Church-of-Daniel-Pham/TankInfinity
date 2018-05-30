@@ -35,7 +35,6 @@ public class Level extends Stage {
 			if (p.isEnabled()) {
 				p.initializeTank();
 				addActor(p.tank);
-				p.tank.centerCursor();
 			}
 		}
 		for (int i = 0; i < 4; i++) {

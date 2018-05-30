@@ -1,5 +1,6 @@
 package com.tank.game;
 
+import com.tank.actor.ui.Cursor;
 import com.tank.actor.vehicles.PlayerTank;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.TankController;
@@ -19,6 +20,7 @@ public class Player {
 	public PlayerCustomizationMenu customMenu;
 	public PlayerHUD hud;
 	public TankController controls;
+	public Cursor cursor;
 	
 	public Player(boolean enabled, String name, int playerNumber, String defaultColor, int defaultRow, int defaultCol) {
 		this.enabled = enabled;
@@ -63,10 +65,14 @@ public class Player {
 	}
 	
 	public void initializeTank() {
-		tank = new PlayerTank(playerNumber);
-		tank.setCustom(custom);
+		tank = new PlayerTank(playerNumber, this);
 		tank.setMapPosition(defaultRow, defaultCol);
 		hud = new PlayerHUD(this);
 		controls = ControlConstants.getPlayerControls(playerNumber);
+	}
+	
+	public void initializeCursor() {
+		cursor = new Cursor(this, tank.getStage());
+		cursor.moveOnStageTo(tank.getX(), tank.getY());
 	}
 }

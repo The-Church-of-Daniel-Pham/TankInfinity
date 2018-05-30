@@ -195,6 +195,26 @@ public class GamepadController extends TankController {
 		}
 		return false;
 	}
+	
+	public boolean pausePressed() {
+		if (controller == null) {
+			return false;
+		}
+		KeyControl pause = keyMap.get("PAUSE");
+		if (pause.getKeyType() == 0) {
+			return controller.getButton(pause.getKeyCode());
+		}
+		else {
+			if (pause.getDirection() < 0) {
+				return (controller.getAxis(pause.getKeyCode()) <= -deadzone);
+			}
+			else if (pause.getDirection() > 0) {
+				return (controller.getAxis(pause.getKeyCode()) >= deadzone);
+			}
+				
+		}
+		return false;
+	}
 
 	public void testButtons() {
 		for (int i = 0; i < 100; i++) {

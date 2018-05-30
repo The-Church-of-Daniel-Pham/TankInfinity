@@ -89,6 +89,15 @@ public class KeyboardMouseController extends TankController {
 			return Gdx.input.isButtonPressed(lSwitch.getKeyCode());
 		}
 	}
+	public boolean pausePressed() {
+		KeyControl pause = keyMap.get("PAUSE");
+		if (pause.getKeyType() == 0) {
+			return Gdx.input.isKeyPressed(pause.getKeyCode());
+		}
+		else {
+			return Gdx.input.isButtonPressed(pause.getKeyCode());
+		}
+	}
 	public Vector3 getCursor(Vector3 oldCursor) {
 		return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 	}
