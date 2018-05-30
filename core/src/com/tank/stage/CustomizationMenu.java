@@ -1,6 +1,7 @@
 package com.tank.stage;
 
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -12,11 +13,14 @@ import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.screen.PlayScreen;
+import com.tank.table.PlayerCustomizationMenu;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
 public class CustomizationMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
+	protected Table uiTable;
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public CustomizationMenu(TankInfinity game) {
@@ -24,22 +28,21 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		this.game = game;
 		AbstractVehicle.vehicleList.clear();
 		AbstractProjectile.projectileList.clear();
-		// create players
-		this.game.players.add(new Player("Player 1", 1, "red", 1, 1));
-		this.game.players.add(new Player("Player 2", 2, "blue", 1, 2));
-		this.game.players.add(new Player("Player 3", 3, "green", 1, 3));
-		this.game.players.add(new Player("Player 4", 4, "yellow", 1, 4));
-		super.addActor(buildTable());
+		// build table
+		uiTable = new Table();
+		buildTable();
+		super.addActor(uiTable);
 	}
 
-	private Table buildTable() {
-		Table uiTable = new Table();
+	private void buildTable() {
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(200).height(75).space(25).center();
 		
 		// Add widgets to the table here.
 		for (final Player p : game.players) {
+			p.initializeTankCustom();
+			p.initializeCustomMenu();
 			uiTable.add(p.customMenu).expand();
 		}
 		
@@ -56,6 +59,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		continueButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.screens.put("Play", new PlayScreen(game));	//creates or replaces with a new game
 	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
@@ -64,7 +68,21 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		uiTable.row();
 		uiTable.add(backButton).width(150).colspan(2).expand().bottom().left();
 		uiTable.add(continueButton).colspan(2).expand().bottom().right();
-
-		return uiTable;
+	}
+	
+	private boolean needToRebuildTable() {
+		for (Actor w : uiTable.getChildren()) {
+			if (w instanceof PlayerCustomizationMenu && ((PlayerCustomizationMenu) w).hasChanged()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public void act(float delta) {
+		if (needToRebuildTable()) {
+			buildTable();
+		}
 	}
 }

@@ -19,6 +19,12 @@ public class TankInfinity extends Game {
 	@Override
 	public void create() {	
 		players = new ArrayList<Player>();
+		// create players
+		players.add(new Player(true, "Player 1", 1, "red", 1, 1));
+		players.add(new Player(false, "Player 2", 2, "blue", 1, 2));
+		players.add(new Player(false, "Player 3", 3, "green", 1, 3));
+		players.add(new Player(false, "Player 4", 4, "yellow", 1, 4));
+		// go to loading screen
 		screens.put("Loading", new LoadingScreen(this));
 		super.setScreen(screens.get("Loading"));
 		Gdx.input.setInputProcessor(inputMultiplexer);

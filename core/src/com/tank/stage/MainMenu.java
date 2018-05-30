@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
-import com.tank.screen.PlayScreen;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
@@ -31,40 +30,14 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.defaults().width(200).height(75).space(25).center();
 
 		// Add widgets to the table here.
-		TextButton newGameButton = new TextButton("New Game", skin);
-		TextButton resumeGameButton = new TextButton("Resume Game", skin);
-		TextButton customizationButton = new TextButton("Customization", skin);
+		TextButton playButton = new TextButton("Play", skin);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		TextButton quitButton = new TextButton("Quit", skin);
 		
-		newGameButton.addListener(new ClickListener() {
+		playButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.screens.put("Play", new PlayScreen(game));	//creates or replaces with a new game
 	        	 game.setScreen(game.screens.get("Customization Menu"));	//go here first
-	        	 //game.setScreen(game.screens.get("Play"));
-	        	 event.stop();
-	         }
-	      });
-		
-		resumeGameButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 //goes to existing screen, if it was created
-	        	 if (game.screens.get("Play") != null) {
-	        		 game.setScreen(game.screens.get("Play"));
-	        	 }
-	        	 else {
-	        		 //do nothing, there is no game to resume
-	        	 }
-	        	 event.stop();
-	         }
-	      });
-		
-		customizationButton.addListener(new ClickListener() {
-	         @Override
-	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.setScreen(game.screens.get("Customization Menu"));
 	        	 event.stop();
 	         }
 	      });
@@ -85,11 +58,7 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.add(newGameButton);
-		uiTable.row();
-		uiTable.add(resumeGameButton);
-		uiTable.row();
-		uiTable.add(customizationButton);
+		uiTable.add(playButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
 		uiTable.row(); 
