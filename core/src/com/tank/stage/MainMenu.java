@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
-import com.tank.screen.PlayScreen;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
@@ -40,9 +39,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		newGameButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.screens.put("Play", new PlayScreen(game));	//creates or replaces with a new game
 	        	 game.setScreen(game.screens.get("Customization Menu"));	//go here first
-	        	 //game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
 	      });

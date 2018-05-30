@@ -31,9 +31,12 @@ public class Level extends Stage {
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
 		
-		for (Player p : game.players) {
-			addActor(p.tank);
+		for (final Player p : game.players) {
+			if (p.isEnabled()) {
+				addActor(p.tank);
+			}
 		}
+		
 		addActor(new BasicEnemy(1500, 1500));
 
 		
