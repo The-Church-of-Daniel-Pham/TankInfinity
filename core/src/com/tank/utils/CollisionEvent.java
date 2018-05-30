@@ -71,38 +71,6 @@ public class CollisionEvent {
 	}
 
 	/**
-	 * Precondition: the ray formed by pre and post intersect c
-	 * 
-	 * @param c
-	 *            The object whose wall collides with the corner of another. The
-	 *            corner is given by (x, y)
-	 * @param pre
-	 *            the coordinates of the corner before the corner collides
-	 * @param post
-	 *            the coordinates of the corner after the corner collides
-	 * @return The Vector2 which represents the magnitude/direction of the wall on
-	 *         'c' that was hit
-	 */
-	public static Vector2 getWallVector(Collidable c, Vector2 pre, Vector2 post) {
-		float[] f = c.getHitbox().getVertices();
-		Vector2[] points = new Vector2[f.length / 2];
-		for (int i = 0; i < points.length; i++) {
-			points[i] = new Vector2(f[i * 2], f[i * 2 + 1]);
-		}
-		for (int i = 0; i < points.length; i++) {
-			// define the coordinates of the ray (point1, point2) that describe one side of
-			// c
-			Vector2 sidePoint1 = points[i % points.length]; // point 1
-			Vector2 sidePoint2 = points[(i + 1) % points.length]; // point 2
-			if (Intersector.intersectSegments(pre, post, sidePoint1, sidePoint2, new Vector2())) { // last parameter not
-																									// used
-				return sidePoint2.cpy().sub(sidePoint1);
-			}
-		}
-		return null; // if no collision found
-	}
-
-	/**
 	 * Precondition: a collision occurs between 'c' and 'w' and the collision is not
 	 * corner to corner. Don't expect the right wall in this case.
 	 * 
@@ -118,16 +86,16 @@ public class CollisionEvent {
 	 *         returned.
 	 */
 	public static Vector2 getWallVector(Polygon c, Polygon w, int n) {
-		n+=8;
+		n += 8;
 		// vertices of c
 		float[] cF = c.getVertices();
 		// vertices of w
 		float[] wF = w.getVertices();
 		// coords of corner in question
-		Vector2 p1p2 = new Vector2(cF[n%8 ], cF[(n +1)%8]);
+		Vector2 p1p2 = new Vector2(cF[n % 8], cF[(n + 1) % 8]);
 		// coords of one of the two closest corners
 		Vector2 q1 = new Vector2(cF[(n + 2) % 8], cF[(n + 3) % 8]);
-		 Vector2 q2 = new Vector2(cF[(n - 2) % 8], cF[(n - 1) % 8]);
+		Vector2 q2 = new Vector2(cF[(n - 2) % 8], cF[(n - 1) % 8]);
 		// make wF vertices into Vector2 coordinates
 		Vector2[] wPoints = new Vector2[wF.length / 2];
 		for (int i = 0; i < wPoints.length; i++) {
@@ -139,10 +107,29 @@ public class CollisionEvent {
 			// sidePoint1 and sidePoint2 make a ray that represent a wall of 'w'
 			Vector2 sidePoint1 = wPoints[i % wPoints.length]; // point 1
 			Vector2 sidePoint2 = wPoints[(i + 1) % wPoints.length]; // point 2
-			if (Intersector.intersectSegments(p1p2, q1, sidePoint1, sidePoint2, new Vector2()) || Intersector.intersectSegments(p1p2, q2, sidePoint1, sidePoint2, new Vector2())) {
+			if (Intersector.intersectSegments(p1p2, q1, sidePoint1, sidePoint2, new Vector2())
+					|| Intersector.intersectSegments(p1p2, q2, sidePoint1, sidePoint2, new Vector2())) {
 				return sidePoint2.cpy().sub(sidePoint1);
 			}
 		}
 		return null;
+	}
+/**
+ * Estimates the wall on p that was hit, given precollision corner pt
+ * @param p The Polygon whose wall was hit
+ * @param pt The corner of the object that hit 'p' before it collided (cannot be inside 'p')
+ * @return a guess as to which wall on 'p'  was hit
+ */
+	public static Vector2 getWallVector(Polygon p, Vector2 pt) {
+		float[] f = p.getVertices();
+		Vector2 leftToV = new Vector2(pt.x - f[0], pt.y - f[1]);
+		Vector2 rightToV = new Vector2(pt.x - f[6], pt.y - f[7]);
+		Vector2 side1 = new Vector2(f[0] - f[2], f[1] - f[3]);
+		Vector2 side2 = new Vector2(f[6] - f[4], f[7] - f[5]);
+		if (leftToV.angle(side1) * rightToV.angle(side2) < 0) {
+			return (new Vector2(f[0] - f[6], f[1] - f[7]));
+		} else {
+			return (new Vector2(f[0] - f[2], f[1] - f[3]));
+		}
 	}
 }

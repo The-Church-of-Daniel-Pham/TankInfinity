@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -54,8 +55,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	protected Polygon hitbox;
 	/**
-	 * The hitbox of the Projectile, presumably at a position to which the Projectile is
-	 * trying to move
+	 * The hitbox of the Projectile, presumably at a position to which the
+	 * Projectile is trying to move
 	 */
 	protected Polygon testHitbox;
 	/**
@@ -63,8 +64,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
-    private MediaSound bounce_sound;
-	
+	private MediaSound bounce_sound;
+
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
 	 * variables
@@ -79,12 +80,13 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            The starting x of the projectile
 	 * @param y
 	 *            The starting y of the projectile
-     * @param bounce
-     *            The sound for the bounce
-     * @param BOUNCE_VOLUME
-     *            The volume of the bounce
+	 * @param bounce
+	 *            The sound for the bounce
+	 * @param BOUNCE_VOLUME
+	 *            The volume of the bounce
 	 */
-	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y, Sound bounce, final float BOUNCE_VOLUME) {
+	public AbstractProjectile(Texture t, AbstractVehicle src, float x, float y, Sound bounce,
+			final float BOUNCE_VOLUME) {
 		tex = t;
 		source = src;
 		setX(x);
@@ -95,10 +97,11 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		projectileList.add(this);
 		bounce_sound = new MediaSound(bounce, BOUNCE_VOLUME);
 	}
-	
+
 	protected abstract void initializeHitbox();
-	
+
 	abstract protected void setStats();
+
 	/**
 	 * The act method is shared by all Actors. It tells what the actor is going to
 	 * do.
@@ -108,39 +111,62 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	@Override
 	public void act(float delta) {
-		move(delta);
+		if (!isDestroyed())
+			move(delta);
 	}
 
 	public void move(float delta) {
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
-		if (!isDestroyed() && canMoveTo(tX, tY, tAngle)) {
+		if (canMoveTo(tX, tY, tAngle)) {
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
-		}
-		else {
-			boolean destroyed = false;
-			for(CollisionEvent e: collisions) {
-				if(e.getWall() == null) {
+		} else {
+			ArrayList<Collidable> objectsHit = new ArrayList<Collidable>();
+			CollisionEvent cornerE = null; // use later if needed
+			int numCornersHit = 0;
+			int numWallsHit = 0;
+			for (CollisionEvent e : collisions) {
+				if (e.getCollidable() instanceof Bullet) {
+					((Bullet) e.getCollidable()).destroy();
 					destroy();
 					break;
 				}
-				if(e.getCollidable() instanceof Bullet) {
-					((Bullet)e.getCollidable()).destroy();
-					destroyed = true;
+				if (e.getCollisionType() == CollisionEvent.CORNER_COLLISION) {
+					numCornersHit++;
+					cornerE = e; // let's face it: since we're not colliding with another bullet, there's no way
+									// we're hitting more than one corner of a tank/tile as a bullet
+				} else {
+					numWallsHit++;
 				}
-				if(e.getCollisionType() == CollisionEvent.WALL_COLLISION && e.getWall() != null) {
-					bounce(e.getWall());
-					break;
+				if (!objectsHit.contains(e.getCollidable())) {
+					objectsHit.add(e.getCollidable());
 				}
 			}
-			if (destroyed) destroy();
+			if (numCornersHit == 0) { // most likely case; good ol wall collision
+				Vector2 wall = collisions.get(0).getWall();
+				if (wall != null)
+					bounce(collisions.get(0).getWall());
+				else// bullet inside tank/tile... can't escape anyways
+					destroy();
+			} else if (numWallsHit > 0) {// corner to corner
+				bounce(velocity.cpy().rotate(90)); // move backwards
+			} else { // head on corner or side corner graze
+				float[] f = testHitbox.getVertices();
+				if (cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
+					bounce(velocity.cpy().rotate(90)); // move backwards
+				} else { // graze
+					System.out.println("graze");
+					bounce(CollisionEvent.getWallVector(cornerE.getCollidable().getHitbox(),
+							cornerE.getCorner().sub(velocity.cpy().scl(delta))));
+				}
+			}
 		}
 	}
-	
+
 	public boolean canMoveTo(float x, float y, float orientation) {
 		testHitbox = getHitboxAt(x, y, orientation);
 		checkCollisions(getNeighbors());
@@ -169,7 +195,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					false);
 		}
 	}
-	
+
 	/**
 	 * The getVelocity method returns the velocity of the projectile
 	 * 
@@ -250,8 +276,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 
 	/**
 	 * From the Collidable interface. The checkCollision method handles all
-	 * collisions to this object. This is handled differently for each subclass
-	 * Uses testHitbox to check collisions.
+	 * collisions to this object. This is handled differently for each subclass Uses
+	 * testHitbox to check collisions.
 	 * 
 	 * @param other
 	 *            The other object this object collides with
@@ -286,15 +312,15 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	}
 
 	public ArrayList<Collidable> getNeighbors() {
-		//get neighboring bricks. instances of  WallTile get added to neighbors
-		//add all vehicles to neighbors
-		//add all bullets to neighbors, then remove this instance
+		// get neighboring bricks. instances of WallTile get added to neighbors
+		// add all vehicles to neighbors
+		// add all bullets to neighbors, then remove this instance
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
-		int[] gridCoords = ((Level)getStage()).getMap().getTileAt(getX(), getY());
-		ArrayList<AbstractMapTile> a =((Level)getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
-		for(AbstractMapTile m: a) {
-			if(m instanceof WallTile) {
-				neighbors.add((WallTile)m);
+		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
+		ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
+		for (AbstractMapTile m : a) {
+			if (m instanceof WallTile) {
+				neighbors.add((WallTile) m);
 			}
 		}
 		neighbors.addAll(AbstractVehicle.vehicleList);
@@ -302,6 +328,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		neighbors.remove(this);
 		return neighbors;
 	}
+
 	public Polygon getHitbox() {
 		return hitbox;
 	}
