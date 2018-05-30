@@ -27,7 +27,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected TankController controls;
 	protected Cursor cursor;
 	protected Vector3 cursorPos;
-	protected String color;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
@@ -51,7 +50,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public PlayerTank(int playerNumber) {
 		super(0, 0); // defaults
-		initializeCustom("default");
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
@@ -66,9 +64,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
-	public PlayerTank(float x, float y, int playerNumber, String color) {
+	public PlayerTank(float x, float y, int playerNumber) {
 		super(x, y);
-		initializeCustom(color);
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
@@ -89,14 +86,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 300);
 		stats.addStat("Rate_Of_Fire", 1);
-	}
-
-	protected void initializeCustom(String color) {
-		custom = new Customization();
-		custom.setCustom("tank color", color);
-		treadTexture = custom.getTexture("tread");
-		gunTexture = custom.getTexture("gun");
-		this.color = color;
 	}
 
 	public void setMapPosition(int row, int col) {
@@ -164,6 +153,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	@Override
 	public void draw(Batch batch, float a) {
+		treadTexture = custom.getTexture("tread");
+		gunTexture = custom.getTexture("gun");
 		super.draw(batch, a);
 		cursor.draw(batch, a);
 	}
@@ -197,24 +188,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		f[7] = y + v.y;
 		return new Polygon(f);
 	}
-
-	/**
-	 * Set Vehicle customization unique to each player tank type
-	 */
-	public void setCustom(String cust, String val) {
-		custom.setCustom(cust, val);
-		gunTexture = custom.getTexture("gun");
-		treadTexture = custom.getTexture("tread");
-	}
-
-	public String getCustom(String cust) {
-		return custom.getCustomValue(cust);
-	}
-
-	public void cycleCustom(String cust, int n) {
-		custom.cycleCustom(cust, n);
-		gunTexture = custom.getTexture("gun");
-		treadTexture = custom.getTexture("tread");
+	
+	public void setCustom(Customization custom) {
+		this.custom = custom;
 	}
 
 	public int getPlayerNumber() {
