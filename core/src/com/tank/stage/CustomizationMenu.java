@@ -59,9 +59,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		continueButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 for (Player p : game.players) {
-	        		 p.initializeTank();
-	        	 }
 	        	 game.screens.put("Play", new PlayScreen(game));	//creates or replaces with a new game
 	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();

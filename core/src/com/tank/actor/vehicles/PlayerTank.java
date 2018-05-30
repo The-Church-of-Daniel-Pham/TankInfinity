@@ -55,8 +55,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursorPos = new Vector3(getX(), getY(), 0);
 		cursor = new Cursor();
+		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 		setWidth(80);
@@ -64,15 +64,15 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
-	public PlayerTank(float x, float y, int playerNumber) {
+	public PlayerTank(int playerNumber, float x, float y) {
 		super(x, y);
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursorPos = new Vector3(getX(), getY(), 0);
 		cursor = new Cursor();
+		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 		setWidth(80);
@@ -92,6 +92,12 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
 		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
 		super.setPosition(x, y);
+	}
+	
+	public void centerCursor() {
+		Vector2 screenCoor = getStage().stageToScreenCoordinates(new Vector2(getX(), getY()));
+		cursorPos = new Vector3(screenCoor.x, screenCoor.y, 0);
+		System.out.println(screenCoor.x + ", " + screenCoor.y);
 	}
 
 	/**
