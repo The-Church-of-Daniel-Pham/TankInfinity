@@ -59,7 +59,7 @@ public class Player {
 		customMenu = new PlayerCustomizationMenu(this, enabled);
 	}
 	
-	public void initializeTankCustom() {
+	public void initializeCustom() {
 		custom = new Customization();
 		custom.setCustom("tank color", defaultColor);
 	}

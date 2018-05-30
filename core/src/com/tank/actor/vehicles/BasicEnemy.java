@@ -2,8 +2,6 @@ package com.tank.actor.vehicles;
 
 import java.util.LinkedList;
 import java.util.ListIterator;
-
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
