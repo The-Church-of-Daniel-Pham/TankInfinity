@@ -97,7 +97,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	public void centerCursor() {
 		Vector2 screenCoor = getStage().stageToScreenCoordinates(new Vector2(getX(), getY()));
 		cursorPos = new Vector3(screenCoor.x, screenCoor.y, 0);
-		System.out.println(screenCoor.x + ", " + screenCoor.y);
 	}
 
 	/**
