@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.tank.game.Player;
 import com.tank.utils.Assets;
 
@@ -16,11 +17,13 @@ public class Cursor extends AbstractUI {
 	protected boolean newGame;
 	
 	protected Player player;
+	protected Stage stage;
 	protected Texture tex;
 
-	public Cursor(Player player) {
+	public Cursor(Player player, Stage stage) {
 		super(false, true, 0, 0);
 		this.player = player;
+		this.stage = stage;
 		newGame = true;
 		tex = Assets.manager.get(Assets.crosshairs_default);
 		screenPos = new Vector3(0, 0, 0);
@@ -42,7 +45,7 @@ public class Cursor extends AbstractUI {
 	
 	public void moveToStage(float x, float y) {
 		stagePos = new Vector3(x, y, 0);
-		screenPos = new Vector3(player.tank.getStage().stageToScreenCoordinates(new Vector2(stagePos.x, stagePos.y)), 0);
+		screenPos = new Vector3(stage.stageToScreenCoordinates(new Vector2(stagePos.x, stagePos.y)), 0);
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());
 		super.setPosition(hudPos.x, hudPos.y);
 	}
@@ -60,7 +63,7 @@ public class Cursor extends AbstractUI {
 		
 		screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
 		screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
-		stagePos = player.tank.getStage().getCamera().unproject(screenPos.cpy()); // to world coordinates
+		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
 		setPosition(hudPos.x, hudPos.y);
 	}

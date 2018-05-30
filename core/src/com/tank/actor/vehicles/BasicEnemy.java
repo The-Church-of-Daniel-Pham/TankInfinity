@@ -75,15 +75,6 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Projectile Durability", 1);
 	}
 	
-	public Stats createBulletStats() {
-		Stats bulletStats = new Stats();
-		bulletStats.addStat("Damage", stats.getStatValue("Damage"));
-		bulletStats.addStat("Projectile Speed", (int)(75 * Math.sqrt(stats.getStatValue("Projectile Speed"))));
-		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
-		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));
-		return bulletStats;
-	}
-	
 	public void initializePathfinding() {
 		path = new LinkedList<Vector2>();
 		pathfindingThread = new Thread() {
@@ -157,7 +148,7 @@ public class BasicEnemy extends FixedTank {
 						backingUp(delta);
 					}
 					else if (forwarding) {
-						super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
+						super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, getRotation());
 						reverseTime += delta;
 						if (reverseTime >= 0.5f) {
 							forwarding = false;
@@ -219,7 +210,7 @@ public class BasicEnemy extends FixedTank {
 				backingUp(delta);
 			}
 			else if (forwarding) {
-				super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
+				super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, getRotation());
 				reverseTime += delta;
 				if (reverseTime >= 0.5f) {
 					forwarding = false;
@@ -273,8 +264,8 @@ public class BasicEnemy extends FixedTank {
 			}
 		}
 		//requestPathfinding();
-		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * direction);
-		super.applyForce(delta * stats.getStatValue("Acceleration") * moveForward, getRotation());
+		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f * direction);
+		super.applyForce(delta * stats.getStatValue("Acceleration")  * 10f * moveForward, getRotation());
 	}
 	
 	public boolean rotateTowardsTarget(float delta, float x, float y) {
@@ -290,7 +281,7 @@ public class BasicEnemy extends FixedTank {
 		if (rotationDifference > 10) direction = 1;
 		else if (rotationDifference < -10) direction = -1;
 		
-		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * direction);
+		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f * direction);
 		return (direction != 0);
 	}
 	
@@ -303,12 +294,12 @@ public class BasicEnemy extends FixedTank {
 	}
 	
 	public void backingUp(float delta) {
-		super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
+		super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, 180 + getRotation());
 		if (reverseTimeThreshold >= 1.5f) {
 			if (randomTurnReverse) 
-				super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration"));
+				super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f);
 			else
-				super.applyAngularForce(-delta * stats.getStatValue("Angular Acceleration"));
+				super.applyAngularForce(-delta * stats.getStatValue("Angular Acceleration") * 2.5f);
 		}
 		reverseTime += delta;
 		if (reverseTime >= reverseTimeThreshold) {

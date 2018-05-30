@@ -18,16 +18,27 @@ public class Bullet extends AbstractProjectile {
 	private static Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
     private static final float BOUNCE_VOLUME = 0.5f;
     private int bounceCount = 0;
+    private float lifeTime;
 
 	public Bullet(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(playerTexture, src, stats, x, y, bounce_sound, BOUNCE_VOLUME);
-		Vector2 v = new Vector2(this.stats.getStatValue("Projectile Speed"), 0);
+		Vector2 v = new Vector2(stats.getStatValue("Projectile Speed"), 0);
+		lifeTime = 0f;
 		velocity = v.setAngle(direction);
 		setRotation(direction);
 		setOrigin(playerTexture.getWidth() / 2, playerTexture.getHeight() / 2);
 		setWidth(25);
 		setHeight(6);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+	}
+	
+	public void act(float delta) {
+		lifeTime += delta;
+		if (lifeTime >= stats.getStatValue("Lifetime") / 10.0f) {
+			destroy();
+			return;
+		}
+		super.act(delta);
 	}
 
 	protected void initializeHitbox() {
@@ -50,6 +61,8 @@ public class Bullet extends AbstractProjectile {
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+				destroy();
+				break;
 			}
 		}
 	}
