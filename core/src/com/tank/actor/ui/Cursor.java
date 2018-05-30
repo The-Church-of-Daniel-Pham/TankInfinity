@@ -34,8 +34,10 @@ public class Cursor extends AbstractUI {
 	}
 
 	public void moveOnStageTo(float x, float y) {
-		Vector2 screenCoor = stage.stageToScreenCoordinates(new Vector2(x, y));
-		super.setPosition(screenCoor.x, screenCoor.y);
+		stagePos = new Vector3(x, y, 0);
+		//screenPos = stage.getCamera().project(stagePos.cpy());
+		//hudPos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
+		//setPosition(hudPos.x, hudPos.y);
 	}
 	
 	public Vector3 getScreenPos() {
@@ -50,8 +52,15 @@ public class Cursor extends AbstractUI {
 	public void act(float delta) {
 		if (screenPos != null)
 			screenPos = player.controls.getCursor(screenPos);
-		else
-			screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
+		else {
+			if (stagePos != null) {
+				screenPos = stage.getCamera().project(stagePos.cpy());
+			}
+			else if (hudPos != null) {
+				screenPos = getStage().getCamera().project(hudPos.cpy());
+			}
+			else screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
+		}
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
 		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
 		setPosition(hudPos.x, hudPos.y);

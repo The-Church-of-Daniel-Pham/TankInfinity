@@ -62,6 +62,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
+	
+	protected int bulletCount;
 
 	/**
 	 * 
@@ -77,6 +79,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		velocity = new Vector2(0, 0);
 		angularVelocity = 0;
 		vehicleList.add(this);
+		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
 	}
 
@@ -182,8 +185,9 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	}
 
 	public void applyFriction(float delta) {
-		velocity.scl((float) Math.pow((100f - stats.getStatValue("Friction")) / 100f, delta));
-		angularVelocity *= (float) Math.pow((100f - stats.getStatValue("Angular_Friction")) / 100f, delta);
+		float traction = stats.getStatValue("Traction");
+		velocity.scl((float) Math.pow(0.05f * (1.0f - ((traction) / (traction + 70.0f))), delta));
+		angularVelocity *= (float) Math.pow(0.025f * (1.0f - ((traction) / (traction + 70.0f))), delta);
 	}
 
 	public void applyForce(Vector2 acceleration) {
@@ -245,6 +249,29 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			}
 		}
 
+	}
+	
+	public float randomShootAngle() {
+		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
+		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
+		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
+		if (accuracy < 0.25) accuracy = 0.25;
+		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
+		if (Math.random() < 0.5) randomAngle *= -1;
+		return randomAngle;
+	}
+	
+	public Stats createBulletStats() {
+		Stats bulletStats = new Stats();
+		bulletStats.addStat("Projectile Speed", stats.getStatValue("Projectile Speed"));
+		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
+		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));
+		return bulletStats;
+	}
+	
+	public void changeBulletCount(int change) {
+		bulletCount += change;
+		if (bulletCount < 0) bulletCount = 0;
 	}
 
 	public Polygon getHitbox() {

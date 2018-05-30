@@ -53,14 +53,25 @@ public class BasicEnemy extends FixedTank {
 		cooldownLastShot = 0.5f;
 	}
 	
-	public void initializeStats() {
-		stats.addStat("Friction", 96); // (fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 1600);
-		stats.addStat("Angular_Friction", 98);
-		stats.addStat("Angular_Acceleration", 300);
-		stats.addStat("Rate_Of_Fire", 1);
-		stats.addStat("Accuracy", 50);
+	protected void initializeStats() {
+		stats.addStat("Damage", 35);
 		stats.addStat("Spread", 40);
+		stats.addStat("Accuracy", 50);
+		stats.addStat("Stability", 50);
+		stats.addStat("Max Bounce", 1);
+		stats.addStat("Projectile Speed", 75);
+		stats.addStat("Lifetime", 80);
+		stats.addStat("Fire Rate", 30);
+		stats.addStat("Max Projectile", 6);
+		
+		maxHealth = health = 100;
+		stats.addStat("Armor", 15);
+		
+		stats.addStat("Traction", 100); // (fraction out of 100)^delta to scale velocity by
+		stats.addStat("Acceleration", 120);
+		stats.addStat("Angular Acceleration", 120);
+		
+		stats.addStat("Projectile Durability", 1);
 	}
 	
 	public void initializePathfinding() {
@@ -146,7 +157,8 @@ public class BasicEnemy extends FixedTank {
 					else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
 						if (cooldownLastShot <= 0f) {
 							shoot();
-							cooldownLastShot = 3.0f / (float)stats.getStatValue("Rate_Of_Fire");
+							int fireRate = stats.getStatValue("Fire Rate");
+							cooldownLastShot = 2.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
 						}
 					}
 				}
@@ -250,7 +262,7 @@ public class BasicEnemy extends FixedTank {
 			}
 		}
 		//requestPathfinding();
-		super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration") * direction);
+		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * direction);
 		super.applyForce(delta * stats.getStatValue("Acceleration") * moveForward, getRotation());
 	}
 	
@@ -267,19 +279,15 @@ public class BasicEnemy extends FixedTank {
 		if (rotationDifference > 10) direction = 1;
 		else if (rotationDifference < -10) direction = -1;
 		
-		super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration") * direction);
+		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * direction);
 		return (direction != 0);
 	}
 	
 	public void shoot() {
 		Vector2 v = new Vector2(160, 0);
-		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
-		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
-		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
-		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
-		if (Math.random() < 0.5) randomAngle *= -1;
+		float randomAngle = randomShootAngle();
 		v.setAngle(getRotation());
-		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, getRotation() + randomAngle));
+		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, getRotation() + randomAngle));
 		shoot_sound.play();
 	}
 	
@@ -287,9 +295,9 @@ public class BasicEnemy extends FixedTank {
 		super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
 		if (reverseTimeThreshold >= 1.5f) {
 			if (randomTurnReverse) 
-				super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration"));
+				super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration"));
 			else
-				super.applyAngularForce(-delta * stats.getStatValue("Angular_Acceleration"));
+				super.applyAngularForce(-delta * stats.getStatValue("Angular Acceleration"));
 		}
 		reverseTime += delta;
 		if (reverseTime >= reverseTimeThreshold) {
