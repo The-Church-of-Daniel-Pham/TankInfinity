@@ -3,6 +3,7 @@ package com.tank.actor.map;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.BorderTile;
@@ -130,6 +131,12 @@ public class Map extends Group {
 		int mapRow = MathUtils.clamp((int) (y / AbstractMapTile.SIZE), 0, map.length - 1);
 		int mapCol = MathUtils.clamp((int) (x / AbstractMapTile.SIZE), 0, map[0].length - 1);
 		return new int[] { mapRow, mapCol };
+	}
+	
+	public Vector2 getCenterOfTilePos(int row, int col) {
+		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		return new Vector2(x, y);
 	}
 	
 	public FloorTile getRandomFloorTile() {

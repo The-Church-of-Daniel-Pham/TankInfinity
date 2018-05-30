@@ -64,4 +64,8 @@ public class Level extends Stage {
 	public Map getMap() {
 		return map;
 	}
+	
+	public TankInfinity getGame() {
+		return game;
+	}
 }

@@ -1,30 +1,44 @@
 package com.tank.actor.vehicles;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.projectiles.Bullet;
+import com.tank.game.Player;
+import com.tank.media.MediaSound;
 import com.tank.utils.Assets;
+import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
 import com.tank.stage.Level;
 
 public class BasicEnemy extends FixedTank {
 	
-	Vector2 targetPos = new Vector2(1500, 1500);
-	LinkedList<Vector2> path;
-	Thread pathfindingThread;
-	int[] endTargetTile = new int[] {37, 37};
-	boolean forwarding;
-	boolean reversing;
-	boolean randomTurnReverse;
-	float reverseTime;
-	float reverseTimeThreshold;
+	protected Vector2 targetPos = new Vector2(1500, 1500);
+	protected LinkedList<Vector2> path;
+	protected Thread pathfindingThread;
+	protected int[] endTargetTile = new int[] {37, 37};
+	protected boolean forwarding;
+	protected boolean reversing;
+	protected boolean randomTurnReverse;
+	protected float reverseTime;
+	protected float reverseTimeThreshold;
 	
-	boolean patrolling;
-	float timeSinceLastPathfind;
+	protected boolean patrolling;
+	protected float timeSinceLastPathfind;
+	
+	protected boolean honeInMode;
+	protected boolean attackMode;
+	protected PlayerTank target;
+	
+	protected float cooldownLastShot;
+	
+	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
 	
 	public BasicEnemy(float x, float y) {
 		super(x, y, Assets.manager.get(Assets.tread_default));
@@ -35,8 +49,10 @@ public class BasicEnemy extends FixedTank {
 		randomTurnReverse = false;
 		patrolling = true;
 		reverseTime = 0;
+		
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
+		cooldownLastShot = 0.5f;
 	}
 	
 	public void initializeStats() {
@@ -44,7 +60,9 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Acceleration", 1600);
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 300);
-		//stats.addStat("Rate_Of_Fire", 1);
+		stats.addStat("Rate_Of_Fire", 1);
+		stats.addStat("Accuracy", 50);
+		stats.addStat("Spread", 40);
 	}
 	
 	public void initializePathfinding() {
@@ -63,44 +81,94 @@ public class BasicEnemy extends FixedTank {
 	
 	@Override
 	public void act(float delta) {
-		timeSinceLastPathfind += delta;
-		if (timeSinceLastPathfind >= 20f) requestPathfinding();
-		if (isOnPath()) setNextTarget(path.removeFirst());
 		if (patrolling) {
+			//Request pathfinding after a certain amount of time not pathfinding
+			timeSinceLastPathfind += delta;
+			if (timeSinceLastPathfind >= 20f) requestPathfinding();
+			//Check if it's on the path (may happen if enemy overshoots tiles)
+			if (isOnPath()) setNextTarget(path.removeFirst());
+			//Finished patrolling to certain tile? Find something new
 			if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
 				selectNewEndTargetTile();
 			}
-			if (targetPos != null && !reversing && !forwarding) {
-				moveToTarget(delta);
+			//Any player nearby?
+			float shortestDistance = -1f;
+			for (Player player : getPlayers()) {
+				PlayerTank playerTank = player.tank;
+				if (playerTank != null && !playerTank.isDestroyed()) {
+					float distance = getDistanceTo(playerTank);
+					if (shortestDistance == -1f || distance < shortestDistance) {
+						shortestDistance = distance;
+						if (shortestDistance <= AbstractMapTile.SIZE * 12) {
+							target = playerTank;
+							patrolling = false;
+							honeInMode = true;
+						}
+					}
+				}
+			}
+			
+			//Moving based things
+			moveByTargetTile(delta);
+		}
+		else if (honeInMode && target != null) {
+			if (isOnPath()) setNextTarget(path.removeFirst());
+			float distanceToTarget = getDistanceTo(target);
+			if (distanceToTarget <= AbstractMapTile.SIZE * 15) {
+				if (distanceToTarget >= AbstractMapTile.SIZE * 8 || !hasLineOfSight(target.getX(), target.getY())) {
+					timeSinceLastPathfind += delta;
+					if (timeSinceLastPathfind >= 20f) {
+						endTargetTile = getTileAt(target.getX(), target.getY());
+						requestPathfinding();
+					}
+					else if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+						endTargetTile = getTileAt(target.getX(), target.getY());
+						requestPathfinding();
+					}
+					moveByTargetTile(delta);
+				}
+				else {
+					timeSinceLastPathfind += delta;
+					if (timeSinceLastPathfind >= 20f) {
+						endTargetTile = getTileAt(target.getX(), target.getY());
+						requestPathfinding();
+					}
+					if (reversing) {
+						backingUp(delta);
+					}
+					else if (forwarding) {
+						super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
+						reverseTime += delta;
+						if (reverseTime >= 0.5f) {
+							forwarding = false;
+							reverseTime = -delta;
+						}
+						
+					}
+					else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
+						if (cooldownLastShot <= 0f) {
+							shoot();
+							cooldownLastShot = 3.0f / (float)stats.getStatValue("Rate_Of_Fire");
+						}
+					}
+				}
 			}
 			else {
-				if (reversing) {
-					backingUp(delta);
-				}
-				else if (forwarding) {
-					super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
-					reverseTime += delta;
-					if (reverseTime >= 0.5f) {
-						forwarding = false;
-						reverseTime = -delta;
-					}
-					
-				}
-				else if (targetPos == null) {
-					if (path != null && !path.isEmpty()) {
-						Vector2 nextTile;
-						do {
-							nextTile = path.removeFirst();
-						} while (!path.isEmpty() && (onTile((int)nextTile.x, (int)nextTile.y)));
-						synchronized (path) { setNextTarget(nextTile); }
-					}
-				}
+				target = null;
+				honeInMode = false;
 			}
+		}
+		else {
+			patrolling = true;
+			selectNewEndTargetTile();
 		}
 		
 		super.applyFriction(delta);
 		if (!super.move(delta)){
-			if (!reversing && !forwarding && reverseTime >= 1.0f) {
+			if (honeInMode && cooldownLastShot > 0f) {
+				
+			}
+			else if (!reversing && !forwarding && reverseTime >= 1.0f) {
 				reversing = true;
 				if (reverseTime < 2.5f) {
 					reverseTimeThreshold += 0.5f;
@@ -117,6 +185,36 @@ public class BasicEnemy extends FixedTank {
 		}
 		else{
 			reverseTime += delta;
+		}
+		if (cooldownLastShot > 0f) cooldownLastShot -= delta;
+	}
+	
+	public void moveByTargetTile(float delta) {
+		if (targetPos != null && !reversing && !forwarding) {
+			moveToTarget(delta);
+		}
+		else {
+			if (reversing) {
+				backingUp(delta);
+			}
+			else if (forwarding) {
+				super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
+				reverseTime += delta;
+				if (reverseTime >= 0.5f) {
+					forwarding = false;
+					reverseTime = -delta;
+				}
+				
+			}
+			else if (targetPos == null) {
+				if (path != null && !path.isEmpty()) {
+					Vector2 nextTile;
+					do {
+						nextTile = path.removeFirst();
+					} while (!path.isEmpty() && (onTile((int)nextTile.x, (int)nextTile.y)));
+					synchronized (path) { setNextTarget(nextTile); }
+				}
+			}
 		}
 	}
 	
@@ -156,6 +254,35 @@ public class BasicEnemy extends FixedTank {
 		//requestPathfinding();
 		super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration") * direction);
 		super.applyForce(delta * stats.getStatValue("Acceleration") * moveForward, getRotation());
+	}
+	
+	public boolean rotateTowardsTarget(float delta, float x, float y) {
+		float targetRotation = (float) Math.toDegrees(Math.atan2((y - getY()), (x - getX())));
+		float rotationDifference = targetRotation - getRotation();
+		while (rotationDifference < -180f) {
+			rotationDifference += 360f;
+		}
+		while (rotationDifference > 180f) {
+			rotationDifference -= 360f;
+		}
+		int direction = 0;
+		if (rotationDifference > 10) direction = 1;
+		else if (rotationDifference < -10) direction = -1;
+		
+		super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration") * direction);
+		return (direction != 0);
+	}
+	
+	public void shoot() {
+		Vector2 v = new Vector2(160, 0);
+		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
+		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
+		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
+		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
+		if (Math.random() < 0.5) randomAngle *= -1;
+		v.setAngle(getRotation());
+		getStage().addActor(new Bullet(this, getX() + v.x, getY() + v.y, getRotation() + randomAngle));
+		shoot_sound.play();
 	}
 	
 	public void backingUp(float delta) {
@@ -218,6 +345,13 @@ public class BasicEnemy extends FixedTank {
 		}
 	}
 	
+	public boolean hasLineOfSight(float x, float y) {
+		int[] currentTile = getTileAt(getX(), getY());
+		int[] targetTile = getTileAt(x, y);
+		int[][] map = ((Level)getStage()).getMap().getLayout();
+		return LineOfSight.hasSight(map, currentTile[0], currentTile[1], targetTile[0], targetTile[1]);
+	}
+	
 	public void setNextTarget(Vector2 rowCol) {
 		float x = rowCol.y * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
 		float y = rowCol.x * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
@@ -226,6 +360,10 @@ public class BasicEnemy extends FixedTank {
 	
 	public int[] getTileAt(float x, float y) {
 		return ((Level)getStage()).getMap().getTileAt(x, y);
+	}
+	
+	public ArrayList<Player> getPlayers(){
+		return ((Level)getStage()).getGame().players;
 	}
 	
 	public boolean onTile(int row, int col) {
@@ -237,10 +375,9 @@ public class BasicEnemy extends FixedTank {
 		int[] currentTile = getTileAt(getX(), getY());
 		return (currentTile[0] == rowCol[0] && currentTile[1] == rowCol[1]);
 	}
-
-	public void reset() {
-		// TODO Auto-generated method stub
-		
+	
+	public float getDistanceTo(Actor other) {
+		return (float)Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(), 2));
 	}
 
 	@Override
@@ -262,5 +399,10 @@ public class BasicEnemy extends FixedTank {
 			v.rotate(90);
 		}
 		return new Polygon(f);
+	}
+	
+	@Override
+	public String getTeam() {
+		return "ENEMY";
 	}
 }

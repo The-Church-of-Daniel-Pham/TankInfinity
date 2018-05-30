@@ -15,7 +15,8 @@ public class Bullet extends AbstractProjectile {
 	private static float angle;	//angle between diagonal of rectangle and its base
 
 	private static Sound bounce_sound = Assets.manager.get(Assets.bullet_bounce);
-    private static final float BOUNCE_VOLUME = 1f;
+    private static final float BOUNCE_VOLUME = 0.5f;
+    private int bounceCount = 0;
 
 	public Bullet(AbstractVehicle src, float x, float y, float direction) {
 		super(playerTexture, src, x, y, bounce_sound, BOUNCE_VOLUME);
@@ -36,6 +37,15 @@ public class Bullet extends AbstractProjectile {
 	protected void setStats() {
 		stats = new Stats();
 		stats.addStat("Bullet_Speed", 700);
+	}
+	
+	@Override
+	public void bounce(Vector2 wall) {
+		bounceCount += 1;
+		if (bounceCount <= 3)
+			super.bounce(wall);
+		else
+			super.destroy();
 	}
 
 	public void draw(Batch batch, float a) {
