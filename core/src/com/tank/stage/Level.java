@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
@@ -67,5 +69,11 @@ public class Level extends Stage {
 	
 	public TankInfinity getGame() {
 		return game;
+	}
+	@Override
+	public void dispose() {
+		AbstractVehicle.vehicleList.clear();
+		AbstractProjectile.projectileList.clear();
+		super.dispose();
 	}
 }

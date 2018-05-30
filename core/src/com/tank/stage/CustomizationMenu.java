@@ -26,8 +26,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	public CustomizationMenu(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
-		AbstractVehicle.vehicleList.clear();
-		AbstractProjectile.projectileList.clear();
 		// build table
 		uiTable = new Table();
 		buildTable();
