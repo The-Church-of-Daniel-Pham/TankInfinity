@@ -25,27 +25,26 @@ public class LevelHUD extends Stage implements InputProcessor {
 	public LevelHUD(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
-		//cursors
+		// cursors
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
 				p.initializeCursor();
 				addActor(p.cursor);
-				p.cursor.moveOnStageTo(p.tank.getX(), p.tank.getY());
 			}
 		}
-		//ui table
+		// ui table
 		super.addActor(buildTable());
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		
-		//pause by key input, only from player 1
+
+		// pause by key input, only from player 1
 		if (game.players.get(0).controls.pausePressed()) {
 			game.getScreen().pause();
 		}
-		
+
 		// update fps counter
 		sinceChange += delta; // add time since last act() to counter
 		if (sinceChange >= 1.0f) { // after 1 second or more
@@ -78,7 +77,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
-		
+
 		uiTable.add(fpsLabel).width(100).colspan(2).expand().top().left();
 		uiTable.add(pauseButton).width(150).colspan(2).expand().top().right();
 		uiTable.row();
