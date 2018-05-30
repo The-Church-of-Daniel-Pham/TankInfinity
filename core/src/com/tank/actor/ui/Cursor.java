@@ -48,9 +48,12 @@ public class Cursor extends AbstractUI {
 	
 	@Override
 	public void act(float delta) {
-		screenPos = player.controls.getCursor(new Vector3 (getX(), getY(), 0));
+		if (screenPos != null)
+			screenPos = player.controls.getCursor(screenPos);
+		else
+			screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
-		stagePos = stage.getCamera().unproject(screenPos); // to world coordinates
+		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
 		setPosition(hudPos.x, hudPos.y);
 	}
 	
