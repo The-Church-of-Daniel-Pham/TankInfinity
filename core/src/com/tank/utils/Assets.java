@@ -65,19 +65,19 @@ public class Assets {
 	public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
 			Texture.class);
 	//UI
-	public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/crosshairs_default.png",
+	public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/cursor/crosshairs_default.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/crosshairs_red.png",
+	public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/crosshairs_red.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_blue = new AssetDescriptor<Texture>("ui/crosshairs_blue.png",
+	public static final AssetDescriptor<Texture> crosshairs_blue = new AssetDescriptor<Texture>("ui/cursor/crosshairs_blue.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_green = new AssetDescriptor<Texture>("ui/crosshairs_green.png",
+	public static final AssetDescriptor<Texture> crosshairs_green = new AssetDescriptor<Texture>("ui/cursor/crosshairs_green.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_yellow = new AssetDescriptor<Texture>("ui/crosshairs_yellow.png",
+	public static final AssetDescriptor<Texture> crosshairs_yellow = new AssetDescriptor<Texture>("ui/cursor/crosshairs_yellow.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_purple = new AssetDescriptor<Texture>("ui/crosshairs_purple.png",
+	public static final AssetDescriptor<Texture> crosshairs_purple = new AssetDescriptor<Texture>("ui/cursor/crosshairs_purple.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs_tan = new AssetDescriptor<Texture>("ui/crosshairs_tan.png",
+	public static final AssetDescriptor<Texture> crosshairs_tan = new AssetDescriptor<Texture>("ui/cursor/crosshairs_tan.png",
 			Texture.class);
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
