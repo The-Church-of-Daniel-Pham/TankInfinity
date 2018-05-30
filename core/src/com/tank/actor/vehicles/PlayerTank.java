@@ -1,7 +1,6 @@
 package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
@@ -17,7 +16,7 @@ import com.tank.stats.Customization;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
 
-public class PlayerTank extends FreeTank implements InputProcessor {
+public class PlayerTank extends FreeTank {
 	/**
 	 * used for spawning bullets the correct distance away from Vehicle's center
 	 */
@@ -205,52 +204,5 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public float getReloadTime() {
 		return reloadTime;
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

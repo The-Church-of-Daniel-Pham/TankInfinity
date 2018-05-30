@@ -2,8 +2,10 @@ package com.tank.stage;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -63,6 +65,18 @@ public class LevelHUD extends Stage implements InputProcessor {
 			public void clicked(InputEvent event, float x, float y) {
 				game.getScreen().pause();
 				event.stop();
+			}
+		});
+		
+		//pause by key input
+		this.addListener(new InputListener() {
+			@Override
+		 	public boolean keyDown(InputEvent event, int keycode) {
+				if (keycode == Keys.ESCAPE) {
+					game.getScreen().pause();
+					event.stop();
+				}
+				return false;
 			}
 		});
 		

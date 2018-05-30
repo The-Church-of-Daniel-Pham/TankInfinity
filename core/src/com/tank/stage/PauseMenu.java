@@ -1,5 +1,6 @@
 package com.tank.stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -39,6 +40,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		TextButton resumeButton = new TextButton("Resume", skin);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
+		TextButton quitButton = new TextButton("Quit", skin);
 		
 		resumeButton.addListener(new ClickListener() {
 	         @Override
@@ -59,8 +61,17 @@ public class PauseMenu extends Stage implements InputProcessor {
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 game.screens.remove("Play");	//delete current game
+	        	 game.screens.get("Play").dispose();	//delete current game
+	        	 game.screens.remove("Play");	//remove from screens
 	        	 game.setScreen(game.screens.get("Main Menu"));
+	        	 event.stop();
+	         }
+	      });
+
+		quitButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 Gdx.app.exit();
 	        	 event.stop();
 	         }
 	      });
@@ -70,6 +81,8 @@ public class PauseMenu extends Stage implements InputProcessor {
 		uiTable.add(settingsButton);
 		uiTable.row(); 
 		uiTable.add(mainMenuButton);
+		uiTable.row(); 
+		uiTable.add(quitButton);
 		
 		return uiTable;
 	}
