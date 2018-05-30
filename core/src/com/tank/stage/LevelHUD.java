@@ -42,7 +42,9 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		// update reload bars
 		for (Player p : game.players) {
-			p.hud.update();
+			if (p.isEnabled()) {
+				p.hud.update();
+			}
 		}
 	}
 

@@ -59,6 +59,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.screens.remove("Play");	//delete current game
 	        	 game.setScreen(game.screens.get("Main Menu"));
 	        	 event.stop();
 	         }

@@ -27,7 +27,6 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 	protected TankController controls;
 	protected Cursor cursor;
 	protected Vector3 cursorPos;
-	protected String color;
 	protected ArrayList<SubWeapon> subWeapons;
 	protected int selectedWeapon;
 	protected int playerNumber;
@@ -51,14 +50,13 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	public PlayerTank(int playerNumber) {
 		super(0, 0); // defaults
-		initializeCustom("default");
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursorPos = new Vector3(getX(), getY(), 0);
 		cursor = new Cursor();
+		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
 		setWidth(80);
@@ -66,16 +64,15 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 	}
 
-	public PlayerTank(float x, float y, int playerNumber, String color) {
+	public PlayerTank(int playerNumber, float x, float y) {
 		super(x, y);
-		initializeCustom(color);
 		this.playerNumber = playerNumber;
 		initializeStats();
 		controls = ControlConstants.getPlayerControls(playerNumber);
 		reloadTime = 0;
 		selectedWeapon = 0;
-		cursorPos = new Vector3(getX(), getY(), 0);
 		cursor = new Cursor();
+		cursorPos = new Vector3(0, 0, 0);
 		super.setGunOffsetX(-12);
 		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
 		setWidth(80);
@@ -91,18 +88,15 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		stats.addStat("Rate_Of_Fire", 1);
 	}
 
-	protected void initializeCustom(String color) {
-		custom = new Customization();
-		custom.setCustom("tank color", color);
-		treadTexture = custom.getTexture("tread");
-		gunTexture = custom.getTexture("gun");
-		this.color = color;
-	}
-
 	public void setMapPosition(int row, int col) {
 		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
 		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
 		super.setPosition(x, y);
+	}
+	
+	public void centerCursor() {
+		Vector2 screenCoor = getStage().stageToScreenCoordinates(new Vector2(getX(), getY()));
+		cursorPos = new Vector3(screenCoor.x, screenCoor.y, 0);
 	}
 
 	/**
@@ -165,6 +159,8 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
 	@Override
 	public void draw(Batch batch, float a) {
+		treadTexture = custom.getTexture("tread");
+		gunTexture = custom.getTexture("gun");
 		super.draw(batch, a);
 		cursor.draw(batch, a);
 	}
@@ -198,24 +194,9 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 		f[7] = y + v.y;
 		return new Polygon(f);
 	}
-
-	/**
-	 * Set Vehicle customization unique to each player tank type
-	 */
-	public void setCustom(String cust, String val) {
-		custom.setCustom(cust, val);
-		gunTexture = custom.getTexture("gun");
-		treadTexture = custom.getTexture("tread");
-	}
-
-	public String getCustom(String cust) {
-		return custom.getCustomValue(cust);
-	}
-
-	public void cycleCustom(String cust, int n) {
-		custom.cycleCustom(cust, n);
-		gunTexture = custom.getTexture("gun");
-		treadTexture = custom.getTexture("tread");
+	
+	public void setCustom(Customization custom) {
+		this.custom = custom;
 	}
 
 	public int getPlayerNumber() {
