@@ -33,12 +33,13 @@ public class Level extends Stage {
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
 		
-		for (final Player p : game.players) {
+		for (Player p : game.players) {
 			if (p.isEnabled()) {
 				p.initializeTank();
 				addActor(p.tank);
 			}
 		}
+		
 		for (int i = 0; i < 4; i++) {
 			AbstractMapTile randomFloor = map.getRandomFloorTile();
 			int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,

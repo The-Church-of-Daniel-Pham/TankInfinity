@@ -29,7 +29,7 @@ public class ControlConstants {
 		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.AXIS_LEFT_TRIGGER, 1, 1));
 		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.BUTTON_RB, 0));
 		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.BUTTON_LB, 0));
-		DEFAULT_GAMEPAD_CONTROLS.put("PAUSE", new KeyControl(XboxMapping.BUTTON_BACK, 0));
+		DEFAULT_GAMEPAD_CONTROLS.put("PAUSE", new KeyControl(XboxMapping.BUTTON_START, 0));
 		
 		makeDefaultPlayer1();
 		makeDefaultPlayer2();

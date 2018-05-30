@@ -14,7 +14,6 @@ import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
 import com.tank.stage.Level;
-import com.tank.stats.Stats;
 
 public class BasicEnemy extends FixedTank {
 	
