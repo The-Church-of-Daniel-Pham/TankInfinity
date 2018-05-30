@@ -115,16 +115,18 @@ public class BasicEnemy extends FixedTank {
 	}
 	
 	public boolean isOnPath() {
-		ListIterator<Vector2> iter = path.listIterator();
-		while (iter.hasNext()) {
-			Vector2 tile = iter.next();
-			if (onTile((int)tile.x, (int)tile.y)) {
-				//setNextTarget(tile);
-				while (iter.hasPrevious()) {
-					iter.previous();
-					iter.remove();
+		if (path != null) {
+			ListIterator<Vector2> iter = path.listIterator();
+			while (iter.hasNext()) {
+				Vector2 tile = iter.next();
+				if (onTile((int)tile.x, (int)tile.y)) {
+					//setNextTarget(tile);
+					while (iter.hasPrevious()) {
+						iter.previous();
+						iter.remove();
+					}
+					return true;
 				}
-				return true;
 			}
 		}
 		return false;
