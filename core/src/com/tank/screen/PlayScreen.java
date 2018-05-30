@@ -29,7 +29,9 @@ public class PlayScreen implements Screen {
 	public void show() {
 		game.addInput(levelhud);
 		for (Player p : this.game.players) {
-			game.addInput(p.tank);
+			if (p.isEnabled()) {
+				game.addInput(p.tank);
+			}
 		}
 		if (paused) {
 			game.addInput(pauseMenu);

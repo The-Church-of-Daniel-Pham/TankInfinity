@@ -33,7 +33,9 @@ public class Level extends Stage {
 		
 		for (final Player p : game.players) {
 			if (p.isEnabled()) {
+				p.initializeTank();
 				addActor(p.tank);
+				p.tank.centerCursor();
 			}
 		}
 		
