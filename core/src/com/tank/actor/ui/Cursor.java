@@ -18,7 +18,7 @@ public class Cursor extends AbstractUI {
 	protected Stage stage;	//stage underneath, which teh  cursor is virtually "on"
 	protected Color color;
 
-	protected static Texture tex = Assets.manager.get(Assets.crosshairs);;
+	protected static Texture tex = Assets.manager.get(Assets.crosshairs_default);
 
 	public Cursor(Player player, Stage stage) {
 		super(false, true, 0, 0);
@@ -58,6 +58,7 @@ public class Cursor extends AbstractUI {
 	}
 	
 	public void draw(Batch batch, float a) {
+		tex = player.custom.getTexture("cursor");
 		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), tex.getWidth(), tex.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
