@@ -25,6 +25,9 @@ public class Map extends Group {
 	 * origin is in the bottom left corner.
 	 */
 	public AbstractMapTile[][] map;
+	public ArrayList<FloorTile> floors;
+	public ArrayList<WallTile> walls;
+	public ArrayList<BorderTile> border;
 	/**
 	 * Used to point to the higher level object which implements this instance
 	 */
@@ -48,6 +51,9 @@ public class Map extends Group {
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
 		mazeGen.clearBottomLeftCorner(5); // Clears out corner so tank doesn't spawn on bricks
 		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
+		floors = new ArrayList<FloorTile>();
+		walls = new ArrayList<WallTile>();
+		border = new ArrayList<BorderTile>();
 		layout = mazeGen.getMaze(); // create layout pointer
 		// using layout, create tile objects and store in its own double array
 		map = new AbstractMapTile[height][width];
@@ -57,11 +63,14 @@ public class Map extends Group {
 				if (layout[row][col] == 0) { // layout values of 0 = floor tile
 					// polymorphic for simplicity
 					tile = new FloorTile(row, col, this);
+					floors.add((FloorTile) tile);
 				} else if (layout[row][col] == 1) {// layout values of 1 = wall tile
 					tile = new WallTile(row, col, this);
+					walls.add((WallTile) tile);
 				}
 				if (layout[row][col] == 2) { // layout values of 2 = border tile
 					tile = new BorderTile(row, col, this);
+					border.add((BorderTile) tile);
 				}
 				map[row][col] = tile; // store new object in array
 				super.addActor(tile);// kinda redundant, but may come in handy later
@@ -121,6 +130,16 @@ public class Map extends Group {
 		int mapRow = MathUtils.clamp((int) (y / AbstractMapTile.SIZE), 0, map.length - 1);
 		int mapCol = MathUtils.clamp((int) (x / AbstractMapTile.SIZE), 0, map[0].length - 1);
 		return new int[] { mapRow, mapCol };
+	}
+	
+	public FloorTile getRandomFloorTile() {
+		return (floors.get((int)(Math.random() * floors.size())));
+	}
+	public WallTile getRandomWallTile() {
+		return (walls.get((int)(Math.random() * walls.size())));
+	}
+	public BorderTile getRandomBorderTile() {
+		return (border.get((int)(Math.random() * border.size())));
 	}
 
 	/**

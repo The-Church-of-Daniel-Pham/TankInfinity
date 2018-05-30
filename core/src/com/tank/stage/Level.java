@@ -38,7 +38,12 @@ public class Level extends Stage {
 				p.tank.centerCursor();
 			}
 		}
-		addActor(new BasicEnemy(1000, 1000));
+		for (int i = 0; i < 4; i++) {
+			AbstractMapTile randomFloor = map.getRandomFloorTile();
+			int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
+									randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2};
+			addActor(new BasicEnemy(pos[0], pos[1]));
+		}
 		
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
