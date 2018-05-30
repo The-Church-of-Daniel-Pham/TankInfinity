@@ -3,6 +3,7 @@ package com.tank.actor.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -34,8 +35,12 @@ public class Cursor extends AbstractUI {
 	}
 
 	public void moveOnStageTo(float x, float y) {
+		System.out.println(x + ", " + y);
 		Vector2 screenCoor = stage.stageToScreenCoordinates(new Vector2(x, y));
-		super.setPosition(screenCoor.x, screenCoor.y);
+		System.out.println(screenCoor.x + ", "+ screenCoor.y);
+		hudPos = getStage().getCamera().unproject(new Vector3(screenCoor.x,screenCoor.y,0));
+		super.setPosition(hudPos.x, hudPos.y);
+		System.out.println(hudPos.x + ", " + hudPos.y);
 	}
 	
 	public Vector3 getScreenPos() {
@@ -48,10 +53,15 @@ public class Cursor extends AbstractUI {
 	
 	@Override
 	public void act(float delta) {
-		if (screenPos != null)
-			screenPos = player.controls.getCursor(screenPos);
-		else
-			screenPos = player.controls.getCursor(new Vector3(0, 0, 0));
+		if (screenPos != null) {
+			screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
+			screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
+		}
+		else {
+			screenPos = new Vector3();
+			screenPos.x = MathUtils.clamp(player.controls.getCursor(new Vector3(0, 0, 0)).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
+			screenPos.y = MathUtils.clamp(player.controls.getCursor(new Vector3(0, 0, 0)).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
+		}
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
 		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
 		setPosition(hudPos.x, hudPos.y);
