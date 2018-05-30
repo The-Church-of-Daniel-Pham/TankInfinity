@@ -34,7 +34,7 @@ public class Level extends Stage {
 		for (Player p : game.players) {
 			addActor(p.tank);
 		}
-		addActor(new BasicEnemy(1500, 1500));
+		addActor(new BasicEnemy(1000, 1000));
 
 		
 		// replace default stage OrthographicCamera with LevelCamera
