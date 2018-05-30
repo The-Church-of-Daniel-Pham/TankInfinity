@@ -19,6 +19,9 @@ public class BasicEnemy extends FixedTank {
 	int[] endTargetTile = new int[] {37, 37};
 	boolean reversing;
 	float reverseTime;
+	float reverseTimeThreshold;
+	
+	boolean patrolling;
 	float timeSinceLastPathfind;
 	
 	public BasicEnemy(float x, float y) {
@@ -26,13 +29,15 @@ public class BasicEnemy extends FixedTank {
 		initializeStats();
 		initializePathfinding();
 		reversing = false;
+		patrolling = true;
 		reverseTime = 0;
-		timeSinceLastPathfind = 20f;
+		reverseTimeThreshold = 0.5f;
+		timeSinceLastPathfind = 0f;
 	}
 	
 	public void initializeStats() {
-		stats.addStat("Friction", 95); // (fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 1200);
+		stats.addStat("Friction", 96); // (fraction out of 100)^delta to scale velocity by
+		stats.addStat("Acceleration", 1600);
 		stats.addStat("Angular_Friction", 98);
 		stats.addStat("Angular_Acceleration", 300);
 		//stats.addStat("Rate_Of_Fire", 1);
@@ -56,22 +61,48 @@ public class BasicEnemy extends FixedTank {
 	public void act(float delta) {
 		timeSinceLastPathfind += delta;
 		if (timeSinceLastPathfind >= 20f) requestPathfinding();
-		if (targetPos != null && !reversing) {
-			moveToTarget(delta);
-		}
-		else {
-			if (reversing) {
-				reverseTime += delta;
-				super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
-				if (reverseTime >= 0.5f) {
-					reversing = false;
-					reverseTime = 0f;
+		if (isOnPath()) setNextTarget(path.removeFirst());
+		if (patrolling) {
+			if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+				selectNewEndTargetTile();
+			}
+			if (targetPos != null && !reversing) {
+				moveToTarget(delta);
+			}
+			else {
+				if (reversing) {
+					super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
+					reverseTime += delta;
+					if (reverseTime >= reverseTimeThreshold) {
+						reversing = false;
+						reverseTime = -delta;
+					}
+				}
+				else if (targetPos == null) {
+					if (path != null && !path.isEmpty()) {
+						Vector2 nextTile;
+						do {
+							nextTile = path.removeFirst();
+						} while (!path.isEmpty() && (onTile((int)nextTile.x, (int)nextTile.y)));
+						synchronized (path) { setNextTarget(nextTile); }
+					}
 				}
 			}
 		}
+		
 		super.applyFriction(delta);
 		if (!super.move(delta)){
-			reversing = true;
+			if (!reversing && reverseTime >= 1.0f) {
+				reversing = true;
+				if (reverseTime < 2.5f) reverseTimeThreshold += 0.5f; else reverseTimeThreshold = 0.5f;
+				reverseTime = 0f;
+			}
+			else if (!reversing) {
+				reverseTime += delta;
+			}
+		}
+		else{
+			reverseTime += delta;
 		}
 	}
 	
@@ -90,7 +121,6 @@ public class BasicEnemy extends FixedTank {
 		
 		int moveForward = 0;
 		if (!(onTile(getTileAt(targetPos.x, targetPos.y)))) {
-			if (isOnPath()) setNextTarget(path.removeFirst());
 			if (Math.abs(rotationDifference) < 25f) moveForward = 1;
 		}
 		else {
@@ -114,6 +144,13 @@ public class BasicEnemy extends FixedTank {
 		super.applyForce(delta * stats.getStatValue("Acceleration") * moveForward, getRotation());
 	}
 	
+	public void selectNewEndTargetTile() {
+		AbstractMapTile randomEmpty = ((Level)getStage()).getMap().getRandomFloorTile();
+		endTargetTile[0] = randomEmpty.getRow();
+		endTargetTile[1] = randomEmpty.getCol();
+		requestPathfinding();
+	}
+	
 	public boolean isOnPath() {
 		if (path != null) {
 			ListIterator<Vector2> iter = path.listIterator();
@@ -121,6 +158,7 @@ public class BasicEnemy extends FixedTank {
 				Vector2 tile = iter.next();
 				if (onTile((int)tile.x, (int)tile.y)) {
 					//setNextTarget(tile);
+					iter.previous();
 					while (iter.hasPrevious()) {
 						iter.previous();
 						iter.remove();

@@ -143,24 +143,34 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		boolean moved = false;
 
 		// translation
-		if (canMoveTo(tX, tY, getRotation())) {
-			super.setPosition(tX, tY);
-			hitbox = testHitbox;
-			moved = true;
-		} else if (canMoveTo(tX, getY(), getRotation())) {
-			super.setX(tX);
-			hitbox = testHitbox;
-		} else if (canMoveTo(getX(), tY, getRotation())) {
-			super.setY(tY);
-			hitbox = testHitbox;
+		if (velocity.len() > 15) {
+			if (canMoveTo(tX, tY, getRotation())) {
+				super.setPosition(tX, tY);
+				hitbox = testHitbox;
+				moved = true;
+			} else if (canMoveTo(tX, getY(), getRotation())) {
+				super.setX(tX);
+				hitbox = testHitbox;
+			} else if (canMoveTo(getX(), tY, getRotation())) {
+				super.setY(tY);
+				hitbox = testHitbox;
+			}
+			else {
+				velocity.scl((float) Math.pow(0.01f, delta));
+			}
 		}
 
 		// rotation
-		if (canMoveTo(getX(), getY(), tAngle)) {
-			velocity.rotate(tAngle - getRotation());
-			setRotation(tAngle);
-			hitbox = testHitbox;
-			moved = true;
+		if (Math.abs(angularVelocity) > 4) {
+			if (canMoveTo(getX(), getY(), tAngle)) {
+				velocity.rotate(tAngle - getRotation());
+				setRotation(tAngle);
+				hitbox = testHitbox;
+				moved = true;
+			}
+			else {
+				angularVelocity *= (float) Math.pow(0.01f, delta);
+			}
 		}
 		return moved;
 	}
