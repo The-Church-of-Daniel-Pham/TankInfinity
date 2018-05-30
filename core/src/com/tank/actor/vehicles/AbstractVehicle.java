@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.WallTile;
+import com.tank.animations.Explosion;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
@@ -81,6 +82,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
+		maxHealth = 10;
+		health = maxHealth;
 	}
 
 	protected abstract void initializeHitbox();
@@ -140,6 +143,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            Time since last called.
 	 */
 	public boolean move(float delta) {
+		if (isDestroyed())
+			return false;
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
@@ -157,8 +162,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			} else if (canMoveTo(getX(), tY, getRotation())) {
 				super.setY(tY);
 				hitbox = testHitbox;
-			}
-			else {
+			} else {
 				velocity.scl((float) Math.pow(0.01f, delta));
 			}
 		}
@@ -170,8 +174,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				setRotation(tAngle);
 				hitbox = testHitbox;
 				moved = true;
-			}
-			else {
+			} else {
 				angularVelocity *= (float) Math.pow(0.01f, delta);
 			}
 		}
@@ -331,11 +334,20 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			health = maxHealth;
 	}
 
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
 	/**
 	 * From the Destructible interface The destroy method is used to handle removing
 	 * the object from the stage
 	 */
 	public void destroy() {
+		getStage().addActor(new Explosion(getX(), getY()));
 		vehicleList.remove(this);
 		super.remove();
 	}

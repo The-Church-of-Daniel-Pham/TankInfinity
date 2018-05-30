@@ -99,6 +99,7 @@ public class PlayerTank extends FreeTank {
 	 * updates the velocity based on user input and tank stats
 	 */
 	public void act(float delta) {
+		if(isDestroyed()) return;
 		if (player.controls.downPressed()) {
 			super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, 180 + getRotation());
 		} else if (player.controls.upPressed()) {

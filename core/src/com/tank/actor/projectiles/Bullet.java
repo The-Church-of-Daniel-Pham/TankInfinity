@@ -8,6 +8,7 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.badlogic.gdx.audio.Sound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
+import com.tank.utils.CollisionEvent;
 
 public class Bullet extends AbstractProjectile {
 	private static Texture playerTexture = Assets.manager.get(Assets.bullet);
@@ -35,12 +36,21 @@ public class Bullet extends AbstractProjectile {
 	
 	@Override
 	public void bounce(Vector2 wall) {
+		damageNeighbors();
 		bounceCount += 1;
 		if (bounceCount <= stats.getStatValue("Max Bounce"))
 			super.bounce(wall);
 		else {
 			super.destroy();
 			source.changeBulletCount(-1);
+		}
+	}
+	
+	public void damageNeighbors() {
+		for(CollisionEvent e: collisions) {
+			if(e.getCollidable() instanceof AbstractVehicle) {
+				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+			}
 		}
 	}
 
