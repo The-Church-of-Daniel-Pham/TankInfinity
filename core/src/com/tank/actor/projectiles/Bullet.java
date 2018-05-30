@@ -21,7 +21,7 @@ public class Bullet extends AbstractProjectile {
 
 	public Bullet(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(playerTexture, src, stats, x, y, bounce_sound, BOUNCE_VOLUME);
-		Vector2 v = new Vector2(stats.getStatValue("Projectile Speed"), 0);
+		Vector2 v = new Vector2(this.stats.getStatValue("Projectile Speed"), 0);
 		velocity = v.setAngle(direction);
 		setRotation(direction);
 		setOrigin(playerTexture.getWidth() / 2, playerTexture.getHeight() / 2);

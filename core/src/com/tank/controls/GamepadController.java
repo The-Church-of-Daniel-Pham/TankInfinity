@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 public class GamepadController extends TankController {
 	public Controller controller;
 	private LinkedHashMap<String, KeyControl> keyMap;
-	private float deadzone = 0.25f;
+	private float deadzone = 0.10f;
 	private float sensitivity = 15f;
 	private static ArrayList<Controller> inUse = new ArrayList<Controller>();
 

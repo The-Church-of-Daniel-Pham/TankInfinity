@@ -178,6 +178,7 @@ public class PlayerTank extends FreeTank {
 	
 	public Stats createBulletStats() {
 		Stats bulletStats = new Stats();
+		bulletStats.addStat("Damage", stats.getStatValue("Damage"));
 		bulletStats.addStat("Projectile Speed", (int)(75 * Math.sqrt(stats.getStatValue("Projectile Speed"))));
 		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
 		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));

@@ -14,6 +14,7 @@ import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
 import com.tank.stage.Level;
+import com.tank.stats.Stats;
 
 public class BasicEnemy extends FixedTank {
 	
@@ -72,6 +73,15 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Angular Acceleration", 120);
 		
 		stats.addStat("Projectile Durability", 1);
+	}
+	
+	public Stats createBulletStats() {
+		Stats bulletStats = new Stats();
+		bulletStats.addStat("Damage", stats.getStatValue("Damage"));
+		bulletStats.addStat("Projectile Speed", (int)(75 * Math.sqrt(stats.getStatValue("Projectile Speed"))));
+		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
+		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));
+		return bulletStats;
 	}
 	
 	public void initializePathfinding() {
