@@ -17,7 +17,9 @@ public class BasicEnemy extends FixedTank {
 	LinkedList<Vector2> path;
 	Thread pathfindingThread;
 	int[] endTargetTile = new int[] {37, 37};
+	boolean forwarding;
 	boolean reversing;
+	boolean randomTurnReverse;
 	float reverseTime;
 	float reverseTimeThreshold;
 	
@@ -28,7 +30,9 @@ public class BasicEnemy extends FixedTank {
 		super(x, y, Assets.manager.get(Assets.tread_default));
 		initializeStats();
 		initializePathfinding();
+		forwarding = false;
 		reversing = false;
+		randomTurnReverse = false;
 		patrolling = true;
 		reverseTime = 0;
 		reverseTimeThreshold = 0.5f;
@@ -66,17 +70,21 @@ public class BasicEnemy extends FixedTank {
 			if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
 				selectNewEndTargetTile();
 			}
-			if (targetPos != null && !reversing) {
+			if (targetPos != null && !reversing && !forwarding) {
 				moveToTarget(delta);
 			}
 			else {
 				if (reversing) {
-					super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
+					backingUp(delta);
+				}
+				else if (forwarding) {
+					super.applyForce(delta * stats.getStatValue("Acceleration"), getRotation());
 					reverseTime += delta;
-					if (reverseTime >= reverseTimeThreshold) {
-						reversing = false;
+					if (reverseTime >= 0.5f) {
+						forwarding = false;
 						reverseTime = -delta;
 					}
+					
 				}
 				else if (targetPos == null) {
 					if (path != null && !path.isEmpty()) {
@@ -92,12 +100,18 @@ public class BasicEnemy extends FixedTank {
 		
 		super.applyFriction(delta);
 		if (!super.move(delta)){
-			if (!reversing && reverseTime >= 1.0f) {
+			if (!reversing && !forwarding && reverseTime >= 1.0f) {
 				reversing = true;
-				if (reverseTime < 2.5f) reverseTimeThreshold += 0.5f; else reverseTimeThreshold = 0.5f;
+				if (reverseTime < 2.5f) {
+					reverseTimeThreshold += 0.5f;
+					if (reverseTimeThreshold >= 1.5f) {
+						randomTurnReverse = (Math.random() < 0.5);
+					}
+				}
+				else reverseTimeThreshold = 0.5f;
 				reverseTime = 0f;
 			}
-			else if (!reversing) {
+			else if (!reversing && !forwarding) {
 				reverseTime += delta;
 			}
 		}
@@ -142,6 +156,25 @@ public class BasicEnemy extends FixedTank {
 		//requestPathfinding();
 		super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration") * direction);
 		super.applyForce(delta * stats.getStatValue("Acceleration") * moveForward, getRotation());
+	}
+	
+	public void backingUp(float delta) {
+		super.applyForce(delta * stats.getStatValue("Acceleration"), 180 + getRotation());
+		if (reverseTimeThreshold >= 1.5f) {
+			if (randomTurnReverse) 
+				super.applyAngularForce(delta * stats.getStatValue("Angular_Acceleration"));
+			else
+				super.applyAngularForce(-delta * stats.getStatValue("Angular_Acceleration"));
+		}
+		reverseTime += delta;
+		if (reverseTime >= reverseTimeThreshold) {
+			reversing = false;
+			if (reverseTime >= 2.5f) {
+				if (patrolling) requestPathfinding();
+				forwarding = true;
+			}
+			reverseTime = -delta;
+		}
 	}
 	
 	public void selectNewEndTargetTile() {
