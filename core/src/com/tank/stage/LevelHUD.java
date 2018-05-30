@@ -1,11 +1,8 @@
 package com.tank.stage;
 
-import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,21 +17,24 @@ import com.tank.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankInfinity game;
-	protected ArrayList<Player> players;
 	private Label fpsLabel;
 	private static float sinceChange;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(TankInfinity game, ArrayList<Player> players) {
+	public LevelHUD(TankInfinity game) {
 		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
 		this.game = game;
-		this.players = players;
 		super.addActor(buildTable());
 	}
 
 	@Override
 	public void act(float delta) {
+		//pause by key input, only from player 1
+		if (game.players.get(0).controls.pausePressed()) {
+			game.getScreen().pause();
+		}
+		
 		// update fps counter
 		sinceChange += delta; // add time since last act() to counter
 		if (sinceChange >= 1.0f) { // after 1 second or more
@@ -65,18 +65,6 @@ public class LevelHUD extends Stage implements InputProcessor {
 			public void clicked(InputEvent event, float x, float y) {
 				game.getScreen().pause();
 				event.stop();
-			}
-		});
-		
-		//pause by key input
-		this.addListener(new InputListener() {
-			@Override
-		 	public boolean keyDown(InputEvent event, int keycode) {
-				if (keycode == Keys.ESCAPE) {
-					game.getScreen().pause();
-					event.stop();
-				}
-				return false;
 			}
 		});
 		
