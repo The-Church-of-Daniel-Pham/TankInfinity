@@ -8,7 +8,6 @@ import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
-import com.tank.stats.Stats;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
 
@@ -75,7 +74,7 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Stability", 50);
 		stats.addStat("Max Bounce", 1);
 		stats.addStat("Projectile Speed", 75);
-		stats.addStat("Lifetime", 80);
+		stats.addStat("Lifetime", 60);
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 2);
 		
@@ -174,15 +173,6 @@ public class PlayerTank extends FreeTank {
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
 		return randomAngle;
-	}
-	
-	public Stats createBulletStats() {
-		Stats bulletStats = new Stats();
-		bulletStats.addStat("Damage", stats.getStatValue("Damage"));
-		bulletStats.addStat("Projectile Speed", (int)(75 * Math.sqrt(stats.getStatValue("Projectile Speed"))));
-		bulletStats.addStat("Projectile Durability", stats.getStatValue("Projectile Durability"));
-		bulletStats.addStat("Max Bounce", stats.getStatValue("Max Bounce"));
-		return bulletStats;
 	}
 
 	public void switchWeapon(int direction) {

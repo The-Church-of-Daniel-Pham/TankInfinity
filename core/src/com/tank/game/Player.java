@@ -72,6 +72,6 @@ public class Player {
 	}
 	
 	public void initializeCursor() {
-		cursor = new Cursor(this);
+		cursor = new Cursor(this, tank.getStage());
 	}
 }
