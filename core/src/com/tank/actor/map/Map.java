@@ -103,6 +103,10 @@ public class Map extends Group {
 	public int getSizeY() {
 		return map.length * AbstractMapTile.SIZE;
 	}
+	
+	public int[][] getLayout(){
+		return layout;
+	}
 
 	/**
 	 * 

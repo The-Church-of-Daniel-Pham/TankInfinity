@@ -136,15 +136,17 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * @param delta
 	 *            Time since last called.
 	 */
-	public void move(float delta) {
+	public boolean move(float delta) {
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
 		float tY = getY() + velocity.y * delta;
+		boolean moved = false;
 
 		// translation
 		if (canMoveTo(tX, tY, getRotation())) {
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
+			moved = true;
 		} else if (canMoveTo(tX, getY(), getRotation())) {
 			super.setX(tX);
 			hitbox = testHitbox;
@@ -158,7 +160,9 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 			velocity.rotate(tAngle - getRotation());
 			setRotation(tAngle);
 			hitbox = testHitbox;
+			moved = true;
 		}
+		return moved;
 	}
 
 	public boolean canMoveTo(float x, float y, float orientation) {

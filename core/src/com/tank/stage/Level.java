@@ -38,9 +38,7 @@ public class Level extends Stage {
 				p.tank.centerCursor();
 			}
 		}
-		
-		addActor(new BasicEnemy(1500, 1500));
-
+		addActor(new BasicEnemy(1000, 1000));
 		
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
