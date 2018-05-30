@@ -64,7 +64,20 @@ public class Assets {
 			Texture.class);
 	public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
 			Texture.class);
-	public static final AssetDescriptor<Texture> crosshairs = new AssetDescriptor<Texture>("tank/crosshairs.png",
+	//UI
+	public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/cursor/crosshairs_default.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/crosshairs_red.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_blue = new AssetDescriptor<Texture>("ui/cursor/crosshairs_blue.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_green = new AssetDescriptor<Texture>("ui/cursor/crosshairs_green.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_yellow = new AssetDescriptor<Texture>("ui/cursor/crosshairs_yellow.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_purple = new AssetDescriptor<Texture>("ui/cursor/crosshairs_purple.png",
+			Texture.class);
+	public static final AssetDescriptor<Texture> crosshairs_tan = new AssetDescriptor<Texture>("ui/cursor/crosshairs_tan.png",
 			Texture.class);
 	// Menu
 	public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
@@ -125,8 +138,15 @@ public class Assets {
 		manager.load(gun_purple);
 		manager.load(tread_tan);
 		manager.load(gun_tan);
-		manager.load(crosshairs);
 		// System.out.println("Tank textures loaded");
+		manager.load(crosshairs_default);
+		manager.load(crosshairs_red);
+		manager.load(crosshairs_blue);
+		manager.load(crosshairs_green);
+		manager.load(crosshairs_yellow);
+		manager.load(crosshairs_purple);
+		manager.load(crosshairs_tan);
+		// System.out.println("UI textures loaded");
 		manager.load(black);
 		// System.out.println("Menu textures loaded");
 		manager.load(vertex);

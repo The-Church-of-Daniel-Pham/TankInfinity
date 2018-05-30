@@ -41,7 +41,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		
 		// Add widgets to the table here.
 		for (final Player p : game.players) {
-			p.initializeTankCustom();
+			p.initializeCustom();
 			p.initializeCustomMenu();
 			uiTable.add(p.customMenu).expand();
 		}

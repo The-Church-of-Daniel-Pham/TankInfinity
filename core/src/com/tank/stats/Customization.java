@@ -89,6 +89,29 @@ public class Customization {
 				return Assets.manager.get(Assets.gun_default);
 			}
 		}
+		else if (name.equals("cursor")) {
+			if (val.equals("red")) {
+				return Assets.manager.get(Assets.crosshairs_red);
+			}
+			else if (val.equals("blue")) {
+				return Assets.manager.get(Assets.crosshairs_blue);
+			}
+			else if (val.equals("green")) {
+				return Assets.manager.get(Assets.crosshairs_green);
+			}
+			else if (val.equals("yellow")) {
+				return Assets.manager.get(Assets.crosshairs_yellow);
+			}
+			else if (val.equals("purple")) {
+				return Assets.manager.get(Assets.crosshairs_purple);
+			}
+			else if (val.equals("tan")) {
+				return Assets.manager.get(Assets.crosshairs_tan);
+			}
+			else {
+				return Assets.manager.get(Assets.crosshairs_default);
+			}
+		}
 		return null;	//not found
 	}
 }
