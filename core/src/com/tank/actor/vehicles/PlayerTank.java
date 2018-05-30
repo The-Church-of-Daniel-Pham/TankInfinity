@@ -138,6 +138,7 @@ public class PlayerTank extends FreeTank implements InputProcessor {
 
         if (getVelocity().len() > 0 && !treadSoundOn) {
             tread_sound.play();
+            tread_sound.loop();
             tread_sound.setVolume((getVelocity().len()) / (getVelocity().len() + SOME_CONSTANT));
             treadSoundOn = true;
         }
