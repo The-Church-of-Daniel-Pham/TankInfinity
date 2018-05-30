@@ -83,7 +83,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		uiTable.row();
 
 		for (Player p : game.players) {
-			uiTable.add(p.hud).expandX().bottom();
+			uiTable.add(p.hud).expandX().bottom().height(1000);
 		}
 
 		return uiTable;

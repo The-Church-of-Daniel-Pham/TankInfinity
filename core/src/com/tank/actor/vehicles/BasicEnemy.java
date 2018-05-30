@@ -79,6 +79,7 @@ public class BasicEnemy extends FixedTank {
 	
 	@Override
 	public void act(float delta) {
+		if(isDestroyed()) return;
 		if (patrolling) {
 			//Request pathfinding after a certain amount of time not pathfinding
 			timeSinceLastPathfind += delta;
