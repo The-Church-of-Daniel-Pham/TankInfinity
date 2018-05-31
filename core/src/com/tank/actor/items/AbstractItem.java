@@ -11,12 +11,16 @@ import com.tank.utils.Assets;
 
 public abstract class AbstractItem extends Actor implements Collidable{
 
+	public static ArrayList<AbstractItem> items = new ArrayList<AbstractItem>();
 	protected Texture tex;
 	protected Polygon hitbox;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
 	
-	public AbstractItem(Texture tex) {
-		
+	public AbstractItem(float x, float y, Texture tex) {
+		setX(x);
+		setY(y);
+		this.tex = tex;
+		items.add(this);
 	}
 	
 	@Override
@@ -37,6 +41,17 @@ public abstract class AbstractItem extends Actor implements Collidable{
 	public ArrayList<Collidable> getNeighbors() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void destroy() {
+		super.remove();
+		items.remove(this);
+	}
+	
+	public void draw(Batch batch, float a) {
+		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
+				super.getOriginY(), tex.getWidth(), tex.getHeight(), super.getScaleX(), super.getScaleY(),
+				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
 
 	@Override

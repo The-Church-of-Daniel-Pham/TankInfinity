@@ -6,7 +6,6 @@ package com.tank.actor.projectiles;
  * being other projectiles. This class is extended with every projectile.
  */
 import java.util.ArrayList;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
@@ -18,7 +17,6 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
-import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -303,6 +301,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					break;
 				}
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
@@ -311,6 +310,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
 					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+					break;
 				}
 			}
 		}
