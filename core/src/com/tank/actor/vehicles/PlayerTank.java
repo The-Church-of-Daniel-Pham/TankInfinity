@@ -53,6 +53,7 @@ public class PlayerTank extends FreeTank {
 	private final int GUN_PIVOT = -12;
 
 	private boolean markedForNextLevel; // Used to progress to next level
+
 	protected float reloadTime;
 
 	public PlayerTank(int playerNumber, Player player) {
@@ -113,6 +114,7 @@ public class PlayerTank extends FreeTank {
 		setMapPosition(row, col);
 		setRotation(direction);
 		reloadTime = 0;
+		bulletCount = 0;
 		markedForNextLevel = false;
 		if (!AbstractVehicle.vehicleList.contains(this))
 			vehicleList.add(this);
@@ -173,20 +175,23 @@ public class PlayerTank extends FreeTank {
 			super.pointGunToPoint(player.cursor.getStagePos().x, player.cursor.getStagePos().y);
 		}
 		// Firing
-		if (player.controls.firePressed() && reloadTime < 0.01 && bulletCount < stats.getStatValue("Max Projectile")) { // if
-																														// almost
-																														// done
-																														// reloading,
-																														// allow
-																														// for
-																														// rounding
+		if (player.controls.firePressed() && reloadTime < 0.01 && bulletCount < stats.getStatValue("Max Projectile")) {
+			// if
+			// almost
+			// done
+			// reloading,
+			// allow
+			// for
+			// rounding
 			int fireRate = stats.getStatValue("Fire Rate");
 			reloadTime = 2.0f * (1.0f - ((float) (fireRate) / (fireRate + 60)));
 			shoot();
 		} else if (reloadTime > 0) {
 			reloadTime -= delta;
 		}
-		markedForNextLevel = isMarkedForNextLvl();
+		if (!markedForNextLevel) {
+			markedForNextLevel = isMarkedForNextLvl();
+		}
 		playSoundEffects();
 	}
 
