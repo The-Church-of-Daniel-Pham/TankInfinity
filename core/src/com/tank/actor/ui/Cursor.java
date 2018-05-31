@@ -16,15 +16,13 @@ public class Cursor extends AbstractUI {
 	protected Vector3 stagePos;
 	
 	protected Player player;
-	protected Stage stage;	//stage underneath, which teh  cursor is virtually "on"
 	protected Color color;
 
 	protected static Texture tex = Assets.manager.get(Assets.crosshairs_default);
 
-	public Cursor(Player player, Stage stage) {
+	public Cursor(Player player) {
 		super(false, true, 0, 0);
 		this.player = player;
-		this.stage = stage;
 		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
 	
@@ -33,14 +31,15 @@ public class Cursor extends AbstractUI {
 		tex = t;
 		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
+	
+	public float[] getHudPos(float x, float y) {
+		Vector2 screenCoor = player.tank.getStage().stageToScreenCoordinates(new Vector2(x, y));
+		hudPos = getStage().getCamera().unproject(new Vector3(screenCoor.x,screenCoor.y,0));
+		return new float[] {hudPos.x, hudPos.y};
+	}
 
 	public void moveOnStageTo(float x, float y) {
-		System.out.println(x + ", " + y);
-		Vector2 screenCoor = stage.stageToScreenCoordinates(new Vector2(x, y));
-		System.out.println(screenCoor.x + ", "+ screenCoor.y);
-		hudPos = getStage().getCamera().unproject(new Vector3(screenCoor.x,screenCoor.y,0));
-		super.setPosition(hudPos.x, hudPos.y);
-		System.out.println(hudPos.x + ", " + hudPos.y);
+		super.setPosition(getHudPos(x, y)[0], getHudPos(x, y)[1]);
 	}
 	
 	public Vector3 getScreenPos() {
@@ -53,17 +52,10 @@ public class Cursor extends AbstractUI {
 	
 	@Override
 	public void act(float delta) {
-		if (screenPos != null) {
-			screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
-			screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
-		}
-		else {
-			screenPos = new Vector3();
-			screenPos.x = MathUtils.clamp(player.controls.getCursor(new Vector3(0, 0, 0)).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
-			screenPos.y = MathUtils.clamp(player.controls.getCursor(new Vector3(0, 0, 0)).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
-		}
+		screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
+		screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
-		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
+		stagePos = player.tank.getStage().getCamera().unproject(screenPos.cpy()); // to world coordinates
 		setPosition(hudPos.x, hudPos.y);
 	}
 	
