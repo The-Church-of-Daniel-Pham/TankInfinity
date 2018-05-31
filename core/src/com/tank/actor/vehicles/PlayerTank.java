@@ -188,6 +188,16 @@ public class PlayerTank extends FreeTank {
 		f[7] = y + v.y;
 		return new Polygon(f);
 	}
+	
+	public boolean remove() {
+		if (super.remove()) {
+			if (tread_sound != null) tread_sound.dispose();
+			if (engine_sound != null) engine_sound.dispose();
+			if (shoot_sound != null) shoot_sound.dispose();
+			return true;
+		}
+		return false;
+	}
 
 	public int getPlayerNumber() {
 		return playerNumber;
