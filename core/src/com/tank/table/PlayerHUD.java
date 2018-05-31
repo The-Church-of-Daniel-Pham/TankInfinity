@@ -11,6 +11,7 @@ import com.tank.utils.Assets;
 public class PlayerHUD extends Table{
 	protected Player player;
 	protected ProgressBar reloadBar;
+	protected ProgressBar healthBar;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	public PlayerHUD(Player player) {
@@ -22,10 +23,13 @@ public class PlayerHUD extends Table{
 		Label nameLabel = new Label(player.getName(), skin);
 		nameLabel.setAlignment(Align.left);
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
+		healthBar = new ProgressBar(0.0f, player.tank.getMaxHealth(), 0.01f, false, skin);
 
 		super.add(nameLabel).left();
 		super.row();
 		super.add(reloadBar).width(300);
+		super.row();
+		super.add(healthBar).width(300);
 	}
 	
 	public void update() {
@@ -33,5 +37,6 @@ public class PlayerHUD extends Table{
 		// reload time out of max reload time (inverse of rate of fire)
 		//System.out.println(completion);
 		reloadBar.setValue(completion);
+		healthBar.setValue(player.tank.getHealth());
 	}
 }
