@@ -55,6 +55,7 @@ public class PlayerTank extends FreeTank {
 		setWidth(80);
 		setHeight(90);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		initializeHitbox();
 	}
 
 	public PlayerTank(int playerNumber, Player player, float x, float y) {
@@ -69,6 +70,23 @@ public class PlayerTank extends FreeTank {
 		setWidth(80);
 		setHeight(90);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		initializeHitbox();
+	}
+	
+	public PlayerTank(int playerNumber, Player player, int row, int col, float direction) {
+		super(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2, row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2);
+		setRotation(direction);
+		this.playerNumber = playerNumber;
+		this.player = player;
+		initializeStats();
+		reloadTime = 0;
+		selectedWeapon = 0;
+		super.setGunOffsetX(-12);
+		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
+		setWidth(80);
+		setHeight(90);
+		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		initializeHitbox();
 	}
 
 	protected void initializeStats() {
@@ -90,6 +108,10 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Angular Acceleration", 120);
 		
 		stats.addStat("Projectile Durability", 1);
+	}
+	
+	protected void initializeHitbox() {
+		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 
 	public void setMapPosition(int row, int col) {

@@ -324,7 +324,6 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float velocityLength = getTotalVelocity().len();
 		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 60.0)));
 		if (accuracy < 0.25) accuracy = 0.25;
-		System.out.println("Spread: " + spreadRange + ", Accuracy: " + accuracy);
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
 		return randomAngle;
