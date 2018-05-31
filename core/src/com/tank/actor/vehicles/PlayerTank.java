@@ -120,7 +120,6 @@ public class PlayerTank extends FreeTank {
 			int fireRate = stats.getStatValue("Fire Rate");
 			reloadTime = 2.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
 			shoot();
-			bulletCount++;
 		} else if (reloadTime > 0) {
 			reloadTime -= delta;
 		}

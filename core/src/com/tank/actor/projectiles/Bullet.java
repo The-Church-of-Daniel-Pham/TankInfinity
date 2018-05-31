@@ -30,6 +30,7 @@ public class Bullet extends AbstractProjectile {
 		setWidth(25);
 		setHeight(6);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		source.changeBulletCount(1);
 	}
 	
 	public void act(float delta) {
@@ -52,8 +53,7 @@ public class Bullet extends AbstractProjectile {
 		if (bounceCount <= stats.getStatValue("Max Bounce"))
 			super.bounce(wall);
 		else {
-			super.destroy();
-			source.changeBulletCount(-1);
+			destroy();
 		}
 	}
 	
@@ -90,5 +90,10 @@ public class Bullet extends AbstractProjectile {
 		f[6] = x + v.x;
 		f[7] = y + v.y;
 		return new Polygon(f);
+	}
+	@Override
+	public void destroy() {
+		source.changeBulletCount(-1);
+		super.destroy();
 	}
 }

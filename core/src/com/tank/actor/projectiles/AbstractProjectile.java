@@ -122,7 +122,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			super.setPosition(tX, tY);
 			hitbox = testHitbox;
 		} else {
-			ArrayList<Collidable> objectsHit = new ArrayList<Collidable>();
+			// ArrayList<Collidable> objectsHit = new ArrayList<Collidable>();
 			CollisionEvent cornerE = null; // use later if needed
 			int numCornersHit = 0;
 			int numWallsHit = 0;
@@ -139,9 +139,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				} else {
 					numWallsHit++;
 				}
-				if (!objectsHit.contains(e.getCollidable())) {
-					objectsHit.add(e.getCollidable());
-				}
+				// if (!objectsHit.contains(e.getCollidable())) {
+				// objectsHit.add(e.getCollidable());
+				// }
 			}
 			if (numCornersHit == 0) { // most likely case; good ol wall collision
 				Vector2 wall = collisions.get(0).getWall();
@@ -155,8 +155,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				float[] f = testHitbox.getVertices();
 				if (cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
 					bounce(velocity.cpy().rotate(90)); // move backwards
-				} else { // graze
-					System.out.println("graze");
+				} else { // graze, use different algorithm to find wall
 					bounce(CollisionEvent.getWallVector(cornerE.getCollidable().getHitbox(),
 							cornerE.getCorner().sub(velocity.cpy().scl(delta))));
 				}
@@ -284,32 +283,26 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		float[] testVertices = testHitbox.getVertices(); // vertices of this instance's hitbox
 		// check each Collidable object against this instance
 		for (Collidable c : other) {
-			boolean canCollide = true;
-			if (c instanceof Teamable) {
-				Teamable teamObject = (Teamable)c;
-				canCollide = !(teamObject.getTeam() != null && getTeam() != null && getTeam().equals(teamObject.getTeam()));
-			}
-			if (canCollide) {
-				float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
-																		// with this instance
-				for (int i = 0; i < testVertices.length / 2; i++) {
-					// check for wall collision by checking if the corners of this instance are
-					// contained within another Collidable object
-					if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
-						// generate the wall associated with the collision
-						Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
-						// create new wall collision event
-						collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
-								new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
-					}
-					// check for corner collision by checking if the corners of another Collidable
-					// object are contained within this instance
-					if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
-						// create new corner collision event
-						Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
-						collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
-								new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
-					}
+
+			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
+																	// with this instance
+			for (int i = 0; i < testVertices.length / 2; i++) {
+				// check for wall collision by checking if the corners of this instance are
+				// contained within another Collidable object
+				if (c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) {
+					// generate the wall associated with the collision
+					Vector2 wall = CollisionEvent.getWallVector(testHitbox, c.getHitbox(), i * 2);
+					// create new wall collision event
+					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
+							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+				}
+				// check for corner collision by checking if the corners of another Collidable
+				// object are contained within this instance
+				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
+					// create new corner collision event
+					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
+					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
+							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
 				}
 			}
 		}
@@ -317,8 +310,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 
 	public ArrayList<Collidable> getNeighbors() {
 		// get neighboring bricks. instances of WallTile get added to neighbors
-		// add all vehicles to neighbors
-		// add all bullets to neighbors, then remove this instance
+		// add all vehicles not on team to neighbors
+		// add all bullets not on team to neighbors, then remove this instance
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
 		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
 		ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
@@ -327,8 +320,16 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				neighbors.add((WallTile) m);
 			}
 		}
-		neighbors.addAll(AbstractVehicle.vehicleList);
-		neighbors.addAll(AbstractProjectile.projectileList);
+		for (AbstractVehicle v : AbstractVehicle.vehicleList) {
+			boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
+			if (canCollide)
+				neighbors.add(v);
+		}
+		for (AbstractProjectile p : AbstractProjectile.projectileList) {
+			boolean canCollide = !(p.getTeam() != null && getTeam() != null && getTeam().equals(p.getTeam()));
+			if (canCollide)
+				neighbors.add(p);
+		}
 		neighbors.remove(this);
 		return neighbors;
 	}
@@ -381,7 +382,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public boolean isDestroyed() {
 		return (getStage() == null);
 	}
-	
+
 	public String getTeam() {
 		if (source != null)
 			return source.getTeam();
