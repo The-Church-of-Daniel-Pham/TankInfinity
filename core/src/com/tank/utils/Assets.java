@@ -101,7 +101,11 @@ public class Assets {
     public static final AssetDescriptor<Texture> tank_preview_tan = new AssetDescriptor<Texture>("ui/tank/tank_preview_tan.png",
             Texture.class);
     // Menu
-    public static final AssetDescriptor<Texture> splash = new AssetDescriptor<Texture>("menu/loading/splash.png",
+    public static final AssetDescriptor<Texture> backdrop = new AssetDescriptor<Texture>("menu/loading/backdrop.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> loading_tank = new AssetDescriptor<Texture>("menu/loading/loading_tank.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> title = new AssetDescriptor<Texture>("menu/main/title.png",
             Texture.class);
     public static final AssetDescriptor<Texture> black = new AssetDescriptor<Texture>("menu/pause/black.png",
             Texture.class);
@@ -128,12 +132,14 @@ public class Assets {
 
     public static void loadLoading() {
         // load first
-        manager.load(splash);
+        manager.load(backdrop);
+        manager.load(loading_tank);
         manager.load(skin);
     }
 
     public static void loadTextures() {
         manager.load(explosionSheet);
+        // System.out.println("Animation loaded");
         manager.load(grass0);
         manager.load(grass1);
         manager.load(grass2);
@@ -178,6 +184,7 @@ public class Assets {
         manager.load(tank_preview_purple);
         manager.load(tank_preview_tan);
         // System.out.println("UI textures loaded");
+        manager.load(title);
         manager.load(black);
         manager.load(red);
         // System.out.println("Menu textures loaded");

@@ -14,26 +14,28 @@ import com.tank.utils.Assets;
 
 public class Loading extends Stage implements InputProcessor {
 	protected TankInfinity game;
-	private ProgressBar assetsBar;	
+	private ProgressBar assetsBar;
+	private Background tankLoadingBackground;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
-	private Texture splash = Assets.manager.get(Assets.splash);
+	private Texture backdrop = Assets.manager.get(Assets.backdrop);
+	private Texture loading_tank = Assets.manager.get(Assets.loading_tank);
 	
 	public Loading(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
-		Background backdrop = new Background(splash);
-		// between ratios of screen size to image dimensions, picks the largest such
-		// that the image is scaled up to fill the screen
-		backdrop.setScale(
-				Math.max(((float) Gdx.graphics.getWidth()) / splash.getWidth(), (float) Gdx.graphics.getHeight())
-						/ splash.getHeight());
-		super.addActor(backdrop);
+		Background backdropBackground = new Background(backdrop);
+		backdropBackground.fillScale();
+		tankLoadingBackground = new Background(loading_tank);
+		tankLoadingBackground.setPosition(300, 400);
+		super.addActor(backdropBackground);
+		super.addActor(tankLoadingBackground);
 		super.addActor(buildTable());
 	}
 	
 	@Override
 	public void act(float delta) {
+		tankLoadingBackground.moveBy(delta * Assets.manager.getProgress() * 1000, 0);
 		assetsBar.setValue(Assets.manager.getProgress());
 	}
 

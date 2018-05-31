@@ -16,7 +16,8 @@ public class LoadingScreen implements Screen {
 		// starts loading everything, but not waiting to continue
 		Assets.loadAll();
 		// wait until loading stage's assets are loaded
-		Assets.manager.finishLoadingAsset(Assets.splash.fileName);
+		Assets.manager.finishLoadingAsset(Assets.backdrop.fileName);
+		Assets.manager.finishLoadingAsset(Assets.loading_tank.fileName);
 		Assets.manager.finishLoadingAsset(Assets.skin.fileName);
 		loading = new Loading(this.game);
 	}
