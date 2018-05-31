@@ -19,6 +19,7 @@ import com.tank.animations.Explosion;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
+import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -67,6 +68,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
+	private MediaSound damageSound;
+	private static float DAMAGE_VOLUME = 1f;
 	
 	protected int bulletCount;
 
@@ -78,6 +81,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            initial y position of Vehicle
 	 */
 	public AbstractVehicle(float x, float y) {
+		damageSound = new MediaSound(Assets.manager.get(Assets.tank_damage), DAMAGE_VOLUME);
 		setX(x);
 		setY(y);
 		stats = new Stats();
@@ -414,6 +418,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * the object from the stage
 	 */
 	public void destroy() {
+		damageSound.play();
 		getStage().addActor(new Explosion(getX(), getY()));
 		vehicleList.remove(this);
 		remove();
