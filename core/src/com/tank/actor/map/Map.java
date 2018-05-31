@@ -209,13 +209,15 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 
-	public void removeWall(AbstractMapTile m) {
-		if (!(m instanceof BorderTile)) {
-			AbstractMapTile n = new FloorTile(m.getRow(), m.getCol(), this);
-			addActor(n);
-			map[m.getRow()][m.getCol()] = n;
-			layout[m.getRow()][m.getCol()] = 0;
-			m.remove();
+	public void removeWall(AbstractMapTile wall) {
+		if (wall.getParent() != null && wall.getParent().equals(this)) {
+			layout[wall.getRow()][wall.getCol()] = 0;
+			FloorTile floor = new FloorTile(wall.getRow(), wall.getCol(), this);
+			addActor(floor);
+			map[wall.getRow()][wall.getCol()] = floor;
+			walls.remove(wall);
+			floors.add(floor);
+			wall.remove();
 		}
 	}
 

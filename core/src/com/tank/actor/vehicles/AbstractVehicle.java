@@ -307,11 +307,11 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	}
 	
 	public void accelerateForward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation());
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation());
 	}
 	
 	public void accelerateBackward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation() + 180);
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation() + 180);
 	}
 	
 	public void turnLeft(float delta) {

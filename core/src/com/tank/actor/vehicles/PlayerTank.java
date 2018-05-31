@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.projectiles.Rocket;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
@@ -132,7 +133,7 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Projectile Speed", 75);
 		stats.addStat("Lifetime", 60);
 		stats.addStat("Fire Rate", 30);
-		stats.addStat("Max Projectile", 2);
+		stats.addStat("Max Projectile", 3);
 
 		maxHealth = health = 100;
 		stats.addStat("Armor", 15);
