@@ -15,6 +15,7 @@ import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
+import com.tank.utils.CycleList;
 
 public class PlayerTank extends FreeTank {
 	/**
@@ -24,8 +25,7 @@ public class PlayerTank extends FreeTank {
 	private static float angle;	//angle between diagonal of rectangle and its base
 	
 	protected Player player;
-	protected ArrayList<SubWeapon> subWeapons;
-	protected int selectedWeapon;
+	protected CycleList<SubWeapon> subWeapons;
 	protected int playerNumber;
 
 	private final float TREAD_VOLUME = 0.2f;
@@ -56,8 +56,8 @@ public class PlayerTank extends FreeTank {
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
-		selectedWeapon = 0;
 		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
@@ -72,8 +72,8 @@ public class PlayerTank extends FreeTank {
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
-		selectedWeapon = 0;
 		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
@@ -88,8 +88,8 @@ public class PlayerTank extends FreeTank {
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
-		selectedWeapon = 0;
 		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
@@ -226,7 +226,19 @@ public class PlayerTank extends FreeTank {
 	}
 
 	public void switchWeapon(int direction) {
-		selectedWeapon += direction;
+		subWeapons.cycleBy(direction);
+	}
+	
+	public SubWeapon getCurrentSubWeapon() {
+		return subWeapons.getCurrent();
+	}
+	
+	public SubWeapon getCurrentNextWeapon() {
+		return subWeapons.getNext();
+	}
+	
+	public SubWeapon getCurrentPrevWeapon() {
+		return subWeapons.getPrevious();
 	}
 
 	public Polygon getHitboxAt(float x, float y, float direction) {
