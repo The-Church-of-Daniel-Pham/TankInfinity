@@ -1,12 +1,23 @@
 package com.tank.utils;
 
-public class CycleList {
-	private Object[] values;
+import java.util.ArrayList;
+
+public class CycleList<E> {
+	private ArrayList<E> values;
 	private int index;
 	private boolean loop;
 	
-	public CycleList(Object[] arr, int i, boolean l) {
-		values = arr;
+	public CycleList() {
+		values = new ArrayList<E>();
+		index = 0;
+		loop = true;
+	}
+	
+	public CycleList(E[] arr, int i, boolean l) {
+		values = new ArrayList<E>();
+		for (E object : arr) {
+			values.add(object);
+		}
 		index = i;
 		loop = l;
 	}
@@ -19,16 +30,30 @@ public class CycleList {
 		this.index = i;
 	}
 	
-	public Object getCurrent() {
-		return values[index];
+	public E getCurrent() {
+		return values.get(index);
 	}
 	
-	public Object getNext() {
-		return values[index + 1];
+	public E getNext() {
+		if (index < values.size() - 1)
+			return values.get(index + 1);
+		else if (loop)
+			return values.get(0);
+		else
+			return null;
 	}
 	
-	public Object getPrevious() {
-		return values[index - 1];
+	public E getPrevious() {
+		if (index > 0)
+			return values.get(index - 1);
+		else if (loop)
+			return values.get(values.size() - 1);
+		else
+			return null;
+	}
+	
+	public void addAtCurrent(E object){
+		values.add(index, object);
 	}
 	
 	public void setCurrent(Object obj) {
@@ -42,17 +67,17 @@ public class CycleList {
 	
 	public void cycleBy(int n) {
 		if (loop) {
-			index = Math.floorMod((index + n), values.length);	//always positive
+			index = Math.floorMod((index + n), values.size());	//always positive
 		}
-		else if ((index + n) < values.length && (index + n) >= 0) {
+		else if ((index + n) < values.size() && (index + n) >= 0) {
 			index = index+ n;
 		}
 	}
 	
 	public int indexOf(Object obj) {
-		for (int i = 0; i < values.length; i++)
+		for (int i = 0; i < values.size(); i++)
 		{
-			if (values[i].equals(obj)) {
+			if (values.get(i).equals(obj)) {
 				return i;
 			}
 		}
