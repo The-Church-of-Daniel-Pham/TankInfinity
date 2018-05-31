@@ -48,7 +48,6 @@ public class PlayerTank extends FreeTank {
 	private final int GUN_PIVOT = -12;
 	
 	private boolean markedForNextLevel; //Used to progress to next level
-	private boolean subHeld;
 
 	protected float reloadTime;
 
@@ -109,6 +108,7 @@ public class PlayerTank extends FreeTank {
 	    setMapPosition(row, col);
 	    setRotation(direction);
 	    reloadTime = 0;
+	    bulletCount = 0;
 	    markedForNextLevel = false;
 	    if (!AbstractVehicle.vehicleList.contains(this)) vehicleList.add(this);
 	    initializeHitbox();
@@ -182,7 +182,6 @@ public class PlayerTank extends FreeTank {
 				markedForNextLevel = true;
 			}
 		}
-		subHeld = player.controls.subPressed();
 
 		playSoundEffects();
 	}
