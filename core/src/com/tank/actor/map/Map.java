@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.BorderTile;
 import com.tank.actor.map.tiles.FloorTile;
+import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.stage.Level;
 import com.tank.utils.mapgenerator.MazeMaker;
@@ -29,6 +30,7 @@ public class Map extends Group {
 	public ArrayList<FloorTile> floors;
 	public ArrayList<WallTile> walls;
 	public ArrayList<BorderTile> border;
+	public PortalTile portal;
 	/**
 	 * Used to point to the higher level object which implements this instance
 	 */
@@ -77,6 +79,9 @@ public class Map extends Group {
 				super.addActor(tile);// kinda redundant, but may come in handy later
 			}
 		}
+		FloorTile portalSpawn = getRandomFloorTile();
+		portal = new PortalTile(portalSpawn.getRow(), portalSpawn.getCol(), this);
+		super.addActor(portal);
 	}
 
 	public void setFrustrumTilesVisible(int border) {
@@ -96,6 +101,7 @@ public class Map extends Group {
 	@Override
 	public void act(float delta) {
 		setFrustrumTilesVisible(2);
+		portal.act(delta);
 	}
 
 	/**
@@ -208,5 +214,6 @@ public class Map extends Group {
 		for (Actor tile : super.getChildren()) {
 			tile.draw(batch, alpha);
 		}
+		portal.draw(batch, alpha);
 	}
 }
