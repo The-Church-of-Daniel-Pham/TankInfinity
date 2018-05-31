@@ -9,7 +9,6 @@ import com.tank.stage.GameOverMenu;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
 import com.tank.stage.PauseMenu;
-import com.tank.utils.Constants;
 
 public class PlayScreen implements Screen {
 	protected TankInfinity game;
