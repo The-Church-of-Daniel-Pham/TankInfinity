@@ -121,12 +121,14 @@ public class PlayScreen implements Screen {
     }
 	
 	public boolean isReadyForNextLevel() {
+		boolean atleastOne = false;
 		for(Player p: game.players) {
 			if (p.isEnabled() && p.tank != null && !p.tank.isDestroyed()) {
+				atleastOne = true;
 				if (!p.tank.isReadyForNextLevel()) return false;
 			}
     	}
-    	return true;
+    	return atleastOne && true;
 	}
 	
 	public void setupNextLevel() {
