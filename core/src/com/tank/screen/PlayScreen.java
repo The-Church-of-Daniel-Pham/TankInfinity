@@ -38,12 +38,16 @@ public class PlayScreen implements Screen {
 		if (paused) {
 			game.addInput(pauseMenu);
 		}
+		if (gameOver) {
+			game.addInput(gameOverMenu);
+		}
 	}
 
 	@Override
 	public void hide() {
 		game.removeInput(levelhud);
 		game.removeInput(pauseMenu);
+		game.removeInput(gameOverMenu);
 		paused = true; // when leaving this screen, pause automatically for return
 	}
 
@@ -52,6 +56,7 @@ public class PlayScreen implements Screen {
 		level.getViewport().update(width, height, true);
 		levelhud.getViewport().update(width, height, true);
 		pauseMenu.getViewport().update(width, height, true);
+		gameOverMenu.getViewport().update(width, height, true);
 	}
 
 	@Override
@@ -139,6 +144,7 @@ public class PlayScreen implements Screen {
 		level.dispose();
 		levelhud.dispose();
 		pauseMenu.dispose();
+		gameOverMenu.dispose();
 	}
 
 	@Override
@@ -146,6 +152,7 @@ public class PlayScreen implements Screen {
 		paused = true;
 		game.removeInput(levelhud);
 		game.addInput(pauseMenu);
+		game.addInput(gameOverMenu);
 	}
 
 	@Override
@@ -153,5 +160,6 @@ public class PlayScreen implements Screen {
 		paused = false;
 		game.addInput(levelhud);
 		game.removeInput(pauseMenu);
+		game.removeInput(gameOverMenu);
 	}
 }
