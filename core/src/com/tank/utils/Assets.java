@@ -102,6 +102,7 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> black = new AssetDescriptor<Texture>("menu/pause/black.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> red = new AssetDescriptor<Texture>("menu/gameover/red.png", Texture.class);
     // Debug
     public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
             Texture.class);
@@ -174,6 +175,7 @@ public class Assets {
         manager.load(tank_preview_tan);
         // System.out.println("UI textures loaded");
         manager.load(black);
+        manager.load(red);
         // System.out.println("Menu textures loaded");
         manager.load(vertex);
         // System.out.println("Debug textures loaded");
