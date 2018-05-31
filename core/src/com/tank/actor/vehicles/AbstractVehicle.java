@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.WallTile;
+import com.tank.animations.Explosion;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
@@ -78,7 +79,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		angularVelocity = 0;
 		vehicleList.add(this);
 		collisions = new ArrayList<CollisionEvent>();
-		maxHealth = 100;
+		maxHealth = 10;
 		health = maxHealth;
 	}
 
@@ -319,6 +320,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * the object from the stage
 	 */
 	public void destroy() {
+		getStage().addActor(new Explosion(getX(), getY()));
 		vehicleList.remove(this);
 		super.remove();
 	}

@@ -13,7 +13,7 @@ public class Explosion extends Actor
     // Constant rows and columns of the sprite sheet
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
     private static final float FRAME_DURATION = 0.025F;
-    private int x, y;
+    private float x, y;
 
     // Objects used
     Animation<TextureRegion> explosionAnimation; // Must declare frame type (TextureRegion)
@@ -22,7 +22,7 @@ public class Explosion extends Actor
     // A variable for tracking elapsed time for the animation
     float stateTime;
 
-    public Explosion(int x, int y)
+    public Explosion(float x, float y)
     {
         // Load the sprite sheet as a Texture
         explosionSheet = Assets.manager.get(Assets.explosionSheet);
