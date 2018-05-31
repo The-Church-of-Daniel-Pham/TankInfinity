@@ -322,7 +322,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		}
 		for (AbstractVehicle v : AbstractVehicle.vehicleList) {
 			boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
-			if (canCollide)
+			if (true)
 				neighbors.add(v);
 		}
 		for (AbstractProjectile p : AbstractProjectile.projectileList) {
