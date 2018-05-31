@@ -72,6 +72,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
 		TextButton pauseButton = new TextButton("Pause", skin);
+		Table placeholder = new Table();
 
 		pauseButton.addListener(new ClickListener() {
 			@Override
@@ -86,7 +87,12 @@ public class LevelHUD extends Stage implements InputProcessor {
 		uiTable.row();
 
 		for (Player p : game.players) {
-			uiTable.add(p.hud).expandX().bottom().height(200);
+			if (p.isEnabled()) {
+				uiTable.add(p.hud).expandX().height(200).bottom();
+			}
+			else {
+				uiTable.add(placeholder).expandX().height(200).bottom();
+			}
 		}
 
 		return uiTable;

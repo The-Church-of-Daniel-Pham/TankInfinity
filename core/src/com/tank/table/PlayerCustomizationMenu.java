@@ -84,6 +84,7 @@ public class PlayerCustomizationMenu  extends Table{
 	public void disable() {
 		super.clearChildren();
 		
+		Label placeholder = new Label("", skin);
 		final TextButton enableButton = new TextButton("Enable", skin);
 		
 		enableButton.addListener(new ClickListener() {
@@ -96,7 +97,13 @@ public class PlayerCustomizationMenu  extends Table{
 			}
 		});
 		
-		super.add(enableButton);
+		super.add(placeholder).colspan(3);
+		super.row();
+		super.add(placeholder).width(50);
+		super.add(placeholder).width(200).height(200);
+		super.add(placeholder).width(50);
+		super.row();
+		super.add(enableButton).colspan(3);
 		changed = false;
 	}
 	
