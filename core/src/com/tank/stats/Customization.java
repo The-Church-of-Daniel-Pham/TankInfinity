@@ -7,11 +7,11 @@ import com.tank.utils.CycleList;
 
 public class Customization {
 	private LinkedHashMap<String, String> custom;
-	private CycleList colors;
+	private CycleList<String> colors;
 
 	public Customization() {
 		custom = new LinkedHashMap<String, String>();
-		colors = new CycleList (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
+		colors = new CycleList<String> (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
 	}
 
 	public void setCustom(String cust, String val) {
