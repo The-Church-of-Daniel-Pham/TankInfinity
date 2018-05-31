@@ -417,7 +417,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public void destroy() {
 		getStage().addActor(new Explosion(getX(), getY()));
 		vehicleList.remove(this);
-		super.remove();
+		remove();
 	}
 
 	/**
