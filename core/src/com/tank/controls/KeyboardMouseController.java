@@ -72,7 +72,7 @@ public class KeyboardMouseController extends TankController {
 		}
 	}
 	public boolean subRightPressed() {
-		KeyControl rSwitch = keyMap.get("RSWITCH");
+		KeyControl rSwitch = keyMap.get("RSHIFT");
 		if (rSwitch.getKeyType() == 0) {
 			return Gdx.input.isKeyPressed(rSwitch.getKeyCode());
 		}
@@ -81,7 +81,7 @@ public class KeyboardMouseController extends TankController {
 		}
 	}
 	public boolean subLeftPressed() {
-		KeyControl lSwitch = keyMap.get("LSWITCH");
+		KeyControl lSwitch = keyMap.get("LSHIFT");
 		if (lSwitch.getKeyType() == 0) {
 			return Gdx.input.isKeyPressed(lSwitch.getKeyCode());
 		}

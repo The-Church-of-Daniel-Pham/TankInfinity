@@ -31,6 +31,7 @@ public class CycleList<E> {
 	}
 	
 	public E getCurrent() {
+		if (values.size() == 0) return null;
 		return values.get(index);
 	}
 	
@@ -56,6 +57,17 @@ public class CycleList<E> {
 		values.add(index, object);
 	}
 	
+	public E get(int index){
+		return values.get(index);
+	}
+	
+	public void removeCurrent(){
+		if (values.size() != 0) {
+			values.remove(index);
+			if (index == values.size()) index = 0;
+		}
+	}
+	
 	public void setCurrent(Object obj) {
 		if (indexOf(obj) != -1) {
 			setIndex(indexOf(obj));
@@ -66,6 +78,7 @@ public class CycleList<E> {
 	}
 	
 	public void cycleBy(int n) {
+		if (values.size() == 0) return;
 		if (loop) {
 			index = Math.floorMod((index + n), values.size());	//always positive
 		}
