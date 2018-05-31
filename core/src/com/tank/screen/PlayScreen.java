@@ -63,14 +63,14 @@ public class PlayScreen implements Screen {
 		// before drawing
 
 		if (!gameOver) {
-			gameOver = isGameOver();
-			if (gameOver) {
+			gameOver = isGameOver(); //check if game is over
+			if (gameOver) { //only runs once, when gameOver becomes true
 				game.removeInput(levelhud);
 				game.addInput(gameOverMenu);
 			}
 		}
 
-		// Update the stage
+		// Update the stage even if game is over
 		if (!paused) {
 			level.act(delta);
 		}
@@ -90,6 +90,8 @@ public class PlayScreen implements Screen {
 			pauseMenu.getViewport().apply();
 			pauseMenu.draw();
 		}
+		
+		//update the gameOver menu
 		if (gameOver) {
 			gameOverMenu.act(delta);
 			gameOverMenu.getViewport().apply();
@@ -98,7 +100,7 @@ public class PlayScreen implements Screen {
 
 	}
 
-	public boolean isGameOver() {  	
+	public boolean isGameOver() {  	//game is over if all player tanks are destroyed
     		for(Player p: game.players) {
     		if(p.tank != null && !p.tank.isDestroyed()) return false;
     	}
