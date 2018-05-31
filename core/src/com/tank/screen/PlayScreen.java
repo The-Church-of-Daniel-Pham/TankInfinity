@@ -3,7 +3,9 @@ package com.tank.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.stage.GameOverMenu;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
 import com.tank.stage.PauseMenu;
@@ -14,15 +16,19 @@ public class PlayScreen implements Screen {
 	public Level level;
 	public LevelHUD levelhud;
 	public PauseMenu pauseMenu;
+	public GameOverMenu gameOverMenu;
 	protected boolean paused;
+	protected boolean gameOver;
 
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
 		level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
 		levelhud = new LevelHUD(this.game);
 		pauseMenu = new PauseMenu(this.game);
+		gameOverMenu = new GameOverMenu(this.game);
+		gameOver = false;
 	}
-	
+
 	@Override
 	public void show() {
 		game.addInput(levelhud);
@@ -35,45 +41,68 @@ public class PlayScreen implements Screen {
 	public void hide() {
 		game.removeInput(levelhud);
 		game.removeInput(pauseMenu);
-		paused = true;	//when leaving this screen, pause automatically for return
+		paused = true; // when leaving this screen, pause automatically for return
 	}
-	
-    @Override
+
+	@Override
 	public void resize(int width, int height) {
 		level.getViewport().update(width, height, true);
 		levelhud.getViewport().update(width, height, true);
 		pauseMenu.getViewport().update(width, height, true);
 	}
-	
-    @Override
-    public void render(float delta) {
-    	//Clear the screen
-    	Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+
+	@Override
+	public void render(float delta) {
+		// Clear the screen
+		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
-				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds anti-aliasing
-		
-		//if more than one type of viewports are used, each's apply() must be called before drawing
-		
-        //Update the stage
+				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds
+																											// anti-aliasing
+
+		// if more than one type of viewports are used, each's apply() must be called
+		// before drawing
+
+		if (!gameOver) {
+			gameOver = isGameOver();
+			if (gameOver) {
+				game.removeInput(levelhud);
+				game.addInput(gameOverMenu);
+			}
+		}
+
+		// Update the stage
 		if (!paused) {
 			level.act(delta);
 		}
 		level.getViewport().apply();
 		level.draw();
-		
-		//update the hud
-		if (!paused) {
+
+		// update the hud
+		if (!paused && !gameOver) {
 			levelhud.act(delta);
 			levelhud.getViewport().apply();
 			levelhud.draw();
 		}
-		
-		//update the pause menu
+
+		// update the pause menu
 		if (paused) {
 			pauseMenu.act(delta);
 			pauseMenu.getViewport().apply();
 			pauseMenu.draw();
 		}
+		if (gameOver) {
+			gameOverMenu.act(delta);
+			gameOverMenu.getViewport().apply();
+			gameOverMenu.draw();
+		}
+
+	}
+
+	public boolean isGameOver() {  	
+    		for(Player p: game.players) {
+    		if(p.tank != null && !p.tank.isDestroyed()) return false;
+    	}
+    	return true;
     }
 
 	@Override
@@ -82,7 +111,7 @@ public class PlayScreen implements Screen {
 		levelhud.dispose();
 		pauseMenu.dispose();
 	}
-	
+
 	@Override
 	public void pause() {
 		paused = true;
