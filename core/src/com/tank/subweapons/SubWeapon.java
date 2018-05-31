@@ -24,7 +24,7 @@ public abstract class SubWeapon {
 		this.tex = tex;
 	}
 	public void addAmmo(int ammo) {
-		this.ammo = ammo;
+		this.ammo += ammo;
 	}
 	public abstract void shoot(PlayerTank source);
 	

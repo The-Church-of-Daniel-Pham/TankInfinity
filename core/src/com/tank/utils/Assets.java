@@ -73,6 +73,9 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
             Texture.class);
+    //Items
+    public static final AssetDescriptor<Texture> box = new AssetDescriptor<Texture>("item/box.png",
+            Texture.class);
     //UI
     public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/cursor/crosshairs_default.png",
             Texture.class);
@@ -174,6 +177,8 @@ public class Assets {
         manager.load(tread_tan);
         manager.load(gun_tan);
         // System.out.println("Tank textures loaded");
+        manager.load(box);
+        // System.out.println("Item textures loaded");
         manager.load(crosshairs_default);
         manager.load(crosshairs_red);
         manager.load(crosshairs_blue);

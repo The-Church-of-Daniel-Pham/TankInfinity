@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.tank.actor.items.AbstractItem;
+import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.FloorTile;
@@ -76,6 +78,12 @@ public class Level extends Stage {
 				int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 										randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2};
 				addActor(new BasicEnemy(pos[0], pos[1]));
+			}
+		}
+		for (int i = 0; i < Math.random() * enemyCount + 1; i++) {
+			if (!emptySpaces.isEmpty()) {
+				AbstractMapTile randomFloor = emptySpaces.remove((int)(Math.random() * emptySpaces.size()));
+				addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
 			}
 		}
 		
@@ -181,6 +189,10 @@ public class Level extends Stage {
 			projectile.remove();
 		}
 		AbstractProjectile.projectileList.clear();
+		for (AbstractItem item : AbstractItem.items) {
+			item.remove();
+		}
+		AbstractItem.items.clear();
 		super.dispose();
 	}
 }
