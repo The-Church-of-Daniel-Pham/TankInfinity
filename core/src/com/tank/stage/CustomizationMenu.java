@@ -1,5 +1,6 @@
 package com.tank.stage;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,7 +15,6 @@ import com.tank.game.TankInfinity;
 import com.tank.screen.PlayScreen;
 import com.tank.table.PlayerCustomizationMenu;
 import com.tank.utils.Assets;
-import com.tank.utils.Constants;
 
 public class CustomizationMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -22,7 +22,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public CustomizationMenu(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		// build table
 		uiTable = new Table();

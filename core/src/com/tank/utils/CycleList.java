@@ -11,16 +11,24 @@ public class CycleList {
 		loop = l;
 	}
 	
-	public Object getIndex() {
+	public int getIndex() {
 		return index;
+	}
+	
+	public void setIndex(int i) {
+		this.index = i;
 	}
 	
 	public Object getCurrent() {
 		return values[index];
 	}
 	
-	public void setIndex(int i) {
-		this.index = i;
+	public Object getNext() {
+		return values[index + 1];
+	}
+	
+	public Object getPrevious() {
+		return values[index - 1];
 	}
 	
 	public void setCurrent(Object obj) {

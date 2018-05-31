@@ -11,14 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
-import com.tank.utils.Constants;
 
 public class MainMenu extends Stage implements InputProcessor{
 	protected TankInfinity game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	public MainMenu(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		super.addActor(buildTable());
 	}

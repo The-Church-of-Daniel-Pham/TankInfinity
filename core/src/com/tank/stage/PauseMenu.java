@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
 import com.tank.actor.ui.Background;
 import com.tank.utils.Assets;
-import com.tank.utils.Constants;
 
 public class PauseMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -21,11 +20,11 @@ public class PauseMenu extends Stage implements InputProcessor {
 	private Texture black = Assets.manager.get(Assets.black);
 	
 	public PauseMenu(TankInfinity game) {
-		super(new ExtendViewport(Constants.PREFERRED_WINDOW_WIDTH, Constants.PREFERRED_WINDOW_HEIGHT));
+		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		Background darken = new Background(black);
 		// scale dark to fit screen
-		darken.setScale(((float)Constants.WINDOW_WIDTH)/black.getWidth(), ((float)Constants.WINDOW_HEIGHT)/black.getHeight());
+		darken.setScale(((float) Gdx.graphics.getWidth())/black.getWidth(), ((float) Gdx.graphics.getHeight())/black.getHeight());
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}
