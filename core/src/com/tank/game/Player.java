@@ -73,6 +73,5 @@ public class Player {
 	
 	public void initializeCursor() {
 		cursor = new Cursor(this, tank.getStage());
-		cursor.moveOnStageTo(tank.getX(), tank.getY());
 	}
 }
