@@ -40,6 +40,9 @@ public class PlayerTank extends FreeTank {
 
 	private final int SOME_CONSTANT = 1000;
 	private final int THRESH = 20;
+	
+	private final int GUN_OFFSET = -8;
+	private final int GUN_PIVOT = -12;
 
 	protected float reloadTime;
 
@@ -50,8 +53,8 @@ public class PlayerTank extends FreeTank {
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
-		super.setGunOffsetX(-12);
-		super.setGunPivotX(treadTexture.getWidth() / 2 + super.getGunOffsetX());
+		super.setGunOffsetX(GUN_OFFSET);
+		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
 		setHeight(90);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
@@ -65,8 +68,8 @@ public class PlayerTank extends FreeTank {
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
-		super.setGunOffsetX(-12);
-		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
+		super.setGunOffsetX(GUN_OFFSET);
+		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
 		setHeight(90);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
@@ -75,17 +78,17 @@ public class PlayerTank extends FreeTank {
 	
 	public PlayerTank(int playerNumber, Player player, int row, int col, float direction) {
 		super(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2, row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2);
-		setRotation(direction);
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
-		super.setGunOffsetX(-12);
-		super.setGunPivotX(treadTexture.getWidth() / 2 - super.getGunOffsetX());
+		super.setGunOffsetX(GUN_OFFSET);
+		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
 		setHeight(90);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		setRotation(direction);
 		initializeHitbox();
 	}
 

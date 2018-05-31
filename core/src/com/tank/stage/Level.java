@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
@@ -27,7 +28,7 @@ public class Level extends Stage {
 	 */
 	public Level(TankInfinity game, int mapWidth, int mapHeight) {
 		// world is first scaled to fit within the viewport, then the shorter dimension is lengthened to fill the viewport
-		super(new ExtendViewport(12 * AbstractMapTile.SIZE, 8 * AbstractMapTile.SIZE));
+		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
 		this.game = game;
 		this.mapWidth = mapWidth;
 		this.mapHeight = mapHeight;
@@ -40,6 +41,39 @@ public class Level extends Stage {
 			int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 									randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2};
 			addActor(new BasicEnemy(pos[0], pos[1]));
+		}
+		
+		// replace default stage OrthographicCamera with LevelCamera
+		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
+		super.getViewport().setCamera(camera);
+	}
+	
+	/**
+	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
+	 * @param mapWidth the width of the map in tiles
+	 * @param mapHeight the height of the map in tiles
+	 */
+	public Level(TankInfinity game, int levelNum) {
+		// world is first scaled to fit within the viewport, then the shorter dimension is lengthened to fill the viewport
+		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
+		this.game = game;
+		mapWidth = 40 + (int)(Math.pow(levelNum - 1, 1.5) / 2.5);
+		mapHeight = 40 + (int)(Math.pow(levelNum - 1, 1.4) / 3);
+
+		map = new Map(mapWidth, mapHeight, this);
+		addActor(map);
+		spawnInPlayers();
+		int minEnemies = (int)(3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
+		int maxEnemies = (int)(6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
+		int enemyCount = (int)(Math.random() * (maxEnemies - minEnemies)) + minEnemies;
+		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
+		for (int i = 0; i < enemyCount; i++) {
+			if (!emptySpaces.isEmpty()) {
+				AbstractMapTile randomFloor = emptySpaces.remove((int)(Math.random() * emptySpaces.size()));
+				int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
+										randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2};
+				addActor(new BasicEnemy(pos[0], pos[1]));
+			}
 		}
 		
 		// replace default stage OrthographicCamera with LevelCamera

@@ -51,7 +51,7 @@ public class Map extends Group {
 		// create level pointer
 		this.level = level;
 		// maze generation
-		MazeMaker mazeGen = new MazeMaker(height, width); // create maze maker object in order to create a maze
+		MazeMaker mazeGen = new MazeMaker(height - 1, width - 1); // create maze maker object in order to create a maze
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
 		//Create the spawn area
 		spawnZone = mazeGen.getRandomOpen(2);
@@ -150,6 +150,15 @@ public class Map extends Group {
 	
 	public FloorTile getRandomFloorTile() {
 		return (floors.get((int)(Math.random() * floors.size())));
+	}
+	public ArrayList<FloorTile> getEmptyNonSpawnFloorTiles(){
+		ArrayList<FloorTile> tiles = new ArrayList<FloorTile>();
+		for (FloorTile floorTile : floors) {
+			if (!(floorTile.getRow() >= spawnZone[0] - 2 && floorTile.getRow() <= spawnZone[0] + 2
+					&& floorTile.getCol() >= spawnZone[1] - 2 && floorTile.getCol() <= spawnZone[1] + 2))
+				tiles.add(floorTile);
+		}
+		return tiles;
 	}
 	public WallTile getRandomWallTile() {
 		return (walls.get((int)(Math.random() * walls.size())));
