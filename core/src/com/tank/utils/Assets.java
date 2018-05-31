@@ -42,6 +42,8 @@ public class Assets {
     // Projectiles
     public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> rocket = new AssetDescriptor<Texture>("projectiles/rocket.png",
+            Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_default = new AssetDescriptor<Texture>("tank/tank_tread_default.png",
             Texture.class);
@@ -155,6 +157,7 @@ public class Assets {
         manager.load(portal);
         // System.out.println("Map textures loaded");
         manager.load(bullet);
+        manager.load(rocket);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_default);
         manager.load(gun_default);
