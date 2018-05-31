@@ -425,7 +425,6 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	protected void initializeHitbox() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -446,5 +445,14 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	public String getTeam() {
 		return "ENEMY";
+	}
+	
+	@Override
+	public boolean remove() {
+		if (super.remove()) {
+			if (shoot_sound != null) shoot_sound.dispose();
+			return true;
+		}
+		return false;
 	}
 }
