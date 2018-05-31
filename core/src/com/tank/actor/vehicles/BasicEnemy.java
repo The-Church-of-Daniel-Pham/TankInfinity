@@ -42,6 +42,7 @@ public class BasicEnemy extends FixedTank {
 		super(x, y, Assets.manager.get(Assets.tread_default));
 		initializeStats();
 		initializePathfinding();
+		setRotation((float)(Math.random() * 360f));
 		forwarding = false;
 		reversing = false;
 		randomTurnReverse = false;

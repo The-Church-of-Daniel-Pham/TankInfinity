@@ -30,7 +30,6 @@ public class Cursor extends AbstractUI {
 		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
 	
-	
 	public Vector3 getScreenPos() {
 		return screenPos;
 	}
@@ -48,6 +47,12 @@ public class Cursor extends AbstractUI {
 		screenPos = new Vector3(stage.stageToScreenCoordinates(new Vector2(stagePos.x, stagePos.y)), 0);
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());
 		super.setPosition(hudPos.x, hudPos.y);
+	}
+	
+	public void setupCursor(Stage stage) {
+		this.stage = stage;
+		newGame = true;
+		screenPos = new Vector3(0, 0, 0);
 	}
 	
 	public void moveToTank() {
