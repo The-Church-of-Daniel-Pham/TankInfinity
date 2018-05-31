@@ -1,7 +1,6 @@
 package com.tank.animations;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,6 +13,7 @@ public class Explosion extends Actor
     // Constant rows and columns of the sprite sheet
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
     private static final float FRAME_DURATION = 0.025F;
+    private int x, y;
 
     // Objects used
     Animation<TextureRegion> explosionAnimation; // Must declare frame type (TextureRegion)
@@ -22,11 +22,13 @@ public class Explosion extends Actor
     // A variable for tracking elapsed time for the animation
     float stateTime;
 
-    public Explosion()
+    public Explosion(int x, int y)
     {
         // Load the sprite sheet as a Texture
         explosionSheet = Assets.manager.get(Assets.explosionSheet);
         stateTime = 0f;
+        this.x = x;
+        this.y = y;
         create();
     }
 
@@ -67,7 +69,7 @@ public class Explosion extends Actor
 
         // Get current frame of animation for the current stateTime
         TextureRegion currentFrame = explosionAnimation.getKeyFrame(stateTime, false);
-        spriteBatch.draw(currentFrame, 50, 50); // Draw current frame at (50, 50)
+        spriteBatch.draw(currentFrame, x, y); // Draw current frame at (50, 50)
     }
 
     public void dispose() {
