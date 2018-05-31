@@ -3,8 +3,9 @@ package com.tank.stage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -14,8 +15,9 @@ import com.tank.utils.Assets;
 
 public class Loading extends Stage implements InputProcessor {
 	protected TankInfinity game;
-	private ProgressBar assetsBar;
 	private Background tankLoadingBackground;
+	private float distance;
+	private float percent;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private Texture backdrop = Assets.manager.get(Assets.backdrop);
@@ -27,7 +29,9 @@ public class Loading extends Stage implements InputProcessor {
 		Background backdropBackground = new Background(backdrop);
 		backdropBackground.fillScale();
 		tankLoadingBackground = new Background(loading_tank);
-		tankLoadingBackground.setPosition(300, 400);
+		tankLoadingBackground.setPosition(-loading_tank.getWidth(), 300);
+		percent = 0;
+		distance = Gdx.graphics.getWidth() + loading_tank.getWidth();
 		super.addActor(backdropBackground);
 		super.addActor(tankLoadingBackground);
 		super.addActor(buildTable());
@@ -35,18 +39,20 @@ public class Loading extends Stage implements InputProcessor {
 	
 	@Override
 	public void act(float delta) {
-		tankLoadingBackground.moveBy(delta * Assets.manager.getProgress() * 1000, 0);
-		assetsBar.setValue(Assets.manager.getProgress());
+		percent = Interpolation.linear.apply(percent, Assets.manager.getProgress(), 0.05f);
+		tankLoadingBackground.setX(percent * distance);
 	}
 
 	private Table buildTable() {
 		Table uiTable = new Table();
-		uiTable.setFillParent(true);
-		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
+		uiTable.setFillParent(false);
+		uiTable.setDebug(true);
+		uiTable.bottom().padBottom(200).right().padRight(100);
+		uiTable.defaults().width(400).height(200).space(25).right();
 
 		// Add widgets to the table here.
-		assetsBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin);
-		uiTable.add(assetsBar).width(500).height(150).expand();
+		Label tipLabel = new Label("Get gud", skin);
+		uiTable.add(tipLabel);
 
 		return uiTable;
 	}
