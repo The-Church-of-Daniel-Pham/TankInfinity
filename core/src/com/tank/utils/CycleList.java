@@ -36,6 +36,7 @@ public class CycleList<E> {
 	}
 	
 	public E getNext() {
+		if (values.size() == 0) return null;
 		if (index < values.size() - 1)
 			return values.get(index + 1);
 		else if (loop)
@@ -45,6 +46,7 @@ public class CycleList<E> {
 	}
 	
 	public E getPrevious() {
+		if (values.size() == 0) return null;
 		if (index > 0)
 			return values.get(index - 1);
 		else if (loop)
