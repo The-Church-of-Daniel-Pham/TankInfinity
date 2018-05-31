@@ -450,7 +450,7 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	public boolean remove() {
 		if (super.remove()) {
-			if (shoot_sound != null) shoot_sound.dispose();
+			if (shoot_sound != null) shoot_sound.stop();
 			return true;
 		}
 		return false;
