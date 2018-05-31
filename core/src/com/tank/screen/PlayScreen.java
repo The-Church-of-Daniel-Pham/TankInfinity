@@ -19,11 +19,13 @@ public class PlayScreen implements Screen {
 	public GameOverMenu gameOverMenu;
 	protected boolean paused;
 	protected boolean gameOver;
+	protected int levelNum;
 
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
 		//level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
-		level = new Level(this.game, 1);
+		levelNum = 1;
+		level = new Level(this.game, levelNum);
 		levelhud = new LevelHUD(this.game);
 		pauseMenu = new PauseMenu(this.game);
 		gameOverMenu = new GameOverMenu(this.game);
@@ -98,15 +100,39 @@ public class PlayScreen implements Screen {
 			gameOverMenu.getViewport().apply();
 			gameOverMenu.draw();
 		}
+		
+		if (!paused && !gameOver) {
+			if (isReadyForNextLevel()) {
+				setupNextLevel();
+			}
+		}
 
 	}
 
 	public boolean isGameOver() {  	//game is over if all player tanks are destroyed
-    		for(Player p: game.players) {
+    	for(Player p: game.players) {
     		if(p.tank != null && !p.tank.isDestroyed()) return false;
     	}
     	return true;
     }
+	
+	public boolean isReadyForNextLevel() {
+		for(Player p: game.players) {
+    		if (p.tank != null && !p.tank.isReadyForNextLevel()) return false;
+    	}
+    	return true;
+	}
+	
+	public void setupNextLevel() {
+		levelNum++;
+		level.dispose();
+		level = new Level(this.game, levelNum);
+		for (Player p : game.players) {
+			if (p.isEnabled() && !p.tank.isDestroyed()) {
+				p.cursor.setupCursor(level);
+			}
+		}
+	}
 
 	@Override
 	public void dispose() {

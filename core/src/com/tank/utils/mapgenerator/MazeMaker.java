@@ -202,11 +202,11 @@ public class MazeMaker {
 	
 	public void addBorder(int size) {
 		int[][] newMaze = new int[maze.length + size][maze[0].length + size];
-		for (int row = 0; row < maze.length; row++) {
+		for (int row = 0; row < newMaze.length; row++) {
 			newMaze[row][0] = 2;
 			newMaze[row][newMaze[row].length - 1] = 2;
 		}
-		for (int col = 0; col < maze.length; col++) {
+		for (int col = 0; col < newMaze[0].length; col++) {
 			newMaze[0][col] = 2;
 			newMaze[newMaze.length - 1][col] = 2;
 		}

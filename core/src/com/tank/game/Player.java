@@ -71,10 +71,17 @@ public class Player {
 		controls = ControlConstants.getPlayerControls(playerNumber);
 	}
 	
-	public void initializeTank(int row, int col, float rotation) {
-		tank = new PlayerTank(playerNumber, this, row, col, rotation);
-		hud = new PlayerHUD(this);
-		controls = ControlConstants.getPlayerControls(playerNumber);
+	public void initializeTank(int row, int col, float rotation, boolean first) {
+		if (first) {
+			tank = new PlayerTank(playerNumber, this, row, col, rotation);
+			hud = new PlayerHUD(this);
+			controls = ControlConstants.getPlayerControls(playerNumber);
+		}
+		else {
+			if (tank.getHealth() != 0) {
+				tank.setupTank(row, col, rotation);
+			}
+		}
 	}
 	
 	public void initializeCursor() {

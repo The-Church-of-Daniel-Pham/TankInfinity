@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
+import com.tank.stage.Level;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
 
@@ -43,6 +46,9 @@ public class PlayerTank extends FreeTank {
 	
 	private final int GUN_OFFSET = -8;
 	private final int GUN_PIVOT = -12;
+	
+	private boolean markedForNextLevel; //Used to progress to next level
+	private boolean subHeld;
 
 	protected float reloadTime;
 
@@ -53,6 +59,7 @@ public class PlayerTank extends FreeTank {
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
+		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
@@ -68,6 +75,7 @@ public class PlayerTank extends FreeTank {
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
+		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
@@ -83,6 +91,7 @@ public class PlayerTank extends FreeTank {
 		initializeStats();
 		reloadTime = 0;
 		selectedWeapon = 0;
+		markedForNextLevel = false;
 		super.setGunOffsetX(GUN_OFFSET);
 		super.setGunPivotX(gunTexture.getWidth() / 2 + GUN_PIVOT);
 		setWidth(80);
@@ -90,6 +99,19 @@ public class PlayerTank extends FreeTank {
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 		setRotation(direction);
 		initializeHitbox();
+	}
+	
+	public void setupTank(int row, int col, float direction) {
+		engine_sound =  new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_engine.wav")), ENGINE_VOLUME);
+		engineSoundOn = false;
+	    tread_sound =  new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_tread.wav")), TREAD_VOLUME);
+	    treadSoundOn = false;
+	    setMapPosition(row, col);
+	    setRotation(direction);
+	    reloadTime = 0;
+	    markedForNextLevel = false;
+	    if (!AbstractVehicle.vehicleList.contains(this)) vehicleList.add(this);
+	    initializeHitbox();
 	}
 
 	protected void initializeStats() {
@@ -152,6 +174,15 @@ public class PlayerTank extends FreeTank {
 		} else if (reloadTime > 0) {
 			reloadTime -= delta;
 		}
+		
+		if (player.controls.subPressed()) {
+			PortalTile portal = ((Level)getStage()).getMap().getPortalTile();
+			int[] currentTile = ((Level)getStage()).getMap().getTileAt(getX(), getY());
+			if (currentTile[0] == portal.getRow() && currentTile[1] == portal.getCol()) {
+				markedForNextLevel = true;
+			}
+		}
+		subHeld = player.controls.subPressed();
 
 		playSoundEffects();
 	}
@@ -234,6 +265,10 @@ public class PlayerTank extends FreeTank {
 
 	public float getReloadTime() {
 		return reloadTime;
+	}
+	
+	public boolean isReadyForNextLevel() {
+		return markedForNextLevel;
 	}
 	
 	@Override

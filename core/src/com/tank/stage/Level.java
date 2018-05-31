@@ -35,7 +35,7 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
-		spawnInPlayers();
+		spawnInPlayers(true);
 		for (int i = 0; i < 4; i++) {
 			AbstractMapTile randomFloor = map.getRandomFloorTile();
 			int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
@@ -62,7 +62,10 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
-		spawnInPlayers();
+		if (levelNum == 1)
+			spawnInPlayers(true);
+		else
+			spawnInPlayers(false);
 		int minEnemies = (int)(3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int)(6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int enemyCount = (int)(Math.random() * (maxEnemies - minEnemies)) + minEnemies;
@@ -81,7 +84,7 @@ public class Level extends Stage {
 		super.getViewport().setCamera(camera);
 	}
 	
-	private void spawnInPlayers() {
+	private void spawnInPlayers(boolean first) {
 		/**
 		 * Player formations:
 		 * 1 Player				2 Players
@@ -110,39 +113,39 @@ public class Level extends Stage {
 		for (int i = 0; i < players.size(); i++) {
 			Player p = players.get(i);
 			if (players.size() == 1) {
-				p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1], 90);
+				p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1], 90, first);
 			}
 			else if (players.size() == 2) {
 				if (i == 0) {
-					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] - 1, 180);
+					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] - 1, 180, first);
 				}
 				else if (i == 1) {
-					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] + 1, 0);
+					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] + 1, 0, first);
 				}
 			}
 			else if (players.size() == 3) {
 				if (i == 0) {
-					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1], 90);
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1], 90, first);
 				}
 				else if (i == 1) {
-					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 210);
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 210, first);
 				}
 				else if (i == 2) {
-					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 330);
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 330, first);
 				}
 			}
 			else if (players.size() == 4) {
 				if (i == 0) {
-					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] - 1, 90);
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] - 1, 90, first);
 				}
 				else if (i == 1) {
-					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] + 1, 0);
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] + 1, 0, first);
 				}
 				else if (i == 2) {
-					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 180);
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 180, first);
 				}
 				else if (i == 3) {
-					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 270);
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 270, first);
 				}
 			}
 			addActor(p.tank);

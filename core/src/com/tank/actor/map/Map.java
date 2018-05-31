@@ -169,6 +169,9 @@ public class Map extends Group {
 	public int[] getSpawnPoint() {
 		return spawnZone;
 	}
+	public PortalTile getPortalTile() {
+		return portal;
+	}
 
 	/**
 	 * 
