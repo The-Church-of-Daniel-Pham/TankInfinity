@@ -1,5 +1,7 @@
 package com.tank.stage;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.map.Map;
@@ -32,14 +34,7 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
-		
-		for (Player p : game.players) {
-			if (p.isEnabled()) {
-				p.initializeTank();
-				addActor(p.tank);
-			}
-		}
-		
+		spawnInPlayers();
 		for (int i = 0; i < 4; i++) {
 			AbstractMapTile randomFloor = map.getRandomFloorTile();
 			int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
@@ -50,6 +45,74 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
+	}
+	
+	private void spawnInPlayers() {
+		/**
+		 * Player formations:
+		 * 1 Player				2 Players
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 0 0 1 0 0			0 1 0 2 0
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 
+		 * 3 Players			4 Players
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 0 0 1 0 0			0 1 0 2 0
+		 * 0 0 0 0 0			0 0 0 0 0
+		 * 0 2 0 3 0			0 3 0 4 0
+		 * 0 0 0 0 0			0 0 0 0 0
+		 */
+		ArrayList<Player> players = new ArrayList<Player>();
+		for (Player p : game.players) {
+			if (p.isEnabled()) {
+				players.add(p);
+				//p.initializeTank();
+				//addActor(p.tank);
+			}
+		}
+		
+		for (int i = 0; i < players.size(); i++) {
+			Player p = players.get(i);
+			if (players.size() == 1) {
+				p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1], 90);
+			}
+			else if (players.size() == 2) {
+				if (i == 0) {
+					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] - 1, 180);
+				}
+				else if (i == 1) {
+					p.initializeTank(map.getSpawnPoint()[0], map.getSpawnPoint()[1] + 1, 0);
+				}
+			}
+			else if (players.size() == 3) {
+				if (i == 0) {
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1], 90);
+				}
+				else if (i == 1) {
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 210);
+				}
+				else if (i == 2) {
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 330);
+				}
+			}
+			else if (players.size() == 4) {
+				if (i == 0) {
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] - 1, 90);
+				}
+				else if (i == 1) {
+					p.initializeTank(map.getSpawnPoint()[0] + 1, map.getSpawnPoint()[1] + 1, 0);
+				}
+				else if (i == 2) {
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] - 1, 180);
+				}
+				else if (i == 3) {
+					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 270);
+				}
+			}
+			addActor(p.tank);
+		}
 	}
 	
 	public int getMapWidth() {
@@ -73,7 +136,13 @@ public class Level extends Stage {
 	}
 	@Override
 	public void dispose() {
+		for (AbstractVehicle vehicle : AbstractVehicle.vehicleList) {
+			vehicle.remove();
+		}
 		AbstractVehicle.vehicleList.clear();
+		for (AbstractProjectile projectile : AbstractProjectile.projectileList) {
+			projectile.remove();
+		}
 		AbstractProjectile.projectileList.clear();
 		super.dispose();
 	}

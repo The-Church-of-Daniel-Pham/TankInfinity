@@ -31,6 +31,7 @@ public class Map extends Group {
 	public ArrayList<WallTile> walls;
 	public ArrayList<BorderTile> border;
 	public PortalTile portal;
+	public int[] spawnZone;
 	/**
 	 * Used to point to the higher level object which implements this instance
 	 */
@@ -52,7 +53,9 @@ public class Map extends Group {
 		// maze generation
 		MazeMaker mazeGen = new MazeMaker(height, width); // create maze maker object in order to create a maze
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
-		mazeGen.clearBottomLeftCorner(5); // Clears out corner so tank doesn't spawn on bricks
+		//Create the spawn area
+		spawnZone = mazeGen.getRandomOpen(2);
+		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
 		floors = new ArrayList<FloorTile>();
 		walls = new ArrayList<WallTile>();
@@ -153,6 +156,9 @@ public class Map extends Group {
 	}
 	public BorderTile getRandomBorderTile() {
 		return (border.get((int)(Math.random() * border.size())));
+	}
+	public int[] getSpawnPoint() {
+		return spawnZone;
 	}
 
 	/**

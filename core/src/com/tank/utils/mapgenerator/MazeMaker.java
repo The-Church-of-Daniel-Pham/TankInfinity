@@ -201,19 +201,23 @@ public class MazeMaker {
 	}
 	
 	public void addBorder(int size) {
-		size = MathUtils.clamp(size, 0, Math.min(maze.length, maze[0].length));
-		for (int row = 0; row < maze.length; row++)
+		int[][] newMaze = new int[maze.length + size][maze[0].length + size];
+		for (int row = 0; row < maze.length; row++) {
+			newMaze[row][0] = 2;
+			newMaze[row][newMaze[row].length - 1] = 2;
+		}
+		for (int col = 0; col < maze.length; col++) {
+			newMaze[0][col] = 2;
+			newMaze[newMaze.length - 1][col] = 2;
+		}
+		for (int row = size; row < newMaze.length - size; row++)
 		{
-			for (int col = 0; col <  maze[row].length; col++)
+			for (int col = size; col <  newMaze[row].length - size; col++)
 			{
-				if (row < size || row >= maze.length - size || col < size || col >= maze[row].length - size) {
-					maze[row][col] = 2;
-				}
-				else {
-					maze[row][col] = maze[row][col];
-				}
+				newMaze[row][col] = maze[row - size][col - size];
 			}
 		}
+		maze = newMaze;
 	}
 
 	/**
@@ -514,6 +518,14 @@ public class MazeMaker {
             }
         }
 	}
+	
+	public void squareOpener(int cRow, int cCol, int radius) {
+		for (int row = cRow - radius; row <= cRow + radius; row++) {
+			for (int col = cCol - radius; col <= cCol + radius; col++) {
+				if (exists(col, row)) maze[row][col] = 0;
+			}
+		}
+	}
 
 	/**
 	 * The exists method is used to check if a given cell is inside the bounds of the map
@@ -523,5 +535,15 @@ public class MazeMaker {
 	 */
 	private boolean exists(int x, int y) {
 		return ((x >= 0 && x < maze[0].length) && (y >= 0 && y < maze.length));
+	}
+	
+	public int[] getRandomOpen(int border) {
+		ArrayList<int[]> openPoints = new ArrayList<int[]>();
+		for (int row = border; row < maze.length - border; row++) {
+			for (int col = border; col < maze.length - border; col++) {
+				if (maze[row][col] == 0) openPoints.add(new int[] {row, col});
+			}
+		}
+		if (openPoints.isEmpty()) return null; else return openPoints.get((int)(Math.random() * openPoints.size()));
 	}
 }
