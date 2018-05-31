@@ -105,6 +105,9 @@ public class PlayerTank extends FreeTank {
 		engineSoundOn = false;
 	    tread_sound =  new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_tread.wav")), TREAD_VOLUME);
 	    treadSoundOn = false;
+	    velocity = new Vector2(0, 0);
+	    secondaryVelocity = new Vector2(0, 0);
+	    angularVelocity = 0;
 	    setMapPosition(row, col);
 	    setRotation(direction);
 	    reloadTime = 0;
