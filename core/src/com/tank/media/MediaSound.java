@@ -19,6 +19,8 @@ public class MediaSound {
     }
 
     public void dispose() {
+    	stop();
+    	setVolume(0);
         sound.dispose();
     }
 
