@@ -67,7 +67,7 @@ public class BasicEnemy extends FixedTank {
 		maxHealth = health = 100;
 		stats.addStat("Armor", 15);
 		
-		stats.addStat("Traction", 100); // (fraction out of 100)^delta to scale velocity by
+		stats.addStat("Traction", 100);
 		stats.addStat("Acceleration", 120);
 		stats.addStat("Angular Acceleration", 120);
 		
@@ -121,11 +121,11 @@ public class BasicEnemy extends FixedTank {
 			//Moving based things
 			moveByTargetTile(delta);
 		}
-		else if (honeInMode && target != null) {
+		else if (honeInMode && target != null && !target.isDestroyed()) {
 			if (isOnPath()) setNextTarget(path.removeFirst());
 			float distanceToTarget = getDistanceTo(target);
-			if (distanceToTarget <= AbstractMapTile.SIZE * 15) {
-				if (distanceToTarget >= AbstractMapTile.SIZE * 8 || !hasLineOfSight(target.getX(), target.getY())) {
+			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+				if (distanceToTarget >= AbstractMapTile.SIZE * 6 || !hasLineOfSight(target.getX(), target.getY())) {
 					timeSinceLastPathfind += delta;
 					if (timeSinceLastPathfind >= 20f) {
 						endTargetTile = getTileAt(target.getX(), target.getY());
@@ -138,30 +138,8 @@ public class BasicEnemy extends FixedTank {
 					moveByTargetTile(delta);
 				}
 				else {
-					timeSinceLastPathfind += delta;
-					if (timeSinceLastPathfind >= 20f) {
-						endTargetTile = getTileAt(target.getX(), target.getY());
-						requestPathfinding();
-					}
-					if (reversing) {
-						backingUp(delta);
-					}
-					else if (forwarding) {
-						super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, getRotation());
-						reverseTime += delta;
-						if (reverseTime >= 0.5f) {
-							forwarding = false;
-							reverseTime = -delta;
-						}
-						
-					}
-					else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
-						if (cooldownLastShot <= 0f) {
-							shoot();
-							int fireRate = stats.getStatValue("Fire Rate");
-							cooldownLastShot = 2.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
-						}
-					}
+					honeInMode = false;
+					attackMode = true;
 				}
 			}
 			else {
@@ -169,14 +147,53 @@ public class BasicEnemy extends FixedTank {
 				honeInMode = false;
 			}
 		}
+		else if (attackMode && target != null && !target.isDestroyed()) {
+			float distanceToTarget = getDistanceTo(target);
+			if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
+				if (reversing) {
+					backingUp(delta);
+				}
+				else if (forwarding) {
+					accelerateForward(delta);
+					reverseTime += delta;
+					if (reverseTime >= 0.5f) {
+						forwarding = false;
+						reverseTime = -delta;
+					}
+					
+				}
+				else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
+					if (cooldownLastShot <= 0f) {
+						shoot();
+						int fireRate = stats.getStatValue("Fire Rate");
+						cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+					}
+				}
+			}
+			else {
+				if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+					attackMode = false;
+					honeInMode = true;
+					endTargetTile = getTileAt(target.getX(), target.getY());
+					requestPathfinding();
+				}
+				else {
+					attackMode = false;
+					patrolling = true;
+					selectNewEndTargetTile();
+					requestPathfinding();
+				}
+			}
+		}
 		else {
 			patrolling = true;
 			selectNewEndTargetTile();
+			requestPathfinding();
 		}
 		
 		super.applyFriction(delta);
 		if (!super.move(delta)){
-			if (honeInMode && cooldownLastShot > 0f) {
+			if (attackMode && cooldownLastShot > 0f) {
 				
 			}
 			else if (!reversing && !forwarding && reverseTime >= 1.0f) {
@@ -223,7 +240,9 @@ public class BasicEnemy extends FixedTank {
 					do {
 						nextTile = path.removeFirst();
 					} while (!path.isEmpty() && (onTile((int)nextTile.x, (int)nextTile.y)));
-					synchronized (path) { setNextTarget(nextTile); }
+					synchronized (path) {
+						setNextTarget(nextTile);
+					}
 				}
 			}
 		}
@@ -263,8 +282,8 @@ public class BasicEnemy extends FixedTank {
 			}
 		}
 		//requestPathfinding();
-		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f * direction);
-		super.applyForce(delta * stats.getStatValue("Acceleration")  * 10f * moveForward, getRotation());
+		if (direction == 1) turnLeft(delta); else if (direction == -1) turnRight(delta);
+		if (moveForward == 1) accelerateForward(delta);
 	}
 	
 	public boolean rotateTowardsTarget(float delta, float x, float y) {
@@ -280,7 +299,7 @@ public class BasicEnemy extends FixedTank {
 		if (rotationDifference > 10) direction = 1;
 		else if (rotationDifference < -10) direction = -1;
 		
-		super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f * direction);
+		if (direction == 1) turnLeft(delta); else if (direction == -1) turnRight(delta);
 		return (direction != 0);
 	}
 	
@@ -293,19 +312,35 @@ public class BasicEnemy extends FixedTank {
 	}
 	
 	public void backingUp(float delta) {
-		super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, 180 + getRotation());
+		accelerateBackward(delta);
 		if (reverseTimeThreshold >= 1.5f) {
 			if (randomTurnReverse) 
-				super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * 2.5f);
+				turnLeft(delta);
 			else
-				super.applyAngularForce(-delta * stats.getStatValue("Angular Acceleration") * 2.5f);
+				turnRight(delta);
 		}
 		reverseTime += delta;
 		if (reverseTime >= reverseTimeThreshold) {
 			reversing = false;
-			if (reverseTime >= 2.5f) {
-				if (patrolling) requestPathfinding();
+			if (reverseTimeThreshold >= 2.5f) {
+				if (patrolling) {
+					selectNewEndTargetTile();
+					requestPathfinding();
+				}
+				if (honeInMode) {
+					requestPathfinding();
+				}
 				forwarding = true;
+			}
+			else if(reverseTime >= 1.5f) {
+				if (patrolling) {
+					selectNewEndTargetTile();
+					requestPathfinding();
+					forwarding = true;
+				}
+				if (honeInMode) {
+					requestPathfinding();
+				}
 			}
 			reverseTime = -delta;
 		}
