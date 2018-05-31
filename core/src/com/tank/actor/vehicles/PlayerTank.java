@@ -1,6 +1,8 @@
 package com.tank.actor.vehicles;
 
 import java.util.ArrayList;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -27,8 +29,10 @@ public class PlayerTank extends FreeTank {
 	private final float ENGINE_VOLUME = 0.6f;
     private final float SHOOT_VOLUME = 0.6f;
 
-	private MediaSound engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
-	private MediaSound tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
+	//private MediaSound engine_sound = new MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
+	//private MediaSound tread_sound = new MediaSound(Assets.manager.get(Assets.tank_tread), TREAD_VOLUME);
+    private MediaSound engine_sound =  new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_engine.wav")), ENGINE_VOLUME);
+    private MediaSound tread_sound =  new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_tread.wav")), TREAD_VOLUME);
 	private MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);
 
 	private boolean treadSoundOn = false;
@@ -193,7 +197,7 @@ public class PlayerTank extends FreeTank {
 		if (super.remove()) {
 			if (tread_sound != null) tread_sound.dispose();
 			if (engine_sound != null) engine_sound.dispose();
-			if (shoot_sound != null) shoot_sound.dispose();
+			if (shoot_sound != null) shoot_sound.stop();
 			return true;
 		}
 		return false;
