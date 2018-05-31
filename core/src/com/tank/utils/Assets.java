@@ -36,6 +36,9 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> stone4 = new AssetDescriptor<Texture>("map/stone4.png",
             Texture.class);
+    //Portal
+    public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portalSpiral.png",
+    		Texture.class);
     // Projectiles
     public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
             Texture.class);
@@ -141,6 +144,7 @@ public class Assets {
         manager.load(stone2);
         manager.load(stone3);
         manager.load(stone4);
+        manager.load(portal);
         // System.out.println("Map textures loaded");
         manager.load(bullet);
         // System.out.println("Projectile textures loaded");
