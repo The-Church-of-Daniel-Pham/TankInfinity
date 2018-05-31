@@ -128,9 +128,22 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			int numWallsHit = 0;
 			for (CollisionEvent e : collisions) {
 				if (e.getCollidable() instanceof Bullet) {
-					((Bullet) e.getCollidable()).destroy();
-					destroy();
-					break;
+					int durability = stats.getStatValue("Projectile Durability");
+					int otherDurability = ((Bullet) e.getCollidable()).getStat("Projectile Durability");
+					if (durability > otherDurability) {
+						((Bullet) e.getCollidable()).destroy();
+						stats.addStat("Projectile Durability", durability - otherDurability);
+					}
+					else if (otherDurability < durability) {
+						destroy();
+						((Bullet) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
+						break;
+					}
+					else{
+						((Bullet) e.getCollidable()).destroy();
+						destroy();
+						break;
+					}
 				}
 				if (e.getCollisionType() == CollisionEvent.CORNER_COLLISION) {
 					numCornersHit++;
@@ -259,6 +272,10 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	public int getStat(String stat) {
 		return stats.getStatValue(stat);
+	}
+	
+	public void setStat(int value, String stat) {
+		stats.addStat(stat, value);
 	}
 
 	/**

@@ -100,14 +100,14 @@ public class PlayerTank extends FreeTank {
 	public void act(float delta) {
 		if(isDestroyed()) return;
 		if (player.controls.downPressed()) {
-			super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, 180 + getRotation());
+			accelerateBackward(delta);
 		} else if (player.controls.upPressed()) {
-			super.applyForce(delta * stats.getStatValue("Acceleration")  * 10f, getRotation());
+			accelerateForward(delta);
 		}
 		if (player.controls.leftPressed()) {
-			super.applyAngularForce(delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+			turnLeft(delta);
 		} else if (player.controls.rightPressed()) {
-			super.applyAngularForce(-1 * delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+			turnRight(delta);
 		}
 		super.applyFriction(delta);
 		super.move(delta);
@@ -162,16 +162,8 @@ public class PlayerTank extends FreeTank {
 		float randomAngle = randomShootAngle();
 		v.setAngle(getGunRotation());
 		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, super.gunRotation + randomAngle));
+		applySecondaryForce(30.0f * (float)Math.sqrt(stats.getStatValue("Projectile Speed")), getGunRotation() + 180);
 		shoot_sound.play();
-	}
-	
-	public float randomShootAngle() {
-		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
-		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
-		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + 1000.0f));
-		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
-		if (Math.random() < 0.5) randomAngle *= -1;
-		return randomAngle;
 	}
 
 	public void switchWeapon(int direction) {

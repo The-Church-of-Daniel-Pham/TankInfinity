@@ -46,6 +46,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	protected Vector2 velocity;
 	/**
+	 * The secondary velocity of the vehicle (like knockback)
+	 */
+	protected Vector2 secondaryVelocity;
+	/**
 	 * The angular velocity of the vehicle
 	 */
 	protected float angularVelocity;
@@ -77,11 +81,34 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		setX(x);
 		setY(y);
 		stats = new Stats();
+		makeBaselineStats();
 		velocity = new Vector2(0, 0);
+		secondaryVelocity = new Vector2(0, 0);
 		angularVelocity = 0;
 		vehicleList.add(this);
 		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
+	}
+	
+	public void makeBaselineStats() {
+		stats.addStat("Damage", 35);
+		stats.addStat("Spread", 40);
+		stats.addStat("Accuracy", 50);
+		stats.addStat("Stability", 50);
+		stats.addStat("Max Bounce", 1);
+		stats.addStat("Projectile Speed", 75);
+		stats.addStat("Lifetime", 60);
+		stats.addStat("Fire Rate", 30);
+		stats.addStat("Max Projectile", 2);
+
+		maxHealth = health = 100;
+		stats.addStat("Armor", 15);
+
+		stats.addStat("Traction", 100);
+		stats.addStat("Acceleration", 120);
+		stats.addStat("Angular Acceleration", 120);
+
+		stats.addStat("Projectile Durability", 1);
 	}
 
 	protected abstract void initializeHitbox();
@@ -132,6 +159,14 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public Vector2 getVelocity() {
 		return velocity;
 	}
+	
+	public Vector2 getSecondaryVelocity() {
+		return secondaryVelocity;
+	}
+	
+	public Vector2 getTotalVelocity() {
+		return velocity.cpy().add(secondaryVelocity);
+	}
 
 	/**
 	 * Called each frame. Changes tank rotation/position based on the value of
@@ -144,12 +179,16 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		if (isDestroyed())
 			return false;
 		float tAngle = getRotation() + delta * angularVelocity;
-		float tX = getX() + velocity.x * delta;
-		float tY = getY() + velocity.y * delta;
+		if (secondaryVelocity.len2() < 400f) {
+			secondaryVelocity.x = 0;
+			secondaryVelocity.y = 0;
+		}
+		float tX = getX() + (velocity.x + secondaryVelocity.x) * delta;
+		float tY = getY() + (velocity.y + secondaryVelocity.y) * delta;
 		boolean moved = false;
 
 		// translation
-		if (velocity.len() > 15) {
+		if (velocity.cpy().add(secondaryVelocity).len() > 15) {
 			if (canMoveTo(tX, tY, getRotation())) {
 				super.setPosition(tX, tY);
 				hitbox = testHitbox;
@@ -188,6 +227,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public void applyFriction(float delta) {
 		float traction = stats.getStatValue("Traction");
 		velocity.scl((float) Math.pow(0.05f * (1.0f - ((traction) / (traction + 70.0f))), delta));
+		secondaryVelocity.scl((float) Math.pow(0.1f * (1.0f - ((traction) / (traction + 70.0f))), delta));
 		angularVelocity *= (float) Math.pow(0.025f * (1.0f - ((traction) / (traction + 70.0f))), delta);
 	}
 
@@ -199,6 +239,16 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		Vector2 v = new Vector2(mag, 0);
 		v.setAngle(dir);
 		velocity.add(v);
+	}
+	
+	public void applySecondaryForce(Vector2 acceleration) {
+		secondaryVelocity = secondaryVelocity.add(acceleration);
+	}
+
+	public void applySecondaryForce(float mag, float dir) {
+		Vector2 v = new Vector2(mag, 0);
+		v.setAngle(dir);
+		secondaryVelocity.add(v);
 	}
 
 	public void applyAngularForce(float acceleration) {
@@ -252,11 +302,29 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 
 	}
 	
+	public void accelerateForward(float delta) {
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation());
+	}
+	
+	public void accelerateBackward(float delta) {
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation() + 180);
+	}
+	
+	public void turnLeft(float delta) {
+		applyAngularForce(delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+	}
+	
+	public void turnRight(float delta) {
+		applyAngularForce(-1 * delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+	}
+	
 	public float randomShootAngle() {
-		float spreadRange = 45f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
-		double accuracy = 1.0f + 0.05f * (float)Math.sqrt(stats.getStatValue("Accuracy"));
-		accuracy *= 1.0f - (getVelocity().len() / (getVelocity().len() + (stats.getStatValue("Stability") * 60.0f)));
+		float spreadRange = 30f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
+		double accuracy = 1.0 + 0.1 * Math.sqrt(stats.getStatValue("Accuracy"));
+		float velocityLength = getTotalVelocity().len();
+		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 60.0)));
 		if (accuracy < 0.25) accuracy = 0.25;
+		System.out.println("Spread: " + spreadRange + ", Accuracy: " + accuracy);
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
 		return randomAngle;
