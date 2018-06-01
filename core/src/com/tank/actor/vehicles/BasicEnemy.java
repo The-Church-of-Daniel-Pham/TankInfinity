@@ -65,7 +65,7 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 6);
 		
-		maxHealth = health = 100;
+		maxHealth = health = 60;
 		stats.addStat("Armor", 15);
 		
 		stats.addStat("Traction", 100);

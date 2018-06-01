@@ -132,8 +132,8 @@ public class PlayerTank extends FreeTank {
 
 	protected void initializeStats() {
 		stats.addStat("Damage", 35);
-		stats.addStat("Spread", 40);
-		stats.addStat("Accuracy", 50);
+		stats.addStat("Spread", 60);
+		stats.addStat("Accuracy", 70);
 		stats.addStat("Stability", 50);
 		stats.addStat("Max Bounce", 1);
 		stats.addStat("Projectile Speed", 75);
@@ -145,8 +145,8 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Armor", 15);
 
 		stats.addStat("Traction", 100); // (fraction out of 100)^delta to scale velocity by
-		stats.addStat("Acceleration", 120);
-		stats.addStat("Angular Acceleration", 120);
+		stats.addStat("Acceleration", 130);
+		stats.addStat("Angular Acceleration", 130);
 
 		stats.addStat("Projectile Durability", 1);
 	}
