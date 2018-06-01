@@ -57,10 +57,8 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 			public void clicked(InputEvent event, float x, float y) {
 				if (countEnabled > 0) {
 					for (Player p : game.players) {
-						if (p.isEnabled()) {
-							// update active player names based on text field
-							p.setName(p.customMenu.playerNameTextField.getText());
-						}
+						// update player names based on text field
+						p.setName(p.customMenu.getCustomName());
 					}
 					game.screens.put("Play", new PlayScreen(game)); // creates or replaces with a new game
 					game.setScreen(game.screens.get("Play"));
