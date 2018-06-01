@@ -69,7 +69,7 @@ public class Bullet extends AbstractProjectile {
 
 	public void draw(Batch batch, float a) {
 		super.draw(batch, a);
-		super.drawVertices(batch, a);
+		//super.drawVertices(batch, a);
 	}
 
 	@Override
