@@ -3,6 +3,7 @@ package com.tank.actor.vehicles;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -11,6 +12,7 @@ import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.projectiles.Chakram;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
@@ -245,9 +247,19 @@ public class PlayerTank extends FreeTank {
 
 	@Override
 	public void draw(Batch batch, float a) {
+		if (getCurrentSubWeapon() != null) drawSubWeapon(batch, a);
 		treadTexture = player.custom.getTexture("tread");
 		gunTexture = player.custom.getTexture("gun");
 		super.draw(batch, a);
+	}
+	
+	public void drawSubWeapon(Batch batch, float a) {
+		//update textures from customization
+		Texture tex = getCurrentSubWeapon().getTexture();
+		float scale = Math.min(Math.min(1.0f, 128.0f / tex.getWidth()), 128.0f / tex.getHeight());
+		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY() + 256,
+					tex.getWidth() / 2, tex.getHeight() / 2, tex.getWidth(), tex.getHeight(), scale, scale,
+					0, 0, 0, tex.getWidth(), tex.getHeight(), false, false);
 	}
 
 	public void shoot() {

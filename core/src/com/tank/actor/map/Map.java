@@ -53,10 +53,10 @@ public class Map extends Group {
 		// maze generation
 		MazeMaker mazeGen = new MazeMaker(height - 1, width - 1); // create maze maker object in order to create a maze
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
-		//Create the spawn area
-		spawnZone = mazeGen.getRandomOpen(2);
-		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
+		//Create the spawn area
+		spawnZone = mazeGen.getRandomOpen(4);
+		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		floors = new ArrayList<FloorTile>();
 		walls = new ArrayList<WallTile>();
 		border = new ArrayList<BorderTile>();

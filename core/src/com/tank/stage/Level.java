@@ -68,22 +68,27 @@ public class Level extends Stage {
 			spawnInPlayers(true);
 		else
 			spawnInPlayers(false);
+		
+		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
+		int minItems = (int)(7.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
+		int maxItems = (int)(12.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
+		int itemCount = (int)(Math.random() * (maxItems - minItems)) + minItems;
+		for (int i = 0; i < itemCount + 1; i++) {
+			if (!emptySpaces.isEmpty()) {
+				AbstractMapTile randomFloor = emptySpaces.remove((int)(Math.random() * emptySpaces.size()));
+				addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
+			}
+		}
+		
 		int minEnemies = (int)(3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int)(6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int enemyCount = (int)(Math.random() * (maxEnemies - minEnemies)) + minEnemies;
-		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
 		for (int i = 0; i < enemyCount; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int)(Math.random() * emptySpaces.size()));
 				int[] pos = new int[] {randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 										randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2};
 				addActor(new BasicEnemy(pos[0], pos[1]));
-			}
-		}
-		for (int i = 0; i < Math.random() * enemyCount + 1; i++) {
-			if (!emptySpaces.isEmpty()) {
-				AbstractMapTile randomFloor = emptySpaces.remove((int)(Math.random() * emptySpaces.size()));
-				addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
 			}
 		}
 		

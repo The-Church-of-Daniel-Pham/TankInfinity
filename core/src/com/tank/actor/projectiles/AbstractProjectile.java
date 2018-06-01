@@ -126,7 +126,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 						((AbstractProjectile) e.getCollidable()).destroy();
 						stats.addStat("Projectile Durability", durability - otherDurability);
 					}
-					else if (otherDurability < durability) {
+					else if (otherDurability > durability) {
 						destroy();
 						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
 						break;
@@ -158,7 +158,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				bounce(velocity.cpy().rotate(90)); // move backwards
 			} else { // head on corner or side corner graze
 				float[] f = testHitbox.getVertices();
-				if (cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
+				if (cornerE.getWall() != null && cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
 					bounce(velocity.cpy().rotate(90)); // move backwards
 				} else { // graze, use different algorithm to find wall
 					bounce(CollisionEvent.getWallVector(cornerE.getCollidable().getHitbox(),
