@@ -9,7 +9,7 @@ public abstract class FixedTank extends AbstractVehicle {
 
 	public FixedTank(float x, float y) {
 		super(x, y);
-		tankTexture = Assets.manager.get(Assets.tread_default);
+		tankTexture = Assets.manager.get(Assets.fixed_gray);
 		initiliazeHitbox();
 		super.setOrigin(tankTexture.getWidth() / 2, tankTexture.getHeight() / 2);
 	}

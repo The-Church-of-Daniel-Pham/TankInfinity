@@ -42,7 +42,7 @@ public class BasicEnemy extends FixedTank {
 	protected int expGive;
 	
 	public BasicEnemy(float x, float y, int level) {
-		super(x, y, Assets.manager.get(Assets.tread_default));
+		super(x, y, Assets.manager.get(Assets.fixed_tan));
 		initializeStats();
 		initializePathfinding();
 		setRotation((float)(Math.random() * 360f));
