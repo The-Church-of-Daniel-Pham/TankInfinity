@@ -114,9 +114,8 @@ public class MediaSound {
     	if (!muted) {
 	    	int soundsCount = loopingSounds.size();
 	    	for (int count = 0; count < soundsCount; count++) {
-	    		MediaSound sound = loopingSounds.get(0);
-	    		sound.stop();
-	    		sound.loop();
+	    		MediaSound sound = loopingSounds.get(count);
+	    		sound.setVolume(sound.getVolume());
 	    	}
     	}
     	else {
