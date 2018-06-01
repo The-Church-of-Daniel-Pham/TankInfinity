@@ -126,4 +126,13 @@ public class MediaSound {
     		}
     	}
     }
+    
+    public static float getGlobalVolume() {
+    	return globalSoundVolume;
+    }
+    
+    public static void setGlobalVolume(float vol) {
+    	globalSoundVolume = vol;
+    	updateLoopingSounds();
+    }
 }
