@@ -7,14 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
 import com.tank.utils.Assets;
 
 public class PlayerCustomizationMenu  extends Table{
 	protected final Player player;
+	public TextField playerNameTextField;
 	protected boolean changed = false;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
@@ -35,9 +36,7 @@ public class PlayerCustomizationMenu  extends Table{
 	public void enable() {
 		super.clearChildren();
 		
-		Label playerLabel = new Label(player.getName(), skin);
-		playerLabel.setAlignment(Align.center);
-		
+		playerNameTextField = new TextField(player.getName(), skin);
 		final Image tankPreviewImage = new Image(player.custom.getTexture("preview"));
 		final TextButton rightButton = new TextButton(">", skin);
 		final TextButton leftButton = new TextButton("<", skin);
@@ -71,7 +70,7 @@ public class PlayerCustomizationMenu  extends Table{
 			}
 		});
 		
-		super.add(playerLabel).colspan(3);
+		super.add(playerNameTextField).colspan(3);
 		super.row();
 		super.add(leftButton).height(50).width(50);
 		super.add(tankPreviewImage).width(200).height(200);
