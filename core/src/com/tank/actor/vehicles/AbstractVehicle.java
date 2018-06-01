@@ -37,7 +37,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The maxHealth of the vehicle
 	 */
-	protected int maxHealth;
+	//protected int maxHealth;
 	/**
 	 * The stats of the vehicle
 	 */
@@ -105,7 +105,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 2);
 
-		maxHealth = health = 100;
+		stats.addStat("Max Health", 100);
+		health = 100;
 		stats.addStat("Armor", 15);
 
 		stats.addStat("Traction", 100);
@@ -331,8 +332,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float spreadRange = 30f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
 		double accuracy = 1.0 + 0.1 * Math.sqrt(stats.getStatValue("Accuracy"));
 		float velocityLength = getTotalVelocity().len();
-		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 60.0)));
+		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 55.0)));
+		spreadRange *= 1.0 + (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 70.0)));
 		if (accuracy < 0.25) accuracy = 0.25;
+		if (spreadRange > 50f) spreadRange = 50f;
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
 		return randomAngle;
@@ -407,13 +410,14 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            The amount healed
 	 */
 	public void heal(Actor source, int heal) {
+		int maxHealth = stats.getStatValue("Max Health");
 		health += heal;
 		if (health > maxHealth)
 			health = maxHealth;
 	}
 
 	public int getMaxHealth() {
-		return maxHealth;
+		return stats.getStatValue("Max Health");
 	}
 
 	public int getHealth() {
