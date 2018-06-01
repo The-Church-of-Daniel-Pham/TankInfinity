@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
+import com.tank.media.MediaMusic;
+import com.tank.media.MediaSound;
 import com.tank.table.AudioSettings;
 import com.tank.table.ControlsSettings;
 import com.tank.table.VideoSettings;
@@ -20,9 +22,9 @@ public class SettingsMenu extends Stage implements InputProcessor {
 	protected Table uiTable; // master table containing titles, settings, and back button
 	protected Table titleTable; // tab headers
 	protected Table settingsTable; // placeholder to be swapped out
-	protected Table videoTable;
-	protected Table audioTable;
-	protected Table controlsTable;
+	protected VideoSettings videoTable;
+	protected AudioSettings audioTable;
+	protected ControlsSettings controlsTable;
 	private Skin skin = Assets.manager.get(Assets.skin);;
 
 	public SettingsMenu(TankInfinity game) {
@@ -107,5 +109,12 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		settingsTable.clearChildren();
 		settingsTable.setFillParent(false);
 		settingsTable.add(t);
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		MediaMusic.setGlobalVolume(audioTable.getMusicVol());
+		MediaSound.setGlobalVolume(audioTable.getSfxVol());
 	}
 }
