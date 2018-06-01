@@ -13,9 +13,11 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankInfinity game;
+	protected Table uiTable;
 	private Label fpsLabel;
 	private static float sinceChange;
 
@@ -31,14 +33,15 @@ public class LevelHUD extends Stage implements InputProcessor {
 				addActor(p.cursor);
 			}
 		}
-		// ui table
-		super.addActor(buildTable());
+		uiTable = new Table();
+		buildTable();
+		super.addActor(uiTable);
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		
+
 		// pause by key input, only from active players
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
@@ -48,11 +51,16 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		}
 
-		// update fps counter
-		sinceChange += delta; // add time since last act() to counter
-		if (sinceChange >= 1.0f) { // after 1 second or more
-			sinceChange = 0; // reset counter
-			fpsLabel.setText(Gdx.graphics.getFramesPerSecond() + " FPS"); // update fps label
+		// update fps counter, if on
+		if (Constants.FPS_COUNTER.getCurrent().equals("On")) {
+			sinceChange += delta; // add time since last act() to counter
+			if (sinceChange >= 1.0f) { // after 1 second or more
+				sinceChange = 0; // reset counter
+				fpsLabel.setText(Gdx.graphics.getFramesPerSecond() + " FPS"); // update fps label
+			}
+		}
+		else {
+			fpsLabel.setText("");
 		}
 
 		// update reload bars
@@ -63,8 +71,9 @@ public class LevelHUD extends Stage implements InputProcessor {
 		}
 	}
 
-	private Table buildTable() {
-		Table uiTable = new Table();
+	private void buildTable() {
+		uiTable.clearChildren();
+
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(200).height(100).space(25).center();
@@ -89,12 +98,9 @@ public class LevelHUD extends Stage implements InputProcessor {
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
 				uiTable.add(p.hud).expandX().height(250).bottom();
-			}
-			else {
+			} else {
 				uiTable.add(placeholder).expandX().height(250).bottom();
 			}
 		}
-
-		return uiTable;
 	}
 }
