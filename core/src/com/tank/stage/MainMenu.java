@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.ui.Background;
 import com.tank.game.TankInfinity;
@@ -34,13 +35,16 @@ public class MainMenu extends Stage implements InputProcessor{
 	private void buildTable() {
 		uiTable.setFillParent(false);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(300).height(100).space(25).left();
+		uiTable.defaults().width(250).height(100).space(25).left();
 		uiTable.bottom().padBottom(200).left().padLeft(150);
 
 		// Add widgets to the table here.
 		TextButton playButton = new TextButton("Play", skin);
+		playButton.getLabel().setAlignment(Align.left);
 		TextButton settingsButton = new TextButton("Settings", skin);
+		settingsButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
+		quitButton.getLabel().setAlignment(Align.left);
 		
 		playButton.addListener(new ClickListener() {
 	         @Override

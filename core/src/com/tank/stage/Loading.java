@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
 import com.tank.actor.ui.Background;
@@ -53,6 +54,7 @@ public class Loading extends Stage implements InputProcessor {
 
 		// Add widgets to the table here.
 		Label tipLabel = new Label("Git gud", skin, "withBackground");
+		tipLabel.setAlignment(Align.topLeft);
 		uiTable.add(tipLabel).width(500).height(150).right();
 	}
 }
