@@ -18,7 +18,7 @@ public class PlayerHUD extends Table{
 		this.player = player;
 		
 		super.setDebug(false);
-		super.defaults().width(200).height(50).space(25).center();
+		super.defaults().width(300).height(50).space(25).center();
 		
 		Label nameLabel = new Label(player.getName(), skin);
 		nameLabel.setAlignment(Align.left);

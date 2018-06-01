@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -61,7 +60,7 @@ public class ScrollViewTest extends Stage implements InputProcessor {
 
         titleTable.setDebug(true);
         titleTable.setFillParent(true);
-        titleTable.defaults().width(200).height(75).space(25);
+        titleTable.defaults().width(300).height(100).space(25);
         titleTable.center();
         titleTable.top();
         titleTable.padTop(100f);

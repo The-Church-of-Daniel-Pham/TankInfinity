@@ -34,7 +34,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	private void buildTable() {
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.defaults().width(300).height(100).space(25).center();
 
 		// Add widgets to the table here.
 		for (final Player p : game.players) {
@@ -44,6 +44,8 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		}
 
 		TextButton backButton = new TextButton("Back", skin);
+		TextButton continueButton = new TextButton("Continue", skin);
+		
 		backButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -51,8 +53,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
-
-		TextButton continueButton = new TextButton("Continue", skin);
+		
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
