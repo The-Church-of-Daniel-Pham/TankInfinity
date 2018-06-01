@@ -1,10 +1,7 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	font: {
-		file: font-export.fnt
-	}
-	title: {
-		file: font-title-export.fnt
+	raidercrusader: {
+		file: raidercrusader.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -92,7 +89,7 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: {
 		checkboxOn: checkbox-on
 		checkboxOff: checkbox
-		font: font
+		font: raidercrusader
 		fontColor: black
 	}
 }
@@ -112,34 +109,21 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
-		font: font
+		font: raidercrusader
 		up: round-gray
 		down: round-dark-gray
 		over: round-light-gray
-	}
-	toggle: {
-		font: font
-		fontColor: black
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
-		checked: round-dark-gray
-		checkedOver: round-light-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: font
-		fontColor: black
-	}
-	title: {
-		font: title
+		font: raidercrusader
 		fontColor: black
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
-		font: font
+		font: raidercrusader
 		fontColorSelected: white
 		fontColorUnselected: black
 		selection: selection
@@ -166,7 +150,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: font
+		font: raidercrusader
 		fontColor: black
 		scrollStyle: default
 		listStyle: default
@@ -183,32 +167,13 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
-	default-horizontal: {
-		handle: horizontal-split-pane
-	}
 	default-vertical: {
 		handle: vertical-split-pane
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: font
-		fontColor: black
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
-	}
-	toggle: {
-		font: font
-		fontColor: black
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
-		checked: round-dark-gray
-		checkedOver: round-light-gray
-	}
-	special: {
-		font: title
+		font: raidercrusader
 		fontColor: black
 		up: round-gray
 		down: round-dark-gray
@@ -217,7 +182,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: font
+		font: raidercrusader
 		fontColor: black
 		background: textfield
 		cursor: cursor
@@ -227,32 +192,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
-		background: round-white
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
-	default: {
-		background: touchpad
-		knob: touchpad-knob
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
-	default: {
-		plus: plus
-		minus: minus
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-	default: {
-		background: window
-		titleFont: font
-		titleFontColor: black
-	}
-	dialog: {
-		background: window
-		titleFont: font
-		titleFontColor: black
-		stageBackground: white
 	}
 }
 }
