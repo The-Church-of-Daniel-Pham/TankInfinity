@@ -267,7 +267,7 @@ public class PlayerTank extends FreeTank {
 
 	@Override
 	public void draw(Batch batch, float a) {
-		if (getCurrentSubWeapon() != null) drawSubWeapon(batch, a);
+		//if (getCurrentSubWeapon() != null) drawSubWeapon(batch, a);
 		treadTexture = player.custom.getTexture("tread");
 		gunTexture = player.custom.getTexture("gun");
 		super.draw(batch, a);
