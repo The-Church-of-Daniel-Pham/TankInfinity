@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.actor.vehicles.PlayerTank;
 import com.tank.utils.Assets;
 
 public class HealthPackItem extends AbstractItem {
@@ -65,5 +67,10 @@ public class HealthPackItem extends AbstractItem {
         f[6] = x + v.x;
         f[7] = y + v.y;
         return new Polygon(f);
+    }
+
+    public int restoreHealth(PlayerTank p)
+    {
+        return p.getMaxHealth()/4;
     }
 }
