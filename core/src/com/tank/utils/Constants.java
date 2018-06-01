@@ -11,6 +11,7 @@ public class Constants {
 	public static CycleList<String> WINDOW_MODES = new CycleList<String>(
 			new String[] { "Fullscreen", "Windowed Borderless", "Windowed" }, 0, true);
 	public static CycleList<String> VSYNC = new CycleList<String>(new String[] { "On", "Off" }, 0, true);
+	public static CycleList<String> FPS_COUNTER = new CycleList<String>(new String[] { "On", "Off" }, 1, true);
 	public static float CLEAR_COLOR = 25f / 255f;
 
 	public static final int LEVEL1_WIDTH = 40;
@@ -39,6 +40,14 @@ public class Constants {
 			break;
 		case 1:	//if Vsync is off
 			Gdx.graphics.setVSync(false);
+			break;
+		}
+		switch (FPS_COUNTER.getIndex()) {
+		case 0:	// if fps counter is on
+			
+			break;
+		case 1:	//if fps counter is off
+			
 			break;
 		}
 	}

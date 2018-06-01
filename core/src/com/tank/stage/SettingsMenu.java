@@ -17,16 +17,18 @@ import com.tank.utils.Constants;
 
 public class SettingsMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
+	protected Table uiTable;
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public SettingsMenu(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
-		super.addActor(buildTable());
+		uiTable = new Table();
+		buildTable();
+		super.addActor(uiTable);
 	}
 
 	private Table buildTable() {
-		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(400).height(100).space(25).center();
@@ -53,6 +55,13 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		vsyncValueLabel.setAlignment(Align.center);
 		final TextButton forwardVsyncButton = new TextButton(">", skin);
 		final TextButton backwardVsyncButton = new TextButton("<", skin);
+		
+		Label fpsLabel = new Label("FPS Counter ", skin);
+		fpsLabel.setAlignment(Align.right);
+		final Label fpsValueLabel = new Label((String) Constants.FPS_COUNTER.getCurrent(), skin);
+		fpsValueLabel.setAlignment(Align.center);
+		final TextButton forwardFpsButton = new TextButton(">", skin);
+		final TextButton backwardFpsButton = new TextButton("<", skin);
 		
 		TextButton applyButton = new TextButton("Apply", skin);
 		TextButton backButton = new TextButton("Back", skin);
@@ -112,6 +121,24 @@ public class SettingsMenu extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
+		
+		forwardFpsButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Constants.FPS_COUNTER.cycleBy(1);
+				fpsValueLabel.setText((String) Constants.FPS_COUNTER.getCurrent());
+				event.stop();
+			}
+		});
+
+		backwardFpsButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Constants.FPS_COUNTER.cycleBy(-1);
+				fpsValueLabel.setText((String) Constants.FPS_COUNTER.getCurrent());
+				event.stop();
+			}
+		});
 
 		applyButton.addListener(new ClickListener() {
 			@Override
@@ -146,6 +173,11 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		uiTable.add(backwardVsyncButton).width(50).height(50).spaceRight(0);
 		uiTable.add(vsyncValueLabel).spaceLeft(0).spaceRight(0);
 		uiTable.add(forwardVsyncButton).width(50).height(50).spaceLeft(0);
+		uiTable.row();
+		uiTable.add(fpsLabel).right();
+		uiTable.add(backwardFpsButton).width(50).height(50).spaceRight(0);
+		uiTable.add(fpsValueLabel).spaceLeft(0).spaceRight(0);
+		uiTable.add(forwardFpsButton).width(50).height(50).spaceLeft(0);
 		uiTable.row();
 		uiTable.add(applyButton).width(150).colspan(4);
 		uiTable.row();

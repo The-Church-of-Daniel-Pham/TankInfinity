@@ -15,7 +15,7 @@ import com.tank.utils.Assets;
 
 public class PlayerCustomizationMenu  extends Table{
 	protected final Player player;
-	public TextField playerNameTextField;
+	protected TextField playerNameTextField;
 	protected boolean changed = false;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
@@ -37,6 +37,7 @@ public class PlayerCustomizationMenu  extends Table{
 		super.clearChildren();
 		
 		playerNameTextField = new TextField(player.getName(), skin);
+		playerNameTextField.setMaxLength(8);
 		final Image tankPreviewImage = new Image(player.custom.getTexture("preview"));
 		final TextButton rightButton = new TextButton(">", skin);
 		final TextButton leftButton = new TextButton("<", skin);
@@ -108,5 +109,16 @@ public class PlayerCustomizationMenu  extends Table{
 	
 	public boolean hasChanged() {
 		return changed;
+	}
+	
+	public String getCustomName() {
+		if (player.isEnabled()) {
+			// if player is enabled, set new name
+			return playerNameTextField.getText();
+		}
+		else {
+			// otherwise set as same as old
+			return player.getName();
+		}
 	}
 }
