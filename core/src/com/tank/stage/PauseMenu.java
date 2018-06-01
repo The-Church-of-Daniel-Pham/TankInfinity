@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
 import com.tank.actor.ui.Background;
@@ -37,9 +38,13 @@ public class PauseMenu extends Stage implements InputProcessor {
 
 		// Add widgets to the table here.
 		TextButton resumeButton = new TextButton("Resume", skin);
+		resumeButton.getLabel().setAlignment(Align.left);
 		TextButton settingsButton = new TextButton("Settings", skin);
+		settingsButton.getLabel().setAlignment(Align.left);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
+		mainMenuButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
+		quitButton.getLabel().setAlignment(Align.left);
 		
 		resumeButton.addListener(new ClickListener() {
 	         @Override
