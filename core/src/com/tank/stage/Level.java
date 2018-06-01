@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.items.AbstractItem;
+import com.tank.actor.items.HealthPackItem;
 import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
@@ -22,6 +23,7 @@ public class Level extends Stage {
 	protected int mapHeight;
 	protected Map map;
 	protected LevelCamera camera;
+	private static final int HEALTHPACK_COUNT = 4;
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -85,6 +87,13 @@ public class Level extends Stage {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
+			}
+		}
+
+		for (int i = 0; i < HEALTHPACK_COUNT; i++) {
+			if (!emptySpaces.isEmpty()) {
+				AbstractMapTile randomTile = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
+				addActor(new HealthPackItem(randomTile.getRow(), randomTile.getCol(), new String()));
 			}
 		}
 
