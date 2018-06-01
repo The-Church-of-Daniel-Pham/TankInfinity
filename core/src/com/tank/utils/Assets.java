@@ -134,7 +134,7 @@ public class Assets {
             Sound.class);
 
     // UI
-    public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/plain-james/uiskin.json",
+    public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/uiskin.json",
             Skin.class);
 
     public static void loadLoading() {
