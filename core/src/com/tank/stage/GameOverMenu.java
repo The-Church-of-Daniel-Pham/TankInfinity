@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.ui.Background;
 import com.tank.game.TankInfinity;
@@ -25,7 +26,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		this.game = game;
 		Background darken = new Background(red);
 		// scale dark to fit screen
-		darken.setScale(((float) Gdx.graphics.getWidth())/red.getWidth(), ((float) Gdx.graphics.getHeight())/red.getHeight());
+		darken.fillScale();
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}
@@ -35,13 +36,14 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(300).height(100).space(25).center();
-
+		
 		// Add widgets to the table here.
 		Label gameOverNotif = new Label("Game Over!", skin);
-		gameOverNotif.setFontScale(2);
-		gameOverNotif.setAlignment(1);
+		gameOverNotif.setAlignment(Align.left);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
+		mainMenuButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
+		quitButton.getLabel().setAlignment(Align.left);
 		
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
@@ -60,7 +62,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	        	 event.stop();
 	         }
 	      });
-		uiTable.add(gameOverNotif);
+		uiTable.add(gameOverNotif).height(150);
 		uiTable.row();
 		uiTable.add(mainMenuButton);
 		uiTable.row(); 
