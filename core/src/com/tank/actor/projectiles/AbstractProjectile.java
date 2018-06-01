@@ -214,6 +214,10 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public void updateVelocityAndMove() {
 
 	}
+	
+	public AbstractVehicle getSource() {
+		return source;
+	}
 
 	/**
 	 * The applyForce method is used to instantly change the velocity of the
