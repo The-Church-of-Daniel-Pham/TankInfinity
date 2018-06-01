@@ -16,6 +16,7 @@ import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
 import com.tank.stage.Level;
+import com.tank.stats.Upgrade;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -62,12 +63,20 @@ public class PlayerTank extends FreeTank {
 	
 	protected boolean subRightHeld;
 	protected boolean subLeftHeld;
+	
+	protected int level;
+	protected int exp;
+	protected int totalExp;
+	protected int nextExp;		//Model: (Level * 7) + (Level ^ 1.5) / 5
+	protected ArrayList<Upgrade> selectableUpgrades;
+	protected int upgradesLeft;
 
 	public PlayerTank(int playerNumber, Player player) {
 		super(0, 0); // defaults
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		initializeExpLevel();
 		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
 		markedForNextLevel = false;
@@ -84,6 +93,7 @@ public class PlayerTank extends FreeTank {
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		initializeExpLevel();
 		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
 		markedForNextLevel = false;
@@ -101,6 +111,7 @@ public class PlayerTank extends FreeTank {
 		this.playerNumber = playerNumber;
 		this.player = player;
 		initializeStats();
+		initializeExpLevel();
 		subWeapons = new CycleList<SubWeapon>();
 		reloadTime = 0;
 		markedForNextLevel = false;
@@ -141,7 +152,8 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 3);
 
-		maxHealth = health = 100;
+		stats.addStat("Max Health", 100);
+		health = 100;
 		stats.addStat("Armor", 15);
 
 		stats.addStat("Traction", 100); // (fraction out of 100)^delta to scale velocity by
@@ -153,6 +165,14 @@ public class PlayerTank extends FreeTank {
 
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
+	}
+	
+	protected void initializeExpLevel() {
+		level = 1;
+		exp = 0;
+		totalExp = 0;
+		nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);
+		upgradesLeft = 0;
 	}
 
 	public void setMapPosition(int row, int col) {
@@ -393,6 +413,49 @@ public class PlayerTank extends FreeTank {
 			}
 		}
 
+	}
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public int getCurrentExp() {
+		return exp;
+	}
+	
+	public int getTotalExp() {
+		return totalExp;
+	}
+	
+	public int getNextExp() {
+		return nextExp;
+	}
+	
+	public void gainExp(int expGained) {
+		this.exp += expGained;
+		totalExp += expGained;
+		while (exp >= nextExp) {
+			level++;
+			exp -= nextExp;
+			nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);
+			if (upgradesLeft == 0) {
+				selectableUpgrades = Upgrade.getRandomUpgrade(4);
+			}
+			upgradesLeft++;
+		}
+	}
+	
+	public void selectUpgrade(int choice) {
+		addUpgrade(selectableUpgrades.get(choice));
+		upgradesLeft--;
+		if (upgradesLeft > 0) {
+			selectableUpgrades = Upgrade.getRandomUpgrade(4);
+		}
+		
+	}
+	
+	public void addUpgrade(Upgrade upgrade) {
+		stats.mergeStats(upgrade.getChanges());
 	}
 	
 	@Override
