@@ -390,9 +390,11 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            The damage dealt
 	 */
 	public void damage(Actor source, int damage) {
-		health -= damage;
-		if (health <= 0 && !isDestroyed())
-			destroy();
+		if (damage > 0) {
+			health -= Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			if (health <= 0 && !isDestroyed())
+				destroy();
+		}
 	}
 
 	/**
