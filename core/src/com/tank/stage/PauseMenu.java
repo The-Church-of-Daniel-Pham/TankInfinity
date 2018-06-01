@@ -33,7 +33,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.defaults().width(300).height(100).space(25).center();
 
 		// Add widgets to the table here.
 		TextButton resumeButton = new TextButton("Resume", skin);

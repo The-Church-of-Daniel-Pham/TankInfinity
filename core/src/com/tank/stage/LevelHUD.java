@@ -67,7 +67,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(75).pad(25).center();
+		uiTable.defaults().width(200).height(100).space(25).center();
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
@@ -82,16 +82,16 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		});
 
-		uiTable.add(fpsLabel).width(100).colspan(2).expand().top().left();
-		uiTable.add(pauseButton).width(150).colspan(2).expand().top().right();
+		uiTable.add(fpsLabel).colspan(2).expand().top().left();
+		uiTable.add(pauseButton).colspan(2).expand().top().right();
 		uiTable.row();
 
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
-				uiTable.add(p.hud).expandX().height(200).bottom();
+				uiTable.add(p.hud).expandX().height(250).bottom();
 			}
 			else {
-				uiTable.add(placeholder).expandX().height(200).bottom();
+				uiTable.add(placeholder).expandX().height(250).bottom();
 			}
 		}
 

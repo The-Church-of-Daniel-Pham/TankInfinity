@@ -22,7 +22,7 @@ public class PlayerCustomizationMenu  extends Table{
 		this.player = player;
 		
 		super.setDebug(false);
-		super.defaults().width(200).height(75).space(25).center();
+		super.defaults().width(300).height(100).space(25).center();
 		
 		if (initial) {
 			enable();
@@ -99,9 +99,9 @@ public class PlayerCustomizationMenu  extends Table{
 		
 		super.add(placeholder).colspan(3);
 		super.row();
-		super.add(placeholder).width(50);
+		super.add(placeholder).height(50).width(50);
 		super.add(placeholder).width(200).height(200);
-		super.add(placeholder).width(50);
+		super.add(placeholder).height(50).width(50);
 		super.row();
 		super.add(enableButton).colspan(3);
 		changed = false;

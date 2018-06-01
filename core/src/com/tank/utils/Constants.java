@@ -4,17 +4,19 @@ import com.badlogic.gdx.Gdx;
 
 public class Constants {
 	// Window
-	public static CycleList<Integer> RESOLUTIONS = new CycleList<Integer>(new Integer[] { 1280, 720, 1366, 768, 1600, 900, 1680, 1050,
-			1920, 1080, 1920, 1200, 2560, 1440, 3840, 2160, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() }, 16,
-			true);
+	public static CycleList<Integer> RESOLUTIONS = new CycleList<Integer>(
+			new Integer[] { 1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080, 1920, 1200, 2560, 1440, 3840, 2160,
+					Gdx.graphics.getWidth(), Gdx.graphics.getHeight() },
+			16, true);
 	public static CycleList<String> WINDOW_MODES = new CycleList<String>(
 			new String[] { "Fullscreen", "Windowed Borderless", "Windowed" }, 0, true);
-	public static boolean VSYNC_ENABLED = true;
+	public static CycleList<String> VSYNC = new CycleList<String>(new String[] { "On", "Off" }, 0, true);
+	public static float CLEAR_COLOR = 25f / 255f;
 
 	public static final int LEVEL1_WIDTH = 40;
 	public static final int LEVEL1_HEIGHT = 40;
 
-	public static void updateWindow() {
+	public static void updateVideo() {
 		switch (WINDOW_MODES.getIndex()) {
 		case 0: // if constant WINDOW_MODE is Fullscreen
 			Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode()); // set fullscreen
@@ -31,10 +33,13 @@ public class Constants {
 			Gdx.graphics.setWindowedMode((Integer) RESOLUTIONS.getCurrent(), (Integer) RESOLUTIONS.getNext());
 			break;
 		}
-		Gdx.graphics.setVSync(VSYNC_ENABLED);
-	}
-
-	public static void toggleVsync(boolean state) {
-		VSYNC_ENABLED = state;
+		switch (VSYNC.getIndex()) {
+		case 0:	// if vSync is on
+			Gdx.graphics.setVSync(true);
+			break;
+		case 1:	//if Vsync is off
+			Gdx.graphics.setVSync(false);
+			break;
+		}
 	}
 }

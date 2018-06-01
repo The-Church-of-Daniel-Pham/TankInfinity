@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -53,7 +52,7 @@ public class Loading extends Stage implements InputProcessor {
 		uiTable.bottom().padBottom(100).right().padRight(50);
 
 		// Add widgets to the table here.
-		Label tipLabel = new Label("Git gud", skin);
-		uiTable.add(tipLabel).width(500).height(100).right();
+		Label tipLabel = new Label("Git gud", skin, "withBackground");
+		uiTable.add(tipLabel).width(500).height(150).right();
 	}
 }
