@@ -12,6 +12,8 @@ public class MediaMusic {
     private Music music;
     private float volume;
 
+    private static float globalSoundVolume = 1.0f;
+    
     public MediaMusic(Music music, float volume) {
         this.music = music;
         this.volume = volume;
@@ -84,5 +86,14 @@ public class MediaMusic {
 
     public void setMusic(Music music) {
         this.music = music;
+    }
+    
+    public static float getGlobalVolume() {
+    	return globalSoundVolume;
+    }
+    
+    public static void setGlobalVolume(float vol) {
+    	globalSoundVolume = vol;
+    	//updateLoopingSounds();
     }
 }
