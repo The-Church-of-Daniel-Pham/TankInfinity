@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class Assets {
-    public static final AssetManager manager = new AssetManager();
+	public static final AssetManager manager = new AssetManager();
 
-    // For animation
-    public static final AssetDescriptor<Texture> explosionSheet = new AssetDescriptor<Texture>("animation/explosion_atlas.png",
-            Texture.class);
+	// For animation
+	public static final AssetDescriptor<Texture> explosionSheet = new AssetDescriptor<Texture>(
+			"animation/explosion_atlas.png", Texture.class);
 
     // Textures
     // Floor
@@ -46,6 +46,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> chakram = new AssetDescriptor<Texture>("projectiles/chakram.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> landMine = new AssetDescriptor<Texture>("projectiles/landMine.png",
+			Texture.class);
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
             Texture.class);
     // Tank
@@ -123,30 +125,30 @@ public class Assets {
     public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
             Texture.class);
 
-    // Audio
-    // Bullet
-    public static final AssetDescriptor<Sound> bullet_fire = new AssetDescriptor<Sound>("audio/bullet_fire.wav",
-            Sound.class);
-    public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce.wav",
-            Sound.class);
-    // Tank
-    public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
-            Sound.class);
-    public static final AssetDescriptor<Sound> tank_tread = new AssetDescriptor<Sound>("audio/tank_tread.wav",
-            Sound.class);
-    public static final AssetDescriptor<Sound> tank_damage = new AssetDescriptor<Sound>("audio/damage_sound.wav",
-            Sound.class);
+	// Audio
+	// Bullet
+	public static final AssetDescriptor<Sound> bullet_fire = new AssetDescriptor<Sound>("audio/bullet_fire.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce.wav",
+			Sound.class);
+	// Tank
+	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> tank_tread = new AssetDescriptor<Sound>("audio/tank_tread.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> tank_damage = new AssetDescriptor<Sound>("audio/damage_sound.wav",
+			Sound.class);
 
-    // UI
-    public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/uiskin.json",
-            Skin.class);
+	// UI
+	public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/uiskin.json", Skin.class);
 
-    public static void loadLoading() {
-        // load first
-        manager.load(backdrop);
-        manager.load(loading_tank);
-        manager.load(skin);
-    }
+	public static void loadLoading() {
+		// load first
+		manager.load(backdrop);
+		manager.load(loading_tank);
+		manager.load(skin);
+	}
+
 
     public static void loadTextures() {
         manager.load(explosionSheet);
@@ -167,6 +169,7 @@ public class Assets {
         manager.load(rocket);
         manager.load(chakram);
         manager.load(boomerang);
+        manager.load(landMine);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_default);
         manager.load(gun_default);
@@ -207,31 +210,31 @@ public class Assets {
         manager.load(vertex);
         // System.out.println("Debug textures loaded");
     }
+    
+	public static void loadAudio() {
+		manager.load(bullet_fire);
+		manager.load(bullet_bounce);
+		// System.out.println("Bullet audio loaded");
+		manager.load(tank_engine);
+		manager.load(tank_tread);
+		manager.load(tank_damage);
+		// System.out.println("Tank audio loaded");
+	}
 
-    public static void loadAudio() {
-        manager.load(bullet_fire);
-        manager.load(bullet_bounce);
-        // System.out.println("Bullet audio loaded");
-        manager.load(tank_engine);
-        manager.load(tank_tread);
-        manager.load(tank_damage);
-        // System.out.println("Tank audio loaded");
-    }
+	public static void loadUI() {
+		// more later
+		// System.out.println("UI loaded");
+	}
 
-    public static void loadUI() {
-        //more later
-        // System.out.println("UI loaded");
-    }
+	public static void loadAll() {
+		loadLoading();
+		loadTextures();
+		loadAudio();
+		loadUI();
+		// System.out.println("All loaded");
+	}
 
-    public static void loadAll() {
-        loadLoading();
-        loadTextures();
-        loadAudio();
-        loadUI();
-        // System.out.println("All loaded");
-    }
-
-    public static void dispose() {
-        manager.dispose();
-    }
+	public static void dispose() {
+		manager.dispose();
+	}
 }
