@@ -11,6 +11,7 @@ import com.tank.actor.items.AbstractItem;
 import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
+import com.tank.actor.projectiles.Boomerang;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.projectiles.Chakram;
 import com.tank.game.Player;

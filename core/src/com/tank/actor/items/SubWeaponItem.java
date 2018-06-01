@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.subweapons.BoomerangSubWeapon;
 import com.tank.subweapons.ChakramSubWeapon;
 import com.tank.subweapons.RocketSubWeapon;
 import com.tank.subweapons.SubWeapon;
@@ -79,12 +80,14 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 2);
+		int random = (int)(Math.random() * 3);
 		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
 			case 1:
 				return new ChakramSubWeapon(3);
+			case 2:
+				return new BoomerangSubWeapon(3);
 		}
 		return null;
 	}

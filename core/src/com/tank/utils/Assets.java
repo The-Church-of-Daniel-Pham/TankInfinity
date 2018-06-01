@@ -46,6 +46,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> chakram = new AssetDescriptor<Texture>("projectiles/chakram.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
+            Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_default = new AssetDescriptor<Texture>("tank/tank_tread_default.png",
             Texture.class);
@@ -164,6 +166,7 @@ public class Assets {
         manager.load(bullet);
         manager.load(rocket);
         manager.load(chakram);
+        manager.load(boomerang);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_default);
         manager.load(gun_default);

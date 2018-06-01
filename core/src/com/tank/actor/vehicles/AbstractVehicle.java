@@ -164,6 +164,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		return velocity;
 	}
 	
+	public float getAngularVelocity() {
+		return angularVelocity;
+	}
+	
 	public Vector2 getSecondaryVelocity() {
 		return secondaryVelocity;
 	}
