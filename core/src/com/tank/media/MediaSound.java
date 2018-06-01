@@ -12,6 +12,7 @@ public class MediaSound {
     private Sound sound;
     private float volume;
     private long mediaId;
+    private static boolean muted = true;
 
     public MediaSound(Sound sound, float volume) {
         this.sound = sound;
@@ -24,14 +25,17 @@ public class MediaSound {
     }
 
     public long loop() {
-
-        mediaId = sound.loop();
+    	if (!muted) {
+    		mediaId = sound.loop();
+    	}
         return mediaId;
     }
 
     public long loop(float vol) {
-        volume = vol;
-        mediaId = sound.loop(vol);
+    	if (!muted) {
+	        volume = vol;
+	        mediaId = sound.loop(vol);
+    	}
         return mediaId;
     }
 
@@ -40,7 +44,9 @@ public class MediaSound {
     }
 
     public long play() {
-        mediaId = sound.play(volume);
+    	if (!muted) {
+    		mediaId = sound.play(volume);
+    	}
         return mediaId;
     }
 
@@ -53,7 +59,6 @@ public class MediaSound {
     }
 
     public void setVolume(float vol) {
-
         volume = vol;
         sound.setVolume(mediaId, vol);
     }

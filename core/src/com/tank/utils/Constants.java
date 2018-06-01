@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 
 public class Constants {
 	// Window
-	public static CycleList RESOLUTIONS = new CycleList(new Object[] { 1280, 720, 1366, 768, 1600, 900, 1680, 1050,
+	public static CycleList<Integer> RESOLUTIONS = new CycleList<Integer>(new Integer[] { 1280, 720, 1366, 768, 1600, 900, 1680, 1050,
 			1920, 1080, 1920, 1200, 2560, 1440, 3840, 2160, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() }, 16,
 			true);
-	public static CycleList WINDOW_MODES = new CycleList(
+	public static CycleList<String> WINDOW_MODES = new CycleList<String>(
 			new String[] { "Fullscreen", "Windowed Borderless", "Windowed" }, 0, true);
 	public static boolean VSYNC_ENABLED = true;
 
