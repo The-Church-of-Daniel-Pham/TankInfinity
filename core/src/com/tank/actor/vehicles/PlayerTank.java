@@ -196,7 +196,7 @@ public class PlayerTank extends FreeTank {
 			if (getCurrentSubWeapon() != null) {
 				getCurrentSubWeapon().shoot(this);
 				getCurrentSubWeapon().addAmmo(-1);
-				if (getCurrentSubWeapon().getAmmo() == 0) {
+				if (getCurrentSubWeapon().getAmmo() <= 0) {
 					subWeapons.removeCurrent();
 				}
 			}

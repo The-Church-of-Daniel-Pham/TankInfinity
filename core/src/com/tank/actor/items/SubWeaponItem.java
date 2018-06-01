@@ -19,14 +19,6 @@ public class SubWeaponItem extends AbstractItem{
 	public static final float BOX_SIZE = 110;
 	public static final float SCALE = 0.6f;
 	public float rotationAnimTime = 0f;
-	public static ArrayList<SubWeapon> randomSubs = new ArrayList<SubWeapon>();
-		
-	static {
-		randomSubs.add(new RocketSubWeapon(2));
-		randomSubs.add(new ChakramSubWeapon(3));
-		randomSubs.add(new BoomerangSubWeapon(3));
-		randomSubs.add(new LandMineSubWeapon(2));
-	}
 	
 	public SubWeaponItem(int row, int col) {
 		this(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
@@ -90,6 +82,17 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		return randomSubs.get((int)(Math.random() * randomSubs.size()));
+		int random = (int)(Math.random() * 4);
+		switch (random){
+			case 0:
+				return new RocketSubWeapon(2);
+			case 1:
+				return new ChakramSubWeapon(3);
+			case 2:
+				return new BoomerangSubWeapon(3);
+			case 3:
+				return new LandMineSubWeapon(2);
+		}
+		return null;
 	}
 }
