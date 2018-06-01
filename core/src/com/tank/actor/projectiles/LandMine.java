@@ -1,28 +1,38 @@
 package com.tank.actor.projectiles;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.interfaces.Collidable;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
+import com.tank.utils.CollisionEvent;
 
 public class LandMine extends AbstractProjectile {
 	private static Texture landMineTexture = Assets.manager.get(Assets.landMine);
+	private float lifeTime = 0f;
 
 	public LandMine(AbstractVehicle src, Stats stat, float x, float y) {
 		super(landMineTexture, src, stat, x, y);
 		//super.setRotation(src.getRotation());
 		super.setWidth(128);
 		super.setHeight(128);
+		setOrigin(landMineTexture.getWidth() / 2, landMineTexture.getHeight() / 2);
 		initializeHitbox();
 		velocity = new Vector2(0, 0);
 	}
 
 	@Override
 	public void act(float delta) {
-		// do nothing
-
+		lifeTime += delta;
+		checkDetonation();
+		if (lifeTime >= stats.getStatValue("Lifetime") / 10.0f) {
+			destroy();
+			return;
+		}
 	}
 
 	@Override
@@ -47,12 +57,41 @@ public class LandMine extends AbstractProjectile {
 
 	@Override
 	public void bounce(Vector2 wall) {
-		// mines don't bounce
+		// nothing
 	}
-
+	
+	public void checkDetonation() {
+		checkCollisions(getNeighbors());
+		boolean markForDeletion = false;
+		for(CollisionEvent e: collisions) {
+			if(e.getCollidable() instanceof AbstractVehicle) {
+				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+				float tankX = ((AbstractVehicle)e.getCollidable()).getX();
+				float tankY = ((AbstractVehicle)e.getCollidable()).getY();
+				float direction =  (float) Math.toDegrees(Math.atan2((tankY - getY()), (tankX - getX())));
+				Vector2 knockback = new Vector2(2000, 0);
+				knockback.setAngle(direction);
+				((AbstractVehicle)e.getCollidable()).applySecondaryForce(knockback);
+				markForDeletion = true;
+			}
+		}
+		if (markForDeletion) destroy();
+	}
+	
+	@Override
+	public ArrayList<Collidable> getNeighbors() {
+		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
+		for (AbstractVehicle v : AbstractVehicle.vehicleList) {
+			boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
+			if (canCollide)
+				neighbors.add(v);
+		}
+		return neighbors;
+	}
+	 
 	@Override
 	protected void initializeHitbox() {
-		hitbox = getHitboxAt(getX(), getY(), getRotation());
+		testHitbox = hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 
 	@Override

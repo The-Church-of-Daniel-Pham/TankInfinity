@@ -1,11 +1,14 @@
 package com.tank.actor.items;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.subweapons.BoomerangSubWeapon;
 import com.tank.subweapons.ChakramSubWeapon;
+import com.tank.subweapons.LandMineSubWeapon;
 import com.tank.subweapons.RocketSubWeapon;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
@@ -15,8 +18,15 @@ public class SubWeaponItem extends AbstractItem{
 	public static Texture box = Assets.manager.get(Assets.box);
 	public static final float BOX_SIZE = 110;
 	public static final float SCALE = 0.6f;
-	
 	public float rotationAnimTime = 0f;
+	public static ArrayList<SubWeapon> randomSubs = new ArrayList<SubWeapon>();
+		
+	static {
+		randomSubs.add(new RocketSubWeapon(2));
+		randomSubs.add(new ChakramSubWeapon(3));
+		randomSubs.add(new BoomerangSubWeapon(3));
+		randomSubs.add(new LandMineSubWeapon(2));
+	}
 	
 	public SubWeaponItem(int row, int col) {
 		this(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
@@ -80,15 +90,6 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 3);
-		switch (random){
-			case 0:
-				return new RocketSubWeapon(2);
-			case 1:
-				return new ChakramSubWeapon(3);
-			case 2:
-				return new BoomerangSubWeapon(3);
-		}
-		return null;
+		return randomSubs.get((int)(Math.random() * randomSubs.size()));
 	}
 }
