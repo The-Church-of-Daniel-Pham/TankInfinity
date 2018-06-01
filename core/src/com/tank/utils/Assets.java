@@ -121,6 +121,8 @@ public class Assets {
             Sound.class);
     public static final AssetDescriptor<Sound> tank_tread = new AssetDescriptor<Sound>("audio/tank_tread.wav",
             Sound.class);
+    public static final AssetDescriptor<Sound> tank_damage = new AssetDescriptor<Sound>("audio/damage_sound.wav",
+            Sound.class);
 
     // UI
     public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/plain-james/uiskin.json",
@@ -191,6 +193,7 @@ public class Assets {
         // System.out.println("Bullet audio loaded");
         manager.load(tank_engine);
         manager.load(tank_tread);
+        manager.load(tank_damage);
         // System.out.println("Tank audio loaded");
     }
 
