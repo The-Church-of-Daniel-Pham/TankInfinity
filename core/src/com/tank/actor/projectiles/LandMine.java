@@ -3,6 +3,7 @@ package com.tank.actor.projectiles;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
@@ -18,8 +19,8 @@ public class LandMine extends AbstractProjectile {
 	public LandMine(AbstractVehicle src, Stats stat, float x, float y) {
 		super(landMineTexture, src, stat, x, y);
 		//super.setRotation(src.getRotation());
-		super.setWidth(128);
-		super.setHeight(128);
+		super.setWidth(60);
+		super.setHeight(60);
 		setOrigin(landMineTexture.getWidth() / 2, landMineTexture.getHeight() / 2);
 		initializeHitbox();
 		velocity = new Vector2(0, 0);
@@ -33,6 +34,12 @@ public class LandMine extends AbstractProjectile {
 			destroy();
 			return;
 		}
+	}
+	
+	@Override
+	public void draw(Batch batch, float a) {
+		super.draw(batch, a);
+		//drawVertices(batch, a);
 	}
 
 	@Override
