@@ -73,10 +73,6 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
-		if (levelNum == 1)
-			spawnInPlayers(true);
-		else
-			spawnInPlayers(false);
 
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
 		int minItems = (int) (7.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
@@ -93,6 +89,11 @@ public class Level extends Stage {
 				}
 			}
 		}
+		
+		if (levelNum == 1)
+			spawnInPlayers(true);
+		else
+			spawnInPlayers(false);
 
 		int minEnemies = (int) (3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
