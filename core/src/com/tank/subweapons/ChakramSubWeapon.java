@@ -18,7 +18,7 @@ public class ChakramSubWeapon extends SubWeapon {
 	@Override
 	public void shoot(PlayerTank source) {
 		Vector2 v = new Vector2(PlayerTank.TANK_GUN_LENGTH, 0);
-		float randomAngle = source.randomShootAngle() * 0.25f;
+		float randomAngle = source.randomShootAngle() * 0.4f;
 		v.setAngle(source.getGunRotation());
 		source.getStage().addActor(
 				new Chakram(source, createStats(source), source.getX() + v.x, source.getY() + v.y, source.getGunRotation() + randomAngle));
