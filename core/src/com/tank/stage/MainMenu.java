@@ -16,6 +16,7 @@ import com.tank.utils.Assets;
 
 public class MainMenu extends Stage implements InputProcessor{
 	protected TankInfinity game;
+	protected Table uiTable;
 	private Texture title = Assets.manager.get(Assets.title);
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
@@ -25,11 +26,12 @@ public class MainMenu extends Stage implements InputProcessor{
 		Background titleBackground = new Background(title);
 		titleBackground.fillScale();
 		super.addActor(titleBackground);
-		super.addActor(buildTable());
+		uiTable = new Table();
+		buildTable();
+		super.addActor(uiTable);
 	}
 	
-	private Table buildTable() {
-		Table uiTable = new Table();
+	private void buildTable() {
 		uiTable.setFillParent(false);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(300).height(100).space(25).left();
@@ -70,7 +72,5 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.add(settingsButton);
 		uiTable.row(); 
 		uiTable.add(quitButton);
-		
-		return uiTable;
 	}
 }
