@@ -10,8 +10,7 @@ public class ControlsSettings extends Table{
 	
 	public ControlsSettings() {
 		super.setFillParent(false);
-		super.setDebug(true); // This is optional, but enables debug lines for tables.
-		super.defaults().width(300).height(100).space(25).center();
+		super.setDebug(false); // This is optional, but enables debug lines for tables.
 
 		// Add widgets to the table here.
 		Label upLabel = new Label("Up", skin);
@@ -24,22 +23,31 @@ public class ControlsSettings extends Table{
 		Label lshiftLabel = new Label("Left Shift", skin);
 		Label pauseLabel = new Label("Pause", skin);
 		
-		super.add(upLabel);
-		super.row();
-		super.add(downLabel);
-		super.row();
-		super.add(rightLabel);
-		super.row();
-		super.add(leftLabel);
-		super.row();
-		super.add(shootLabel);
-		super.row();
-		super.add(subLabel);
-		super.row();
-		super.add(rshiftLabel);
-		super.row();
-		super.add(lshiftLabel);
-		super.row();
-		super.add(pauseLabel);
+		Table left = new Table();
+		left.defaults().width(300).height(100).space(25);
+		Table right = new Table();
+		right.defaults().width(300).height(100).space(25);
+		
+		left.add(upLabel);
+		left.row();
+		left.add(downLabel);
+		left.row();
+		left.add(rightLabel);
+		left.row();
+		left.add(leftLabel);
+		
+		right.add(shootLabel);
+		right.row();
+		right.add(subLabel);
+		right.row();
+		right.add(rshiftLabel);
+		right.row();
+		right.add(lshiftLabel);
+		right.row();
+		right.add(pauseLabel);
+		
+		super.defaults().top().space(25);
+		super.add(left);
+		super.add(right);
 	}
 }

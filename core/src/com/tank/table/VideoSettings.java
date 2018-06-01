@@ -15,7 +15,7 @@ public class VideoSettings extends Table{
 	
 	public VideoSettings() {
 		super.setFillParent(false);
-		super.setDebug(true); // This is optional, but enables debug lines for tables.
+		super.setDebug(false); // This is optional, but enables debug lines for tables.
 		super.defaults().width(400).height(100).space(25).center();
 
 		// Add widgets to the table here.
@@ -31,8 +31,8 @@ public class VideoSettings extends Table{
 		final Label resolutionValueLabel = new Label(
 				(Integer) Constants.RESOLUTIONS.getCurrent() + " x " + (Integer) Constants.RESOLUTIONS.getNext(), skin);
 		resolutionValueLabel.setAlignment(Align.center);
-		final TextButton plusResolutionButton = new TextButton("+", skin);
-		final TextButton minusResolutionButton = new TextButton("-", skin);
+		final TextButton forwardResolutionButton = new TextButton(">", skin);
+		final TextButton backwardResolutionButton = new TextButton("<", skin);
 		
 		Label vsyncLabel = new Label("Vertical Sync ", skin);
 		vsyncLabel.setAlignment(Align.right);
@@ -68,7 +68,7 @@ public class VideoSettings extends Table{
 			}
 		});
 
-		plusResolutionButton.addListener(new ClickListener() {
+		forwardResolutionButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.RESOLUTIONS.cycleBy(2);
@@ -78,7 +78,7 @@ public class VideoSettings extends Table{
 			}
 		});
 
-		minusResolutionButton.addListener(new ClickListener() {
+		backwardResolutionButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.RESOLUTIONS.cycleBy(-2);
@@ -141,9 +141,9 @@ public class VideoSettings extends Table{
 		super.add(forwardWindowButton).width(50).height(50).spaceLeft(0);
 		super.row();
 		super.add(resolutionLabel).right();
-		super.add(minusResolutionButton).width(50).height(50).spaceRight(0);
+		super.add(backwardResolutionButton).width(50).height(50).spaceRight(0);
 		super.add(resolutionValueLabel).spaceLeft(0).spaceRight(0);
-		super.add(plusResolutionButton).width(50).height(50).spaceLeft(0);
+		super.add(forwardResolutionButton).width(50).height(50).spaceLeft(0);
 		super.row();
 		super.add(vsyncLabel).right();
 		super.add(backwardVsyncButton).width(50).height(50).spaceRight(0);

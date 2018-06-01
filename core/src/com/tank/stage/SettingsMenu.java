@@ -45,7 +45,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 
 	public void buildTable() {
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.top();
 
 		TextButton backButton = new TextButton("Back", skin);
@@ -59,13 +59,24 @@ public class SettingsMenu extends Stage implements InputProcessor {
 
 		uiTable.add(titleTable);
 		uiTable.row();
-		uiTable.add(settingsTable);
+		uiTable.add(settingsTable); // first tab to display
+		changeSettingsTo(videoTable);
 		uiTable.row();
 		uiTable.add(backButton).width(150).height(100).space(25).center();
 	}
 
 	public void buildTitleTable() {
+		titleTable.setDebug(false);
+		titleTable.setFillParent(false);
+		titleTable.defaults().width(300).height(100).space(25);
+		titleTable.center();
+		titleTable.top();
+		titleTable.padTop(100f);
+
 		TextButton videoButton = new TextButton("Video", skin);
+		TextButton audioButton = new TextButton("Audio", skin);
+		TextButton controlsButton = new TextButton("Controls", skin);
+
 		videoButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -73,7 +84,6 @@ public class SettingsMenu extends Stage implements InputProcessor {
 			}
 		});
 
-		TextButton audioButton = new TextButton("Audio", skin);
 		audioButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -81,7 +91,6 @@ public class SettingsMenu extends Stage implements InputProcessor {
 			}
 		});
 
-		TextButton controlsButton = new TextButton("Controls", skin);
 		controlsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -89,12 +98,6 @@ public class SettingsMenu extends Stage implements InputProcessor {
 			}
 		});
 
-		titleTable.setDebug(true);
-		titleTable.setFillParent(false);
-		titleTable.defaults().width(300).height(100).space(25);
-		titleTable.center();
-		titleTable.top();
-		titleTable.padTop(100f);
 		titleTable.add(videoButton);
 		titleTable.add(audioButton);
 		titleTable.add(controlsButton);
