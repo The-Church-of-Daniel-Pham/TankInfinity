@@ -445,6 +445,10 @@ public class PlayerTank extends FreeTank {
 		}
 	}
 	
+	public ArrayList<Upgrade> getSelectableUpgrades() {
+		return selectableUpgrades;
+	}
+	
 	public void selectUpgrade(int choice) {
 		addUpgrade(selectableUpgrades.get(choice));
 		upgradesLeft--;
