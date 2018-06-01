@@ -41,7 +41,7 @@ public class PlayerUpgradeMenu extends Table{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				player.custom.cycleCustom("tank color", 1);
-				tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
+				//tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
 				event.stop();
 			}
 		});
@@ -50,7 +50,7 @@ public class PlayerUpgradeMenu extends Table{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				player.custom.cycleCustom("tank color", -1);
-				tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
+				//tankPreviewImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.custom.getTexture("preview"))));
 				event.stop();
 			}
 		});
@@ -60,7 +60,7 @@ public class PlayerUpgradeMenu extends Table{
 			public void clicked(InputEvent event, float x, float y) {
 				changed = true;
 				player.enable(false);
-				disable();
+				//disable();
 				event.stop();
 			}
 		});
@@ -68,7 +68,7 @@ public class PlayerUpgradeMenu extends Table{
 		super.add(playerNameLabel).colspan(3);
 		super.row();
 		super.add(leftButton).height(50).width(50);
-		super.add(tankPreviewImage).width(200).height(200);
+		//super.add(tankPreviewImage).width(200).height(200);
 		super.add(rightButton).height(50).width(50);
 		super.row();
 		super.add(disableButton).colspan(3);
@@ -82,7 +82,8 @@ public class PlayerUpgradeMenu extends Table{
 	public String getCustomName() {
 		if (player.isEnabled()) {
 			// if player is enabled, set new name
-			return playerNameLabel.getText();
+			//return playerNameLabel.getText();
+			return null;
 		}
 		else {
 			// otherwise set as same as old
