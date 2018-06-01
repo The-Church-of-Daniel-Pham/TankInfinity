@@ -14,6 +14,7 @@ import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Boomerang;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.projectiles.Chakram;
+import com.tank.actor.projectiles.LandMine;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
