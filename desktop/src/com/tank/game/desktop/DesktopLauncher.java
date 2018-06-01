@@ -17,6 +17,6 @@ public class DesktopLauncher {
 		config.backgroundFPS = 0; // setting to 0 disables foreground fps throttling
 
 		new LwjglApplication(new TankInfinity(), config); // creates the openGL window
-		Constants.updateWindow();							// update window mode and resolution
+		Constants.updateVideo();							// update window mode, resolution, and vSync
 	}
 }

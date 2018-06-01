@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -30,36 +29,53 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.defaults().width(400).height(100).space(25).center();
 
 		// Add widgets to the table here.
 		Label windowLabel = new Label("Window Mode ", skin);
 		windowLabel.setAlignment(Align.right);
-		final TextButton windowModeButton = new TextButton((String) Constants.WINDOW_MODES.getCurrent(), skin);
+		final Label windowValueLabel = new Label((String) Constants.WINDOW_MODES.getCurrent(), skin);
+		windowValueLabel.setAlignment(Align.center);
+		final TextButton forwardWindowButton = new TextButton(">", skin);
+		final TextButton backwardWindowButton = new TextButton("<", skin);	
+		
 		Label resolutionLabel = new Label("Resolution ", skin);
 		resolutionLabel.setAlignment(Align.right);
 		final Label resolutionValueLabel = new Label(
 				(Integer) Constants.RESOLUTIONS.getCurrent() + " x " + (Integer) Constants.RESOLUTIONS.getNext(), skin);
 		resolutionValueLabel.setAlignment(Align.center);
-		final TextButton plusButton = new TextButton("+", skin);
-		final TextButton minusButton = new TextButton("-", skin);
+		final TextButton plusResolutionButton = new TextButton("+", skin);
+		final TextButton minusResolutionButton = new TextButton("-", skin);
+		
 		Label vsyncLabel = new Label("Vertical Sync ", skin);
 		vsyncLabel.setAlignment(Align.right);
-		final CheckBox vsyncButton = new CheckBox("", skin);
-		vsyncButton.setChecked(Constants.VSYNC_ENABLED);
+		final Label vsyncValueLabel = new Label((String) Constants.VSYNC.getCurrent(), skin);
+		vsyncValueLabel.setAlignment(Align.center);
+		final TextButton forwardVsyncButton = new TextButton(">", skin);
+		final TextButton backwardVsyncButton = new TextButton("<", skin);
+		
 		TextButton applyButton = new TextButton("Apply", skin);
 		TextButton backButton = new TextButton("Back", skin);
 
-		windowModeButton.addListener(new ClickListener() {
+		forwardWindowButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.WINDOW_MODES.cycleBy(1);
-				windowModeButton.setText((String) Constants.WINDOW_MODES.getCurrent());
+				windowValueLabel.setText((String) Constants.WINDOW_MODES.getCurrent());
 				event.stop();
 			}
 		});
 
-		plusButton.addListener(new ClickListener() {
+		backwardWindowButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Constants.WINDOW_MODES.cycleBy(-1);
+				windowValueLabel.setText((String) Constants.WINDOW_MODES.getCurrent());
+				event.stop();
+			}
+		});
+
+		plusResolutionButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.RESOLUTIONS.cycleBy(2);
@@ -69,7 +85,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 			}
 		});
 
-		minusButton.addListener(new ClickListener() {
+		minusResolutionButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.RESOLUTIONS.cycleBy(-2);
@@ -78,11 +94,21 @@ public class SettingsMenu extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
-
-		vsyncButton.addListener(new ClickListener() {
+		
+		forwardVsyncButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Constants.toggleVsync(vsyncButton.isChecked());
+				Constants.VSYNC.cycleBy(1);
+				vsyncValueLabel.setText((String) Constants.VSYNC.getCurrent());
+				event.stop();
+			}
+		});
+
+		backwardVsyncButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Constants.VSYNC.cycleBy(-1);
+				vsyncValueLabel.setText((String) Constants.VSYNC.getCurrent());
 				event.stop();
 			}
 		});
@@ -90,7 +116,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		applyButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Constants.updateWindow();
+				Constants.updateVideo();
 				// update resolution text in the case from switching from windowed to fullscreen
 				resolutionValueLabel.setText(
 						(Integer) Constants.RESOLUTIONS.getCurrent() + " x " + (Integer) Constants.RESOLUTIONS.getNext());
@@ -107,15 +133,19 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		});
 
 		uiTable.add(windowLabel).right();
-		uiTable.add(windowModeButton).width(300).colspan(3).left();
+		uiTable.add(backwardWindowButton).width(50).height(50).spaceRight(0);
+		uiTable.add(windowValueLabel).spaceLeft(0).spaceRight(0);
+		uiTable.add(forwardWindowButton).width(50).height(50).spaceLeft(0);
 		uiTable.row();
 		uiTable.add(resolutionLabel).right();
-		uiTable.add(minusButton).width(50).spaceRight(0);
+		uiTable.add(minusResolutionButton).width(50).height(50).spaceRight(0);
 		uiTable.add(resolutionValueLabel).spaceLeft(0).spaceRight(0);
-		uiTable.add(plusButton).width(50).spaceLeft(0);
+		uiTable.add(plusResolutionButton).width(50).height(50).spaceLeft(0);
 		uiTable.row();
 		uiTable.add(vsyncLabel).right();
-		uiTable.add(vsyncButton).width(50).colspan(3).left();
+		uiTable.add(backwardVsyncButton).width(50).height(50).spaceRight(0);
+		uiTable.add(vsyncValueLabel).spaceLeft(0).spaceRight(0);
+		uiTable.add(forwardVsyncButton).width(50).height(50).spaceLeft(0);
 		uiTable.row();
 		uiTable.add(applyButton).width(150).colspan(4);
 		uiTable.row();

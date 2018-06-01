@@ -9,6 +9,7 @@ import com.tank.stage.GameOverMenu;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
 import com.tank.stage.PauseMenu;
+import com.tank.utils.Constants;
 
 public class PlayScreen implements Screen {
 	protected TankInfinity game;
@@ -61,7 +62,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		// Clear the screen
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+		Gdx.gl.glClearColor(Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
 				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds
 																											// anti-aliasing

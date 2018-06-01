@@ -1,7 +1,7 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	raidercrusader: {
-		file: raidercrusader.fnt
+	bison: {
+		file: bison.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -73,9 +73,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
+		up: round-dark-gray
+		down: round-white
+		over: round-gray
 	}
 	toggle: {
 		up: round-gray
@@ -89,8 +89,9 @@ com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: {
 		checkboxOn: checkbox-on
 		checkboxOff: checkbox
-		font: raidercrusader
-		fontColor: black
+		font: bison
+		fontColor: gray
+		checkedFontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
@@ -109,23 +110,30 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
-		font: raidercrusader
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
+		font: bison
+		fontColor: white
+		downFontColor: black
+		up: round-dark-gray
+		down: round-white
+		over: round-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: raidercrusader
-		fontColor: black
+		font: bison
+		fontColor: white
+	}
+	withBackground: {
+		font: bison
+		fontColor: white
+		background: round-dark-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
-		font: raidercrusader
+		font: bison
 		fontColorSelected: white
-		fontColorUnselected: black
+		fontColorUnselected: gray
 		selection: selection
 	}
 }
@@ -150,8 +158,9 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: raidercrusader
-		fontColor: black
+		font: bison
+		fontColor: white
+		disabledFontColor: gray
 		scrollStyle: default
 		listStyle: default
 	}
@@ -173,16 +182,16 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: raidercrusader
-		fontColor: black
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
+		font: bison
+		fontColor: white
+		downFontColor: black
+		down: round-white
+		over: round-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: raidercrusader
+		font: bison
 		fontColor: black
 		background: textfield
 		cursor: cursor
@@ -192,6 +201,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: bison
 	}
 }
 }
