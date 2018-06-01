@@ -105,6 +105,6 @@ public abstract class FreeTank extends AbstractVehicle {
 		batch.draw(gunTexture, super.getX() - gunPivotX + gunOffsets.x, super.getY() - gunPivotY + gunOffsets.y, gunPivotX, gunPivotY,
 				gunTexture.getWidth(), gunTexture.getHeight(), 1, 1, gunRotation, 0, 0, gunTexture.getWidth(),
 				gunTexture.getHeight(), false, false);
-		super.drawVertices(batch, a);
+		//super.drawVertices(batch, a);
 	}
 }
