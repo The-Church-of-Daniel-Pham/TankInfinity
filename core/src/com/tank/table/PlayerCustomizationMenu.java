@@ -73,9 +73,9 @@ public class PlayerCustomizationMenu  extends Table{
 		
 		super.add(playerLabel).colspan(3);
 		super.row();
-		super.add(leftButton).width(50);
+		super.add(leftButton).height(50).width(50);
 		super.add(tankPreviewImage).width(200).height(200);
-		super.add(rightButton).width(50);
+		super.add(rightButton).height(50).width(50);
 		super.row();
 		super.add(disableButton).colspan(3);
 		changed = false;

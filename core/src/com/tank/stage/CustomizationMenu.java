@@ -25,7 +25,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	public CustomizationMenu(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
-		// build table
 		uiTable = new Table();
 		buildTable();
 		super.addActor(uiTable);
@@ -44,8 +43,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 		}
 
 		TextButton backButton = new TextButton("Back", skin);
-		TextButton continueButton = new TextButton("Continue", skin);
-		
 		backButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -53,7 +50,8 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 				event.stop();
 			}
 		});
-		
+
+		TextButton continueButton = new TextButton("Continue", skin);
 		continueButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -81,6 +79,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		if (needToRebuildTable()) {
 			buildTable();
 		}
