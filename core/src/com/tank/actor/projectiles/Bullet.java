@@ -1,19 +1,17 @@
 package com.tank.actor.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.media.MediaSound;
-import com.badlogic.gdx.audio.Sound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class Bullet extends AbstractProjectile {
 	private static Texture playerTexture = Assets.manager.get(Assets.bullet);
-	private static Texture enemyTexture;
+	//private static Texture enemyTexture;
 	private static float angle;	//angle between diagonal of rectangle and its base
 
     private static final float BOUNCE_VOLUME = 0.5f;
