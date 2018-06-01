@@ -3,6 +3,7 @@ package com.tank.actor.vehicles;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
+
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -11,12 +12,12 @@ import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
+import com.tank.stage.Level;
 import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
-import com.tank.stage.Level;
 
-public class BasicEnemy extends FixedTank {
+public class FreeBasicEnemy extends FreeTank{
 	
 	protected Vector2 targetPos = new Vector2(1500, 1500);
 	protected LinkedList<Vector2> path;
@@ -29,6 +30,8 @@ public class BasicEnemy extends FixedTank {
 	protected float reverseTimeThreshold;
 	
 	protected boolean patrolling;
+	protected boolean patrolGunRotateDirection;
+	protected float timeGunPatrol;
 	protected float timeSinceLastPathfind;
 	
 	protected boolean honeInMode;
@@ -41,12 +44,14 @@ public class BasicEnemy extends FixedTank {
 	
 	protected int expGive;
 	
-	public BasicEnemy(float x, float y, int level) {
-		super(x, y, Assets.manager.get(Assets.fixed_tan));
+	public FreeBasicEnemy(float x, float y, int level) {
+		super(x, y, Assets.manager.get(Assets.tread_green), Assets.manager.get(Assets.gun_green));
 		initializeStats();
 		initializePathfinding();
 		initializeHitbox();
 		setRotation((float)(Math.random() * 360f));
+		super.setGunOffsetX(-8);
+		super.setGunPivotX(gunTexture.getWidth() / 2 - 12);
 		forwarding = false;
 		reversing = false;
 		randomTurnReverse = false;
@@ -127,6 +132,7 @@ public class BasicEnemy extends FixedTank {
 			
 			//Moving based things
 			moveByTargetTile(delta);
+			patrolGunRotation(delta);
 		}
 		else if (honeInMode && target != null && !target.isDestroyed()) {
 			if (isOnPath()) setNextTarget(path.removeFirst());
@@ -143,6 +149,7 @@ public class BasicEnemy extends FixedTank {
 						requestPathfinding();
 					}
 					moveByTargetTile(delta);
+					rotateGunTowardsTarget(delta, target.getX(), target.getY());
 				}
 				else {
 					honeInMode = false;
@@ -157,6 +164,7 @@ public class BasicEnemy extends FixedTank {
 		else if (attackMode && target != null && !target.isDestroyed()) {
 			float distanceToTarget = getDistanceTo(target);
 			if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
+				boolean rotatingGun = rotateGunTowardsTarget(delta, target.getX(), target.getY());
 				if (reversing) {
 					backingUp(delta);
 				}
@@ -169,12 +177,17 @@ public class BasicEnemy extends FixedTank {
 					}
 					
 				}
-				else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
+				else if (rotatingGun) {
+					rotateTowardsTarget(delta, target.getX(), target.getY());
+				}
+				
+				if (!rotatingGun) {
 					if (cooldownLastShot <= 0f) {
 						shoot();
 						int fireRate = stats.getStatValue("Fire Rate");
 						cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
 					}
+					if (!reversing && !forwarding) accelerateForward(delta);
 				}
 			}
 			else {
@@ -200,8 +213,16 @@ public class BasicEnemy extends FixedTank {
 		
 		super.applyFriction(delta);
 		if (!super.move(delta)){
-			if (attackMode && cooldownLastShot > 0f) {
-				
+			if (attackMode && cooldownLastShot > 0f && !reversing && !forwarding) {
+				reversing = true;
+				if (reverseTime < 2.5f) {
+					reverseTimeThreshold += 0.5f;
+					if (reverseTimeThreshold >= 1.5f) {
+						randomTurnReverse = (Math.random() < 0.5);
+					}
+				}
+				else reverseTimeThreshold = 0.5f;
+				reverseTime = 0f;
 			}
 			else if (!reversing && !forwarding && reverseTime >= 1.0f) {
 				reversing = true;
@@ -293,6 +314,35 @@ public class BasicEnemy extends FixedTank {
 		if (moveForward == 1) accelerateForward(delta);
 	}
 	
+	public void patrolGunRotation(float delta) {
+		float rotationDifference = getRotation() - getGunRotation();
+		while (rotationDifference < -180f) {
+			rotationDifference += 360f;
+		}
+		while (rotationDifference > 180f) {
+			rotationDifference -= 360f;
+		}
+		
+		if (Math.abs(rotationDifference) < 45) {
+			if (patrolGunRotateDirection) {
+				rotateGun(-30 * delta);
+			}
+			else {
+				rotateGun(30 * delta);
+			}
+		}
+		else {
+			if (rotationDifference < 0f) {
+				patrolGunRotateDirection = true;
+				rotateGun(-30 * delta);
+			}
+			else {
+				patrolGunRotateDirection = false;
+				rotateGun(30 * delta);
+			}
+		}
+	}
+	
 	public boolean rotateTowardsTarget(float delta, float x, float y) {
 		float targetRotation = (float) Math.toDegrees(Math.atan2((y - getY()), (x - getX())));
 		float rotationDifference = targetRotation - getRotation();
@@ -310,11 +360,28 @@ public class BasicEnemy extends FixedTank {
 		return (direction != 0);
 	}
 	
+	public boolean rotateGunTowardsTarget(float delta, float x, float y) {
+		float targetRotation = (float) Math.toDegrees(Math.atan2((y - getY()), (x - getX())));
+		float rotationDifference = targetRotation - getGunRotation();
+		while (rotationDifference < -180f) {
+			rotationDifference += 360f;
+		}
+		while (rotationDifference > 180f) {
+			rotationDifference -= 360f;
+		}
+		int direction = 0;
+		if (rotationDifference > 20) direction = 1;
+		else if (rotationDifference < -20) direction = -1;
+		
+		rotateGun(direction * 70 * delta);
+		return (direction != 0);
+	}
+	
 	public void shoot() {
 		Vector2 v = new Vector2(160, 0);
 		float randomAngle = randomShootAngle();
-		v.setAngle(getRotation());
-		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, getRotation() + randomAngle));
+		v.setAngle(getGunRotation());
+		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, getGunRotation() + randomAngle));
 		shoot_sound.play();
 	}
 	
@@ -467,7 +534,7 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (super.tankTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2((float) (super.treadTexture.getWidth()) / 2, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 
