@@ -417,7 +417,7 @@ public class PlayerTank extends FreeTank {
 					for (int i = 0; i < testVertices.length / 2; i++) {
 						if ((c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) ||
 								(testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1]))){
-							heal(this, getMaxHealth()/4);
+							heal(((HealthPackItem) c), (int)(getMaxHealth() * 0.4));
 							((HealthPackItem) c).destroy();
 							break;
 						}
