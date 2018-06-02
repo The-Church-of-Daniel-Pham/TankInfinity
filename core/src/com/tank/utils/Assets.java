@@ -97,6 +97,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> tank_preview_yellow = new AssetDescriptor<Texture>("ui/tank/tank_preview_yellow.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> sub_empty = new AssetDescriptor<Texture>("ui/sub/sub_empty.png",
+            Texture.class);
     // Menu
     public static final AssetDescriptor<Texture> backdrop = new AssetDescriptor<Texture>("menu/loading/backdrop.png",
             Texture.class);
@@ -185,6 +187,7 @@ public class Assets {
         manager.load(title);
         manager.load(black);
         manager.load(red);
+        manager.load(sub_empty);
         // System.out.println("Menu textures loaded");
         manager.load(vertex);
         // System.out.println("Debug textures loaded");
