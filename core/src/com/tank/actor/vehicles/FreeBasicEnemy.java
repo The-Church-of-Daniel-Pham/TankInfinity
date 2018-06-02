@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
 import com.tank.stage.Level;
@@ -513,7 +515,10 @@ public class FreeBasicEnemy extends FreeTank{
 	 */
 	public void damage(Actor source, int damage) {
 		if (damage > 0) {
-			health -= Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			damage =  Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			health -= damage;
+			if (getStage() != null)
+				getStage().addActor(new MovingText("-" + damage, Color.RED, 1.5f, new Vector2(0, 200), getX(), getY()));
 			if (health <= 0 && !isDestroyed()) {
 				destroy();
 				if (source instanceof AbstractProjectile) {

@@ -2,18 +2,16 @@ package com.tank.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
-import com.tank.screen.PlayScreen;
 import com.tank.table.PlayerUpgradeMenu;
 import com.tank.utils.Assets;
 
@@ -36,6 +34,7 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(500).height(400).space(50).center();
 		Label title = new Label("Upgrades", skin);
+		title.setAlignment(Align.top);
 		uiTable.add(title).expand().top().colspan(2);
 		uiTable.padTop(50);
 		uiTable.row();
