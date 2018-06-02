@@ -10,7 +10,6 @@ public class BorderTile extends WallTile{
 	
 	@Override
 	public void build() {
-		super.addTexture(Assets.manager.get(Assets.grass0));
 		double rand = Math.random();
 		if (rand < 0.25) {
 			super.addTexture(Assets.manager.get(Assets.border1));
