@@ -101,4 +101,8 @@ public class KeyboardMouseController extends TankController {
 	public Vector3 getCursor(Vector3 oldCursor) {
 		return new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 	}
+	
+	public void setKey(String key, KeyControl control) {
+		keyMap.replace(key, control);
+	}
 }

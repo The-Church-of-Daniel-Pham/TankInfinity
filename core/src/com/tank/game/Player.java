@@ -31,6 +31,7 @@ public class Player {
 		this.defaultColor = defaultColor;
 		this.defaultRow = defaultRow;
 		this.defaultCol = defaultCol;
+		this.controls = ControlConstants.getPlayerControls(playerNumber);
 	}
 	
 	public void setName(String name) {
