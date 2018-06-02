@@ -17,6 +17,7 @@ import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.actor.projectiles.LandMine;
 import com.tank.actor.projectiles.Rocket;
+import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
@@ -314,6 +315,7 @@ public class PlayerTank extends FreeTank {
 	
 	public void pickUpSubWeapon(SubWeaponItem item) {
 		SubWeapon sub = item.getSubWeapon();
+		getStage().addActor(new MovingText("+" + sub.getAmmo() + " " + sub.getName(), Color.WHITE, 1.5f, new Vector2(0, 200), getX(), getY()));
 		int index = subWeapons.indexOf(sub);
 		if (index == -1) {
 			subWeapons.addAtCurrent(sub);
@@ -453,7 +455,15 @@ public class PlayerTank extends FreeTank {
 	public void gainExp(int expGained) {
 		this.exp += expGained;
 		totalExp += expGained;
+		if (getStage() != null)
+			getStage().addActor(new MovingText("+" + expGained + " EXP", Color.WHITE, 1.5f, new Vector2(0, 120),
+					getX() + (float)(100f * Math.random()) - 50f,
+					getY() + (float)(100f * Math.random()) - 50f, 0.8f));
 		while (exp >= nextExp) {
+			if (getStage() != null)
+				getStage().addActor(new MovingText("LEVEL UP!", Color.WHITE, 1.5f, new Vector2(0, 200),
+						getX() + (float)(100f * Math.random()) - 50f,
+						getY() + (float)(100f * Math.random()) - 50f, 1.3f));
 			level++;
 			exp -= nextExp;
 			nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);
