@@ -19,18 +19,29 @@ public class PlayerUpgradeMenu extends Table {
 	public PlayerUpgradeMenu(final Player player) {
 		this.player = player;
 
-		super.setDebug(true);
+		super.setDebug(false);
 		super.defaults().width(75).height(75).space(15).center();
 
 		buildTable();
 	}
 
+	public void refreshMenu() {
+		buildTable();
+	}
+
+	public boolean needsToRefresh() {
+		if (player == null || player.tank == null)
+			return false;
+		// if player exp changes return true? or if selectableupgrades.size() changes?
+		return false;
+	}
+
 	public void buildTable() {
 		super.clearChildren();
-		if (player.tank == null)
+		if (player == null || player.tank == null)
 			return;
 		super.setSkin(skin);
-		add(new Label(player.getName(), skin)).colspan(3);
+		add(new Label(player.getName(), skin)).colspan(3).width(250);
 		row();
 		ArrayList<Upgrade> u = player.tank.getSelectableUpgrades();
 
@@ -63,5 +74,9 @@ public class PlayerUpgradeMenu extends Table {
 		add("").fill();
 	}
 
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+	}
 
 }
