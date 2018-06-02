@@ -1,6 +1,7 @@
 package com.tank.actor.items;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
@@ -51,7 +52,7 @@ public class HealthPackItem extends AbstractItem {
     @Override
     public Polygon getHitboxAt(float x, float y, float direction) {
         float[] f = new float[8];
-        Vector2 v = new Vector2(getWidth(), getHeight());
+        Vector2 v = new Vector2(getWidth() * 0.6f, getHeight() * 0.6f);
         v.setAngle(direction);
         v.rotate(45);
         f[0] = x + v.x;
