@@ -66,7 +66,9 @@ public class PlayerHUD extends Table{
 		
 		leftSubImage = new Image(skin.getDrawable("round-light-gray"));
 		leftSubAmmo = new Label("", skin, "small");
-		leftSubAmmo.setPosition(38, 2, Align.bottomRight);
+		leftSubAmmo.setAlignment(Align.right);
+		leftSubAmmo.setPosition(2, 2, Align.bottomRight);
+		leftSubAmmo.setWidth(44f);
 		leftSubAmmo.setFontScale(0.6f);
 		leftSub = new Group();
 		leftSub.addActor(leftSubImage);
@@ -74,7 +76,9 @@ public class PlayerHUD extends Table{
 		
 		centerSubImage = new Image(skin.getDrawable("round-light-gray"));
 		centerSubAmmo = new Label("", skin, "small");
-		centerSubAmmo.setPosition(38, 2, Align.bottomRight);
+		centerSubAmmo.setAlignment(Align.right);
+		centerSubAmmo.setPosition(2, 2, Align.bottomRight);
+		centerSubAmmo.setWidth(44f);
 		centerSubAmmo.setFontScale(0.6f);
 		centerSub = new Group();
 		centerSub.addActor(centerSubImage);
@@ -82,7 +86,9 @@ public class PlayerHUD extends Table{
 		
 		rightSubImage = new Image(skin.getDrawable("round-light-gray"));
 		rightSubAmmo = new Label("", skin, "small");
-		rightSubAmmo.setPosition(38, 2, Align.bottomRight);
+		rightSubAmmo.setAlignment(Align.right);
+		rightSubAmmo.setPosition(2, 2, Align.bottomRight);
+		rightSubAmmo.setWidth(44f);
 		rightSubAmmo.setFontScale(0.6f);
 		rightSub = new Group();
 		rightSub.addActor(rightSubImage);
