@@ -95,15 +95,12 @@ public class Level extends Stage {
 				}
 			}
 		}
-		
-		if (levelNum == 1)
-			spawnInPlayers(true);
-		else
-			spawnInPlayers(false);
 
 		int minEnemies = (int) (3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int enemyCount = (int) (Math.random() * (maxEnemies - minEnemies)) + minEnemies;
+		addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
+				spawnCenter.x, spawnCenter.y - AbstractMapTile.SIZE, 2, true, 5.0f));
 		for (int i = 0; i < enemyCount; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
@@ -117,6 +114,11 @@ public class Level extends Stage {
 				}
 			}
 		}
+		
+		if (levelNum == 1)
+			spawnInPlayers(true);
+		else
+			spawnInPlayers(false);
 
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
