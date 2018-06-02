@@ -73,10 +73,12 @@ public class PlayScreen implements Screen {
 		
 		// pause by key input, only from active players
 		boolean pausePressed = false;
-		for (Player p : game.players) {
-			if (p.isEnabled()) {
-				if (p.controls.pausePressed()) {
-					pausePressed = true;
+		if (!gameOver) {
+			for (Player p : game.players) {
+				if (p.isEnabled()) {
+					if (p.controls.pausePressed()) {
+						pausePressed = true;
+					}
 				}
 			}
 		}

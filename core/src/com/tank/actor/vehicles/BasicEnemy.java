@@ -30,6 +30,7 @@ public class BasicEnemy extends FixedTank {
 	protected boolean randomTurnReverse;
 	protected float reverseTime;
 	protected float reverseTimeThreshold;
+	protected float reverseTimeChanges = 0.5f;
 	
 	protected boolean patrolling;
 	protected float timeSinceLastPathfind;
@@ -37,6 +38,9 @@ public class BasicEnemy extends FixedTank {
 	protected boolean honeInMode;
 	protected boolean attackMode;
 	protected PlayerTank target;
+	
+	protected float distanceForTrack = 12f;
+	protected float distanceForShoot = 6f;
 	
 	protected float cooldownLastShot;
 	
@@ -102,98 +106,13 @@ public class BasicEnemy extends FixedTank {
 	public void act(float delta) {
 		if(isDestroyed()) return;
 		if (patrolling) {
-			//Request pathfinding after a certain amount of time not pathfinding
-			timeSinceLastPathfind += delta;
-			if (timeSinceLastPathfind >= 20f) requestPathfinding();
-			//Check if it's on the path (may happen if enemy overshoots tiles)
-			if (isOnPath()) setNextTarget(path.removeFirst());
-			//Finished patrolling to certain tile? Find something new
-			if (path == null || path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
-				selectNewEndTargetTile();
-			}
-			//Any player nearby?
-			float shortestDistance = -1f;
-			for (Player player : getPlayers()) {
-				PlayerTank playerTank = player.tank;
-				if (playerTank != null && !playerTank.isDestroyed()) {
-					float distance = getDistanceTo(playerTank);
-					if (shortestDistance == -1f || distance < shortestDistance) {
-						shortestDistance = distance;
-						if (shortestDistance <= AbstractMapTile.SIZE * 12) {
-							target = playerTank;
-							patrolling = false;
-							honeInMode = true;
-						}
-					}
-				}
-			}
-			
-			//Moving based things
-			moveByTargetTile(delta);
+			patrolMode(delta);
 		}
 		else if (honeInMode && target != null && !target.isDestroyed()) {
-			if (isOnPath()) setNextTarget(path.removeFirst());
-			float distanceToTarget = getDistanceTo(target);
-			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-				if (distanceToTarget >= AbstractMapTile.SIZE * 6 || !hasLineOfSight(target.getX(), target.getY())) {
-					timeSinceLastPathfind += delta;
-					if (timeSinceLastPathfind >= 20f) {
-						endTargetTile = getTileAt(target.getX(), target.getY());
-						requestPathfinding();
-					}
-					else if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
-						endTargetTile = getTileAt(target.getX(), target.getY());
-						requestPathfinding();
-					}
-					moveByTargetTile(delta);
-				}
-				else {
-					honeInMode = false;
-					attackMode = true;
-				}
-			}
-			else {
-				target = null;
-				honeInMode = false;
-			}
+			honeInMode(delta);
 		}
 		else if (attackMode && target != null && !target.isDestroyed()) {
-			float distanceToTarget = getDistanceTo(target);
-			if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
-				if (reversing) {
-					backingUp(delta);
-				}
-				else if (forwarding) {
-					accelerateForward(delta);
-					reverseTime += delta;
-					if (reverseTime >= 0.5f) {
-						forwarding = false;
-						reverseTime = -delta;
-					}
-					
-				}
-				else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
-					if (cooldownLastShot <= 0f) {
-						shoot();
-						int fireRate = stats.getStatValue("Fire Rate");
-						cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
-					}
-				}
-			}
-			else {
-				if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-					attackMode = false;
-					honeInMode = true;
-					endTargetTile = getTileAt(target.getX(), target.getY());
-					requestPathfinding();
-				}
-				else {
-					attackMode = false;
-					patrolling = true;
-					selectNewEndTargetTile();
-					requestPathfinding();
-				}
-			}
+			attackMode(delta);
 		}
 		else {
 			patrolling = true;
@@ -206,11 +125,11 @@ public class BasicEnemy extends FixedTank {
 			if (attackMode && cooldownLastShot > 0f) {
 				
 			}
-			else if (!reversing && !forwarding && reverseTime >= 1.0f) {
+			else if (!reversing && !forwarding && reverseTime >= reverseTimeChanges * 2) {
 				reversing = true;
-				if (reverseTime < 2.5f) {
-					reverseTimeThreshold += 0.5f;
-					if (reverseTimeThreshold >= 1.5f) {
+				if (reverseTime < reverseTimeChanges * 5) {
+					reverseTimeThreshold += reverseTimeChanges;
+					if (reverseTimeThreshold >= reverseTimeChanges * 3) {
 						randomTurnReverse = (Math.random() < 0.5);
 					}
 				}
@@ -225,6 +144,103 @@ public class BasicEnemy extends FixedTank {
 			reverseTime += delta;
 		}
 		if (cooldownLastShot > 0f) cooldownLastShot -= delta;
+	}
+	
+	public void patrolMode(float delta) {
+		//Request pathfinding after a certain amount of time not pathfinding
+		timeSinceLastPathfind += delta;
+		if (timeSinceLastPathfind >= 20f) requestPathfinding();
+		//Check if it's on the path (may happen if enemy overshoots tiles)
+		if (isOnPath()) setNextTarget(path.removeFirst());
+		//Finished patrolling to certain tile? Find something new
+		if (path == null || path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+			selectNewEndTargetTile();
+		}
+		//Any player nearby?
+		float shortestDistance = -1f;
+		for (Player player : getPlayers()) {
+			PlayerTank playerTank = player.tank;
+			if (playerTank != null && !playerTank.isDestroyed()) {
+				float distance = getDistanceTo(playerTank);
+				if (shortestDistance == -1f || distance < shortestDistance) {
+					shortestDistance = distance;
+					if (shortestDistance <= AbstractMapTile.SIZE * distanceForTrack) {
+						target = playerTank;
+						patrolling = false;
+						honeInMode = true;
+					}
+				}
+			}
+		}
+		
+		//Moving based things
+		moveByTargetTile(delta);
+	}
+	
+	public void honeInMode(float delta) {
+		if (isOnPath()) setNextTarget(path.removeFirst());
+		float distanceToTarget = getDistanceTo(target);
+		if (distanceToTarget <= AbstractMapTile.SIZE * distanceForTrack) {
+			if (distanceToTarget >= AbstractMapTile.SIZE * distanceForShoot || !hasLineOfSight(target.getX(), target.getY())) {
+				timeSinceLastPathfind += delta;
+				if (timeSinceLastPathfind >= 20f) {
+					endTargetTile = getTileAt(target.getX(), target.getY());
+					requestPathfinding();
+				}
+				else if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+					endTargetTile = getTileAt(target.getX(), target.getY());
+					requestPathfinding();
+				}
+				moveByTargetTile(delta);
+			}
+			else {
+				honeInMode = false;
+				attackMode = true;
+			}
+		}
+		else {
+			target = null;
+			honeInMode = false;
+		}
+	}
+	
+	public void attackMode(float delta) {
+		float distanceToTarget = getDistanceTo(target);
+		if (distanceToTarget < AbstractMapTile.SIZE * distanceForShoot && hasLineOfSight(target.getX(), target.getY())) {
+			if (reversing) {
+				backingUp(delta);
+			}
+			else if (forwarding) {
+				accelerateForward(delta);
+				reverseTime += delta;
+				if (reverseTime >= reverseTimeChanges) {
+					forwarding = false;
+					reverseTime = -delta;
+				}
+				
+			}
+			else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
+				if (cooldownLastShot <= 0f) {
+					shoot();
+					int fireRate = stats.getStatValue("Fire Rate");
+					cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+				}
+			}
+		}
+		else {
+			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+				attackMode = false;
+				honeInMode = true;
+				endTargetTile = getTileAt(target.getX(), target.getY());
+				requestPathfinding();
+			}
+			else {
+				attackMode = false;
+				patrolling = true;
+				selectNewEndTargetTile();
+				requestPathfinding();
+			}
+		}
 	}
 	
 	public void moveByTargetTile(float delta) {
@@ -323,7 +339,7 @@ public class BasicEnemy extends FixedTank {
 	
 	public void backingUp(float delta) {
 		accelerateBackward(delta);
-		if (reverseTimeThreshold >= 1.5f) {
+		if (reverseTimeThreshold >= reverseTimeChanges * 3) {
 			if (randomTurnReverse) 
 				turnLeft(delta);
 			else
@@ -332,7 +348,7 @@ public class BasicEnemy extends FixedTank {
 		reverseTime += delta;
 		if (reverseTime >= reverseTimeThreshold) {
 			reversing = false;
-			if (reverseTimeThreshold >= 2.5f) {
+			if (reverseTimeThreshold >= reverseTimeChanges * 5) {
 				if (patrolling) {
 					selectNewEndTargetTile();
 					requestPathfinding();
@@ -342,7 +358,7 @@ public class BasicEnemy extends FixedTank {
 				}
 				forwarding = true;
 			}
-			else if(reverseTime >= 1.5f) {
+			else if(reverseTime >= reverseTimeChanges * 3) {
 				if (patrolling) {
 					selectNewEndTargetTile();
 					requestPathfinding();

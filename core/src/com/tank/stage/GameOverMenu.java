@@ -48,8 +48,8 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
-	        	 //game.screens.get("Play").dispose();	//delete current game
-	        	 //game.screens.remove("Play");	//remove from screens
+	        	 game.screens.get("Play").dispose();	//delete current game
+	        	 game.screens.remove("Play");	//remove from screens
 	        	 game.setScreen(game.screens.get("Main Menu"));
 	        	 event.stop();
 	         }
