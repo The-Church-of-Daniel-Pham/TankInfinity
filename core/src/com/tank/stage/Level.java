@@ -2,8 +2,6 @@ package com.tank.stage;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.items.AbstractItem;
@@ -13,7 +11,6 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.projectiles.AbstractProjectile;
-import com.tank.actor.ui.MovingText;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;

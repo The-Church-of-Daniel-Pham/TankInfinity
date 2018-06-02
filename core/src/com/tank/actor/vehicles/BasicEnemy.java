@@ -388,9 +388,14 @@ public class BasicEnemy extends FixedTank {
 			pathfindingThread = new Thread() {
 				@Override
 				public void run() {
-					int[][] map = ((Level)getStage()).getMap().getLayout();
-					int[] startPos = ((Level)getStage()).getMap().getTileAt(getX(), getY());
-					path = PathfindingUtil.pathfinding(map, startPos[0], startPos[1], endTargetTile[0], endTargetTile[1]);
+					try {
+						int[][] map = ((Level)getStage()).getMap().getLayout();
+						int[] startPos = ((Level)getStage()).getMap().getTileAt(getX(), getY());
+						path = PathfindingUtil.pathfinding(map, startPos[0], startPos[1], endTargetTile[0], endTargetTile[1]);
+					}
+					catch (Exception e) {
+						
+					}
 				}
 			};
 			pathfindingThread.start();
