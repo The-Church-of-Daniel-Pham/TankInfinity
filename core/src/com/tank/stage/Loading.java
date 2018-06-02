@@ -53,7 +53,7 @@ public class Loading extends Stage implements InputProcessor {
 		uiTable.bottom().padBottom(100).right().padRight(50);
 
 		// Add widgets to the table here.
-		Label tipLabel = new Label("Git gud", skin, "withBackground");
+		Label tipLabel = new Label("Git gud", skin, "mediumWithBackground");
 		tipLabel.setAlignment(Align.topLeft);
 		uiTable.add(tipLabel).width(500).height(150).right();
 	}
