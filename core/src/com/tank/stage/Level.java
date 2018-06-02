@@ -118,13 +118,6 @@ public class Level extends Stage {
 	}
 
 	private void spawnInPlayers(boolean first) {
-		/**
-		 * Player formations: 1 Player 2 Players 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-		 * 0 0 1 0 0 0 1 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-		 * 
-		 * 3 Players 4 Players 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 2 0 0 0 0 0 0 0 0 0 0
-		 * 0 0 2 0 3 0 0 3 0 4 0 0 0 0 0 0 0 0 0 0 0
-		 */
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (Player p : game.players) {
 			if (p.isEnabled()) {

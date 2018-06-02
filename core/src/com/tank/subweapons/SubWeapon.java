@@ -14,6 +14,9 @@ public abstract class SubWeapon {
 		this.ammo = ammo;
 	}
 
+	public String getName() {
+		return name;
+	}
 	public Texture getTexture() {
 		return tex;
 	}
