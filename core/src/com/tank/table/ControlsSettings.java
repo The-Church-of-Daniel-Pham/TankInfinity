@@ -1,19 +1,22 @@
 package com.tank.table;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tank.controls.ControlConstants;
+import com.tank.controls.KeyControl;
+import com.tank.controls.TankController;
 import com.tank.utils.Assets;
 
 import javax.xml.bind.annotation.XmlType;
 import java.awt.event.KeyEvent;
+import java.util.LinkedHashMap;
 
 public class ControlsSettings extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
+
 	private static String keyForward = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("UP").getKeyCode());
 	private static String keyBack = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("DOWN").getKeyCode());
 	private static String keyTurnRight = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RIGHT").getKeyCode());
@@ -23,7 +26,18 @@ public class ControlsSettings extends Table{
 	private static String keyRshift = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RSHIFT").getKeyCode());
 	private static String keyLshift = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LSHIFT").getKeyCode());
 	private static String keyPause = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("PAUSE").getKeyCode());
-	
+
+	private TextField forwardText;
+	private TextField backtext;
+	private TextField rTurnText;
+	private TextField lTurnText;
+	private TextField shootText;
+	private TextField subShootText;
+	private TextField rShiftText;
+	private TextField lShiftText;
+	private TextField pauseText;
+
+
 	public ControlsSettings() {
 		super.setFillParent(false);
 		super.setDebug(false);
@@ -38,38 +52,48 @@ public class ControlsSettings extends Table{
 			keySubShoot = "Right Click";
 		}
 
+
+		TextButton applyButton = new TextButton("Apply", skin);
+		applyButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				saveKeys();
+				event.stop();
+			}
+		});
+
 		Label forwardLabel = new Label("Move Forward", skin, STYLE_NAME);
-		TextField forwardText = new TextField(keyForward, skin, STYLE_NAME);
+		forwardText = new TextField(keyForward, skin, STYLE_NAME);
 
 		Label backLabel = new Label("Move Back", skin, STYLE_NAME);
-		TextField backtext = new TextField(keyBack, skin, STYLE_NAME);
+		backtext = new TextField(keyBack, skin, STYLE_NAME);
 
 		Label rTurnLabel = new Label("Turn Right", skin, STYLE_NAME);
-		TextField rTurnText = new TextField(keyTurnRight, skin, STYLE_NAME);
+		rTurnText = new TextField(keyTurnRight, skin, STYLE_NAME);
 
 		Label lTurnLabel = new Label("Turn Left", skin, STYLE_NAME);
-		TextField lTurnText = new TextField(keyTurnLeft, skin, STYLE_NAME);
+		lTurnText = new TextField(keyTurnLeft, skin, STYLE_NAME);
 
 		Label shootLabel = new Label("Shoot", skin, STYLE_NAME);
-		TextField shootText = new TextField(keyShoot, skin, STYLE_NAME);
+		shootText = new TextField(keyShoot, skin, STYLE_NAME);
 
 		Label subShootLabel = new Label("Shoot sub weapon", skin, STYLE_NAME);
-		TextField subShootText = new TextField(keySubShoot, skin, STYLE_NAME);
+		subShootText = new TextField(keySubShoot, skin, STYLE_NAME);
 
 		Label rShiftLabel = new Label("Shift subs right", skin, STYLE_NAME);
-		TextField rShiftText = new TextField(keyRshift, skin, STYLE_NAME);
+		rShiftText = new TextField(keyRshift, skin, STYLE_NAME);
 
 		Label lShiftLabel = new Label("Shift subs left", skin, STYLE_NAME);
-		TextField lShiftText = new TextField(keyLshift, skin, STYLE_NAME);
+		lShiftText = new TextField(keyLshift, skin, STYLE_NAME);
 
 		Label pauseLabel = new Label("Pause", skin, STYLE_NAME);
-		TextField pauseText = new TextField(keyPause, skin, STYLE_NAME);
+		pauseText = new TextField(keyPause, skin, STYLE_NAME);
 
 		Table left = new Table();
 		left.defaults().width(300).height(100).space(25);
 		Table right = new Table();
 		right.defaults().width(300).height(100).space(25);
-		
+
 		right.add(forwardText);
 		left.add(forwardLabel);
 
@@ -124,8 +148,15 @@ public class ControlsSettings extends Table{
 		right.row();
 		left.row();
 
+		right.add(applyButton);
+
 		super.defaults().top().space(25);
 		super.add(left);
 		super.add(right);
+	}
+
+	public void saveKeys()
+	{
+		ControlConstants.DEFAULT_KEYBOARD_CONTROLS.put("UP", new KeyControl(Input.Keys.valueOf(forwardText.getText().toUpperCase().substring(0,1)), 0));
 	}
 }
