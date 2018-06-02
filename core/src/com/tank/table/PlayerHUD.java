@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
@@ -34,9 +35,19 @@ public class PlayerHUD extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	private final Image leftSubImage;
+	private Label leftSubAmmo;
+	private Group leftSub;
+	
 	private final Image centerSubImage;
+	private Label centerSubAmmo;
+	private Group centerSub;
+	
 	private final Image rightSubImage;
+	private Label rightSubAmmo;
+	private Group rightSub;
+	
 	private SubWeapon lastCenterSubWeapon;
+	private int lastCenterAmmo;
 	
 	public PlayerHUD(Player player) {
 		this.player = player;
@@ -54,8 +65,29 @@ public class PlayerHUD extends Table{
 		icon.addActor(nameLabel);	
 		
 		leftSubImage = new Image(skin.getDrawable("round-light-gray"));
+		leftSubAmmo = new Label("", skin, "small");
+		leftSubAmmo.setPosition(38, 2, Align.bottomRight);
+		leftSubAmmo.setFontScale(0.6f);
+		leftSub = new Group();
+		leftSub.addActor(leftSubImage);
+		leftSub.addActor(leftSubAmmo);
+		
 		centerSubImage = new Image(skin.getDrawable("round-light-gray"));
+		centerSubAmmo = new Label("", skin, "small");
+		centerSubAmmo.setPosition(38, 2, Align.bottomRight);
+		centerSubAmmo.setFontScale(0.6f);
+		centerSub = new Group();
+		centerSub.addActor(centerSubImage);
+		centerSub.addActor(centerSubAmmo);
+		
 		rightSubImage = new Image(skin.getDrawable("round-light-gray"));
+		rightSubAmmo = new Label("", skin, "small");
+		rightSubAmmo.setPosition(38, 2, Align.bottomRight);
+		rightSubAmmo.setFontScale(0.6f);
+		rightSub = new Group();
+		rightSub.addActor(rightSubImage);
+		rightSub.addActor(rightSubAmmo);
+		
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, true, skin, "yellow-vertical");
 		
 		healthBar = new ProgressBar(0.0f, player.tank.getMaxHealth(), 0.01f, false, skin, "green-horizontal");
@@ -88,9 +120,9 @@ public class PlayerHUD extends Table{
 		infoTable.row();
 		infoTable.add(exp).width(120).height(40).colspan(3);
 		infoTable.row();
-		infoTable.add(leftSubImage).width(40).height(40).center();
-		infoTable.add(centerSubImage).width(40).height(40).center();
-		infoTable.add(rightSubImage).width(40).height(40).center();
+		infoTable.add(leftSub).width(40).height(40).center();
+		infoTable.add(centerSub).width(40).height(40).center();
+		infoTable.add(rightSub).width(40).height(40).center();
 		
 		super.add(icon).width(140).height(140);
 		super.add(infoTable);
@@ -103,15 +135,23 @@ public class PlayerHUD extends Table{
 		if (subChanged()) {
 			if (player.tank.getCurrentSubWeapon() != null) {
 				centerSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getCurrentSubWeapon().getTexture())));
+				centerSubAmmo.setText("" + player.tank.getCurrentSubWeapon().getAmmo());
 				rightSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getPrevSubWeapon().getTexture())));
+				rightSubAmmo.setText("" + player.tank.getPrevSubWeapon().getAmmo());
 				leftSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getNextSubWeapon().getTexture())));
+				leftSubAmmo.setText("" + player.tank.getNextSubWeapon().getAmmo());
 			}
 			else {
 				centerSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				centerSubAmmo.setText("");
 				leftSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				leftSubAmmo.setText("");
 				rightSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				rightSubAmmo.setText("");
 			}
 			lastCenterSubWeapon = player.tank.getCurrentSubWeapon();
+			if (player.tank.getCurrentSubWeapon() != null)
+				lastCenterAmmo = player.tank.getCurrentSubWeapon().getAmmo();
 		}
 		float completion = player.tank.getReloadTime() / player.tank.getLastReloadTime();;
 		// reload time out of max reload time (inverse of rate of fire)
@@ -128,6 +168,8 @@ public class PlayerHUD extends Table{
 		if (player.tank.getCurrentSubWeapon() == null && lastCenterSubWeapon == null) return false;
 		if (player.tank.getCurrentSubWeapon() != null && lastCenterSubWeapon == null) return true;
 		if (player.tank.getCurrentSubWeapon() == null && lastCenterSubWeapon != null) return true;
-		return !player.tank.getCurrentSubWeapon().equals(lastCenterSubWeapon);
+		if (!player.tank.getCurrentSubWeapon().equals(lastCenterSubWeapon)) return true;
+		if (lastCenterAmmo != player.tank.getCurrentSubWeapon().getAmmo()) return true;
+		return false;
 	}
 }
