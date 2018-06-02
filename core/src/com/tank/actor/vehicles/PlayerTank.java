@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.items.AbstractItem;
+import com.tank.actor.items.HealthPackItem;
 import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
@@ -406,6 +407,18 @@ public class PlayerTank extends FreeTank {
 						if ((c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) || 
 						(testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1]))){
 							pickUpSubWeapon((SubWeaponItem)c);
+							break;
+						}
+					}
+				}
+
+				if(c instanceof HealthPackItem){
+					float[] cTestVertices = c.getHitbox().getVertices();
+					for (int i = 0; i < testVertices.length / 2; i++) {
+						if ((c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) ||
+								(testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1]))){
+							heal(this, getMaxHealth()/4);
+							((HealthPackItem) c).destroy();
 							break;
 						}
 					}
