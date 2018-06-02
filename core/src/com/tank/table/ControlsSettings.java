@@ -94,9 +94,9 @@ public class ControlsSettings extends Table{
 		pauseText = new TextField(keyPause, skin, STYLE_NAME);
 
 		Table left = new Table();
-		left.defaults().width(300).height(50).space(25);
+		left.defaults().width(300).height(100).space(25);
 		Table right = new Table();
-		right.defaults().width(300).height(50).space(25);
+		right.defaults().width(300).height(100).space(25);
 
 		right.add(forwardText);
 		left.add(forwardLabel);
