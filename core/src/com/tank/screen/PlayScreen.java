@@ -111,7 +111,6 @@ public class PlayScreen implements Screen {
 				setupNextLevel();
 			}
 		}
-
 	}
 
 	public boolean isGameOver() {  	//game is over if all player tanks are destroyed
