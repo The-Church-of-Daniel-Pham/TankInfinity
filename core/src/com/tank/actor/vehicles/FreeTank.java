@@ -17,8 +17,8 @@ public abstract class FreeTank extends AbstractVehicle {
 
 	public FreeTank(float x, float y) {
 		super(x, y);
-		treadTexture = Assets.manager.get(Assets.tread_default);
-		gunTexture = Assets.manager.get(Assets.gun_default);
+		treadTexture = Assets.manager.get(Assets.tread_red);
+		gunTexture = Assets.manager.get(Assets.gun_red);
 		initializeHitbox();
 		super.setOrigin(treadTexture.getWidth() / 2, treadTexture.getHeight() / 2);
 		setGunPivot(treadTexture.getWidth() / 2, treadTexture.getWidth() / 2);

@@ -53,10 +53,10 @@ public class Map extends Group {
 		// maze generation
 		MazeMaker mazeGen = new MazeMaker(height - 1, width - 1); // create maze maker object in order to create a maze
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
-		//Create the spawn area
-		spawnZone = mazeGen.getRandomOpen(2);
-		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
+		//Create the spawn area
+		spawnZone = mazeGen.getRandomOpen(4);
+		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		floors = new ArrayList<FloorTile>();
 		walls = new ArrayList<WallTile>();
 		border = new ArrayList<BorderTile>();
@@ -209,13 +209,15 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 
-	public void removeWall(AbstractMapTile m) {
-		if (!(m instanceof BorderTile)) {
-			AbstractMapTile n = new FloorTile(m.getRow(), m.getCol(), this);
-			addActor(n);
-			map[m.getRow()][m.getCol()] = n;
-			layout[m.getRow()][m.getCol()] = 0;
-			m.remove();
+	public void removeWall(AbstractMapTile wall) {
+		if (wall.getParent() != null && wall.getParent().equals(this)) {
+			layout[wall.getRow()][wall.getCol()] = 0;
+			FloorTile floor = new FloorTile(wall.getRow(), wall.getCol(), this);
+			addActor(floor);
+			map[wall.getRow()][wall.getCol()] = floor;
+			walls.remove(wall);
+			floors.add(floor);
+			wall.remove();
 		}
 	}
 

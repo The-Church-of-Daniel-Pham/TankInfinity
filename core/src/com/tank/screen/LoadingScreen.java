@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.tank.game.TankInfinity;
 import com.tank.stage.Loading;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class LoadingScreen implements Screen {
 	public Loading loading;
@@ -16,7 +17,8 @@ public class LoadingScreen implements Screen {
 		// starts loading everything, but not waiting to continue
 		Assets.loadAll();
 		// wait until loading stage's assets are loaded
-		Assets.manager.finishLoadingAsset(Assets.splash.fileName);
+		Assets.manager.finishLoadingAsset(Assets.backdrop.fileName);
+		Assets.manager.finishLoadingAsset(Assets.loading_tank.fileName);
 		Assets.manager.finishLoadingAsset(Assets.skin.fileName);
 		loading = new Loading(this.game);
 	}
@@ -24,7 +26,7 @@ public class LoadingScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		// Clear the screen
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+		Gdx.gl.glClearColor(Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		//Update the stage

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
+import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.projectiles.Bullet;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
@@ -38,8 +39,10 @@ public class BasicEnemy extends FixedTank {
 	
 	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
 	
-	public BasicEnemy(float x, float y) {
-		super(x, y, Assets.manager.get(Assets.tread_default));
+	protected int expGive;
+	
+	public BasicEnemy(float x, float y, int level) {
+		super(x, y, Assets.manager.get(Assets.fixed_tan));
 		initializeStats();
 		initializePathfinding();
 		setRotation((float)(Math.random() * 360f));
@@ -48,6 +51,7 @@ public class BasicEnemy extends FixedTank {
 		randomTurnReverse = false;
 		patrolling = true;
 		reverseTime = 0;
+		expGive = 2 + level;
 		
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
@@ -65,7 +69,8 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 6);
 		
-		maxHealth = health = 100;
+		stats.addStat("Max Health", 60);
+		health = 60;
 		stats.addStat("Armor", 15);
 		
 		stats.addStat("Traction", 100);
@@ -426,6 +431,36 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	protected void initializeHitbox() {
 		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	/**
+	 * From the Destructible interface. The damage method is used to handle the
+	 * object getting hit.
+	 * 
+	 * @param source
+	 *            The other actor that hit this object, in any
+	 * @param damage
+	 *            The damage dealt
+	 */
+	public void damage(Actor source, int damage) {
+		if (damage > 0) {
+			health -= Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			if (health <= 0 && !isDestroyed()) {
+				destroy();
+				if (source instanceof AbstractProjectile) {
+					AbstractVehicle tankSource = ((AbstractProjectile)source).getSource();
+					if (tankSource instanceof PlayerTank) {
+						((PlayerTank)tankSource).gainExp(expGive);
+					}
+				}
+				else {
+					if (source instanceof PlayerTank) {
+						((PlayerTank)source).gainExp(expGive);
+					}
+				}
+			}
+		}
 	}
 
 	@Override

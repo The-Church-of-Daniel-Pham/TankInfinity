@@ -78,7 +78,9 @@ public class Player {
 			controls = ControlConstants.getPlayerControls(playerNumber);
 		}
 		else {
-			if (tank.getHealth() != 0) {
+			if (tank.getHealth() > 0) {
+				int heal = tank.getMaxHealth() / 5;
+				tank.heal(null, heal);
 				tank.setupTank(row, col, rotation);
 			}
 		}

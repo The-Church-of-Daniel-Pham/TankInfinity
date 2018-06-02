@@ -1,0 +1,224 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	bison: {
+		file: bison.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	dark-gray: {
+		r: 0.2
+		g: 0.2
+		b: 0.2
+		a: 1
+	}
+	gray: {
+		r: 0.68333334
+		g: 0.68333334
+		b: 0.68333334
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	round-dark-gray: {
+		name: round-white
+		color: {
+			r: 0.22
+			g: 0.22
+			b: 0.22
+			a: 1
+		}
+	}
+	round-light-gray: {
+		name: round-white
+		color: {
+			r: 0.86333334
+			g: 0.86333334
+			b: 0.86333334
+			a: 1
+		}
+	}
+	round-gray-small: {
+		name: round-white-small
+		color: {
+			r: 0.4633333
+			g: 0.4633333
+			b: 0.4633333
+			a: 1
+		}
+	}
+	round-black-small: {
+		name: round-white-small
+		color: {
+			r: 0
+			g: 0
+			b: 0
+			a: 1
+		}
+	}
+	gray: {
+		name: white
+		color: {
+			r: 0.59
+			g: 0.59
+			b: 0.59
+			a: 1
+		}
+	}
+	textfield-dark-gray: {
+		name: textfield
+		color: dark-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: round-dark-gray
+		down: round-white
+		over: round-gray
+	}
+	toggle: {
+		up: round-gray
+		down: round-dark-gray
+		over: round-light-gray
+		checked: round-dark-gray
+		checkedOver: round-light-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkbox-on
+		checkboxOff: checkbox
+		font: bison
+		fontColor: gray
+		checkedFontColor: white
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: round-gray
+		down: round-dark-gray
+		over: round-light-gray
+	}
+	toggle: {
+		up: round-gray
+		down: round-dark-gray
+		over: round-light-gray
+		checked: round-dark-gray
+		checkedOver: round-light-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: bison
+		fontColor: white
+		downFontColor: black
+		up: round-dark-gray
+		down: round-white
+		over: round-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: bison
+		fontColor: white
+	}
+	withBackground: {
+		font: bison
+		fontColor: white
+		background: round-dark-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: bison
+		fontColorSelected: white
+		fontColorUnselected: gray
+		selection: selection
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: progress-bar
+		knobBefore: progress-bar-fill
+	}
+	default-vertical: {
+		background: progress-bar
+		knobBefore: progress-bar-fill-vert
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: list
+		hScroll: round-black-small
+		hScrollKnob: round-gray-small
+		vScroll: round-black-small
+		vScrollKnob: round-gray-small
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: bison
+		fontColor: white
+		disabledFontColor: gray
+		scrollStyle: default
+		listStyle: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: slider-horizontal
+		knob: slider-knob
+	}
+	default-vertical: {
+		background: slider-vertical
+		knob: slider-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-vertical: {
+		handle: vertical-split-pane
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: bison
+		fontColor: white
+		downFontColor: black
+		down: round-white
+		over: round-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: bison
+		fontColor: white
+		focusedFontColor: black
+		background: textfield-dark-gray
+		focusedBackground: textfield
+		cursor: cursor
+		selection: gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: bison
+	}
+}
+}
