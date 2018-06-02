@@ -21,7 +21,7 @@ public class SubWeaponItem extends AbstractItem{
 	public SubWeaponItem(int row, int col) {
 		this(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 				row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
-				randomSubWeapon());
+				null);
 	}
 	
 	public SubWeaponItem(float x, float y, SubWeapon sub) {
@@ -56,6 +56,8 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public SubWeapon getSubWeapon() {
+		if (sub == null)
+			sub = randomSubWeapon();
 		return sub;
 	}
 
