@@ -1,5 +1,6 @@
 package com.tank.table;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -13,19 +14,29 @@ import java.awt.event.KeyEvent;
 public class ControlsSettings extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
-	private String keyForward = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("UP").getKeyCode() + "";
-	private String keyBack = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("DOWN").getKeyCode() + "";
-	private String keyTurnRight = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RIGHT").getKeyCode() + "";
-	private String keyTurnLeft = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LEFT").getKeyCode() + "";
-	private String keyShoot = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("SHOOT").getKeyCode() + "";
-	private String keySubShoot = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("SUB").getKeyCode() + "";
-	private String keyRshift = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RSHIFT").getKeyCode() + "";
-	private String keyLshift = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LSHIFT").getKeyCode() + "";
-	private String keyPause = (char)ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("PAUSE").getKeyCode() + "";
+	private static String keyForward = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("UP").getKeyCode());
+	private static String keyBack = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("DOWN").getKeyCode());
+	private static String keyTurnRight = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RIGHT").getKeyCode());
+	private static String keyTurnLeft = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LEFT").getKeyCode());
+	private static String keyShoot = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("SHOOT").getKeyCode());
+	private static String keySubShoot = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("SUB").getKeyCode());
+	private static String keyRshift = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RSHIFT").getKeyCode());
+	private static String keyLshift = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LSHIFT").getKeyCode());
+	private static String keyPause = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("PAUSE").getKeyCode());
 	
 	public ControlsSettings() {
 		super.setFillParent(false);
 		super.setDebug(false);
+
+		if(keyShoot.equalsIgnoreCase("unknown"))
+		{
+			keyShoot = "Left Click";
+		}
+
+		if(keySubShoot.equalsIgnoreCase("soft left"))
+		{
+			keySubShoot = "Right Click";
+		}
 
 		Label forwardLabel = new Label("Move Forward", skin, STYLE_NAME);
 		TextField forwardText = new TextField(keyForward, skin, STYLE_NAME);
