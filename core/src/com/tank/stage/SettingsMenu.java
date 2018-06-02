@@ -37,7 +37,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		settingsTable = new Table();
 		videoTable = new VideoSettings();
 		audioTable = new AudioSettings();
-		controlsTable = new ControlsSettings();
+		controlsTable = new ControlsSettings(game);
 
 		uiTable = new Table();
 		buildTable();

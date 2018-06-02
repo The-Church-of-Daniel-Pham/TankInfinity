@@ -20,11 +20,12 @@ public class MainMenu extends Stage implements InputProcessor{
 	protected Table uiTable;
 	private Texture title = Assets.manager.get(Assets.title);
 	private Skin skin = Assets.manager.get(Assets.skin);
+	private Background titleBackground;
 	
 	public MainMenu(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
-		Background titleBackground = new Background(title);
+		titleBackground = new Background(title);
 		titleBackground.setFill(true);
 		super.addActor(titleBackground);
 		uiTable = new Table();

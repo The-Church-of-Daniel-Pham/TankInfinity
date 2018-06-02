@@ -242,4 +242,8 @@ public class GamepadController extends TankController {
 		if (Math.abs(controller.getAxis(vertical.getKeyCode())) > deadzone) newY += sensitivity * controller.getAxis(vertical.getKeyCode());
 		return new Vector3(newX, newY, 0);
 	}
+	
+	public void setKey(String key, KeyControl control) {
+		keyMap.replace(key, control);
+	}
 }

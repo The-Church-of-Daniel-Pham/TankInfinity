@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.KeyControl;
 import com.tank.controls.TankController;
+import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
 
 import javax.xml.bind.annotation.XmlType;
@@ -14,6 +15,7 @@ import java.awt.event.KeyEvent;
 import java.util.LinkedHashMap;
 
 public class ControlsSettings extends Table{
+	private TankInfinity game;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
 
@@ -38,8 +40,10 @@ public class ControlsSettings extends Table{
 	private TextField pauseText;
 
 
-	public ControlsSettings() {
-		super.setFillParent(false);
+	public ControlsSettings(TankInfinity game) {
+		this.game = game;
+		
+		super.setFillParent(true);
 		super.setDebug(false);
 
 		if(keyShoot.equalsIgnoreCase("unknown"))
@@ -90,9 +94,9 @@ public class ControlsSettings extends Table{
 		pauseText = new TextField(keyPause, skin, STYLE_NAME);
 
 		Table left = new Table();
-		left.defaults().width(300).height(100).space(25);
+		left.defaults().width(300).height(50).space(25);
 		Table right = new Table();
-		right.defaults().width(300).height(100).space(25);
+		right.defaults().width(300).height(50).space(25);
 
 		right.add(forwardText);
 		left.add(forwardLabel);
@@ -157,6 +161,6 @@ public class ControlsSettings extends Table{
 
 	public void saveKeys()
 	{
-		ControlConstants.DEFAULT_KEYBOARD_CONTROLS.put("UP", new KeyControl(Input.Keys.valueOf(forwardText.getText().toUpperCase().substring(0,1)), 0));
+		game.players.get(0).controls.setKey("UP", new KeyControl(Input.Keys.valueOf(forwardText.getText().toUpperCase().substring(0,1)), 0));
 	}
 }
