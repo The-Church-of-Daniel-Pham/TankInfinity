@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.tank.actor.map.tiles.BorderTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.stats.Stats;
@@ -55,7 +56,7 @@ public class Rocket extends AbstractProjectile {
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(2));
 			}
-			if (e.getCollidable() instanceof WallTile) {
+			if (e.getCollidable() instanceof WallTile && !(e.getCollidable() instanceof BorderTile)) {
 				((WallTile)e.getCollidable()).destroyWall();
 			}
 		}
