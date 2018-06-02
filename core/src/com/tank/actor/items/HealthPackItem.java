@@ -51,7 +51,7 @@ public class HealthPackItem extends AbstractItem {
     @Override
     public Polygon getHitboxAt(float x, float y, float direction) {
         float[] f = new float[8];
-        Vector2 v = new Vector2(getWidth(), getHeight());
+        Vector2 v = new Vector2(getWidth() * 0.6f, getHeight() * 0.6f);
         v.setAngle(direction);
         v.rotate(45);
         f[0] = x + v.x;
