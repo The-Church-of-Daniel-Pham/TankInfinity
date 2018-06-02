@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.NumberUtils;
 import com.tank.utils.Assets;
 
@@ -13,7 +14,8 @@ public class MovingText extends Label{
 	private float lifeTime;
 	private float maxLifeTime;
 	private Vector2 velocity;
-	boolean fade;
+	private boolean fade;
+	private float persistTime;
 	
 	public MovingText(String text, Color color, float lifeTime, Vector2 velocity, float x, float y) {
 		super(text, skin);
@@ -34,7 +36,20 @@ public class MovingText extends Label{
 		setFontScale(scale);
 		setScale(scale);
 		setX(x - getWidth() * scale / 2);
-		setY(y - getHeight() * scale / 2);
+		setY(y - getHeight() / 2);
+	}
+	
+	public MovingText(String text, Color color, float lifeTime, Vector2 velocity, float x, float y, float scale, boolean fade, float persist) {
+		super(text, skin);
+		this.fade = fade;
+		maxLifeTime = lifeTime + persist;
+		this.velocity = velocity;
+		this.persistTime = persist;
+		setColor(color);
+		setFontScale(scale);
+		setScale(scale);
+		setX(x - getWidth() * scale / 2);
+		setY(y - getHeight() / 2);
 	}
 	
 	@Override
@@ -44,6 +59,16 @@ public class MovingText extends Label{
 		setY(getY() + velocity.y * delta);
 		if (lifeTime >= maxLifeTime) {
 			remove();
+		}
+	}
+	
+	@Override
+	public void draw(Batch batch, float a) {
+		if (fade && lifeTime > persistTime) {
+			super.draw(batch, 1.0f - ((float)(lifeTime - persistTime) / (maxLifeTime - persistTime)));
+		}
+		else {
+			super.draw(batch, a);
 		}
 	}
 }

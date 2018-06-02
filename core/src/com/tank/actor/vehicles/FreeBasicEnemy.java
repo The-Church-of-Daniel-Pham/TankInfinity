@@ -523,7 +523,9 @@ public class FreeBasicEnemy extends FreeTank{
 			damage =  Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
 			health -= damage;
 			if (getStage() != null)
-				getStage().addActor(new MovingText("-" + damage, Color.RED, 1.5f, new Vector2(0, 200), getX(), getY()));
+				getStage().addActor(new MovingText("-" + damage, Color.RED, 1.5f, new Vector2(0, 200),
+						getX() + (float)(100f * Math.random()) - 50f,
+						getY() + (float)(100f * Math.random()) - 50f));
 			if (health <= 0 && !isDestroyed()) {
 				destroy();
 				if (source instanceof AbstractProjectile) {
