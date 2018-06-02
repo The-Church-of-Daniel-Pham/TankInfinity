@@ -72,6 +72,7 @@ public class LandMine extends AbstractProjectile {
 		boolean markForDeletion = false;
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
+				/*
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 				float tankX = ((AbstractVehicle)e.getCollidable()).getX();
 				float tankY = ((AbstractVehicle)e.getCollidable()).getY();
@@ -80,6 +81,14 @@ public class LandMine extends AbstractProjectile {
 				knockback.setAngle(direction);
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(knockback);
 				markForDeletion = true;
+				*/
+				Stats explosionStats = new Stats();
+				explosionStats.addStat("Damage", getStat("Damage"));
+				explosionStats.addStat("Explosion Size", 1024);
+				explosionStats.addStat("Lifetime", 10);
+				getStage().addActor(new RadialExplosion(source, explosionStats, getX(), getY()));
+				destroy();
+				break;
 			}
 		}
 		if (markForDeletion) destroy();

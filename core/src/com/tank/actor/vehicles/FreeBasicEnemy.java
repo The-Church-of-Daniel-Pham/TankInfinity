@@ -110,7 +110,7 @@ public class FreeBasicEnemy extends FreeTank{
 			//Check if it's on the path (may happen if enemy overshoots tiles)
 			if (isOnPath()) setNextTarget(path.removeFirst());
 			//Finished patrolling to certain tile? Find something new
-			if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+			if (path == null || path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
 				selectNewEndTargetTile();
 			}
 			//Any player nearby?

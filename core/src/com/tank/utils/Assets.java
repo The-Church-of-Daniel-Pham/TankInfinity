@@ -12,6 +12,8 @@ public class Assets {
 	// For animation
 	public static final AssetDescriptor<Texture> explosionSheet = new AssetDescriptor<Texture>(
 			"animation/explosion_atlas.png", Texture.class);
+	public static final AssetDescriptor<Texture> burstSheet = new AssetDescriptor<Texture>(
+			"animation/burstSheet.png", Texture.class);
 
     // Textures
     // Floor
@@ -140,6 +142,7 @@ public class Assets {
 
     public static void loadTextures() {
         manager.load(explosionSheet);
+        manager.load(burstSheet);
         manager.load(healthpack);
         // System.out.println("Animation loaded");
         manager.load(grass0);

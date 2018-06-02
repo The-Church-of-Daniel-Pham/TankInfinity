@@ -41,6 +41,11 @@ public class Rocket extends AbstractProjectile {
 	@Override
 	public void bounce(Vector2 wall) {
 		damageNeighbors();
+		Stats explosionStats = new Stats();
+		explosionStats.addStat("Damage", getStat("Damage") / 3);
+		explosionStats.addStat("Explosion Size", 256);
+		explosionStats.addStat("Lifetime", 5);
+		getStage().addActor(new RadialExplosion(source, explosionStats, getX(), getY()));
 		destroy();
 	}
 	

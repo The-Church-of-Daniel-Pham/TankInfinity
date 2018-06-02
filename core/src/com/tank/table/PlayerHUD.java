@@ -53,8 +53,8 @@ public class PlayerHUD extends Table{
 		if (subChanged()) {
 			if (player.tank.getCurrentSubWeapon() != null) {
 				centerSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getCurrentSubWeapon().getTexture())));
-				leftSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getPrevSubWeapon().getTexture())));
-				rightSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getNextSubWeapon().getTexture())));
+				rightSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getPrevSubWeapon().getTexture())));
+				leftSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getNextSubWeapon().getTexture())));
 			}
 			else {
 				centerSubImage.setDrawable(subEmptyTex);

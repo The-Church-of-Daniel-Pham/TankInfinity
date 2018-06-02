@@ -122,12 +122,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				if (e.getCollidable() instanceof AbstractProjectile) {
 					int durability = stats.getStatValue("Projectile Durability");
 					int otherDurability = ((AbstractProjectile) e.getCollidable()).getStat("Projectile Durability");
-					if (durability > otherDurability) {
+					if (durability > otherDurability && !(e.getCollidable() instanceof RadialExplosion)) {
 						((AbstractProjectile) e.getCollidable()).destroy();
 						stats.addStat("Projectile Durability", durability - otherDurability);
 						return;
 					}
-					else if (otherDurability > durability) {
+					else if (otherDurability > durability || e.getCollidable() instanceof RadialExplosion) {
 						destroy();
 						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
 						return;
@@ -308,6 +308,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
 					break;
 				}
+			}
+			
+			for (int i = 0; i < cTestVertices.length / 2; i++) {
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
 				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
