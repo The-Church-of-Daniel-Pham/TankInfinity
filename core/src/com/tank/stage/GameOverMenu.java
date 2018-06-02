@@ -26,7 +26,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		this.game = game;
 		Background darken = new Background(red);
 		// scale dark to fit screen
-		darken.fillScale();
+		darken.setFill(true);
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}

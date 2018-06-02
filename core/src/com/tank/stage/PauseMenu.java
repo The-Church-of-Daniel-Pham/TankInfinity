@@ -24,8 +24,7 @@ public class PauseMenu extends Stage implements InputProcessor {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		Background darken = new Background(black);
-		// scale dark to fit screen
-		darken.setScale(((float) Gdx.graphics.getWidth())/black.getWidth(), ((float) Gdx.graphics.getHeight())/black.getHeight());
+		darken.setFill(true);
 		super.addActor(darken);
 		super.addActor(buildTable());
 	}

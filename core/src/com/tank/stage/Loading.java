@@ -29,7 +29,7 @@ public class Loading extends Stage implements InputProcessor {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		Background backdropBackground = new Background(backdrop);
-		backdropBackground.fillScale();
+		backdropBackground.setFill(true);
 		tankLoadingBackground = new Background(loading_tank);
 		tankLoadingBackground.setPosition(-loading_tank.getWidth(), 300);
 		percent = 0;
