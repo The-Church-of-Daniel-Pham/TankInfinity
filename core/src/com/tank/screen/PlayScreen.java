@@ -62,7 +62,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		// Clear the screen
-		Gdx.gl.glClearColor(1f, 1f, 1f, 1);
+		Gdx.gl.glClearColor(Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, Constants.CLEAR_COLOR, 1.0f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT
 				| (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0)); // adds
 																											// anti-aliasing
@@ -122,10 +122,14 @@ public class PlayScreen implements Screen {
     }
 	
 	public boolean isReadyForNextLevel() {
+		boolean atleastOne = false;
 		for(Player p: game.players) {
-    		if (p.tank != null && !p.tank.isReadyForNextLevel()) return false;
+			if (p.isEnabled() && p.tank != null && !p.tank.isDestroyed()) {
+				atleastOne = true;
+				if (!p.tank.isReadyForNextLevel()) return false;
+			}
     	}
-    	return true;
+    	return atleastOne && true;
 	}
 	
 	public void setupNextLevel() {

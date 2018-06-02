@@ -6,7 +6,6 @@ package com.tank.actor.projectiles;
  * being other projectiles. This class is extended with every projectile.
  */
 import java.util.ArrayList;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
@@ -18,7 +17,6 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
-import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -63,7 +61,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
-	private MediaSound bounce_sound;
+	//private MediaSound bounce_sound;
 
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
@@ -79,13 +77,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 *            The starting x of the projectile
 	 * @param y
 	 *            The starting y of the projectile
-	 * @param bounce
-	 *            The sound for the bounce
-	 * @param BOUNCE_VOLUME
-	 *            The volume of the bounce
 	 */
-	public AbstractProjectile(Texture t, AbstractVehicle src, Stats stat, float x, float y, Sound bounce,
-			final float BOUNCE_VOLUME) {
+	public AbstractProjectile(Texture t, AbstractVehicle src, Stats stat, float x, float y) {
 		tex = t;
 		source = src;
 		stats = stat;
@@ -94,7 +87,6 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		initializeHitbox();
 		collisions = new ArrayList<CollisionEvent>();
 		projectileList.add(this);
-		bounce_sound = new MediaSound(bounce, BOUNCE_VOLUME);
 	}
 
 	protected abstract void initializeHitbox();
@@ -127,22 +119,23 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			int numCornersHit = 0;
 			int numWallsHit = 0;
 			for (CollisionEvent e : collisions) {
-				if (e.getCollidable() instanceof Bullet) {
+				if (e.getCollidable() instanceof AbstractProjectile) {
 					int durability = stats.getStatValue("Projectile Durability");
-					int otherDurability = ((Bullet) e.getCollidable()).getStat("Projectile Durability");
+					int otherDurability = ((AbstractProjectile) e.getCollidable()).getStat("Projectile Durability");
 					if (durability > otherDurability) {
-						((Bullet) e.getCollidable()).destroy();
+						((AbstractProjectile) e.getCollidable()).destroy();
 						stats.addStat("Projectile Durability", durability - otherDurability);
+						return;
 					}
-					else if (otherDurability < durability) {
+					else if (otherDurability > durability) {
 						destroy();
-						((Bullet) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
-						break;
+						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
+						return;
 					}
 					else{
-						((Bullet) e.getCollidable()).destroy();
+						((AbstractProjectile) e.getCollidable()).destroy();
 						destroy();
-						break;
+						return;
 					}
 				}
 				if (e.getCollisionType() == CollisionEvent.CORNER_COLLISION) {
@@ -166,7 +159,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				bounce(velocity.cpy().rotate(90)); // move backwards
 			} else { // head on corner or side corner graze
 				float[] f = testHitbox.getVertices();
-				if (cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
+				if (cornerE.getWall() != null && cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
 					bounce(velocity.cpy().rotate(90)); // move backwards
 				} else { // graze, use different algorithm to find wall
 					bounce(CollisionEvent.getWallVector(cornerE.getCollidable().getHitbox(),
@@ -221,6 +214,10 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public void updateVelocityAndMove() {
 
 	}
+	
+	public AbstractVehicle getSource() {
+		return source;
+	}
 
 	/**
 	 * The applyForce method is used to instantly change the velocity of the
@@ -256,9 +253,6 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public void bounce(Vector2 wall) {
 		velocity.rotateRad(2 * velocity.angleRad(wall)); // rotate by double to angle that the bullet forms, relative to
 		// the wall
-
-		bounce_sound.play();
-
 		super.setRotation(velocity.angle()); // update rotation
 
 	}
@@ -312,6 +306,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					break;
 				}
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
@@ -320,6 +315,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
 					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+					break;
 				}
 			}
 		}

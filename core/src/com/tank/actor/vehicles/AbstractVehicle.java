@@ -37,7 +37,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	/**
 	 * The maxHealth of the vehicle
 	 */
-	protected int maxHealth;
+	//protected int maxHealth;
 	/**
 	 * The stats of the vehicle
 	 */
@@ -105,7 +105,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 2);
 
-		maxHealth = health = 100;
+		stats.addStat("Max Health", 100);
+		health = 100;
 		stats.addStat("Armor", 15);
 
 		stats.addStat("Traction", 100);
@@ -162,6 +163,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 
 	public Vector2 getVelocity() {
 		return velocity;
+	}
+	
+	public float getAngularVelocity() {
+		return angularVelocity;
 	}
 	
 	public Vector2 getSecondaryVelocity() {
@@ -292,6 +297,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					break;
 				}
 				// check for corner collision by checking if the corners of another Collidable
 				// object are contained within this instance
@@ -300,18 +306,18 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
 					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+					break;
 				}
 			}
 		}
-
 	}
 	
 	public void accelerateForward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation());
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation());
 	}
 	
 	public void accelerateBackward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 250f, getRotation() + 180);
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation() + 180);
 	}
 	
 	public void turnLeft(float delta) {
@@ -326,8 +332,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		float spreadRange = 30f * (1.0f - (stats.getStatValue("Spread") / (stats.getStatValue("Spread") + 100.0f)));
 		double accuracy = 1.0 + 0.1 * Math.sqrt(stats.getStatValue("Accuracy"));
 		float velocityLength = getTotalVelocity().len();
-		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 60.0)));
+		accuracy *= 1.0 - (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 55.0)));
+		spreadRange *= 1.0 + (velocityLength / (velocityLength + (stats.getStatValue("Stability") * 70.0)));
 		if (accuracy < 0.25) accuracy = 0.25;
+		if (spreadRange > 50f) spreadRange = 50f;
 		float randomAngle = spreadRange * (float)Math.pow(Math.random(), accuracy);
 		if (Math.random() < 0.5) randomAngle *= -1;
 		return randomAngle;
@@ -385,9 +393,11 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            The damage dealt
 	 */
 	public void damage(Actor source, int damage) {
-		health -= damage;
-		if (health <= 0 && !isDestroyed())
-			destroy();
+		if (damage > 0) {
+			health -= Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			if (health <= 0 && !isDestroyed())
+				destroy();
+		}
 	}
 
 	/**
@@ -400,13 +410,14 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 *            The amount healed
 	 */
 	public void heal(Actor source, int heal) {
+		int maxHealth = stats.getStatValue("Max Health");
 		health += heal;
 		if (health > maxHealth)
 			health = maxHealth;
 	}
 
 	public int getMaxHealth() {
-		return maxHealth;
+		return stats.getStatValue("Max Health");
 	}
 
 	public int getHealth() {
@@ -418,7 +429,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 * the object from the stage
 	 */
 	public void destroy() {
-		damageSound.play();
+		//damageSound.play();
 		getStage().addActor(new Explosion(getX(), getY()));
 		vehicleList.remove(this);
 		remove();

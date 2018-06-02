@@ -32,6 +32,10 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		// drawVertices(batch, a);
 		// }
 	}
+	
+	public void destroyWall() {
+		map.removeWall(this);
+	}
 
 	@Override
 	public void build() {

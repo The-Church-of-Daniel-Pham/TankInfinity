@@ -25,7 +25,6 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	public CustomizationMenu(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
-		// build table
 		uiTable = new Table();
 		buildTable();
 		super.addActor(uiTable);
@@ -34,10 +33,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	private void buildTable() {
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(75).space(25).center();
+		uiTable.defaults().width(300).height(100).space(25).center();
 
 		// Add widgets to the table here.
-		for (final Player p : game.players) {
+		for (Player p : game.players) {
 			p.initializeCustom();
 			p.initializeCustomMenu();
 			uiTable.add(p.customMenu).expand();
@@ -57,6 +56,10 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (countEnabled > 0) {
+					for (Player p : game.players) {
+						// update player names based on text field
+						p.setName(p.customMenu.getCustomName());
+					}
 					game.screens.put("Play", new PlayScreen(game)); // creates or replaces with a new game
 					game.setScreen(game.screens.get("Play"));
 					event.stop();
@@ -80,6 +83,7 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		if (needToRebuildTable()) {
 			buildTable();
 		}

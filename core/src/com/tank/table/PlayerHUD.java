@@ -18,7 +18,7 @@ public class PlayerHUD extends Table{
 		this.player = player;
 		
 		super.setDebug(false);
-		super.defaults().width(200).height(50).space(25).center();
+		super.defaults().width(300).height(50).space(25).center();
 		
 		Label nameLabel = new Label(player.getName(), skin);
 		nameLabel.setAlignment(Align.left);
@@ -33,9 +33,7 @@ public class PlayerHUD extends Table{
 	}
 	
 	public void update() {
-		int fireRate = player.tank.getStatValue("Fire Rate");
-		float maxReload = 2.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
-		float completion = player.tank.getReloadTime() / (maxReload);
+		float completion = player.tank.getReloadTime() / player.tank.getLastReloadTime();;
 		// reload time out of max reload time (inverse of rate of fire)
 		//System.out.println(completion);
 		reloadBar.setValue(completion);

@@ -52,14 +52,8 @@ public class Customization {
 			else if (val.equals("yellow")) {
 				return Assets.manager.get(Assets.tread_yellow);
 			}
-			else if (val.equals("purple")) {
-				return Assets.manager.get(Assets.tread_purple);
-			}
-			else if (val.equals("tan")) {
-				return Assets.manager.get(Assets.tread_tan);
-			}
 			else {
-				return Assets.manager.get(Assets.tread_default);
+				return Assets.manager.get(Assets.tread_red);
 			}
 		}
 		else if (name.equals("gun")) {
@@ -75,14 +69,8 @@ public class Customization {
 			else if (val.equals("yellow")) {
 				return Assets.manager.get(Assets.gun_yellow);
 			}
-			else if (val.equals("purple")) {
-				return Assets.manager.get(Assets.gun_purple);
-			}
-			else if (val.equals("tan")) {
-				return Assets.manager.get(Assets.gun_tan);
-			}
 			else {
-				return Assets.manager.get(Assets.gun_default);
+				return Assets.manager.get(Assets.gun_red);
 			}
 		}
 		else if (name.equals("cursor")) {
@@ -97,12 +85,6 @@ public class Customization {
 			}
 			else if (val.equals("yellow")) {
 				return Assets.manager.get(Assets.crosshairs_yellow);
-			}
-			else if (val.equals("purple")) {
-				return Assets.manager.get(Assets.crosshairs_purple);
-			}
-			else if (val.equals("tan")) {
-				return Assets.manager.get(Assets.crosshairs_tan);
 			}
 			else {
 				return Assets.manager.get(Assets.crosshairs_default);
@@ -121,14 +103,8 @@ public class Customization {
 			else if (val.equals("yellow")) {
 				return Assets.manager.get(Assets.tank_preview_yellow);
 			}
-			else if (val.equals("purple")) {
-				return Assets.manager.get(Assets.tank_preview_purple);
-			}
-			else if (val.equals("tan")) {
-				return Assets.manager.get(Assets.tank_preview_tan);
-			}
 			else {
-				return Assets.manager.get(Assets.tank_preview_default);
+				return Assets.manager.get(Assets.tank_preview_red);
 			}
 		}
 		return null;	//not found
