@@ -47,7 +47,7 @@ public class FreeBasicEnemy extends FreeTank{
 	protected int expGive;
 	
 	public FreeBasicEnemy(float x, float y, int level) {
-		super(x, y, Assets.manager.get(Assets.tread_green), Assets.manager.get(Assets.gun_green));
+		super(x, y, Assets.manager.get(Assets.tread_purple), Assets.manager.get(Assets.gun_purple));
 		initializeStats();
 		initializePathfinding();
 		initializeHitbox();
