@@ -17,6 +17,7 @@ import com.tank.actor.ui.MovingText;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;
+import com.tank.actor.vehicles.RocketEnemy;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 
@@ -106,11 +107,16 @@ public class Level extends Stage {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-				if (Math.random() < 0.5) {
-					addActor(new BasicEnemy(pos[0], pos[1], levelNum));
-				}
-				else {
-					addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
+				switch ((int)(Math.random() * 5)) {
+					case 0: case 2:
+						addActor(new BasicEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 1: case 3:
+						addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 4:
+						addActor(new RocketEnemy(pos[0], pos[1], levelNum));
+						break;
 				}
 			}
 		}
