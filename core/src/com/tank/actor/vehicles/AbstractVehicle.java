@@ -207,9 +207,11 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 				moved = true;
 			} else if (canMoveTo(tX, getY(), getRotation())) {
 				super.setX(tX);
+				if (Math.abs((velocity.x + secondaryVelocity.x) * 30.0) > Math.abs(velocity.y + secondaryVelocity.y)) moved = true;
 				hitbox = testHitbox;
 			} else if (canMoveTo(getX(), tY, getRotation())) {
 				super.setY(tY);
+				if (Math.abs((velocity.y + secondaryVelocity.y) * 30.0) > Math.abs(velocity.x + secondaryVelocity.x)) moved = true;
 				hitbox = testHitbox;
 			} else {
 				velocity.scl((float) Math.pow(0.01f, delta));
