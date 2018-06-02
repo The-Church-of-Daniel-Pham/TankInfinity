@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.NumberUtils;
 import com.tank.utils.Assets;
 
 public class MovingText extends Label{
@@ -12,6 +13,7 @@ public class MovingText extends Label{
 	private float lifeTime;
 	private float maxLifeTime;
 	private Vector2 velocity;
+	boolean fade;
 	
 	public MovingText(String text, Color color, float lifeTime, Vector2 velocity, float x, float y) {
 		super(text, skin);
@@ -20,7 +22,19 @@ public class MovingText extends Label{
 		maxLifeTime = lifeTime;
 		this.velocity = velocity;
 		setColor(color);
-		setOrigin(getWidth() / 2, getHeight() / 2);
+		setX(x - getWidth() / 2);
+		setY(y - getHeight() / 2);
+	}
+	
+	public MovingText(String text, Color color, float lifeTime, Vector2 velocity, float x, float y, float scale) {
+		super(text, skin);
+		maxLifeTime = lifeTime;
+		this.velocity = velocity;
+		setColor(color);
+		setFontScale(scale);
+		setScale(scale);
+		setX(x - getWidth() * scale / 2);
+		setY(y - getHeight() * scale / 2);
 	}
 	
 	@Override
@@ -31,10 +45,5 @@ public class MovingText extends Label{
 		if (lifeTime >= maxLifeTime) {
 			remove();
 		}
-	}
-	
-	@Override
-	public void draw(Batch batch, float a) {
-		super.draw(batch, a);
 	}
 }
