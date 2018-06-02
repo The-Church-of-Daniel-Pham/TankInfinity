@@ -1,5 +1,6 @@
 package com.tank.table;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -25,6 +26,7 @@ public class PlayerHUD extends Table{
 	protected ProgressBar healthBar;
 	protected Label healthLabel;
 	protected Group health;
+	private float healthBlinkingTime;
 	
 	protected ProgressBar expBar;
 	protected Label expLabel;
@@ -96,7 +98,7 @@ public class PlayerHUD extends Table{
 		
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, true, skin, "yellow-vertical");
 		
-		healthBar = new ProgressBar(0.0f, player.tank.getMaxHealth(), 0.01f, false, skin, "green-horizontal");
+		healthBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin, "green-horizontal");
 		healthLabel = new Label("0 HP", skin, "small");
 		healthLabel.setPosition(2, 2);
 		health = new Group();
@@ -137,7 +139,7 @@ public class PlayerHUD extends Table{
 		super.setBackground(skin.newDrawable("list", 1.0f, 1.0f, 1.0f, 0.75f));
 	}
 	
-	public void update() {
+	public void update(float delta) {
 		if (subChanged()) {
 			if (player.tank.getCurrentSubWeapon() != null) {
 				centerSubImage.setDrawable(new TextureRegionDrawable(new TextureRegion(player.tank.getCurrentSubWeapon().getTexture())));
@@ -163,8 +165,28 @@ public class PlayerHUD extends Table{
 		// reload time out of max reload time (inverse of rate of fire)
 		//System.out.println(completion);
 		reloadBar.setValue(completion);
-		healthBar.setValue(player.tank.getHealth());
+		float healthPercent = (float)player.tank.getHealth() / player.tank.getMaxHealth();
+		healthBar.setValue(healthPercent);
 		healthLabel.setText(player.tank.getHealth() + " HP");
+		if (healthPercent < 0.25) {
+			healthBlinkingTime += delta;
+			while (healthBlinkingTime >= 2.5f) healthBlinkingTime -= 2.5f;
+			if (healthBlinkingTime < 0.75f) {
+				float percent = ((0.75f - healthBlinkingTime) / 0.75f);
+				healthLabel.setColor(1, percent, percent, 1);
+			}
+			else if (healthBlinkingTime < 1.5f) {
+				float percent = ((healthBlinkingTime - 0.75f) / 0.75f);
+				healthLabel.setColor(1, percent, percent, 1);
+			}
+			else {
+				healthLabel.setColor(Color.WHITE);
+			}
+		}
+		else {
+			healthBlinkingTime = 1.5f;
+			healthLabel.setColor(Color.WHITE);
+		}
 		expBar.setValue(((float) player.tank.getCurrentExp()) / player.tank.getNextExp());
 		expLabel.setText(player.tank.getCurrentExp() + " EXP");
 		
