@@ -25,7 +25,7 @@ public class MainMenu extends Stage implements InputProcessor{
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		Background titleBackground = new Background(title);
-		titleBackground.fillScale();
+		titleBackground.setFill(true);
 		super.addActor(titleBackground);
 		uiTable = new Table();
 		buildTable();
