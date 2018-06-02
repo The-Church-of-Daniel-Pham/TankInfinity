@@ -69,6 +69,18 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> gun_yellow = new AssetDescriptor<Texture>("tank/tank_gun_yellow.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> tread_purple = new AssetDescriptor<Texture>("tank/tank_tread_purple.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_purple = new AssetDescriptor<Texture>("tank/tank_gun_purple.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tread_tan = new AssetDescriptor<Texture>("tank/tank_tread_tan.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tread_gray = new AssetDescriptor<Texture>("tank/tank_tread_gray.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_gray = new AssetDescriptor<Texture>("tank/tank_gun_gray.png",
+            Texture.class);
     public static final AssetDescriptor<Texture> fixed_purple = new AssetDescriptor<Texture>("tank/tank_fixed_purple.png",
             Texture.class);
     public static final AssetDescriptor<Texture> fixed_tan = new AssetDescriptor<Texture>("tank/tank_fixed_tan.png",
@@ -169,6 +181,12 @@ public class Assets {
         manager.load(gun_green);
         manager.load(tread_yellow);
         manager.load(gun_yellow);
+        manager.load(tread_purple);
+        manager.load(gun_purple);
+        manager.load(tread_tan);
+        manager.load(gun_tan);
+        manager.load(tread_gray);
+        manager.load(gun_gray);
         manager.load(fixed_purple);
         manager.load(fixed_tan);
         manager.load(fixed_gray);

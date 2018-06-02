@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.NumberUtils;
 import com.tank.utils.Assets;
 
 public class MovingText extends Label{
