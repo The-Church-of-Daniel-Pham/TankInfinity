@@ -455,13 +455,15 @@ public class PlayerTank extends FreeTank {
 	public void gainExp(int expGained) {
 		this.exp += expGained;
 		totalExp += expGained;
-		getStage().addActor(new MovingText("+" + expGained + " EXP", Color.WHITE, 1.5f, new Vector2(0, 120),
-				getX() + (float)(100f * Math.random()) - 50f,
-				getY() + (float)(100f * Math.random()) - 50f, 0.8f));
-		while (exp >= nextExp) {
-			getStage().addActor(new MovingText("LEVEL UP!", Color.WHITE, 1.5f, new Vector2(0, 200),
+		if (getStage() != null)
+			getStage().addActor(new MovingText("+" + expGained + " EXP", Color.WHITE, 1.5f, new Vector2(0, 120),
 					getX() + (float)(100f * Math.random()) - 50f,
-					getY() + (float)(100f * Math.random()) - 50f, 1.3f));
+					getY() + (float)(100f * Math.random()) - 50f, 0.8f));
+		while (exp >= nextExp) {
+			if (getStage() != null)
+				getStage().addActor(new MovingText("LEVEL UP!", Color.WHITE, 1.5f, new Vector2(0, 200),
+						getX() + (float)(100f * Math.random()) - 50f,
+						getY() + (float)(100f * Math.random()) - 50f, 1.3f));
 			level++;
 			exp -= nextExp;
 			nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);

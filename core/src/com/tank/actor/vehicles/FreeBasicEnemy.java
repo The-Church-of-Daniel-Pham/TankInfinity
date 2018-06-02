@@ -372,10 +372,10 @@ public class FreeBasicEnemy extends FreeTank{
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 15) direction = 1;
-		else if (rotationDifference < -15) direction = -1;
+		if (rotationDifference > 10) direction = 1;
+		else if (rotationDifference < -10) direction = -1;
 		
-		rotateGun(direction * 70 * delta);
+		rotateGun(direction * 80 * delta);
 		return (direction != 0);
 	}
 	
