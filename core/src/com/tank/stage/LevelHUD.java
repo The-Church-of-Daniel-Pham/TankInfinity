@@ -58,8 +58,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 				sinceChange = 0; // reset counter
 				fpsLabel.setText(Gdx.graphics.getFramesPerSecond() + " FPS"); // update fps label
 			}
-		}
-		else {
+		} else {
 			fpsLabel.setText("");
 		}
 
@@ -76,7 +75,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().width(200).height(100).space(25).center();
+		uiTable.defaults().pad(25).center();
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
@@ -91,15 +90,16 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		});
 
-		uiTable.add(fpsLabel).colspan(2).expand().top().left();
-		uiTable.add(pauseButton).colspan(2).expand().top().right();
+		uiTable.add(fpsLabel).width(200).height(100).colspan(2).expand().top().left();
+		uiTable.add(pauseButton).width(200).height(100).colspan(2).expand().top().right();
 		uiTable.row();
 
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
-				uiTable.add(p.hud).expandX().height(200).bottom().padBottom(100);
+				uiTable.add(p.hud).width(400).bottom();
 			} else {
-				uiTable.add(placeholder).height(200).expandX().bottom().padBottom(50);
+				// placeholder scaled to fraction of the width of the entire table width
+				uiTable.add(placeholder).width(400).bottom();
 			}
 		}
 	}
