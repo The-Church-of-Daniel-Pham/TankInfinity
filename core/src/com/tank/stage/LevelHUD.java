@@ -42,15 +42,6 @@ public class LevelHUD extends Stage implements InputProcessor {
 	public void act(float delta) {
 		super.act(delta);
 
-		// pause by key input, only from active players
-		for (Player p : game.players) {
-			if (p.isEnabled()) {
-				if (p.controls.pausePressed()) {
-					game.getScreen().pause();
-				}
-			}
-		}
-
 		// update fps counter, if on
 		if (Constants.FPS_COUNTER.getCurrent().equals("On")) {
 			sinceChange += delta; // add time since last act() to counter

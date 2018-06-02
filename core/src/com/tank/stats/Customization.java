@@ -11,7 +11,7 @@ public class Customization {
 
 	public Customization() {
 		custom = new LinkedHashMap<String, String>();
-		colors = new CycleList<String> (new String[] {"default", "red", "blue", "green", "yellow", "purple", "tan"}, 0, true);
+		colors = new CycleList<String> (new String[] {"red", "blue", "green", "yellow"}, 0, true);
 	}
 
 	public void setCustom(String cust, String val) {
