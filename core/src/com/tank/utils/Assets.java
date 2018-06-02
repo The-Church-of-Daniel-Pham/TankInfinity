@@ -76,6 +76,8 @@ public class Assets {
     //Items
     public static final AssetDescriptor<Texture> box = new AssetDescriptor<Texture>("item/box.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> healthpack = new AssetDescriptor<Texture>("item/healthpack.png",
+            Texture.class);
     //UI
     public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/cursor/crosshairs_default.png",
             Texture.class);
@@ -136,6 +138,7 @@ public class Assets {
 
     public static void loadTextures() {
         manager.load(explosionSheet);
+        manager.load(healthpack);
         // System.out.println("Animation loaded");
         manager.load(grass0);
         manager.load(grass1);
