@@ -2,8 +2,10 @@ package com.tank.stage;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -77,7 +79,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 
 		TextButton videoButton = new TextButton("Video", skin);
 		TextButton audioButton = new TextButton("Audio", skin);
-		TextButton controlsButton = new TextButton("Controls", skin);
+		final TextButton controlsButton = new TextButton("Controls", skin);
 
 		videoButton.addListener(new ClickListener() {
 			@Override
@@ -96,7 +98,10 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		controlsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				changeSettingsTo(controlsTable);
+
+				ScrollPane pane = new ScrollPane(controlsTable, new ScrollPane.ScrollPaneStyle());
+				pane.setHeight(250);
+				changeSettingsTo(pane);
 			}
 		});
 
@@ -105,10 +110,10 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		titleTable.add(controlsButton);
 	}
 
-	public void changeSettingsTo(Table t) {
+	public void changeSettingsTo(Actor a) {
 		settingsTable.clearChildren();
 		settingsTable.setFillParent(false);
-		settingsTable.add(t);
+		settingsTable.add(a);
 	}
 	
 	@Override
