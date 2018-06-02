@@ -8,6 +8,8 @@ package com.tank.actor.vehicles;
  * AI.
  */
 import java.util.ArrayList;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.WallTile;
+import com.tank.actor.ui.MovingText;
 import com.tank.animations.Explosion;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
@@ -394,7 +397,12 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	public void damage(Actor source, int damage) {
 		if (damage > 0) {
-			health -= Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			damage =  Math.max(1, damage - (int)Math.pow(getStatValue("Armor"), 0.8));
+			health -= damage;
+			if (getStage() != null)
+				getStage().addActor(new MovingText("-" + damage, Color.RED, 1.5f, new Vector2(0, 200),
+						getX() + (float)(100f * Math.random()) - 50f,
+						getY() + (float)(100f * Math.random()) - 50f));
 			if (health <= 0 && !isDestroyed())
 				destroy();
 		}
@@ -411,9 +419,12 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	public void heal(Actor source, int heal) {
 		int maxHealth = stats.getStatValue("Max Health");
+		heal = Math.min(heal, maxHealth - health);
 		health += heal;
-		if (health > maxHealth)
-			health = maxHealth;
+		if (getStage() != null)
+			getStage().addActor(new MovingText("+" + heal, Color.GREEN, 1.5f, new Vector2(0, 200),
+					getX() + (float)(100f * Math.random()) - 50f,
+					getY() + (float)(100f * Math.random()) - 50f));
 	}
 
 	public int getMaxHealth() {

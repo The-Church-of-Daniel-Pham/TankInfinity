@@ -4,9 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.NumberUtils;
@@ -18,7 +16,7 @@ import com.tank.utils.CollisionEvent;
 
 public class RadialExplosion extends AbstractProjectile{
 	
-	static int normalSize = 115;
+	static int normalSize = 110;
 	static Texture burstSheet = Assets.manager.get(Assets.burstSheet);
 	private int startingSize;
 	private int endSize;
@@ -34,7 +32,7 @@ public class RadialExplosion extends AbstractProjectile{
 		endSize = stats.getStatValue("Explosion Size");
 		maxLifeTime = stats.getStatValue("Lifetime") / 10.0f;
 		lifeTime = 0f;
-		setOrigin(normalSize / 2, normalSize / 2);
+		setOrigin(64, 64);
 		vehiclesHit = new ArrayList<AbstractVehicle>();
 	}
 	
@@ -55,12 +53,12 @@ public class RadialExplosion extends AbstractProjectile{
 	@Override
 	public void draw(Batch batch, float a) {
 		int frame = (int)(currentSize / 10) % 15;
-		batch.setColor(NumberUtils.intToFloatColor(Color.toIntBits(255, 255, 255, 192)));
+		batch.setColor(NumberUtils.intToFloatColor(Color.toIntBits(255, 255, 255, (int)(192 * (1.0 - ((double)currentSize / endSize)) + 64))));
 		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), 128, 128, super.getScaleX(), super.getScaleY(),
 				0, 128 * frame, 0, 128, tex.getHeight(), false, false);
 		batch.setColor(NumberUtils.intToFloatColor(Color.toIntBits(255, 255, 255, 255)));
-		drawVertices(batch, a);
+		//drawVertices(batch, a);
 	}
 	
 	@Override
