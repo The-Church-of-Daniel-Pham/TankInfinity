@@ -23,7 +23,6 @@ public class Level extends Stage {
 	protected int mapHeight;
 	protected Map map;
 	protected LevelCamera camera;
-	private static final int HEALTHPACK_COUNT = 4;
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -86,14 +85,12 @@ public class Level extends Stage {
 		for (int i = 0; i < itemCount + 1; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
-				addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
-			}
-		}
-
-		for (int i = 0; i < HEALTHPACK_COUNT; i++) {
-			if (!emptySpaces.isEmpty()) {
-				AbstractMapTile randomTile = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
-				addActor(new HealthPackItem(randomTile.getRow(), randomTile.getCol(), new String()));
+				if (Math.random() < 0.7) {
+					addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
+				}
+				else {
+					addActor(new HealthPackItem(randomFloor.getRow(), randomFloor.getCol(), new String()));
+				}
 			}
 		}
 
