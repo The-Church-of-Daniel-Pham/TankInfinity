@@ -71,6 +71,6 @@ public class HealthPackItem extends AbstractItem {
 
     public int restoreHealth(PlayerTank p)
     {
-        return p.getMaxHealth()/4;
+        return (int) (p.getMaxHealth() * 0.4);
     }
 }
