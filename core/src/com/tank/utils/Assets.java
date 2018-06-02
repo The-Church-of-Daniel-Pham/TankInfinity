@@ -38,6 +38,17 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> stone4 = new AssetDescriptor<Texture>("map/stone4.png",
             Texture.class);
+    // Border
+    public static final AssetDescriptor<Texture> border0 = new AssetDescriptor<Texture>("map/border0.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border1 = new AssetDescriptor<Texture>("map/border1.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border2 = new AssetDescriptor<Texture>("map/border2.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border3 = new AssetDescriptor<Texture>("map/border3.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border4 = new AssetDescriptor<Texture>("map/border4.png",
+            Texture.class);
     //Portal
     public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portalSpiral.png",
     		Texture.class);
@@ -165,6 +176,11 @@ public class Assets {
         manager.load(stone2);
         manager.load(stone3);
         manager.load(stone4);
+        manager.load(border0);
+        manager.load(border1);
+        manager.load(border2);
+        manager.load(border3);
+        manager.load(border4);
         manager.load(portal);
         // System.out.println("Map textures loaded");
         manager.load(bullet);
