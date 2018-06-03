@@ -14,6 +14,7 @@ public class SettingsMenuScreen implements Screen {
 	public SettingsMenuScreen (TankInfinity game) {
 		this.game = game;
 		settingsMenu = new SettingsMenu(this.game);
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	@Override

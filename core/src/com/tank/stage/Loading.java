@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
 import com.tank.actor.ui.Background;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class Loading extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -26,7 +27,8 @@ public class Loading extends Stage implements InputProcessor {
 	protected Texture loading_tank = Assets.manager.get(Assets.loading_tank);
 	
 	public Loading(TankInfinity game) {
-		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		//super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		Background backdropBackground = new Background(backdrop);
 		backdropBackground.setFill(true);

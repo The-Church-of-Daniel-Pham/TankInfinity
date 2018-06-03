@@ -24,7 +24,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public LevelHUD(TankInfinity game) {
-		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		// cursors
 		for (Player p : game.players) {
