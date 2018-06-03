@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.items.AbstractItem;
-import com.tank.actor.items.HealthPackItem;
+import com.tank.actor.items.RepairBoxItem;
 import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
@@ -99,7 +99,7 @@ public class Level extends Stage {
 					super.addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
 				}
 				else {
-					super.addActor(new HealthPackItem(randomFloor.getRow(), randomFloor.getCol(), new String()));
+					super.addActor(new RepairBoxItem(randomFloor.getRow(), randomFloor.getCol(), new String()));
 				}
 			}
 		}
