@@ -7,20 +7,20 @@ import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.vehicles.PlayerTank;
 import com.tank.utils.Assets;
 
-public class HealthPackItem extends AbstractItem {
-    public static Texture healthpack = Assets.manager.get(Assets.healthpack);
+public class RepairBoxItem extends AbstractItem {
+    public static Texture repairbox = Assets.manager.get(Assets.repairbox);
     public static final float SCALE = 1f;
     public float rotationTime;
     public static final float PACK_SIZE = 110;
 
-    public HealthPackItem(int row, int col, String temp) {
+    public RepairBoxItem(int row, int col, String temp) {
         this(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
                 row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2);
     }
 
-    public HealthPackItem(float x, float y) {
-        super(x, y, healthpack);
-        setOrigin(healthpack.getWidth() / 2, healthpack.getHeight() / 2);
+    public RepairBoxItem(float x, float y) {
+        super(x, y, repairbox);
+        setOrigin(repairbox.getWidth() / 2, repairbox.getHeight() / 2);
         setHeight(PACK_SIZE);
         setWidth(PACK_SIZE);
         setScale(SCALE);
