@@ -17,6 +17,7 @@ import com.tank.game.TankInfinity;
 import com.tank.screen.PlayScreen;
 import com.tank.table.PlayerUpgradeMenu;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class UpgradeMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -26,7 +27,8 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 	private ArrayList<PlayerUpgradeMenu> pUpgradeMenus;
 
 	public UpgradeMenu(TankInfinity game) {
-		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		//super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super (new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		pUpgradeMenus = new ArrayList<PlayerUpgradeMenu>();
 		uiTable = new Table();

@@ -14,6 +14,8 @@ public class Constants {
 	public static CycleList<String> FPS_COUNTER = new CycleList<String>(new String[] { "On", "Off" }, 1, true);
 	public static float CLEAR_COLOR = 25f / 255f;
 
+	public static int DEFAULT_WIDTH = 1920;
+	public static int DEFAULT_HEIGHT = 1080;
 	public static final int LEVEL1_WIDTH = 40;
 	public static final int LEVEL1_HEIGHT = 40;
 

@@ -14,6 +14,7 @@ public class CustomizationMenuScreen implements Screen{
 	public CustomizationMenuScreen (TankInfinity game) {
 		this.game = game;
 		customizationMenu = new CustomizationMenu(this.game);
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	@Override

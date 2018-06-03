@@ -15,6 +15,7 @@ import com.tank.game.TankInfinity;
 import com.tank.screen.PlayScreen;
 import com.tank.table.PlayerCustomizationMenu;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class CustomizationMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -23,7 +24,8 @@ public class CustomizationMenu extends Stage implements InputProcessor {
 	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public CustomizationMenu(TankInfinity game) {
-		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		//super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		uiTable = new Table();
 		buildTable();
