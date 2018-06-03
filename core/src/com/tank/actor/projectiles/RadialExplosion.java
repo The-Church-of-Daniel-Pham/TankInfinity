@@ -78,7 +78,7 @@ public class RadialExplosion extends AbstractProjectile{
 				knockback.setAngle(direction);
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(knockback);
 				vehiclesHit.add((AbstractVehicle)e.getCollidable());
-				((AbstractVehicle)e.getCollidable()).damage(this, (int)Math.min(stats.getStatValue("Damage") * (2.0 - 1.5 * ((double)currentSize / endSize)), stats.getStatValue("Damage")));
+				((AbstractVehicle)e.getCollidable()).damage(this, (int)Math.min(stats.getStatValue("Damage") * (1.35 - 1.1 * ((double)currentSize / endSize)), stats.getStatValue("Damage")));
 			}
 		}
 	}
