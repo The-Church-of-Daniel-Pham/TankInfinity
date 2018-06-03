@@ -126,7 +126,7 @@ public class PlayScreen implements Screen {
 		if (!paused && !gameOver) {
 			if (isReadyForNextLevel()) {
 				setupNextLevel();
-				//game.setScreen(game.screens.get("Upgrades Menu"));
+				game.setScreen(game.screens.get("Upgrades Menu"));
 			}
 		}
 	}
