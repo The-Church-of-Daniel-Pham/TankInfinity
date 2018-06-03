@@ -65,6 +65,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> pellet = new AssetDescriptor<Texture>("projectiles/pellet.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
+            Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_red = new AssetDescriptor<Texture>("tank/tank_tread_red.png",
             Texture.class);
@@ -192,6 +194,7 @@ public class Assets {
         manager.load(boomerang);
         manager.load(landMine);
         manager.load(pellet);
+        manager.load(pelletIcon);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);
