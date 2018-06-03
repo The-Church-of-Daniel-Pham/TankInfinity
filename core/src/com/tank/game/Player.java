@@ -1,7 +1,5 @@
 package com.tank.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.tank.actor.ui.Cursor;
 import com.tank.actor.vehicles.PlayerTank;
 import com.tank.controls.ControlConstants;
