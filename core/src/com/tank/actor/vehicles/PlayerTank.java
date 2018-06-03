@@ -13,11 +13,13 @@ import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.ui.ArtilleryMark;
 import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
 import com.tank.stage.Level;
+import com.tank.stats.Stats;
 import com.tank.stats.Upgrade;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
@@ -496,6 +498,10 @@ public class PlayerTank extends FreeTank {
 
 	public int getPlayerNumber() {
 		return playerNumber;
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 
 	public float getReloadTime() {
