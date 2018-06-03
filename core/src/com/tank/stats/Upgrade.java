@@ -3,6 +3,7 @@ package com.tank.stats;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.tank.utils.Assets;
 
 public class Upgrade {
 	private Texture icon;
@@ -94,7 +95,10 @@ public class Upgrade {
 	}
 	
 	public Texture getIcon() {
-		return icon;
+		if (icon != null)
+			return icon;
+		else
+			return Assets.manager.get(Assets.bullet);
 	}
 	
 	public Stats getChanges() {
