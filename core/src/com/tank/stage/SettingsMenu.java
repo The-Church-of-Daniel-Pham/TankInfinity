@@ -113,6 +113,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		settingsTable.clearChildren();
 		settingsTable.setFillParent(false);
 		settingsTable.add(a);
+		settingsTable.layout();
 	}
 	
 	@Override

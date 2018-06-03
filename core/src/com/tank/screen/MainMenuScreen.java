@@ -14,6 +14,7 @@ public class MainMenuScreen implements Screen {
 	public MainMenuScreen (TankInfinity game) {
 		this.game = game;
 		mainMenu = new MainMenu(this.game);
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ public class UpgradeMenuScreen implements Screen {
 	public UpgradeMenuScreen(TankInfinity game) {
 		this.game = game;
 		uMenu = new UpgradeMenu(this.game);
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
