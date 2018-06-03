@@ -38,6 +38,17 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> stone4 = new AssetDescriptor<Texture>("map/stone4.png",
             Texture.class);
+    // Border
+    public static final AssetDescriptor<Texture> border0 = new AssetDescriptor<Texture>("map/border0.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border1 = new AssetDescriptor<Texture>("map/border1.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border2 = new AssetDescriptor<Texture>("map/border2.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border3 = new AssetDescriptor<Texture>("map/border3.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> border4 = new AssetDescriptor<Texture>("map/border4.png",
+            Texture.class);
     //Portal
     public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portalSpiral.png",
     		Texture.class);
@@ -51,6 +62,10 @@ public class Assets {
     public static final AssetDescriptor<Texture> landMine = new AssetDescriptor<Texture>("projectiles/landMine.png",
 			Texture.class);
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> pellet = new AssetDescriptor<Texture>("projectiles/pellet.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
             Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_red = new AssetDescriptor<Texture>("tank/tank_tread_red.png",
@@ -69,11 +84,25 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> gun_yellow = new AssetDescriptor<Texture>("tank/tank_gun_yellow.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> tread_purple = new AssetDescriptor<Texture>("tank/tank_tread_purple.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_purple = new AssetDescriptor<Texture>("tank/tank_gun_purple.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tread_tan = new AssetDescriptor<Texture>("tank/tank_tread_tan.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_tan = new AssetDescriptor<Texture>("tank/tank_gun_tan.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tread_gray = new AssetDescriptor<Texture>("tank/tank_tread_gray.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> gun_gray = new AssetDescriptor<Texture>("tank/tank_gun_gray.png",
+            Texture.class);
     public static final AssetDescriptor<Texture> fixed_purple = new AssetDescriptor<Texture>("tank/tank_fixed_purple.png",
             Texture.class);
     public static final AssetDescriptor<Texture> fixed_tan = new AssetDescriptor<Texture>("tank/tank_fixed_tan.png",
             Texture.class);
     public static final AssetDescriptor<Texture> fixed_gray = new AssetDescriptor<Texture>("tank/tank_fixed_gray.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> fixed_big = new AssetDescriptor<Texture>("tank/tank_fixed_big_rocket.png",
             Texture.class);
     //Items
     public static final AssetDescriptor<Texture> box = new AssetDescriptor<Texture>("item/box.png",
@@ -98,8 +127,6 @@ public class Assets {
     public static final AssetDescriptor<Texture> tank_preview_green = new AssetDescriptor<Texture>("ui/tank/tank_preview_green.png",
             Texture.class);
     public static final AssetDescriptor<Texture> tank_preview_yellow = new AssetDescriptor<Texture>("ui/tank/tank_preview_yellow.png",
-            Texture.class);
-    public static final AssetDescriptor<Texture> sub_empty = new AssetDescriptor<Texture>("ui/sub/sub_empty.png",
             Texture.class);
     // Menu
     public static final AssetDescriptor<Texture> backdrop = new AssetDescriptor<Texture>("menu/loading/backdrop.png",
@@ -143,7 +170,6 @@ public class Assets {
     public static void loadTextures() {
         manager.load(explosionSheet);
         manager.load(burstSheet);
-        manager.load(healthpack);
         // System.out.println("Animation loaded");
         manager.load(grass0);
         manager.load(grass1);
@@ -155,6 +181,11 @@ public class Assets {
         manager.load(stone2);
         manager.load(stone3);
         manager.load(stone4);
+        manager.load(border0);
+        manager.load(border1);
+        manager.load(border2);
+        manager.load(border3);
+        manager.load(border4);
         manager.load(portal);
         // System.out.println("Map textures loaded");
         manager.load(bullet);
@@ -162,6 +193,8 @@ public class Assets {
         manager.load(chakram);
         manager.load(boomerang);
         manager.load(landMine);
+        manager.load(pellet);
+        manager.load(pelletIcon);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);
@@ -171,11 +204,19 @@ public class Assets {
         manager.load(gun_green);
         manager.load(tread_yellow);
         manager.load(gun_yellow);
+        manager.load(tread_purple);
+        manager.load(gun_purple);
+        manager.load(tread_tan);
+        manager.load(gun_tan);
+        manager.load(tread_gray);
+        manager.load(gun_gray);
         manager.load(fixed_purple);
         manager.load(fixed_tan);
         manager.load(fixed_gray);
+        manager.load(fixed_big);
         // System.out.println("Tank textures loaded");
         manager.load(box);
+        manager.load(healthpack);
         // System.out.println("Item textures loaded");
         manager.load(crosshairs_default);
         manager.load(crosshairs_red);
@@ -190,7 +231,6 @@ public class Assets {
         manager.load(title);
         manager.load(black);
         manager.load(red);
-        manager.load(sub_empty);
         // System.out.println("Menu textures loaded");
         manager.load(vertex);
         // System.out.println("Debug textures loaded");

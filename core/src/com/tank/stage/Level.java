@@ -2,6 +2,8 @@ package com.tank.stage;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.items.AbstractItem;
@@ -11,9 +13,11 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.ui.MovingText;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;
+import com.tank.actor.vehicles.RocketEnemy;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 
@@ -74,6 +78,9 @@ public class Level extends Stage {
 		map = new Map(mapWidth, mapHeight, this);
 		addActor(map);
 
+		Vector2 spawnCenter = map.getCenterOfTilePos(map.getSpawnPoint()[0], map.getSpawnPoint()[1]);
+		addActor(new MovingText("LEVEL " + levelNum, Color.WHITE, 15.0f, new Vector2(0, 0), spawnCenter.x, spawnCenter.y, 4, true, 5.0f));
+		
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
 		int minItems = (int) (7.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
 		int maxItems = (int) (12.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
@@ -89,28 +96,35 @@ public class Level extends Stage {
 				}
 			}
 		}
-		
-		if (levelNum == 1)
-			spawnInPlayers(true);
-		else
-			spawnInPlayers(false);
 
 		int minEnemies = (int) (3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int enemyCount = (int) (Math.random() * (maxEnemies - minEnemies)) + minEnemies;
+		addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
+				spawnCenter.x, spawnCenter.y - AbstractMapTile.SIZE, 2, true, 5.0f));
 		for (int i = 0; i < enemyCount; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-				if (Math.random() < 0.5) {
-					addActor(new BasicEnemy(pos[0], pos[1], levelNum));
-				}
-				else {
-					addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
+				switch ((int)(Math.random() * 5)) {
+					case 0: case 2:
+						addActor(new BasicEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 1: case 3:
+						addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 4:
+						addActor(new RocketEnemy(pos[0], pos[1], levelNum));
+						break;
 				}
 			}
 		}
+		
+		if (levelNum == 1)
+			spawnInPlayers(true);
+		else
+			spawnInPlayers(false);
 
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
@@ -118,13 +132,6 @@ public class Level extends Stage {
 	}
 
 	private void spawnInPlayers(boolean first) {
-		/**
-		 * Player formations: 1 Player 2 Players 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-		 * 0 0 1 0 0 0 1 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-		 * 
-		 * 3 Players 4 Players 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 2 0 0 0 0 0 0 0 0 0 0
-		 * 0 0 2 0 3 0 0 3 0 4 0 0 0 0 0 0 0 0 0 0 0
-		 */
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (Player p : game.players) {
 			if (p.isEnabled()) {

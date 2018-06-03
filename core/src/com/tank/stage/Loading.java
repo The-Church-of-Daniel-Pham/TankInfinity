@@ -29,7 +29,7 @@ public class Loading extends Stage implements InputProcessor {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		this.game = game;
 		Background backdropBackground = new Background(backdrop);
-		backdropBackground.fillScale();
+		backdropBackground.setFill(true);
 		tankLoadingBackground = new Background(loading_tank);
 		tankLoadingBackground.setPosition(-loading_tank.getWidth(), 300);
 		percent = 0;
@@ -53,7 +53,7 @@ public class Loading extends Stage implements InputProcessor {
 		uiTable.bottom().padBottom(100).right().padRight(50);
 
 		// Add widgets to the table here.
-		Label tipLabel = new Label("Git gud", skin, "withBackground");
+		Label tipLabel = new Label("Git gud", skin, "mediumWithBackground");
 		tipLabel.setAlignment(Align.topLeft);
 		uiTable.add(tipLabel).width(500).height(150).right();
 	}

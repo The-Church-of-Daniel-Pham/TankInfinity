@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class BoomerangSubWeapon extends SubWeapon{
 	
-private static Texture boomerangTexture = Assets.manager.get(Assets.boomerang);
+	private static Texture boomerangTexture = Assets.manager.get(Assets.boomerang);
 	
 	public BoomerangSubWeapon(int ammo) {
 		super("Boomerang", boomerangTexture, ammo);
