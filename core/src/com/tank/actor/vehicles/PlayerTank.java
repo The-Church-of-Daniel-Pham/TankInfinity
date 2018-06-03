@@ -13,6 +13,7 @@ import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.projectiles.Laser;
 import com.tank.actor.ui.ArtilleryMark;
 import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;

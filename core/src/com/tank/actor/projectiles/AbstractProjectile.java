@@ -297,6 +297,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 
 			float[] cTestVertices = c.getHitbox().getVertices(); // vertices of a Collidable object that may collide
 																	// with this instance
+			boolean collided = false;
 			for (int i = 0; i < testVertices.length / 2; i++) {
 				// check for wall collision by checking if the corners of this instance are
 				// contained within another Collidable object
@@ -306,19 +307,21 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					collided = true;
 					break;
 				}
 			}
-			
-			for (int i = 0; i < cTestVertices.length / 2; i++) {
-				// check for corner collision by checking if the corners of another Collidable
-				// object are contained within this instance
-				if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
-					// create new corner collision event
-					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
-					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
-							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
-					break;
+			if (!collided) {
+				for (int i = 0; i < cTestVertices.length / 2; i++) {
+					// check for corner collision by checking if the corners of another Collidable
+					// object are contained within this instance
+					if (testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1])) {
+						// create new corner collision event
+						Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
+						collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
+								new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+						break;
+					}
 				}
 			}
 		}
