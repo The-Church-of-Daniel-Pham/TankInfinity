@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tank.utils.Constants;
 
 public class Background extends Actor {
 	protected Texture texture;
@@ -11,6 +12,9 @@ public class Background extends Actor {
 	
 	public Background(Texture tex) {
 		texture = tex;
+		setX(Constants.DEFAULT_WIDTH / 2);
+		setY(Constants.DEFAULT_HEIGHT / 2);
+		setOrigin(texture.getWidth() / 2, texture.getHeight() / 2);
 	}
 	
 	public void setFill(boolean f) {
@@ -20,9 +24,23 @@ public class Background extends Actor {
 	private void fillScale() {
 		// between ratios of screen size to image dimensions, picks the largest such
 		// that the image is scaled up to fill the screen
-		System.out.println(Gdx.graphics.getWidth() + " x " +  Gdx.graphics.getHeight());
-		setScale(Math.max(((float) Gdx.graphics.getWidth()) / texture.getWidth(), ((float) Gdx.graphics.getHeight()) / texture.getHeight()));
-		System.out.println(getScaleX() + ", " + getScaleY());
+		//System.out.println(Gdx.graphics.getWidth() + " x " +  Gdx.graphics.getHeight());
+		setScale(Math.max(((float) getStage().getWidth()) / texture.getWidth(), ((float) getStage().getHeight()) / texture.getHeight()));
+		if (texture.getWidth() > 1) {
+			setX(getStage().getWidth() / 2);
+		}
+		else {
+			setX(0);
+		}
+		if (texture.getHeight() > 1) {
+			setY(getStage().getHeight() / 2);
+		}
+		else {
+			setY(0);
+		}
+		//setX(getStage().getViewport().getCamera().position.x);
+		//setX(getStage().getViewport().getCamera().position.y);
+		//System.out.println(getScaleX() + ", " + getScaleY());
 	}
 	
 	@Override
