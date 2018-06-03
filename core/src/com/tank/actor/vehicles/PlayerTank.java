@@ -250,20 +250,22 @@ public class PlayerTank extends FreeTank {
 			engine_sound.loop();
 			engineSoundOn = true;
 		}
-
-		if (getVelocity().len() > 0 && !treadSoundOn) {
+		
+		float combinedSpeed = getVelocity().len() + Math.abs(getAngularVelocity());
+		if (combinedSpeed > 0 && !treadSoundOn) {
 			tread_sound.play();
 			tread_sound.loop();
-			tread_sound.setVolume((getVelocity().len()) / (getVelocity().len() + SOME_CONSTANT));
+			tread_sound.setVolume((combinedSpeed) / (combinedSpeed + SOME_CONSTANT));
 			treadSoundOn = true;
 		} else if (treadSoundOn) {
-			tread_sound.setVolume((getVelocity().len()) / (getVelocity().len() + SOME_CONSTANT));
+			tread_sound.setVolume((combinedSpeed) / (combinedSpeed + SOME_CONSTANT));
 		}
 
-		if (getVelocity().len() <= THRESH) {
+		if (combinedSpeed <= THRESH) {
 			treadSoundOn = false;
 			tread_sound.stop();
 		}
+		System.out.println(combinedSpeed);
 	}
 
 	@Override

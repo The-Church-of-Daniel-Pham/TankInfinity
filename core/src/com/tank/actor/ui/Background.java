@@ -23,7 +23,6 @@ public class Background extends Actor {
 	private void fillScale() {
 		// between ratios of screen size to image dimensions, picks the largest such
 		// that the image is scaled up to fill the screen
-		//System.out.println(Gdx.graphics.getWidth() + " x " +  Gdx.graphics.getHeight());
 		setScale(Math.max(((float) getStage().getWidth()) / texture.getWidth(), ((float) getStage().getHeight()) / texture.getHeight()));
 		if (texture.getWidth() > 1) {
 			setX(getStage().getWidth() / 2);
@@ -37,9 +36,6 @@ public class Background extends Actor {
 		else {
 			setY(0);
 		}
-		//setX(getStage().getViewport().getCamera().position.x);
-		//setX(getStage().getViewport().getCamera().position.y);
-		//System.out.println(getScaleX() + ", " + getScaleY());
 	}
 	
 	@Override

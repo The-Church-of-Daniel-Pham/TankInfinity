@@ -16,7 +16,7 @@ import com.tank.utils.Assets;
 
 public class SubWeaponItem extends AbstractItem{
 	public SubWeapon sub;
-	public static Texture box = Assets.manager.get(Assets.box);
+	public static Texture box = Assets.manager.get(Assets.mysterybox);
 	public static final float BOX_SIZE = 110;
 	public static final float SCALE = 0.6f;
 	public float rotationAnimTime = 0f;
