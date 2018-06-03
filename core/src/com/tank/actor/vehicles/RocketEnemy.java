@@ -12,7 +12,7 @@ public class RocketEnemy extends BasicEnemy{
 		super(x, y, level);
 		tankTexture = Assets.manager.get(Assets.fixed_big);
 		reverseTimeChanges = 0.3f;
-		distanceForShoot = 8f;
+		distanceForShoot = 7f;
 		expGive = 3 + level;
 	}
 	
