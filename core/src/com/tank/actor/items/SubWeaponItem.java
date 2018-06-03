@@ -8,6 +8,7 @@ import com.tank.subweapons.ArtillerySubWeapon;
 import com.tank.subweapons.BoomerangSubWeapon;
 import com.tank.subweapons.ChakramSubWeapon;
 import com.tank.subweapons.LandMineSubWeapon;
+import com.tank.subweapons.LaserSubWeapon;
 import com.tank.subweapons.PelletsSubWeapon;
 import com.tank.subweapons.RocketSubWeapon;
 import com.tank.subweapons.SubWeapon;
@@ -84,7 +85,7 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 6);
+		int random = (int)(Math.random() * 7);
 		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
@@ -98,6 +99,8 @@ public class SubWeaponItem extends AbstractItem{
 				return new PelletsSubWeapon(3);
 			case 5:
 				return new ArtillerySubWeapon(2);
+			case 6:
+				return new LaserSubWeapon(2);
 		}
 		return null;
 	}
