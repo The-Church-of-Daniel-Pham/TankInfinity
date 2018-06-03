@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.tank.game.Player;
-import com.tank.utils.Assets;
 
 public class Cursor extends AbstractUI {
 	protected Vector3 screenPos;
@@ -25,7 +24,8 @@ public class Cursor extends AbstractUI {
 		this.player = player;
 		this.stage = stage;
 		newGame = true;
-		tex = Assets.manager.get(Assets.crosshairs_default);
+		tex = player.custom.getTexture("cursor");
+		setColor(player.custom.getColor());
 		screenPos = new Vector3(0, 0, 0);
 		setOrigin(tex.getWidth() / 2, tex.getHeight() / 2);
 	}
@@ -74,7 +74,6 @@ public class Cursor extends AbstractUI {
 	}
 	
 	public void draw(Batch batch, float a) {
-		tex = player.custom.getTexture("cursor");
 		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
 				super.getOriginX(), super.getOriginY(), tex.getWidth(), tex.getHeight(), 1, 1,
 				super.getRotation(), 0, 0, tex.getWidth(), tex.getHeight(), false, false);
