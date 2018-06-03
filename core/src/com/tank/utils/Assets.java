@@ -63,6 +63,8 @@ public class Assets {
 			Texture.class);
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> pellet = new AssetDescriptor<Texture>("projectiles/pellet.png",
+            Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_red = new AssetDescriptor<Texture>("tank/tank_tread_red.png",
             Texture.class);
@@ -166,7 +168,6 @@ public class Assets {
     public static void loadTextures() {
         manager.load(explosionSheet);
         manager.load(burstSheet);
-        manager.load(healthpack);
         // System.out.println("Animation loaded");
         manager.load(grass0);
         manager.load(grass1);
@@ -190,6 +191,7 @@ public class Assets {
         manager.load(chakram);
         manager.load(boomerang);
         manager.load(landMine);
+        manager.load(pellet);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);
@@ -211,6 +213,7 @@ public class Assets {
         manager.load(fixed_big);
         // System.out.println("Tank textures loaded");
         manager.load(box);
+        manager.load(healthpack);
         // System.out.println("Item textures loaded");
         manager.load(crosshairs_default);
         manager.load(crosshairs_red);
