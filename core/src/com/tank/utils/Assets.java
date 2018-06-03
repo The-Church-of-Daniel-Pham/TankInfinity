@@ -71,8 +71,6 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> artilleryShell = new AssetDescriptor<Texture>("projectiles/tiltedAirBomb.png",
             Texture.class);
-    public static final AssetDescriptor<Texture> artilleryMark = new AssetDescriptor<Texture>("projectiles/artilleryMark.png",
-            Texture.class);
     public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
             Texture.class);
     // Tank
@@ -118,8 +116,6 @@ public class Assets {
     public static final AssetDescriptor<Texture> healthpack = new AssetDescriptor<Texture>("item/healthpack.png",
             Texture.class);
     //UI
-    public static final AssetDescriptor<Texture> crosshairs_default = new AssetDescriptor<Texture>("ui/cursor/crosshairs_default.png",
-            Texture.class);
     public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/crosshairs_red.png",
             Texture.class);
     public static final AssetDescriptor<Texture> crosshairs_blue = new AssetDescriptor<Texture>("ui/cursor/crosshairs_blue.png",
@@ -127,6 +123,18 @@ public class Assets {
     public static final AssetDescriptor<Texture> crosshairs_green = new AssetDescriptor<Texture>("ui/cursor/crosshairs_green.png",
             Texture.class);
     public static final AssetDescriptor<Texture> crosshairs_yellow = new AssetDescriptor<Texture>("ui/cursor/crosshairs_yellow.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> crosshairs_black = new AssetDescriptor<Texture>("ui/cursor/crosshairs_black.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/artillery_crosshairs_red.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_crosshairs_blue = new AssetDescriptor<Texture>("ui/cursor/artillery_crosshairs_blue.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_crosshairs_green = new AssetDescriptor<Texture>("ui/cursor/artillery_crosshairs_green.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_crosshairs_yellow = new AssetDescriptor<Texture>("ui/cursor/artillery_crosshairs_yellow.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_crosshairs_black = new AssetDescriptor<Texture>("ui/cursor/artillery_crosshairs_black.png",
             Texture.class);
     public static final AssetDescriptor<Texture> tank_preview_red = new AssetDescriptor<Texture>("ui/tank/tank_preview_red.png",
             Texture.class);
@@ -204,7 +212,6 @@ public class Assets {
         manager.load(landMine);
         manager.load(pellet);
         manager.load(artilleryShell);
-        manager.load(artilleryMark);
         manager.load(pelletIcon);
         manager.load(laser);
         // System.out.println("Projectile textures loaded");
@@ -230,11 +237,16 @@ public class Assets {
         manager.load(box);
         manager.load(healthpack);
         // System.out.println("Item textures loaded");
-        manager.load(crosshairs_default);
         manager.load(crosshairs_red);
         manager.load(crosshairs_blue);
         manager.load(crosshairs_green);
         manager.load(crosshairs_yellow);
+        manager.load(crosshairs_black);
+        manager.load(artillery_crosshairs_red);
+        manager.load(artillery_crosshairs_blue);
+        manager.load(artillery_crosshairs_green);
+        manager.load(artillery_crosshairs_yellow);
+        manager.load(artillery_crosshairs_black);
         manager.load(tank_preview_red);
         manager.load(tank_preview_blue);
         manager.load(tank_preview_green);
