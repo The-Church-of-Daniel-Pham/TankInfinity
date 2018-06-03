@@ -16,7 +16,7 @@ public class LandMineSubWeapon extends SubWeapon{
 
 	@Override
 	public void shoot(PlayerTank source) {
-		source.getStage().getRoot().addActorAt(1,
+		source.getStage().addActor(
 				new LandMine(source, createStats(source), source.getX(), source.getY()));
 		int fireRate = source.getStatValue("Fire Rate");
 		source.setReloadTime(4.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
