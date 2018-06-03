@@ -34,6 +34,8 @@ public class ControlsSettings extends Table{
 	private TextButton rShiftText;
 	private TextButton lShiftText;
 	private TextButton pauseText;
+	
+	private Thread settingKey;
 
 
 	public ControlsSettings(TankInfinity game) {
@@ -57,17 +59,32 @@ public class ControlsSettings extends Table{
 		forwardText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				while(true) {
-					if (isMouseInput()) {
-						saveKey("UP", buttonPressed());
-						updateButton(forwardText, "UP");
-						break;
-					} else {
-						saveKey("UP", keyPressed());
-						updateButton(forwardText, "UP");
-						break;
-					}
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
 				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("UP", control);
+								updateButton(forwardText, "UP");
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted()) return;
+							if (loops == 100) return; //10 seconds
+							
+						}
+					}
+				};
+				settingKey.start();
 				event.stop();
 			}
 		});
@@ -160,19 +177,19 @@ public class ControlsSettings extends Table{
 		super.add(right);
 	}
 
-	private void saveKey(String key, int input)
+	private void saveKey(String key, KeyControl input)
 	{
-		int type = 0;
-		if(isMouseInput())
-		{
-			type = 1;
-		}
-		game.players.get(0).controls.setKey(key, new KeyControl(input, type));
+		game.players.get(0).controls.setKey(key, input);
 	}
-
-	private boolean isMouseInput()
-	{
-		return Gdx.input.isButtonPressed(Input.Buttons.LEFT) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT) || Gdx.input.isButtonPressed(Input.Buttons.MIDDLE);
+	
+	public KeyControl pressedControls() {
+		int key = keyPressed();
+		if (key != -1)
+			return new KeyControl(key, 0);
+		int button = buttonPressed();
+		if (button != -1)
+			return new KeyControl(button, 1);
+		return null;
 	}
 
 	private int keyPressed()
