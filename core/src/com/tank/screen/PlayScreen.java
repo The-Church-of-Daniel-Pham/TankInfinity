@@ -18,6 +18,7 @@ public class PlayScreen implements Screen {
 	public PauseMenu pauseMenu;
 	public GameOverMenu gameOverMenu;
 	protected boolean paused;
+	protected boolean pauseHeld;
 	protected boolean gameOver;
 	protected int levelNum;
 
@@ -69,6 +70,22 @@ public class PlayScreen implements Screen {
 
 		// if more than one type of viewports are used, each's apply() must be called
 		// before drawing
+		
+		// pause by key input, only from active players
+		boolean pausePressed = false;
+		if (!gameOver) {
+			for (Player p : game.players) {
+				if (p.isEnabled()) {
+					if (p.controls.pausePressed()) {
+						pausePressed = true;
+					}
+				}
+			}
+		}
+		if (pausePressed && !pauseHeld) {
+			if (!paused) pause(); else resume();
+		}
+		pauseHeld = pausePressed;
 
 		if (!gameOver) {
 			gameOver = isGameOver(); //check if game is over
@@ -109,6 +126,7 @@ public class PlayScreen implements Screen {
 		if (!paused && !gameOver) {
 			if (isReadyForNextLevel()) {
 				setupNextLevel();
+				//game.setScreen(game.screens.get("Upgrades Menu"));
 			}
 		}
 	}

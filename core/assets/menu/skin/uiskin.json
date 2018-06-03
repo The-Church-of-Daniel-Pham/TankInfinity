@@ -1,7 +1,13 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	bison: {
-		file: bison.fnt
+	bison36: {
+		file: bison36.fnt
+	}
+	bison48: {
+		file: bison48.fnt
+	}
+	bison72: {
+		file: bison72.fnt
 	}
 }
 com.badlogic.gdx.graphics.Color: {
@@ -11,22 +17,40 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	blue: {
+		r: 0.18039215
+		g: 0.71706593
+		b: 0.90196073
+		a: 1
+	}
 	dark-gray: {
 		r: 0.2
 		g: 0.2
 		b: 0.2
 		a: 1
 	}
-	gray: {
-		r: 0.68333334
-		g: 0.68333334
-		b: 0.68333334
+	green: {
+		r: 0.1824097
+		g: 0.90411764
+		b: 0.41961932
+		a: 1
+	}
+	light-gray: {
+		r: 0.702353
+		g: 0.702353
+		b: 0.702353
 		a: 1
 	}
 	white: {
 		r: 1
 		g: 1
 		b: 1
+		a: 1
+	}
+	yellow: {
+		r: 0.8980392
+		g: 0.8388453
+		b: 0.17647058
 		a: 1
 	}
 }
@@ -49,24 +73,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1
 		}
 	}
-	round-gray-small: {
-		name: round-white-small
-		color: {
-			r: 0.4633333
-			g: 0.4633333
-			b: 0.4633333
-			a: 1
-		}
-	}
-	round-black-small: {
-		name: round-white-small
-		color: {
-			r: 0
-			g: 0
-			b: 0
-			a: 1
-		}
-	}
 	gray: {
 		name: white
 		color: {
@@ -80,6 +86,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: textfield
 		color: dark-gray
 	}
+	progress-bar-fill-green: {
+		name: progress-bar-fill
+		color: green
+	}
+	progress-bar-fill-blue: {
+		name: progress-bar-fill
+		color: blue
+	}
+	progress-bar-fill-vert-yellow: {
+		name: progress-bar-fill-vert
+		color: yellow
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
@@ -87,40 +105,17 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: round-white
 		over: round-gray
 	}
-	toggle: {
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
-		checked: round-dark-gray
-		checkedOver: round-light-gray
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
-	default: {
-		checkboxOn: checkbox-on
-		checkboxOff: checkbox
-		font: bison
-		fontColor: gray
-		checkedFontColor: white
-	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
-		up: round-gray
+		up: round-dark-gray
 		down: round-dark-gray
 		over: round-light-gray
-	}
-	toggle: {
-		up: round-gray
-		down: round-dark-gray
-		over: round-light-gray
-		checked: round-dark-gray
-		checkedOver: round-light-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
-		font: bison
+		font: bison72
 		fontColor: white
 		downFontColor: black
 		up: round-dark-gray
@@ -130,20 +125,50 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
-		font: bison
+		font: bison72
 		fontColor: white
 	}
-	withBackground: {
-		font: bison
+	defaultWithBackground: {
+		font: bison72
+		fontColor: white
+		background: round-dark-gray
+	}
+	medium: {
+		font: bison48
+		fontColor: white
+	}
+	small: {
+		font: bison36
+		fontColor: white
+	}
+	mediumWithBackground: {
+		font: bison48
+		fontColor: white
+		background: round-dark-gray
+	}
+	smallWithBackground: {
+		font: bison36
 		fontColor: white
 		background: round-dark-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
-		font: bison
+		font: bison72
 		fontColorSelected: white
-		fontColorUnselected: gray
+		fontColorUnselected: light-gray
+		selection: selection
+	}
+	medium: {
+		font: bison48
+		fontColorSelected: white
+		fontColorUnselected: light-gray
+		selection: selection
+	}
+	small: {
+		font: bison36
+		fontColorSelected: white
+		fontColorUnselected: light-gray
 		selection: selection
 	}
 }
@@ -156,21 +181,45 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 		background: progress-bar
 		knobBefore: progress-bar-fill-vert
 	}
+	blue-horizontal: {
+		background: progress-bar
+		knobBefore: progress-bar-fill-blue
+	}
+	green-horizontal: {
+		background: progress-bar
+		knobBefore: progress-bar-fill-green
+	}
+	yellow-vertical: {
+		background: progress-bar
+		knobBefore: progress-bar-fill-vert-yellow
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
 		background: list
-		hScroll: round-black-small
-		hScrollKnob: round-gray-small
-		vScroll: round-black-small
-		vScrollKnob: round-gray-small
+		hScrollKnob: slider-horizontal
+		vScrollKnob: slider-vertical
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: bison
+		font: bison72
 		fontColor: white
-		disabledFontColor: gray
+		disabledFontColor: light-gray
+		scrollStyle: default
+		listStyle: default
+	}
+	medium: {
+		font: bison48
+		fontColor: white
+		disabledFontColor: light-gray
+		scrollStyle: default
+		listStyle: default
+	}
+	small: {
+		font: bison36
+		fontColor: white
+		disabledFontColor: light-gray
 		scrollStyle: default
 		listStyle: default
 	}
@@ -185,14 +234,23 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 		knob: slider-knob
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
-	default-vertical: {
-		handle: vertical-split-pane
-	}
-}
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: bison
+		font: bison72
+		fontColor: white
+		downFontColor: black
+		down: round-white
+		over: round-gray
+	}
+	medium: {
+		font: bison48
+		fontColor: white
+		downFontColor: black
+		down: round-white
+		over: round-gray
+	}
+	small: {
+		font: bison36
 		fontColor: white
 		downFontColor: black
 		down: round-white
@@ -201,7 +259,25 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
-		font: bison
+		font: bison72
+		fontColor: white
+		focusedFontColor: black
+		background: textfield-dark-gray
+		focusedBackground: textfield
+		cursor: cursor
+		selection: gray
+	}
+	medium: {
+		font: bison48
+		fontColor: white
+		focusedFontColor: black
+		background: textfield-dark-gray
+		focusedBackground: textfield
+		cursor: cursor
+		selection: gray
+	}
+	small: {
+		font: bison36
 		fontColor: white
 		focusedFontColor: black
 		background: textfield-dark-gray
@@ -213,12 +289,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-	default: {
-		background: window
-		titleFont: bison
 	}
 }
 }

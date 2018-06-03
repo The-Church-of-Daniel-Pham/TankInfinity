@@ -7,6 +7,7 @@ import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.subweapons.BoomerangSubWeapon;
 import com.tank.subweapons.ChakramSubWeapon;
 import com.tank.subweapons.LandMineSubWeapon;
+import com.tank.subweapons.PelletsSubWeapon;
 import com.tank.subweapons.RocketSubWeapon;
 import com.tank.subweapons.SubWeapon;
 import com.tank.utils.Assets;
@@ -21,7 +22,7 @@ public class SubWeaponItem extends AbstractItem{
 	public SubWeaponItem(int row, int col) {
 		this(col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 				row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
-				randomSubWeapon());
+				null);
 	}
 	
 	public SubWeaponItem(float x, float y, SubWeapon sub) {
@@ -56,6 +57,8 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public SubWeapon getSubWeapon() {
+		if (sub == null)
+			sub = randomSubWeapon();
 		return sub;
 	}
 
@@ -80,7 +83,7 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 4);
+		int random = (int)(Math.random() * 5);
 		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
@@ -90,6 +93,8 @@ public class SubWeaponItem extends AbstractItem{
 				return new BoomerangSubWeapon(3);
 			case 3:
 				return new LandMineSubWeapon(2);
+			case 4:
+				return new PelletsSubWeapon(3);
 		}
 		return null;
 	}

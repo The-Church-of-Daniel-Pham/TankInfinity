@@ -1,5 +1,7 @@
 package com.tank.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.tank.actor.ui.Cursor;
 import com.tank.actor.vehicles.PlayerTank;
 import com.tank.controls.ControlConstants;
@@ -29,6 +31,7 @@ public class Player {
 		this.defaultColor = defaultColor;
 		this.defaultRow = defaultRow;
 		this.defaultCol = defaultCol;
+		this.controls = ControlConstants.getPlayerControls(playerNumber);
 	}
 	
 	public void setName(String name) {
