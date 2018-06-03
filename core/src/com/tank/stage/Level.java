@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.items.AbstractItem;
 import com.tank.actor.items.HealthPackItem;
@@ -13,6 +15,8 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.projectiles.LandMine;
+import com.tank.actor.ui.AbstractUI;
 import com.tank.actor.ui.MovingText;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
@@ -23,6 +27,9 @@ import com.tank.game.TankInfinity;
 
 public class Level extends Stage {
 	protected TankInfinity game;
+	protected Actor groundLevel;
+	protected Actor subSkyLevel;
+	protected Actor skyLevel;
 	protected int mapWidth;
 	protected int mapHeight;
 	protected Map map;
@@ -36,7 +43,7 @@ public class Level extends Stage {
 	 * @param mapHeight
 	 *            the height of the map in tiles
 	 */
-	public Level(TankInfinity game, int mapWidth, int mapHeight) {
+	/*public Level(TankInfinity game, int mapWidth, int mapHeight) {
 		// world is first scaled to fit within the viewport, then the shorter dimension
 		// is lengthened to fill the viewport
 		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
@@ -57,7 +64,7 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
-	}
+	}*/
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -76,10 +83,10 @@ public class Level extends Stage {
 		mapHeight = 40 + (int) (Math.pow(levelNum - 1, 1.4) / 3);
 
 		map = new Map(mapWidth, mapHeight, this);
-		addActor(map);
+		super.addActor(map);
 
 		Vector2 spawnCenter = map.getCenterOfTilePos(map.getSpawnPoint()[0], map.getSpawnPoint()[1]);
-		addActor(new MovingText("LEVEL " + levelNum, Color.WHITE, 15.0f, new Vector2(0, 0), spawnCenter.x, spawnCenter.y, 4, true, 5.0f));
+		super.addActor(new MovingText("LEVEL " + levelNum, Color.WHITE, 15.0f, new Vector2(0, 0), spawnCenter.x, spawnCenter.y, 4, true, 5.0f));
 		
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
 		int minItems = (int) (7.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
@@ -89,18 +96,20 @@ public class Level extends Stage {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				if (Math.random() < 0.7) {
-					addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
+					super.addActor(new SubWeaponItem(randomFloor.getRow(), randomFloor.getCol()));
 				}
 				else {
-					addActor(new HealthPackItem(randomFloor.getRow(), randomFloor.getCol(), new String()));
+					super.addActor(new HealthPackItem(randomFloor.getRow(), randomFloor.getCol(), new String()));
 				}
 			}
 		}
+		
+		super.addActor((groundLevel = new Actor()));
 
 		int minEnemies = (int) (3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int maxEnemies = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
 		int enemyCount = (int) (Math.random() * (maxEnemies - minEnemies)) + minEnemies;
-		addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
+		super.addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
 				spawnCenter.x, spawnCenter.y - AbstractMapTile.SIZE, 2, true, 5.0f));
 		for (int i = 0; i < enemyCount; i++) {
 			if (!emptySpaces.isEmpty()) {
@@ -109,17 +118,20 @@ public class Level extends Stage {
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
 				switch ((int)(Math.random() * 5)) {
 					case 0: case 2:
-						addActor(new BasicEnemy(pos[0], pos[1], levelNum));
+						super.addActor(new BasicEnemy(pos[0], pos[1], levelNum));
 						break;
 					case 1: case 3:
-						addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
+						super.addActor(new FreeBasicEnemy(pos[0], pos[1], levelNum));
 						break;
 					case 4:
-						addActor(new RocketEnemy(pos[0], pos[1], levelNum));
+						super.addActor(new RocketEnemy(pos[0], pos[1], levelNum));
 						break;
 				}
 			}
 		}
+		
+		super.addActor((subSkyLevel = new Actor()));
+		super.addActor((skyLevel = new Actor()));
 		
 		if (levelNum == 1)
 			spawnInPlayers(true);
@@ -192,6 +204,30 @@ public class Level extends Stage {
 
 	public TankInfinity getGame() {
 		return game;
+	}
+	
+	@Override
+	public void addActor(Actor a) {
+		if (a instanceof AbstractProjectile) {
+			if (!(a instanceof LandMine)) {
+				getRoot().addActorBefore(subSkyLevel, a);
+			}
+			else {
+				getRoot().addActorBefore(groundLevel, a);
+			}
+		}
+		else if (a instanceof AbstractVehicle) {
+			getRoot().addActorAfter(groundLevel, a);
+		}
+		else if (a instanceof AbstractItem){
+			getRoot().addActorBefore(groundLevel, a);
+		}
+		else if (a instanceof AbstractUI || a instanceof Label) {
+			getRoot().addActorBefore(skyLevel, a);
+		}
+		else {
+			super.addActor(a);
+		}
 	}
 
 	@Override

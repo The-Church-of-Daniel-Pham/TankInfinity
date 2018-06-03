@@ -265,7 +265,7 @@ public class PlayerTank extends FreeTank {
 			treadSoundOn = false;
 			tread_sound.stop();
 		}
-		System.out.println(combinedSpeed);
+		//System.out.println(combinedSpeed);
 	}
 
 	@Override
