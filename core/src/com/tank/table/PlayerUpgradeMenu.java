@@ -34,15 +34,15 @@ public class PlayerUpgradeMenu extends Table {
 	}
 
 	public boolean needsToRefresh() {
-		if (player == null || player.tank == null)
+		if (player == null || !player.isEnabled() || player.tank == null || player.tank.isDestroyed())
 			return false;
 		// if player exp changes return true? or if selectableupgrades.size() changes?
-		return false;
+		return true;
 	}
 
 	public void buildTable() {
 		super.clearChildren();
-		if (player == null || player.tank == null)
+		if (player == null || !player.isEnabled() || player.tank == null || player.tank.isDestroyed())
 			return;
 		super.setSkin(skin);
 		add(new Label(player.getName(), skin)).colspan(3).width(250);
@@ -71,6 +71,7 @@ public class PlayerUpgradeMenu extends Table {
 			thirdImage = new Image(empty);
 		}
 		add(thirdImage);
+		row();
 		add("").fill();
 		if (u != null && u.size() > 2) {
 			fourthImage = new Image(u.get(3).getIcon());

@@ -14,6 +14,8 @@ public class Assets {
 			"animation/explosion_atlas.png", Texture.class);
 	public static final AssetDescriptor<Texture> burstSheet = new AssetDescriptor<Texture>(
 			"animation/burstSheet.png", Texture.class);
+	public static final AssetDescriptor<Texture> airBombSheet = new AssetDescriptor<Texture>(
+			"animation/airBombSheet.png", Texture.class);
 
     // Textures
     // Floor
@@ -64,6 +66,12 @@ public class Assets {
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
             Texture.class);
     public static final AssetDescriptor<Texture> pellet = new AssetDescriptor<Texture>("projectiles/pellet.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> laser = new AssetDescriptor<Texture>("projectiles/laser.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artilleryShell = new AssetDescriptor<Texture>("projectiles/tiltedAirBomb.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artilleryMark = new AssetDescriptor<Texture>("projectiles/artilleryMark.png",
             Texture.class);
     public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
             Texture.class);
@@ -170,6 +178,7 @@ public class Assets {
     public static void loadTextures() {
         manager.load(explosionSheet);
         manager.load(burstSheet);
+        manager.load(airBombSheet);
         // System.out.println("Animation loaded");
         manager.load(grass0);
         manager.load(grass1);
@@ -194,7 +203,10 @@ public class Assets {
         manager.load(boomerang);
         manager.load(landMine);
         manager.load(pellet);
+        manager.load(artilleryShell);
+        manager.load(artilleryMark);
         manager.load(pelletIcon);
+        manager.load(laser);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);
