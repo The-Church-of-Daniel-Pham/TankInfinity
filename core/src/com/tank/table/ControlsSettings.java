@@ -79,7 +79,7 @@ public class ControlsSettings extends Table{
 								return;
 							}
 							if (isInterrupted()) return;
-							if (loops == 100) return; //10 seconds
+							if (loops == 1000) return; //10 seconds
 							
 						}
 					}
