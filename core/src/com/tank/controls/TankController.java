@@ -14,4 +14,5 @@ public abstract class TankController {
 	public abstract boolean pausePressed();
 	public abstract Vector3 getCursor(Vector3 oldCursor);
 	public abstract void setKey(String key, KeyControl control);
+	public abstract int getKey(String key);
 }

@@ -246,4 +246,5 @@ public class GamepadController extends TankController {
 	public void setKey(String key, KeyControl control) {
 		keyMap.replace(key, control);
 	}
+	public int getKey(String key){return keyMap.get(key).getKeyCode();}
 }

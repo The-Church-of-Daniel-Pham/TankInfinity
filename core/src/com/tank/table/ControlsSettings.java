@@ -1,18 +1,14 @@
 package com.tank.table;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.KeyControl;
-import com.tank.controls.TankController;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
-
-import javax.xml.bind.annotation.XmlType;
-import java.awt.event.KeyEvent;
-import java.util.LinkedHashMap;
 
 public class ControlsSettings extends Table{
 	private TankInfinity game;
@@ -29,15 +25,15 @@ public class ControlsSettings extends Table{
 	private static String keyLshift = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LSHIFT").getKeyCode());
 	private static String keyPause = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("PAUSE").getKeyCode());
 
-	private TextField forwardText;
-	private TextField backtext;
-	private TextField rTurnText;
-	private TextField lTurnText;
-	private TextField shootText;
-	private TextField subShootText;
-	private TextField rShiftText;
-	private TextField lShiftText;
-	private TextField pauseText;
+	private TextButton forwardText;
+	private TextButton backtext;
+	private TextButton rTurnText;
+	private TextButton lTurnText;
+	private TextButton shootText;
+	private TextButton subShootText;
+	private TextButton rShiftText;
+	private TextButton lShiftText;
+	private TextButton pauseText;
 
 
 	public ControlsSettings(TankInfinity game) {
@@ -56,42 +52,49 @@ public class ControlsSettings extends Table{
 			keySubShoot = "Right Click";
 		}
 
-
-		TextButton applyButton = new TextButton("Apply", skin);
-		applyButton.addListener(new ClickListener() {
+		Label forwardLabel = new Label("Move Forward", skin, STYLE_NAME);
+		forwardText = new TextButton(keyForward, skin, STYLE_NAME);
+		forwardText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				saveKeys();
+				while(true) {
+					if (isMouseInput()) {
+						saveKey("UP", buttonPressed());
+						updateButton(forwardText, "UP");
+						break;
+					} else {
+						saveKey("UP", keyPressed());
+						updateButton(forwardText, "UP");
+						break;
+					}
+				}
 				event.stop();
 			}
 		});
 
-		Label forwardLabel = new Label("Move Forward", skin, STYLE_NAME);
-		forwardText = new TextField(keyForward, skin, STYLE_NAME);
-
 		Label backLabel = new Label("Move Back", skin, STYLE_NAME);
-		backtext = new TextField(keyBack, skin, STYLE_NAME);
+		backtext = new TextButton(keyBack, skin, STYLE_NAME);
 
 		Label rTurnLabel = new Label("Turn Right", skin, STYLE_NAME);
-		rTurnText = new TextField(keyTurnRight, skin, STYLE_NAME);
+		rTurnText = new TextButton(keyTurnRight, skin, STYLE_NAME);
 
 		Label lTurnLabel = new Label("Turn Left", skin, STYLE_NAME);
-		lTurnText = new TextField(keyTurnLeft, skin, STYLE_NAME);
+		lTurnText = new TextButton(keyTurnLeft, skin, STYLE_NAME);
 
 		Label shootLabel = new Label("Shoot", skin, STYLE_NAME);
-		shootText = new TextField(keyShoot, skin, STYLE_NAME);
+		shootText = new TextButton(keyShoot, skin, STYLE_NAME);
 
 		Label subShootLabel = new Label("Shoot sub weapon", skin, STYLE_NAME);
-		subShootText = new TextField(keySubShoot, skin, STYLE_NAME);
+		subShootText = new TextButton(keySubShoot, skin, STYLE_NAME);
 
 		Label rShiftLabel = new Label("Shift subs right", skin, STYLE_NAME);
-		rShiftText = new TextField(keyRshift, skin, STYLE_NAME);
+		rShiftText = new TextButton(keyRshift, skin, STYLE_NAME);
 
 		Label lShiftLabel = new Label("Shift subs left", skin, STYLE_NAME);
-		lShiftText = new TextField(keyLshift, skin, STYLE_NAME);
+		lShiftText = new TextButton(keyLshift, skin, STYLE_NAME);
 
 		Label pauseLabel = new Label("Pause", skin, STYLE_NAME);
-		pauseText = new TextField(keyPause, skin, STYLE_NAME);
+		pauseText = new TextButton(keyPause, skin, STYLE_NAME);
 
 		Table left = new Table();
 		left.defaults().width(300).height(100).space(25);
@@ -152,15 +155,63 @@ public class ControlsSettings extends Table{
 		right.row();
 		left.row();
 
-		right.add(applyButton);
-
 		super.defaults().top().space(25);
 		super.add(left);
 		super.add(right);
 	}
 
-	public void saveKeys()
+	private void saveKey(String key, int input)
 	{
-		game.players.get(0).controls.setKey("UP", new KeyControl(Input.Keys.valueOf(forwardText.getText().toUpperCase().substring(0,1)), 0));
+		int type = 0;
+		if(isMouseInput())
+		{
+			type = 1;
+		}
+		game.players.get(0).controls.setKey(key, new KeyControl(input, type));
+	}
+
+	private boolean isMouseInput()
+	{
+		return Gdx.input.isButtonPressed(Input.Buttons.LEFT) || Gdx.input.isButtonPressed(Input.Buttons.RIGHT) || Gdx.input.isButtonPressed(Input.Buttons.MIDDLE);
+	}
+
+	private int keyPressed()
+	{
+		for(int input = 0; input <= 255; input++ ) {
+			boolean isPressed = Gdx.input.isKeyPressed(input);
+			if(isPressed)
+			{
+				return input;
+			}
+		}
+		return -1;
+	}
+
+	private int buttonPressed()
+	{
+		for(int input = 0; input <= 4; input++ ) {
+			boolean isPressed = Gdx.input.isButtonPressed(input);
+			if(isPressed)
+			{
+				return input;
+			}
+		}
+		return -1;
+	}
+
+	private void updateButton(TextButton b, String key)
+	{
+		String input = Input.Keys.toString(game.players.get(0).controls.getKey(key));
+		if(input.equalsIgnoreCase("unknown"))
+		{
+			input = "Left Click";
+		}
+
+		else if(input.equalsIgnoreCase("soft left"))
+		{
+			input = "Right Click";
+		}
+
+		b.setText(input);
 	}
 }
