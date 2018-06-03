@@ -18,6 +18,7 @@ public class PlayScreen implements Screen {
 	public PauseMenu pauseMenu;
 	public GameOverMenu gameOverMenu;
 	protected boolean paused;
+	protected boolean pausedState;
 	protected boolean pauseHeld;
 	protected boolean gameOver;
 	protected int levelNum;
@@ -31,6 +32,7 @@ public class PlayScreen implements Screen {
 		pauseMenu = new PauseMenu(this.game);
 		gameOverMenu = new GameOverMenu(this.game);
 		gameOver = false;
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override
@@ -83,7 +85,12 @@ public class PlayScreen implements Screen {
 			}
 		}
 		if (pausePressed && !pauseHeld) {
-			if (!paused) pause(); else resume();
+			if (!paused) {
+				pause();
+			}
+			else{
+				resume();
+			}
 		}
 		pauseHeld = pausePressed;
 
@@ -170,17 +177,28 @@ public class PlayScreen implements Screen {
 
 	@Override
 	public void pause() {
-		paused = true;
-		game.removeInput(levelhud);
-		game.addInput(pauseMenu);
-		game.addInput(gameOverMenu);
+		if (!paused) {
+			paused = true;
+			game.removeInput(levelhud);
+			game.addInput(pauseMenu);
+			game.addInput(gameOverMenu);
+		}
+		else {
+			pausedState = true;
+		}
 	}
 
 	@Override
 	public void resume() {
-		paused = false;
-		game.addInput(levelhud);
-		game.removeInput(pauseMenu);
-		game.removeInput(gameOverMenu);
+		if (pausedState) {
+			pausedState = false;
+			return;
+		}
+		if (paused) {
+			paused = false;
+			game.addInput(levelhud);
+			game.removeInput(pauseMenu);
+			game.removeInput(gameOverMenu);
+		}
 	}
 }

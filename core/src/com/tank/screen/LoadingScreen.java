@@ -21,6 +21,7 @@ public class LoadingScreen implements Screen {
 		Assets.manager.finishLoadingAsset(Assets.loading_tank.fileName);
 		Assets.manager.finishLoadingAsset(Assets.skin.fileName);
 		loading = new Loading(this.game);
+		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
 	@Override

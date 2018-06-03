@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.ui.Background;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
+import com.tank.utils.Constants;
 
 public class GameOverMenu extends Stage implements InputProcessor {
 	protected TankInfinity game;
@@ -22,7 +23,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	private Texture red = Assets.manager.get(Assets.red);
 	
 	public GameOverMenu(TankInfinity game) {
-		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		Background darken = new Background(red);
 		// scale dark to fit screen
