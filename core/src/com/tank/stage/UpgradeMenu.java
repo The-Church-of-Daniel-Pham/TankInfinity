@@ -4,12 +4,17 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.screen.PlayScreen;
 import com.tank.table.PlayerUpgradeMenu;
 import com.tank.utils.Assets;
 
@@ -30,6 +35,15 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 	}
 
 	private void buildTable() {
+		TextButton continueButton = new TextButton("Continue", skin);
+		continueButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(game.screens.get("Play"));
+					event.stop();
+				
+			}
+		});
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(500).height(400).space(50).center();
@@ -44,6 +58,7 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 				uiTable.row();
 			}
 		}
+		uiTable.add(continueButton).colspan(2).bottom().right().height(100).width(300);
 	}
 
 	@Override
