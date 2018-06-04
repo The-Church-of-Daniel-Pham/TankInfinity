@@ -61,7 +61,7 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> chakram = new AssetDescriptor<Texture>("projectiles/chakram.png",
             Texture.class);
-    public static final AssetDescriptor<Texture> landMine = new AssetDescriptor<Texture>("projectiles/landMine.png",
+    public static final AssetDescriptor<Texture> landmine = new AssetDescriptor<Texture>("projectiles/landmine.png",
 			Texture.class);
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
             Texture.class);
@@ -209,7 +209,7 @@ public class Assets {
         manager.load(rocket);
         manager.load(chakram);
         manager.load(boomerang);
-        manager.load(landMine);
+        manager.load(landmine);
         manager.load(pellet);
         manager.load(artilleryShell);
         manager.load(pelletIcon);

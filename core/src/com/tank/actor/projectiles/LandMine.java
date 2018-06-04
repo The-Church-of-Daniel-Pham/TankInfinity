@@ -13,15 +13,15 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class LandMine extends AbstractProjectile {
-	private static Texture landMineTexture = Assets.manager.get(Assets.landMine);
+	private static Texture landmineTexture = Assets.manager.get(Assets.landmine);
 	private float lifeTime = 0f;
 
 	public LandMine(AbstractVehicle src, Stats stat, float x, float y) {
-		super(landMineTexture, src, stat, x, y);
+		super(landmineTexture, src, stat, x, y);
 		//super.setRotation(src.getRotation());
 		super.setWidth(60);
 		super.setHeight(60);
-		setOrigin(landMineTexture.getWidth() / 2, landMineTexture.getHeight() / 2);
+		setOrigin(landmineTexture.getWidth() / 2, landmineTexture.getHeight() / 2);
 		initializeHitbox();
 		velocity = new Vector2(0, 0);
 	}
