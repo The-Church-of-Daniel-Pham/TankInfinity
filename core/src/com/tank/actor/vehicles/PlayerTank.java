@@ -13,6 +13,7 @@ import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
+import com.tank.actor.projectiles.VampiricFang;
 import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
@@ -69,7 +70,7 @@ public class PlayerTank extends FreeTank {
 	protected int level;
 	protected int exp;
 	protected int totalExp;
-	protected int nextExp;		//Model: 4 + (Level * 3) + (Level ^ 1.5) / 5
+	protected int nextExp;		//Model: 4 + (Level * 2) + (Level ^ 1.5) / 4
 	protected ArrayList<Upgrade> selectableUpgrades;
 	protected int upgradesLeft;
 
@@ -176,7 +177,7 @@ public class PlayerTank extends FreeTank {
 		level = 1;
 		exp = 0;
 		totalExp = 0;
-		nextExp = 4 + (level * 3) + (int)(Math.pow(level, 1.5) / 5);
+		nextExp = 4 + (level * 2) + (int)(Math.pow(level, 1.5) / 4);
 		upgradesLeft = 0;
 	}
 
@@ -212,7 +213,7 @@ public class PlayerTank extends FreeTank {
 		if (player.controls.firePressed() && reloadTime < 0.01 && bulletCount < stats.getStatValue("Max Projectile")) {
 			// if almost done reloading, allow for rounding
 			int fireRate = stats.getStatValue("Fire Rate");
-			setReloadTime(2.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
+			setReloadTime(1.5f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 			shoot();
 		} else if (player.controls.subPressed() && reloadTime < 0.01) {
 			if (getCurrentSubWeapon() != null) {
@@ -467,7 +468,7 @@ public class PlayerTank extends FreeTank {
 						getY() + (float)(100f * Math.random()) - 50f, 1.3f));
 			level++;
 			exp -= nextExp;
-			nextExp = 4 + (level * 3) + (int)(Math.pow(level, 1.5) / 5);
+			nextExp = 4 + (level * 2) + (int)(Math.pow(level, 1.5) / 4);
 			if (upgradesLeft == 0) {
 				selectableUpgrades = Upgrade.getRandomUpgrade(4);
 			}

@@ -43,6 +43,11 @@ public class BasicEnemy extends FixedTank {
 	protected float distanceForTrack = 12f;
 	protected float distanceForShoot = 6f;
 	
+	protected float reloadTime = 3.8f;
+	protected float gunLength = 125;
+	protected float rotateThreshold = 6f;
+	protected int onTileThreshold = 120;
+	
 	protected float cooldownLastShot;
 	
 	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
@@ -61,7 +66,7 @@ public class BasicEnemy extends FixedTank {
 		randomTurnReverse = false;
 		patrolling = true;
 		reverseTime = 0;
-		expGive = 2 + level;
+		expGive = (int)Math.pow(1 + level, 1.1);
 		
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
@@ -245,7 +250,7 @@ public class BasicEnemy extends FixedTank {
 				if (cooldownLastShot <= 0f) {
 					shoot();
 					int fireRate = stats.getStatValue("Fire Rate");
-					cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+					cooldownLastShot = reloadTime * (1.0f - ((float)(fireRate) / (fireRate + 60)));
 				}
 			}
 		}
@@ -344,15 +349,15 @@ public class BasicEnemy extends FixedTank {
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 10) direction = 1;
-		else if (rotationDifference < -10) direction = -1;
+		if (rotationDifference > rotateThreshold) direction = 1;
+		else if (rotationDifference < -rotateThreshold) direction = -1;
 		
 		if (direction == 1) turnLeft(delta); else if (direction == -1) turnRight(delta);
 		return (direction != 0);
 	}
 	
 	public void shoot() {
-		Vector2 v = new Vector2(160, 0);
+		Vector2 v = new Vector2(gunLength, 0);
 		float randomAngle = randomShootAngle();
 		v.setAngle(getRotation());
 		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, getRotation() + randomAngle));
@@ -462,13 +467,19 @@ public class BasicEnemy extends FixedTank {
 	}
 	
 	public boolean onTile(int row, int col) {
-		int[] currentTile = getTileAt(getX(), getY());
-		return (currentTile[0] == row && currentTile[1] == col);
+		//int[] currentTile = getTileAt(getX(), getY());
+		float x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		float y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		float difference = Math.max(Math.abs(getX() - x), Math.abs(getY() - y));
+		return (difference <= onTileThreshold);
 	}
 	
 	public boolean onTile(int[] rowCol) {
-		int[] currentTile = getTileAt(getX(), getY());
-		return (currentTile[0] == rowCol[0] && currentTile[1] == rowCol[1]);
+		//int[] currentTile = getTileAt(getX(), getY());
+		float x = rowCol[1] * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		float y = rowCol[0] * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		float difference = Math.max(Math.abs(getX() - x), Math.abs(getY() - y));
+		return (difference <= onTileThreshold);
 	}
 	
 	public float getDistanceTo(Actor other) {

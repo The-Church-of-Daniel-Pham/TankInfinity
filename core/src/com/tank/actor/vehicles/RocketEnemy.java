@@ -11,9 +11,14 @@ public class RocketEnemy extends BasicEnemy{
 	public RocketEnemy(float x, float y, int level) {
 		super(x, y, level);
 		tankTexture = Assets.manager.get(Assets.fixed_big);
+		
 		reverseTimeChanges = 0.3f;
 		distanceForShoot = 7f;
-		expGive = 3 + level;
+		reloadTime = 5.0f;
+		rotateThreshold = 4.0f;
+		onTileThreshold = 100;
+		gunLength = 110;
+		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	
 	protected void initializeStats() {
@@ -31,8 +36,8 @@ public class RocketEnemy extends BasicEnemy{
 		health = 80;
 		stats.addStat("Armor", 30);
 		
-		stats.addStat("Traction", 80);
-		stats.addStat("Acceleration", 100);
+		stats.addStat("Traction", 150);
+		stats.addStat("Acceleration", 120);
 		stats.addStat("Angular Acceleration", 100);
 		
 		stats.addStat("Projectile Durability", 3);
@@ -50,50 +55,11 @@ public class RocketEnemy extends BasicEnemy{
 		levelUps.addStat("Fire Rate", (int)(1 * Math.pow(levelNum - 1, 0.6)));
 		
 		levelUps.addStat("Max Health", (int)(6 * Math.pow(levelNum - 1, 1.2)));
-		levelUps.addStat("Armor", (int)(4 * Math.pow(levelNum - 1, 0.95)));
+		levelUps.addStat("Armor", (int)(3 * Math.pow(levelNum - 1, 0.95)));
 		
 		levelUps.addStat("Projectile Durability", (int)(0.7 * Math.pow(levelNum - 1, 0.75)));
 		
 		return levelUps;
-	}
-	
-	public void attackMode(float delta) {
-		float distanceToTarget = getDistanceTo(target);
-		if (distanceToTarget < AbstractMapTile.SIZE * distanceForShoot && hasLineOfSight(target.getX(), target.getY())) {
-			if (reversing) {
-				backingUp(delta);
-			}
-			else if (forwarding) {
-				accelerateForward(delta);
-				reverseTime += delta;
-				if (reverseTime >= reverseTimeChanges) {
-					forwarding = false;
-					reverseTime = -delta;
-				}
-				
-			}
-			else if (!rotateTowardsTarget(delta, target.getX(), target.getY())) {
-				if (cooldownLastShot <= 0f) {
-					shoot();
-					int fireRate = stats.getStatValue("Fire Rate");
-					cooldownLastShot = 6.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
-				}
-			}
-		}
-		else {
-			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-				attackMode = false;
-				honeInMode = true;
-				endTargetTile = getTileAt(target.getX(), target.getY());
-				requestPathfinding();
-			}
-			else {
-				attackMode = false;
-				patrolling = true;
-				selectNewEndTargetTile();
-				requestPathfinding();
-			}
-		}
 	}
 	
 	public void shoot() {
