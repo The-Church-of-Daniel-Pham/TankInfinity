@@ -42,6 +42,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		audioTable = new AudioSettings();
 		controlsTable = new ControlsSettings(game);
 		controlsScroll = new ScrollPane(controlsTable, new ScrollPane.ScrollPaneStyle());
+		controlsScroll.setOverscroll(true, true);
 
 		uiTable = new Table();
 		buildTable();

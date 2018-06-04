@@ -89,6 +89,7 @@ public class ControlsSettings extends Table{
 								saveKey("UP", control);
 								showTempMenu = false;
 								updateButton(forwardText, "UP");
+								return;
 							}
 							loops++;
 							try {
@@ -114,27 +115,347 @@ public class ControlsSettings extends Table{
 
 		Label backLabel = new Label("Move Back", skin, STYLE_NAME);
 		backtext = new TextButton(keyBack, skin, STYLE_NAME);
+		backtext.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("DOWN", control);
+								showTempMenu = false;
+								updateButton(backtext, "DOWN");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label rTurnLabel = new Label("Turn Right", skin, STYLE_NAME);
 		rTurnText = new TextButton(keyTurnRight, skin, STYLE_NAME);
+		rTurnText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("RIGHT", control);
+								showTempMenu = false;
+								updateButton(rTurnText, "RIGHT");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label lTurnLabel = new Label("Turn Left", skin, STYLE_NAME);
 		lTurnText = new TextButton(keyTurnLeft, skin, STYLE_NAME);
+		lTurnText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("LEFT", control);
+								showTempMenu = false;
+								updateButton(lTurnText, "LEFT");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label shootLabel = new Label("Shoot", skin, STYLE_NAME);
 		shootText = new TextButton(keyShoot, skin, STYLE_NAME);
+		shootText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("SHOOT", control);
+								showTempMenu = false;
+								updateButton(shootText, "SHOOT");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label subShootLabel = new Label("Shoot sub weapon", skin, STYLE_NAME);
 		subShootText = new TextButton(keySubShoot, skin, STYLE_NAME);
+		subShootText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("SUB", control);
+								showTempMenu = false;
+								updateButton(subShootText, "SUB");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label rShiftLabel = new Label("Shift subs right", skin, STYLE_NAME);
 		rShiftText = new TextButton(keyRshift, skin, STYLE_NAME);
+		rShiftText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("RSHIFT", control);
+								showTempMenu = false;
+								updateButton(rShiftText, "RSHIFT");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label lShiftLabel = new Label("Shift subs left", skin, STYLE_NAME);
 		lShiftText = new TextButton(keyLshift, skin, STYLE_NAME);
+		lShiftText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("LSHIFT", control);
+								showTempMenu = false;
+								updateButton(lShiftText, "LSHIFT");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Label pauseLabel = new Label("Pause", skin, STYLE_NAME);
 		pauseText = new TextButton(keyPause, skin, STYLE_NAME);
+		pauseText.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
+				if (settingKey != null && settingKey.isAlive()) {
+					settingKey.interrupt();
+				}
+				settingKey = new Thread() {
+					@Override
+					public void run() {
+						int loops = 0;
+						while(true) {
+							KeyControl control = pressedControls();
+							if (control != null) {
+								saveKey("PAUSE", control);
+								showTempMenu = false;
+								updateButton(pauseText, "PAUSE");
+								return;
+							}
+							loops++;
+							try {
+								Thread.sleep(10);
+							} catch (InterruptedException e) {
+								return;
+							}
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
+						}
+					}
+				};
+				settingKey.start();
+				event.stop();
+			}
+		});
 
 		Table left = new Table();
 		left.defaults().width(300).height(100).space(25);
