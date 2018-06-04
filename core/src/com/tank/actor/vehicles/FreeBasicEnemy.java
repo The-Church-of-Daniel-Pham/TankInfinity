@@ -99,9 +99,10 @@ public class FreeBasicEnemy extends FreeTank{
 		levelUps.addStat("Accuracy", (int)(5 * Math.pow(levelNum - 1, 0.9)));
 		levelUps.addStat("Stability", (int)(5 * Math.pow(levelNum - 1, 0.6)));
 		levelUps.addStat("Max Bounce", (int)(0.3 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Lifetime", (int)(2.5 * Math.pow(levelNum - 1, 0.5)));
 		levelUps.addStat("Fire Rate", (int)(2.1 * Math.pow(levelNum - 1, 0.6)));
 		
-		levelUps.addStat("Max Health", (int)(5 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Max Health", (int)(4 * Math.pow(levelNum - 1, 1.1)));
 		levelUps.addStat("Armor", (int)(3 * Math.pow(levelNum - 1, 0.9)));
 		
 		levelUps.addStat("Projectile Durability", (int)(0.4 * Math.pow(levelNum - 1, 0.6)));
@@ -127,106 +128,13 @@ public class FreeBasicEnemy extends FreeTank{
 	public void act(float delta) {
 		if(isDestroyed()) return;
 		if (patrolling) {
-			//Request pathfinding after a certain amount of time not pathfinding
-			timeSinceLastPathfind += delta;
-			if (timeSinceLastPathfind >= 20f) requestPathfinding();
-			//Check if it's on the path (may happen if enemy overshoots tiles)
-			if (isOnPath()) setNextTarget(path.removeFirst());
-			//Finished patrolling to certain tile? Find something new
-			if (path == null || path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
-				selectNewEndTargetTile();
-			}
-			//Any player nearby?
-			float shortestDistance = -1f;
-			for (Player player : getPlayers()) {
-				PlayerTank playerTank = player.tank;
-				if (playerTank != null && !playerTank.isDestroyed()) {
-					float distance = getDistanceTo(playerTank);
-					if (shortestDistance == -1f || distance < shortestDistance) {
-						shortestDistance = distance;
-						if (shortestDistance <= AbstractMapTile.SIZE * 12) {
-							target = playerTank;
-							patrolling = false;
-							honeInMode = true;
-						}
-					}
-				}
-			}
-			
-			//Moving based things
-			moveByTargetTile(delta);
-			patrolGunRotation(delta);
+			patrolMode(delta);
 		}
 		else if (honeInMode && target != null && !target.isDestroyed()) {
-			if (isOnPath()) setNextTarget(path.removeFirst());
-			float distanceToTarget = getDistanceTo(target);
-			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-				if (distanceToTarget >= AbstractMapTile.SIZE * 6 || !hasLineOfSight(target.getX(), target.getY())) {
-					timeSinceLastPathfind += delta;
-					if (timeSinceLastPathfind >= 20f) {
-						endTargetTile = getTileAt(target.getX(), target.getY());
-						requestPathfinding();
-					}
-					else if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
-						endTargetTile = getTileAt(target.getX(), target.getY());
-						requestPathfinding();
-					}
-					moveByTargetTile(delta);
-					rotateGunTowardsTarget(delta, target.getX(), target.getY());
-				}
-				else {
-					honeInMode = false;
-					attackMode = true;
-				}
-			}
-			else {
-				target = null;
-				honeInMode = false;
-			}
+			honeInMode(delta);
 		}
 		else if (attackMode && target != null && !target.isDestroyed()) {
-			float distanceToTarget = getDistanceTo(target);
-			if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
-				boolean rotatingGun = rotateGunTowardsTarget(delta, target.getX(), target.getY());
-				if (reversing) {
-					backingUp(delta);
-				}
-				else if (forwarding) {
-					accelerateForward(delta);
-					reverseTime += delta;
-					if (reverseTime >= 0.5f) {
-						forwarding = false;
-						reverseTime = -delta;
-					}
-					
-				}
-				else if (rotatingGun) {
-					rotateTowardsTarget(delta, target.getX(), target.getY());
-				}
-				
-				if (!rotatingGun) {
-					if (cooldownLastShot <= 0f) {
-						shoot();
-						int fireRate = stats.getStatValue("Fire Rate");
-						cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
-					}
-					if (!reversing && !forwarding) accelerateForward(delta);
-				}
-			}
-			else {
-				if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-					attackMode = false;
-					honeInMode = true;
-					endTargetTile = getTileAt(target.getX(), target.getY());
-					requestPathfinding();
-				}
-				else {
-					attackMode = false;
-					patrolling = true;
-					selectNewEndTargetTile();
-					requestPathfinding();
-				}
-			}
+			attackMode(delta);
 		}
 		else {
 			patrolling = true;
@@ -266,6 +174,111 @@ public class FreeBasicEnemy extends FreeTank{
 			reverseTime += delta;
 		}
 		if (cooldownLastShot > 0f) cooldownLastShot -= delta;
+	}
+	
+	public void patrolMode(float delta) {
+		//Request pathfinding after a certain amount of time not pathfinding
+		timeSinceLastPathfind += delta;
+		if (timeSinceLastPathfind >= 20f) requestPathfinding();
+		//Check if it's on the path (may happen if enemy overshoots tiles)
+		if (isOnPath()) setNextTarget(path.removeFirst());
+		//Finished patrolling to certain tile? Find something new
+		if (path == null || path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+			selectNewEndTargetTile();
+		}
+		//Any player nearby?
+		float shortestDistance = -1f;
+		for (Player player : getPlayers()) {
+			PlayerTank playerTank = player.tank;
+			if (playerTank != null && !playerTank.isDestroyed()) {
+				float distance = getDistanceTo(playerTank);
+				if (shortestDistance == -1f || distance < shortestDistance) {
+					shortestDistance = distance;
+					if (shortestDistance <= AbstractMapTile.SIZE * 12) {
+						target = playerTank;
+						patrolling = false;
+						honeInMode = true;
+					}
+				}
+			}
+		}
+		
+		//Moving based things
+		moveByTargetTile(delta);
+		patrolGunRotation(delta);
+	}
+	
+	public void honeInMode(float delta) {
+		if (isOnPath()) setNextTarget(path.removeFirst());
+		float distanceToTarget = getDistanceTo(target);
+		if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+			if (distanceToTarget >= AbstractMapTile.SIZE * 6 || !hasLineOfSight(target.getX(), target.getY())) {
+				timeSinceLastPathfind += delta;
+				if (timeSinceLastPathfind >= 20f) {
+					endTargetTile = getTileAt(target.getX(), target.getY());
+					requestPathfinding();
+				}
+				else if (path.isEmpty() || onTile(endTargetTile) || targetPos == null) {
+					endTargetTile = getTileAt(target.getX(), target.getY());
+					requestPathfinding();
+				}
+				moveByTargetTile(delta);
+				rotateGunTowardsTarget(delta, target.getX(), target.getY());
+			}
+			else {
+				honeInMode = false;
+				attackMode = true;
+			}
+		}
+		else {
+			target = null;
+			honeInMode = false;
+		}
+	}
+	
+	public void attackMode(float delta) {
+		float distanceToTarget = getDistanceTo(target);
+		if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
+			boolean rotatingGun = rotateGunTowardsTarget(delta, target.getX(), target.getY());
+			if (reversing) {
+				backingUp(delta);
+			}
+			else if (forwarding) {
+				accelerateForward(delta);
+				reverseTime += delta;
+				if (reverseTime >= 0.5f) {
+					forwarding = false;
+					reverseTime = -delta;
+				}
+				
+			}
+			else if (rotatingGun) {
+				rotateTowardsTarget(delta, target.getX(), target.getY());
+			}
+			
+			if (!rotatingGun) {
+				if (cooldownLastShot <= 0f) {
+					shoot();
+					int fireRate = stats.getStatValue("Fire Rate");
+					cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+				}
+				if (!reversing && !forwarding) accelerateForward(delta);
+			}
+		}
+		else {
+			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+				attackMode = false;
+				honeInMode = true;
+				endTargetTile = getTileAt(target.getX(), target.getY());
+				requestPathfinding();
+			}
+			else {
+				attackMode = false;
+				patrolling = true;
+				selectNewEndTargetTile();
+				requestPathfinding();
+			}
+		}
 	}
 	
 	public void moveByTargetTile(float delta) {

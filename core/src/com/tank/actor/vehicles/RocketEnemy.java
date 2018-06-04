@@ -46,10 +46,10 @@ public class RocketEnemy extends BasicEnemy{
 		levelUps.addStat("Accuracy", (int)(2 * Math.pow(levelNum - 1, 0.5)));
 		levelUps.addStat("Stability", (int)(3 * Math.pow(levelNum - 1, 0.3)));
 		levelUps.addStat("Max Bounce", (int)(0 * Math.pow(levelNum - 1, 0.7)));
-		levelUps.addStat("Lifetime", (int)(0 * Math.pow(levelNum - 1, 0.7)));
+		levelUps.addStat("Lifetime", (int)(2 * Math.pow(levelNum - 1, 0.7)));
 		levelUps.addStat("Fire Rate", (int)(1 * Math.pow(levelNum - 1, 0.6)));
 		
-		levelUps.addStat("Max Health", (int)(9 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Max Health", (int)(6 * Math.pow(levelNum - 1, 1.2)));
 		levelUps.addStat("Armor", (int)(4 * Math.pow(levelNum - 1, 0.95)));
 		
 		levelUps.addStat("Projectile Durability", (int)(0.7 * Math.pow(levelNum - 1, 0.75)));
