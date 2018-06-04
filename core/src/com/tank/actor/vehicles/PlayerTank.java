@@ -69,7 +69,7 @@ public class PlayerTank extends FreeTank {
 	protected int level;
 	protected int exp;
 	protected int totalExp;
-	protected int nextExp;		//Model: (Level * 7) + (Level ^ 1.5) / 5
+	protected int nextExp;		//Model: 4 + (Level * 3) + (Level ^ 1.5) / 5
 	protected ArrayList<Upgrade> selectableUpgrades;
 	protected int upgradesLeft;
 
@@ -176,7 +176,7 @@ public class PlayerTank extends FreeTank {
 		level = 1;
 		exp = 0;
 		totalExp = 0;
-		nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);
+		nextExp = 4 + (level * 3) + (int)(Math.pow(level, 1.5) / 5);
 		upgradesLeft = 0;
 	}
 
@@ -467,7 +467,7 @@ public class PlayerTank extends FreeTank {
 						getY() + (float)(100f * Math.random()) - 50f, 1.3f));
 			level++;
 			exp -= nextExp;
-			nextExp = (level * 7) + (int)(Math.pow(level, 1.5) / 5);
+			nextExp = 4 + (level * 3) + (int)(Math.pow(level, 1.5) / 5);
 			if (upgradesLeft == 0) {
 				selectableUpgrades = Upgrade.getRandomUpgrade(4);
 			}
