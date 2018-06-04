@@ -86,7 +86,7 @@ public class LandMine extends AbstractProjectile {
 				explosionStats.addStat("Damage", getStat("Damage"));
 				explosionStats.addStat("Explosion Size", 1024);
 				explosionStats.addStat("Lifetime", 10);
-				getStage().addActor(new RadialExplosion(source, explosionStats, getX(), getY()));
+				getStage().addActor(new DamageExplosion(source, explosionStats, getX(), getY()));
 				destroy();
 				break;
 			}
