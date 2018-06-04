@@ -22,7 +22,7 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Damage Up", null, damageIncrease, "Increase tank damage by small amount"));
 		//Armor increase
 		Stats armorIncrease = new Stats();
-		armorIncrease.addStat("Armor", 6);
+		armorIncrease.addStat("Armor", 7);
 		upgrades.add(new Upgrade("Armor Up", null, armorIncrease, "Increase tank defense by small amount"));
 		//Health increase
 		Stats healthIncrease = new Stats();
@@ -30,23 +30,23 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Health Up", null, healthIncrease, "Increase max tank health by small amount"));
 		//Accuracy increase
 		Stats accuracyIncrease = new Stats();
-		accuracyIncrease.addStat("Accuracy", 8);
+		accuracyIncrease.addStat("Accuracy", 9);
 		upgrades.add(new Upgrade("Accuracy Up", null, accuracyIncrease, "Increase tank accuracy by small amount"));
 		//Spread decrease
 		Stats spreadDecrease = new Stats();
-		spreadDecrease.addStat("Spread", 8);
+		spreadDecrease.addStat("Spread", 9);
 		upgrades.add(new Upgrade("Spread Down", null, spreadDecrease, "Decreases tank bullet spread by small amount"));
 		//Stability increase
 		Stats stabilityUp = new Stats();
-		stabilityUp.addStat("Stability", 8);
+		stabilityUp.addStat("Stability", 9);
 		upgrades.add(new Upgrade("Stability Up", null, stabilityUp, "Decreases tank's accuracy loss when moving by small amount"));
 		//Fire Rate
 		Stats fireUp = new Stats();
-		fireUp.addStat("Fire Rate", 6);
+		fireUp.addStat("Fire Rate", 8);
 		upgrades.add(new Upgrade("Fire Rate Up", null, fireUp, "Increases tank's rate of fire by small amount"));
 		//Lifetime Increase
 		Stats lifetimeUp = new Stats();
-		lifetimeUp.addStat("Lifetime", 4);
+		lifetimeUp.addStat("Lifetime", 5);
 		upgrades.add(new Upgrade("Lifetime Up", null, lifetimeUp, "Increases the time before a tank's bullet dissapears by a small amount"));
 		/**
 		 * Conditional Basic Upgrades - 1 Stat increase with 1 smaller increase (for "stronger" stats)
