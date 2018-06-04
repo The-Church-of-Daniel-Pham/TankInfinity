@@ -78,6 +78,7 @@ public class DamageExplosion extends AbstractProjectile{
 			else {
 				if (!finished) {
 					AbstractProjectile.projectileList.remove(this);
+					finished = true;
 				}
 			}
 		}
