@@ -46,7 +46,7 @@ public class Rocket extends AbstractProjectile {
 		explosionStats.addStat("Damage", getStat("Damage") / 3);
 		explosionStats.addStat("Explosion Size", 256);
 		explosionStats.addStat("Lifetime", 5);
-		getStage().addActor(new RadialExplosion(source, explosionStats, getX(), getY()));
+		getStage().addActor(new DamageExplosion(source, explosionStats, getX(), getY()));
 		destroy();
 	}
 	
