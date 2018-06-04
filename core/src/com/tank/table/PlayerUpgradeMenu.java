@@ -16,8 +16,8 @@ import com.tank.utils.Assets;
 
 public class PlayerUpgradeMenu extends Table {
 	protected final Player player;
-	private Skin skin = Assets.manager.get(Assets.skin);
-	private Texture empty = Assets.manager.get(Assets.vertex);
+	private static Skin skin = Assets.manager.get(Assets.skin);
+	private static Texture empty = Assets.manager.get(Assets.vertex);
 	private Label playerName;
 	private Group topImage;
 	private Image topIcon;
@@ -41,6 +41,8 @@ public class PlayerUpgradeMenu extends Table {
 
 	public PlayerUpgradeMenu(final Player player) {
 		this.player = player;
+		
+		selected = -1;
 
 		super.setDebug(false);
 		super.defaults().width(75).height(75).space(15).center();
@@ -58,25 +60,25 @@ public class PlayerUpgradeMenu extends Table {
 		if (selected == 0) topBack.setDrawable(skin, "round-light-gray"); else topBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 1) {
-			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(0).getIcon())));
+			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(1).getIcon())));
 		} else {
 			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 0) leftBack.setDrawable(skin, "round-light-gray"); else leftBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 1) leftBack.setDrawable(skin, "round-light-gray"); else leftBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 2) {
-			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(0).getIcon())));
+			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(2).getIcon())));
 		} else {
 			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 0) rightBack.setDrawable(skin, "round-light-gray"); else rightBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 2) rightBack.setDrawable(skin, "round-light-gray"); else rightBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 3) {
-			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(0).getIcon())));
+			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(3).getIcon())));
 		} else {
 			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 0) bottomBack.setDrawable(skin, "round-light-gray"); else bottomBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 3) bottomBack.setDrawable(skin, "round-light-gray"); else bottomBack.setDrawable(skin, "round-dark-gray");
 	}
 	
 	public void select(int index) {
@@ -120,7 +122,7 @@ public class PlayerUpgradeMenu extends Table {
 		row();
 		
 		if (u != null && u.size() > 1) {
-			leftIcon = new Image(u.get(0).getIcon());
+			leftIcon = new Image(u.get(1).getIcon());
 		} else {
 			leftIcon = new Image(empty);
 		}
@@ -136,7 +138,7 @@ public class PlayerUpgradeMenu extends Table {
 		add("").fill();
 		
 		if (u != null && u.size() > 2) {
-			rightIcon = new Image(u.get(0).getIcon());
+			rightIcon = new Image(u.get(2).getIcon());
 		} else {
 			rightIcon = new Image(empty);
 		}
@@ -153,7 +155,7 @@ public class PlayerUpgradeMenu extends Table {
 		add("").fill();
 		
 		if (u != null && u.size() > 3) {
-			bottomIcon = new Image(u.get(0).getIcon());
+			bottomIcon = new Image(u.get(3).getIcon());
 		} else {
 			bottomIcon = new Image(empty);
 		}
