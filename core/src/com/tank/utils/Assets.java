@@ -52,7 +52,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> border4 = new AssetDescriptor<Texture>("map/border4.png",
             Texture.class);
     //Portal
-    public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portalSpiral.png",
+    public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portal.png",
     		Texture.class);
     // Projectiles
     public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
