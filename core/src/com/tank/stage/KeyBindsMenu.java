@@ -33,6 +33,7 @@ public class KeyBindsMenu extends Stage implements InputProcessor {
         uiTable.setDebug(false);
         uiTable.defaults().width(300).height(100).space(25).center();
         Label keyNotif = new Label("Press any key or mouse button", skin);
+        keyNotif.setFontScale(.5f);
         keyNotif.setAlignment(Align.center);
         uiTable.add(keyNotif).height(150);
         return uiTable;
