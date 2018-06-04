@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
@@ -35,6 +36,7 @@ public class PlayerHUD extends Table{
 	protected Table infoTable;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
+	private Drawable blankSub;
 	
 	private final Image leftSubImage;
 	private Label leftSubAmmo;
@@ -66,7 +68,10 @@ public class PlayerHUD extends Table{
 		icon.addActor(iconImage);
 		icon.addActor(nameLabel);	
 		
-		leftSubImage = new Image(skin.getDrawable("round-light-gray"));
+		blankSub = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_icon)));
+		
+		leftSubImage = new Image(blankSub);
+		leftSubImage.setSize(44, 44);
 		leftSubAmmo = new Label("", skin, "small");
 		leftSubAmmo.setAlignment(Align.right);
 		leftSubAmmo.setPosition(2, 2, Align.bottomRight);
@@ -76,7 +81,9 @@ public class PlayerHUD extends Table{
 		leftSub.addActor(leftSubImage);
 		leftSub.addActor(leftSubAmmo);
 		
-		centerSubImage = new Image(skin.getDrawable("round-light-gray"));
+		
+		centerSubImage = new Image(blankSub);
+		centerSubImage.setSize(44, 44);
 		centerSubAmmo = new Label("", skin, "small");
 		centerSubAmmo.setAlignment(Align.right);
 		centerSubAmmo.setPosition(2, 2, Align.bottomRight);
@@ -86,7 +93,8 @@ public class PlayerHUD extends Table{
 		centerSub.addActor(centerSubImage);
 		centerSub.addActor(centerSubAmmo);
 		
-		rightSubImage = new Image(skin.getDrawable("round-light-gray"));
+		rightSubImage = new Image(blankSub);
+		rightSubImage.setSize(44, 44);
 		rightSubAmmo = new Label("", skin, "small");
 		rightSubAmmo.setAlignment(Align.right);
 		rightSubAmmo.setPosition(2, 2, Align.bottomRight);
@@ -150,11 +158,11 @@ public class PlayerHUD extends Table{
 				leftSubAmmo.setText("" + player.tank.getNextSubWeapon().getAmmo());
 			}
 			else {
-				centerSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				centerSubImage.setDrawable(blankSub);
 				centerSubAmmo.setText("");
-				leftSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				leftSubImage.setDrawable(blankSub);
 				leftSubAmmo.setText("");
-				rightSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				rightSubImage.setDrawable(blankSub);
 				rightSubAmmo.setText("");
 			}
 			lastCenterSubWeapon = player.tank.getCurrentSubWeapon();
