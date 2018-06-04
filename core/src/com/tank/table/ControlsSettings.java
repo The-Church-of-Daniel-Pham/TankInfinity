@@ -2,12 +2,14 @@ package com.tank.table;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.tank.controls.ControlConstants;
 import com.tank.controls.KeyControl;
 import com.tank.game.TankInfinity;
+import com.tank.stage.KeyBindsMenu;
 import com.tank.utils.Assets;
 
 public class ControlsSettings extends Table{
@@ -34,13 +36,27 @@ public class ControlsSettings extends Table{
 	private TextButton rShiftText;
 	private TextButton lShiftText;
 	private TextButton pauseText;
-	
+
 	private Thread settingKey;
+	private KeyBindsMenu menu;
+	private boolean showTempMenu = false;
+
+	@Override
+	public void draw (Batch b, float a)
+	{
+		super.draw(b, a);
+		if(showTempMenu) {
+			menu.act(Gdx.app.getGraphics().getDeltaTime());
+			menu.getViewport().apply();
+			menu.draw();
+		}
+
+	}
 
 
-	public ControlsSettings(TankInfinity game) {
+	public ControlsSettings(final TankInfinity game) {
 		this.game = game;
-		
+		menu = new KeyBindsMenu(game);
 		super.setFillParent(true);
 		super.setDebug(false);
 
@@ -59,6 +75,7 @@ public class ControlsSettings extends Table{
 		forwardText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -70,6 +87,7 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("UP", control);
+								showTempMenu = false;
 								updateButton(forwardText, "UP");
 							}
 							loops++;
@@ -78,9 +96,14 @@ public class ControlsSettings extends Table{
 							} catch (InterruptedException e) {
 								return;
 							}
-							if (isInterrupted()) return;
-							if (loops == 1000) return; //10 seconds
-							
+							if (isInterrupted())
+							{
+								return;
+							}
+							if (loops == 1000) {
+								return; //10 seconds
+							}
+
 						}
 					}
 				};
@@ -181,8 +204,8 @@ public class ControlsSettings extends Table{
 	{
 		game.players.get(0).controls.setKey(key, input);
 	}
-	
-	public KeyControl pressedControls() {
+
+	public static KeyControl pressedControls() {
 		int key = keyPressed();
 		if (key != -1)
 			return new KeyControl(key, 0);
@@ -192,7 +215,7 @@ public class ControlsSettings extends Table{
 		return null;
 	}
 
-	private int keyPressed()
+	public static int keyPressed()
 	{
 		for(int input = 0; input <= 255; input++ ) {
 			boolean isPressed = Gdx.input.isKeyPressed(input);
@@ -204,7 +227,7 @@ public class ControlsSettings extends Table{
 		return -1;
 	}
 
-	private int buttonPressed()
+	public static int buttonPressed()
 	{
 		for(int input = 0; input <= 4; input++ ) {
 			boolean isPressed = Gdx.input.isButtonPressed(input);
