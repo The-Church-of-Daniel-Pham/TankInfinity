@@ -79,8 +79,8 @@ public class Level extends Stage {
 		// is lengthened to fill the viewport
 		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
 		this.game = game;
-		mapWidth = 40 + (int) (Math.pow(levelNum - 1, 1.5) / 2.5);
-		mapHeight = 40 + (int) (Math.pow(levelNum - 1, 1.4) / 3);
+		mapWidth = 20 + (int) (Math.pow(levelNum - 1, 1.1) + Math.pow(levelNum - 1, 1.5) / 5);
+		mapHeight = 20 + (int) (Math.pow(levelNum - 1, 0.9) + Math.pow(levelNum - 1, 1.4) / 6);
 
 		map = new Map(mapWidth, mapHeight, this);
 		super.addActor(map);
@@ -89,8 +89,8 @@ public class Level extends Stage {
 		super.addActor(new MovingText("LEVEL " + levelNum, Color.WHITE, 15.0f, new Vector2(0, 0), spawnCenter.x, spawnCenter.y, 4, true, 5.0f));
 		
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
-		int minItems = (int) (7.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
-		int maxItems = (int) (12.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
+		int minItems = (int) (3.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
+		int maxItems = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.25));
 		int itemCount = (int) (Math.random() * (maxItems - minItems)) + minItems;
 		for (int i = 0; i < itemCount + 1; i++) {
 			if (!emptySpaces.isEmpty()) {
@@ -106,8 +106,8 @@ public class Level extends Stage {
 		
 		super.addActor((groundLevel = new Actor()));
 
-		int minEnemies = (int) (3.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
-		int maxEnemies = (int) (6.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1));
+		int minEnemies = (int) (2.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1) / 2);
+		int maxEnemies = (int) (3.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1) / 2);
 		int enemyCount = (int) (Math.random() * (maxEnemies - minEnemies)) + minEnemies;
 		super.addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
 				spawnCenter.x, spawnCenter.y - AbstractMapTile.SIZE, 2, true, 5.0f));
