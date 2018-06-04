@@ -1,5 +1,6 @@
 package com.tank.actor.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
@@ -66,8 +67,10 @@ public class Cursor extends AbstractUI {
 			newGame = false;
 		}
 		
-		screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
-		screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
+		//screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[2].x);
+		//screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[2].y);
+		screenPos.x = MathUtils.clamp(player.controls.getCursor(screenPos).x, getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[0].x + Gdx.graphics.getWidth());
+		screenPos.y = MathUtils.clamp(player.controls.getCursor(screenPos).y, getStage().getCamera().frustum.planePoints[0].y, getStage().getCamera().frustum.planePoints[0].y + Gdx.graphics.getHeight());
 		stagePos = stage.getCamera().unproject(screenPos.cpy()); // to world coordinates
 		hudPos = getStage().getCamera().unproject(screenPos.cpy());	//copy so screenpos isnt modified
 		setPosition(hudPos.x, hudPos.y);
