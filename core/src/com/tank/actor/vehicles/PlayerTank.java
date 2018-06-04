@@ -13,10 +13,7 @@ import com.tank.actor.items.SubWeaponItem;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.PortalTile;
 import com.tank.actor.projectiles.Bullet;
-import com.tank.actor.projectiles.VampiricFang;
 import com.tank.actor.ui.MovingText;
-import com.tank.animations.DeathExplosion;
-import com.tank.animations.Moose;
 import com.tank.game.Player;
 import com.tank.interfaces.Collidable;
 import com.tank.media.MediaSound;
@@ -300,7 +297,7 @@ public class PlayerTank extends FreeTank {
 		applySecondaryForce(30.0f * (float) Math.sqrt(stats.getStatValue("Projectile Speed")), getGunRotation() + 180);
 		shoot_sound.play();
 		
-		getStage().addActor(new Moose(getX(), getY()));
+		//getStage().addActor(new Moose(getX(), getY()));
 	}
 
 	public void switchWeapon(int direction) {

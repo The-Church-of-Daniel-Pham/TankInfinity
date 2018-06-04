@@ -77,6 +77,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> caltrop = new AssetDescriptor<Texture>("projectiles/caltrop.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> mooseIcon = new AssetDescriptor<Texture>("projectiles/mooseIcon.png",
+            Texture.class);
     // Tank
     public static final AssetDescriptor<Texture> tread_red = new AssetDescriptor<Texture>("tank/tank_tread_red.png",
             Texture.class);
@@ -238,6 +240,7 @@ public class Assets {
         manager.load(artilleryShell);
         manager.load(laser);
         manager.load(fang);
+        manager.load(mooseIcon);
         manager.load(caltrop);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
