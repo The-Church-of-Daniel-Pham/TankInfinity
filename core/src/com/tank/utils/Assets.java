@@ -52,7 +52,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> border4 = new AssetDescriptor<Texture>("map/border4.png",
             Texture.class);
     //Portal
-    public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portalSpiral.png",
+    public static final AssetDescriptor<Texture> portal = new AssetDescriptor<Texture>("map/portal.png",
     		Texture.class);
     // Projectiles
     public static final AssetDescriptor<Texture> bullet = new AssetDescriptor<Texture>("projectiles/bullet.png",
@@ -113,7 +113,7 @@ public class Assets {
     //Items
     public static final AssetDescriptor<Texture> mysterybox = new AssetDescriptor<Texture>("item/mysterybox.png",
             Texture.class);
-    public static final AssetDescriptor<Texture> healthpack = new AssetDescriptor<Texture>("item/healthpack.png",
+    public static final AssetDescriptor<Texture> repairbox = new AssetDescriptor<Texture>("item/repairbox.png",
             Texture.class);
     //UI
     public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/crosshairs_red.png",
@@ -235,7 +235,7 @@ public class Assets {
         manager.load(fixed_big);
         // System.out.println("Tank textures loaded");
         manager.load(mysterybox);
-        manager.load(healthpack);
+        manager.load(repairbox);
         // System.out.println("Item textures loaded");
         manager.load(crosshairs_red);
         manager.load(crosshairs_blue);
