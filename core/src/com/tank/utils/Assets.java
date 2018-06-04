@@ -71,6 +71,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> artilleryShell = new AssetDescriptor<Texture>("projectiles/tiltedAirBomb.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> fang = new AssetDescriptor<Texture>("projectiles/fang.png",
+            Texture.class);
     public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
             Texture.class);
     // Tank
@@ -214,6 +216,7 @@ public class Assets {
         manager.load(artilleryShell);
         manager.load(pelletIcon);
         manager.load(laser);
+        manager.load(fang);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);

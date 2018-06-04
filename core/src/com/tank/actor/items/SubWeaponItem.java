@@ -12,6 +12,7 @@ import com.tank.subweapons.LaserSubWeapon;
 import com.tank.subweapons.PelletsSubWeapon;
 import com.tank.subweapons.RocketSubWeapon;
 import com.tank.subweapons.SubWeapon;
+import com.tank.subweapons.VampiricFangSubWeapon;
 import com.tank.utils.Assets;
 
 public class SubWeaponItem extends AbstractItem{
@@ -85,7 +86,7 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 7);
+		int random = (int)(Math.random() * 8);
 		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
@@ -101,6 +102,8 @@ public class SubWeaponItem extends AbstractItem{
 				return new ArtillerySubWeapon(2);
 			case 6:
 				return new LaserSubWeapon(2);
+			case 7:
+				return new VampiricFangSubWeapon(2);
 		}
 		return null;
 	}
