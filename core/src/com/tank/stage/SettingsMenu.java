@@ -117,6 +117,18 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		settingsTable.layout();
 	}
 	
+	public VideoSettings getVideoSettings() {
+		return videoTable;
+	}
+	
+	public AudioSettings getAudioSettings() {
+		return audioTable;
+	}
+	
+	public ControlsSettings getControlsSettings() {
+		return controlsTable;
+	}
+	
 	@Override
 	public void act(float delta) {
 		super.act(delta);

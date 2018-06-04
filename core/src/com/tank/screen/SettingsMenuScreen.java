@@ -4,16 +4,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.tank.game.TankInfinity;
+import com.tank.stage.KeyBindsMenu;
 import com.tank.stage.SettingsMenu;
 import com.tank.utils.Constants;
 
 public class SettingsMenuScreen implements Screen {
-	public SettingsMenu settingsMenu;
+	private SettingsMenu settingsMenu;
+	private KeyBindsMenu keyBindsMenu;
 	private TankInfinity game;
+	private boolean lastWaitingForInput;
 	
 	public SettingsMenuScreen (TankInfinity game) {
 		this.game = game;
 		settingsMenu = new SettingsMenu(this.game);
+		keyBindsMenu = new KeyBindsMenu(this.game);
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 
@@ -46,6 +50,18 @@ public class SettingsMenuScreen implements Screen {
         //Update the stage
 		settingsMenu.act(delta);
 		settingsMenu.draw();
+		if (settingsMenu.getControlsSettings().isWaitingForInput()) {
+			keyBindsMenu.act(delta);
+			keyBindsMenu.draw();
+		}
+		if (settingsMenu.getControlsSettings().isWaitingForInput() && !lastWaitingForInput) {
+			game.removeInput(settingsMenu);
+			lastWaitingForInput = true;
+		}
+		if (!settingsMenu.getControlsSettings().isWaitingForInput() && lastWaitingForInput) {
+			game.addInput(settingsMenu);
+			lastWaitingForInput = false;
+		}
 	}
 
 	public void dispose() {
