@@ -33,7 +33,7 @@ public class Loading extends Stage implements InputProcessor {
 		Background backdropBackground = new Background(backdrop);
 		backdropBackground.setFill(true);
 		tankLoadingBackground = new Background(loading_tank);
-		tankLoadingBackground.setPosition(-loading_tank.getWidth(), 300);
+		tankLoadingBackground.setPosition(-loading_tank.getWidth(), 400);
 		percent = 0;
 		distance = Gdx.graphics.getWidth() + loading_tank.getWidth();
 		buildTable();
@@ -44,7 +44,7 @@ public class Loading extends Stage implements InputProcessor {
 	
 	@Override
 	public void act(float delta) {
-		percent = Interpolation.linear.apply(percent, Assets.manager.getProgress(), 0.05f);
+		percent = Interpolation.linear.apply(percent, Assets.manager.getProgress(), 0.1f);
 		tankLoadingBackground.setX(percent * distance);
 	}
 
