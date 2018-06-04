@@ -34,6 +34,10 @@ public class PlayScreen implements Screen {
 		gameOver = false;
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
+	
+	public Level getLevel() {
+		return level;
+	}
 
 	@Override
 	public void show() {
