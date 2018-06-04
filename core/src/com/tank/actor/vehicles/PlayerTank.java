@@ -87,6 +87,7 @@ public class PlayerTank extends FreeTank {
 		setWidth(80);
 		setHeight(90);
 		angle = (float) Math.toDegrees(Math.atan((double) getHeight() / getWidth()));
+		selectableUpgrades = new ArrayList<Upgrade>();
 		initializeHitbox();
 	}
 
@@ -104,6 +105,7 @@ public class PlayerTank extends FreeTank {
 		setWidth(80);
 		setHeight(90);
 		angle = (float) Math.toDegrees(Math.atan((double) getHeight() / getWidth()));
+		selectableUpgrades = new ArrayList<Upgrade>();
 		initializeHitbox();
 	}
 
@@ -123,6 +125,7 @@ public class PlayerTank extends FreeTank {
 		setHeight(90);
 		angle = (float) Math.toDegrees(Math.atan((double) getHeight() / getWidth()));
 		setRotation(direction);
+		selectableUpgrades = new ArrayList<Upgrade>();
 		initializeHitbox();
 	}
 

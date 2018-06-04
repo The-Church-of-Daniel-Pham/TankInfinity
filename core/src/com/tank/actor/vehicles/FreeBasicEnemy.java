@@ -15,6 +15,7 @@ import com.tank.actor.ui.MovingText;
 import com.tank.game.Player;
 import com.tank.media.MediaSound;
 import com.tank.stage.Level;
+import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
@@ -49,6 +50,7 @@ public class FreeBasicEnemy extends FreeTank{
 	public FreeBasicEnemy(float x, float y, int level) {
 		super(x, y, Assets.manager.get(Assets.tread_purple), Assets.manager.get(Assets.gun_purple));
 		initializeStats();
+		stats.mergeStats(levelStats(level));
 		initializePathfinding();
 		initializeHitbox();
 		setRotation((float)(Math.random() * 360f));
@@ -64,6 +66,8 @@ public class FreeBasicEnemy extends FreeTank{
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
 		cooldownLastShot = 0.5f;
+		
+		health = getMaxHealth();
 	}
 	
 	protected void initializeStats() {
@@ -73,12 +77,11 @@ public class FreeBasicEnemy extends FreeTank{
 		stats.addStat("Stability", 50);
 		stats.addStat("Max Bounce", 1);
 		stats.addStat("Projectile Speed", 75);
-		stats.addStat("Lifetime", 80);
+		stats.addStat("Lifetime", 50);
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 6);
 		
 		stats.addStat("Max Health", 60);
-		health = 60;
 		stats.addStat("Armor", 15);
 		
 		stats.addStat("Traction", 100);
@@ -86,6 +89,24 @@ public class FreeBasicEnemy extends FreeTank{
 		stats.addStat("Angular Acceleration", 120);
 		
 		stats.addStat("Projectile Durability", 1);
+	}
+	
+	protected Stats levelStats(int levelNum) {
+		Stats levelUps = new Stats();
+		
+		levelUps.addStat("Damage", (int)(1.2 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Spread", (int)(3.4 * Math.pow(levelNum - 1, 0.65)));
+		levelUps.addStat("Accuracy", (int)(5 * Math.pow(levelNum - 1, 0.9)));
+		levelUps.addStat("Stability", (int)(5 * Math.pow(levelNum - 1, 0.6)));
+		levelUps.addStat("Max Bounce", (int)(0.3 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Fire Rate", (int)(2.1 * Math.pow(levelNum - 1, 0.6)));
+		
+		levelUps.addStat("Max Health", (int)(5 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Armor", (int)(3 * Math.pow(levelNum - 1, 0.9)));
+		
+		levelUps.addStat("Projectile Durability", (int)(0.4 * Math.pow(levelNum - 1, 0.6)));
+		
+		return levelUps;
 	}
 	
 	public void initializePathfinding() {

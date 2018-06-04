@@ -104,7 +104,7 @@ public class PlayerUpgradeMenu extends Table {
 		else bottomBack.setDrawable(skin, "round-dark-gray");
 		
 		if (selected == -1) description.setText("Highlight an upgrade with a directional movement key, use same key again to select.");
-		if (u.isEmpty()) description.setText("No Upgrades To Select!");
+		if (u == null || u.isEmpty()) description.setText("No Upgrades To Select!");
 	}
 	
 	public void select(int index) {

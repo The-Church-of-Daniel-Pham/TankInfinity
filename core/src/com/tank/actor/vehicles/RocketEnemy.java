@@ -23,7 +23,7 @@ public class RocketEnemy extends BasicEnemy{
 		stats.addStat("Stability", 30);
 		stats.addStat("Max Bounce", 1);
 		stats.addStat("Projectile Speed", 50);
-		stats.addStat("Lifetime", 80);
+		stats.addStat("Lifetime", 70);
 		stats.addStat("Fire Rate", 20);
 		stats.addStat("Max Projectile", 6);
 		
@@ -36,6 +36,25 @@ public class RocketEnemy extends BasicEnemy{
 		stats.addStat("Angular Acceleration", 100);
 		
 		stats.addStat("Projectile Durability", 3);
+	}
+	
+	protected Stats levelStats(int levelNum) {
+		Stats levelUps = new Stats();
+		
+		levelUps.addStat("Damage", (int)(1.1 * Math.pow(levelNum - 1, 1.3)));
+		levelUps.addStat("Spread", (int)(1.5 * Math.pow(levelNum - 1, 0.7)));
+		levelUps.addStat("Accuracy", (int)(2 * Math.pow(levelNum - 1, 0.5)));
+		levelUps.addStat("Stability", (int)(3 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Max Bounce", (int)(0 * Math.pow(levelNum - 1, 0.7)));
+		levelUps.addStat("Lifetime", (int)(0 * Math.pow(levelNum - 1, 0.7)));
+		levelUps.addStat("Fire Rate", (int)(1 * Math.pow(levelNum - 1, 0.6)));
+		
+		levelUps.addStat("Max Health", (int)(9 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Armor", (int)(4 * Math.pow(levelNum - 1, 0.95)));
+		
+		levelUps.addStat("Projectile Durability", (int)(0.7 * Math.pow(levelNum - 1, 0.75)));
+		
+		return levelUps;
 	}
 	
 	public void attackMode(float delta) {
