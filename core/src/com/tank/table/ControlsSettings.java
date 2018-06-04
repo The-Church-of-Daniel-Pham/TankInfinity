@@ -38,25 +38,9 @@ public class ControlsSettings extends Table{
 	private TextButton pauseText;
 
 	private Thread settingKey;
-	private KeyBindsMenu menu;
-	private boolean showTempMenu = false;
-
-	@Override
-	public void draw (Batch b, float a)
-	{
-		super.draw(b, a);
-		if(showTempMenu) {
-			menu.act(Gdx.app.getGraphics().getDeltaTime());
-			menu.getViewport().apply();
-			menu.draw();
-		}
-
-	}
-
 
 	public ControlsSettings(final TankInfinity game) {
 		this.game = game;
-		menu = new KeyBindsMenu(game);
 		super.setFillParent(true);
 		super.setDebug(false);
 
@@ -75,7 +59,6 @@ public class ControlsSettings extends Table{
 		forwardText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -87,7 +70,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("UP", control);
-								showTempMenu = false;
 								updateButton(forwardText, "UP");
 								return;
 							}
@@ -118,7 +100,6 @@ public class ControlsSettings extends Table{
 		backtext.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -130,7 +111,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("DOWN", control);
-								showTempMenu = false;
 								updateButton(backtext, "DOWN");
 								return;
 							}
@@ -161,7 +141,6 @@ public class ControlsSettings extends Table{
 		rTurnText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -173,7 +152,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("RIGHT", control);
-								showTempMenu = false;
 								updateButton(rTurnText, "RIGHT");
 								return;
 							}
@@ -204,7 +182,6 @@ public class ControlsSettings extends Table{
 		lTurnText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -216,7 +193,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("LEFT", control);
-								showTempMenu = false;
 								updateButton(lTurnText, "LEFT");
 								return;
 							}
@@ -247,7 +223,6 @@ public class ControlsSettings extends Table{
 		shootText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -259,7 +234,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("SHOOT", control);
-								showTempMenu = false;
 								updateButton(shootText, "SHOOT");
 								return;
 							}
@@ -290,7 +264,6 @@ public class ControlsSettings extends Table{
 		subShootText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -302,7 +275,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("SUB", control);
-								showTempMenu = false;
 								updateButton(subShootText, "SUB");
 								return;
 							}
@@ -333,7 +305,6 @@ public class ControlsSettings extends Table{
 		rShiftText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -345,7 +316,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("RSHIFT", control);
-								showTempMenu = false;
 								updateButton(rShiftText, "RSHIFT");
 								return;
 							}
@@ -376,7 +346,6 @@ public class ControlsSettings extends Table{
 		lShiftText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -388,7 +357,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("LSHIFT", control);
-								showTempMenu = false;
 								updateButton(lShiftText, "LSHIFT");
 								return;
 							}
@@ -419,7 +387,6 @@ public class ControlsSettings extends Table{
 		pauseText.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				showTempMenu = true;
 				if (settingKey != null && settingKey.isAlive()) {
 					settingKey.interrupt();
 				}
@@ -431,7 +398,6 @@ public class ControlsSettings extends Table{
 							KeyControl control = pressedControls();
 							if (control != null) {
 								saveKey("PAUSE", control);
-								showTempMenu = false;
 								updateButton(pauseText, "PAUSE");
 								return;
 							}
@@ -558,6 +524,10 @@ public class ControlsSettings extends Table{
 			}
 		}
 		return -1;
+	}
+	
+	public boolean isWaitingForInput() {
+		return (settingKey != null && settingKey.isAlive());
 	}
 
 	private void updateButton(TextButton b, String key)
