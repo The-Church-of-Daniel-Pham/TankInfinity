@@ -41,6 +41,15 @@ public class FreeBasicEnemy extends FreeTank{
 	protected boolean attackMode;
 	protected PlayerTank target;
 	
+	protected float distanceForTrack = 12f;
+	protected float distanceForShoot = 6f;
+	
+	protected float reloadTime = 3.8f;
+	protected float gunLength = 125;
+	protected float rotateThreshold = 10f;
+	protected float gunRotateThreshold = 6f;
+	protected int onTileThreshold = 120;
+	
 	protected float cooldownLastShot;
 	
 	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
@@ -61,7 +70,7 @@ public class FreeBasicEnemy extends FreeTank{
 		randomTurnReverse = false;
 		patrolling = true;
 		reverseTime = 0;
-		expGive = 2 + level;
+		expGive = (int)Math.pow(1 + level, 1.1);;
 		
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
@@ -194,7 +203,7 @@ public class FreeBasicEnemy extends FreeTank{
 				float distance = getDistanceTo(playerTank);
 				if (shortestDistance == -1f || distance < shortestDistance) {
 					shortestDistance = distance;
-					if (shortestDistance <= AbstractMapTile.SIZE * 12) {
+					if (shortestDistance <= AbstractMapTile.SIZE * distanceForTrack) {
 						target = playerTank;
 						patrolling = false;
 						honeInMode = true;
@@ -211,8 +220,8 @@ public class FreeBasicEnemy extends FreeTank{
 	public void honeInMode(float delta) {
 		if (isOnPath()) setNextTarget(path.removeFirst());
 		float distanceToTarget = getDistanceTo(target);
-		if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
-			if (distanceToTarget >= AbstractMapTile.SIZE * 6 || !hasLineOfSight(target.getX(), target.getY())) {
+		if (distanceToTarget <= AbstractMapTile.SIZE * distanceForTrack) {
+			if (distanceToTarget >= AbstractMapTile.SIZE * distanceForShoot || !hasLineOfSight(target.getX(), target.getY())) {
 				timeSinceLastPathfind += delta;
 				if (timeSinceLastPathfind >= 20f) {
 					endTargetTile = getTileAt(target.getX(), target.getY());
@@ -238,7 +247,7 @@ public class FreeBasicEnemy extends FreeTank{
 	
 	public void attackMode(float delta) {
 		float distanceToTarget = getDistanceTo(target);
-		if (distanceToTarget < AbstractMapTile.SIZE * 6 && hasLineOfSight(target.getX(), target.getY())) {
+		if (distanceToTarget < AbstractMapTile.SIZE * distanceForShoot && hasLineOfSight(target.getX(), target.getY())) {
 			boolean rotatingGun = rotateGunTowardsTarget(delta, target.getX(), target.getY());
 			if (reversing) {
 				backingUp(delta);
@@ -260,7 +269,7 @@ public class FreeBasicEnemy extends FreeTank{
 				if (cooldownLastShot <= 0f) {
 					shoot();
 					int fireRate = stats.getStatValue("Fire Rate");
-					cooldownLastShot = 4.0f * (1.0f - ((float)(fireRate) / (fireRate + 60)));
+					cooldownLastShot = reloadTime * (1.0f - ((float)(fireRate) / (fireRate + 60)));
 				}
 				if (!reversing && !forwarding) accelerateForward(delta);
 			}
@@ -389,8 +398,8 @@ public class FreeBasicEnemy extends FreeTank{
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 10) direction = 1;
-		else if (rotationDifference < -10) direction = -1;
+		if (rotationDifference > rotateThreshold) direction = 1;
+		else if (rotationDifference < -rotateThreshold) direction = -1;
 		
 		if (direction == 1) turnLeft(delta); else if (direction == -1) turnRight(delta);
 		return (direction != 0);
@@ -406,8 +415,8 @@ public class FreeBasicEnemy extends FreeTank{
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 10) direction = 1;
-		else if (rotationDifference < -10) direction = -1;
+		if (rotationDifference > gunRotateThreshold) direction = 1;
+		else if (rotationDifference < -gunRotateThreshold) direction = -1;
 		
 		rotateGun(direction * 80 * delta);
 		return (direction != 0);
@@ -524,13 +533,19 @@ public class FreeBasicEnemy extends FreeTank{
 	}
 	
 	public boolean onTile(int row, int col) {
-		int[] currentTile = getTileAt(getX(), getY());
-		return (currentTile[0] == row && currentTile[1] == col);
+		//int[] currentTile = getTileAt(getX(), getY());
+		float x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		float y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		float difference = Math.max(Math.abs(getX() - x), Math.abs(getY() - y));
+		return (difference <= onTileThreshold);
 	}
 	
 	public boolean onTile(int[] rowCol) {
-		int[] currentTile = getTileAt(getX(), getY());
-		return (currentTile[0] == rowCol[0] && currentTile[1] == rowCol[1]);
+		//int[] currentTile = getTileAt(getX(), getY());
+		float x = rowCol[1] * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		float y = rowCol[0] * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
+		float difference = Math.max(Math.abs(getX() - x), Math.abs(getY() - y));
+		return (difference <= onTileThreshold);
 	}
 	
 	public float getDistanceTo(Actor other) {
