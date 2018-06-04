@@ -8,13 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.utils.Assets;
 
 public class DeathExplosion extends Actor {
-    private static Animation<TextureRegion> explosionAnimation;
+    private static Animation<TextureRegion> deathExplosionAnimation;
     private static Texture death_explosion = Assets.manager.get(Assets.death_explosion);
     private static final int FRAMES_ROWS = 10;
     private static final int FRAMES_COLS = 9;
     private static final int FPS = 30;
     private static final int FRAME_WIDTH = death_explosion.getWidth() / FRAMES_COLS;
     private static final int FRAME_HEIGHT = death_explosion.getHeight() / FRAMES_ROWS;
+    private float stateTime;
 	
 	static {
 		TextureRegion[][] textureRegions = TextureRegion.split(death_explosion,
@@ -29,10 +30,8 @@ public class DeathExplosion extends Actor {
             }
         }
 
-        explosionAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
+        deathExplosionAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
 	}
-
-    private float stateTime;
 
     public DeathExplosion(float x, float y) {
         stateTime = 0f;
@@ -51,7 +50,7 @@ public class DeathExplosion extends Actor {
     }
 
     public void draw(Batch batch, float a) {
-    	TextureRegion currentFrame = explosionAnimation.getKeyFrame(stateTime, true);
+    	TextureRegion currentFrame = deathExplosionAnimation.getKeyFrame(stateTime, false);
 		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
     }

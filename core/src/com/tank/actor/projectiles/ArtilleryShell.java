@@ -1,7 +1,5 @@
 package com.tank.actor.projectiles;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -68,7 +66,7 @@ public class ArtilleryShell extends Actor{
 		timeUntilHit -= delta;
 		timePassed += delta;
 		if (timeUntilHit <= 0f) {
-			getStage().addActor(new RadialExplosion(source, stats, getX(), getY()));
+			getStage().addActor(new DamageExplosion(source, stats, getX(), getY()));
 			remove();
 		}
 		else {

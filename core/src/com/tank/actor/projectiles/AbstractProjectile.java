@@ -122,12 +122,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				if (e.getCollidable() instanceof AbstractProjectile) {
 					int durability = stats.getStatValue("Projectile Durability");
 					int otherDurability = ((AbstractProjectile) e.getCollidable()).getStat("Projectile Durability");
-					if (durability > otherDurability && !(e.getCollidable() instanceof RadialExplosion)) {
+					if (durability > otherDurability && !(e.getCollidable() instanceof DamageExplosion)) {
 						((AbstractProjectile) e.getCollidable()).destroy();
 						stats.addStat("Projectile Durability", durability - otherDurability);
 						return;
 					}
-					else if (otherDurability > durability || e.getCollidable() instanceof RadialExplosion) {
+					else if (otherDurability > durability || e.getCollidable() instanceof DamageExplosion) {
 						destroy();
 						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
 						return;
