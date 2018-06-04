@@ -39,7 +39,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean upPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl up = keyMap.get("UP");
@@ -59,7 +59,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean downPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl down = keyMap.get("DOWN");
@@ -79,7 +79,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean rightPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl right = keyMap.get("RIGHT");
@@ -99,7 +99,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean leftPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl left = keyMap.get("LEFT");
@@ -120,7 +120,7 @@ public class GamepadController extends TankController {
 
 	public boolean firePressed() {
 		//testButtons();
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl shoot = keyMap.get("SHOOT");
@@ -140,7 +140,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean subPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl sub = keyMap.get("SUB");
@@ -160,7 +160,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean subRightPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl rSwitch = keyMap.get("RSHIFT");
@@ -180,7 +180,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean subLeftPressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl lSwitch = keyMap.get("LSHIFT");
@@ -200,7 +200,7 @@ public class GamepadController extends TankController {
 	}
 	
 	public boolean pausePressed() {
-		if (controllers.get(index) == null) {
+		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
 		KeyControl pause = keyMap.get("PAUSE");
@@ -235,8 +235,8 @@ public class GamepadController extends TankController {
 	}
 
 	public Vector3 getCursor(Vector3 oldCursor) {
-		if (controllers.get(index) == null) 
-			return null;
+		if (index >= controllers.size || controllers.get(index) == null) 
+			return oldCursor;
 		KeyControl vertical = keyMap.get("CURSOR-V");
 		KeyControl horizontal = keyMap.get("CURSOR-H");
 		float newX = oldCursor.x;
