@@ -99,9 +99,10 @@ public class FreeBasicEnemy extends FreeTank{
 		levelUps.addStat("Accuracy", (int)(5 * Math.pow(levelNum - 1, 0.9)));
 		levelUps.addStat("Stability", (int)(5 * Math.pow(levelNum - 1, 0.6)));
 		levelUps.addStat("Max Bounce", (int)(0.3 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Lifetime", (int)(2.5 * Math.pow(levelNum - 1, 0.5)));
 		levelUps.addStat("Fire Rate", (int)(2.1 * Math.pow(levelNum - 1, 0.6)));
 		
-		levelUps.addStat("Max Health", (int)(5 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Max Health", (int)(4 * Math.pow(levelNum - 1, 1.1)));
 		levelUps.addStat("Armor", (int)(3 * Math.pow(levelNum - 1, 0.9)));
 		
 		levelUps.addStat("Projectile Durability", (int)(0.4 * Math.pow(levelNum - 1, 0.6)));
