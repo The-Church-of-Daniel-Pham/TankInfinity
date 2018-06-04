@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class PelletsSubWeapon extends SubWeapon{
 	
-	private static Texture pelletsTexture = Assets.manager.get(Assets.pelletIcon);
+	private static Texture pelletsTexture = Assets.manager.get(Assets.pellet_icon);
 	
 	public PelletsSubWeapon(int ammo) {
 		super("Pellet Shot", pelletsTexture, ammo);

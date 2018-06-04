@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class VampiricFangSubWeapon extends SubWeapon {
 	
-	private static Texture fangTexture = Assets.manager.get(Assets.fang);
+	private static Texture fangTexture = Assets.manager.get(Assets.fang_icon);
 	
 	public VampiricFangSubWeapon(int ammo) {
 		super("Vampiric Fang", fangTexture, ammo);

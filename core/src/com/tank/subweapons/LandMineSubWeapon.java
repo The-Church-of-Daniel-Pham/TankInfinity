@@ -8,7 +8,7 @@ import com.tank.utils.Assets;
 
 public class LandMineSubWeapon extends SubWeapon{
 	
-	private static Texture landmineTexture = Assets.manager.get(Assets.landmine);
+	private static Texture landmineTexture = Assets.manager.get(Assets.landmine_icon);
 	
 	public LandMineSubWeapon(int ammo) {
 		super("Land Mine", landmineTexture, ammo);
