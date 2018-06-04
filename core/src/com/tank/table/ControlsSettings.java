@@ -482,7 +482,6 @@ public class ControlsSettings extends Table{
 		right.row();
 		left.row();
 
-		super.defaults().top().space(25);
 		super.add(left);
 		super.add(right);
 	}
