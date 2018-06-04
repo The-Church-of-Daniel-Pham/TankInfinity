@@ -103,11 +103,24 @@ public class PlayerUpgradeMenu extends Table {
 		}
 		else bottomBack.setDrawable(skin, "round-dark-gray");
 		
-		if (selected == -1) description.setText("");
+		if (selected == -1) description.setText("Highlight an upgrade with a directional movement key, use same key again to select.");
+		if (u.isEmpty()) description.setText("No Upgrades To Select!");
 	}
 	
 	public void select(int index) {
-		selected = index;
+		if (index == selected) {
+			chooseUpgrade();
+		}
+		else {
+			selected = index;
+		}
+	}
+	public void chooseUpgrade() {
+		ArrayList<Upgrade> u = player.tank.getSelectableUpgrades();
+		if (selected != -1 && !u.isEmpty()) {
+			player.tank.selectUpgrade(selected);
+			selected = -1;
+		}
 	}
 
 	public boolean needsToRefresh() {
@@ -181,7 +194,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		description = new Label("", skin);
 		description.setFontScale(0.5f);
-		description.setPosition(-100, 0, Align.left);
+		description.setPosition(-200, 0, Align.left);
 		Group descLabel = new Group();
 		descLabel.addActor(description);
 		add(descLabel).colspan(3).width(300);
@@ -190,21 +203,23 @@ public class PlayerUpgradeMenu extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (player.controls.upPressed() && !heldButtons.get(0)) {
-			select(0);
-			refreshMenu();
-		}
-		if (player.controls.leftPressed() && !heldButtons.get(1)) {
-			select(1);
-			refreshMenu();
-		}
-		if (player.controls.rightPressed() && !heldButtons.get(2)) {
-			select(2);
-			refreshMenu();
-		}
-		if (player.controls.downPressed() && !heldButtons.get(3)) {
-			select(3);
-			refreshMenu();
+		if (player.tank.getSelectableUpgrades().size() > 0) {
+			if (player.controls.upPressed() && !heldButtons.get(0)) {
+				select(0);
+				refreshMenu();
+			}
+			if (player.controls.leftPressed() && !heldButtons.get(1)) {
+				select(1);
+				refreshMenu();
+			}
+			if (player.controls.rightPressed() && !heldButtons.get(2)) {
+				select(2);
+				refreshMenu();
+			}
+			if (player.controls.downPressed() && !heldButtons.get(3)) {
+				select(3);
+				refreshMenu();
+			}
 		}
 		
 		heldButtons.set(0, player.controls.upPressed());

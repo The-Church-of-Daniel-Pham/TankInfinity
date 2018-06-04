@@ -482,6 +482,9 @@ public class PlayerTank extends FreeTank {
 		if (upgradesLeft > 0) {
 			selectableUpgrades = Upgrade.getRandomUpgrade(4);
 		}
+		else {
+			selectableUpgrades.clear();
+		}
 		
 	}
 	
