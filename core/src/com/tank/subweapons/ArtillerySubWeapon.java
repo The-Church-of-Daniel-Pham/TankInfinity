@@ -8,7 +8,7 @@ import com.tank.utils.Assets;
 
 public class ArtillerySubWeapon extends SubWeapon{
 	
-	private static Texture artilleryShell = Assets.manager.get(Assets.artilleryShell);
+	private static Texture artilleryShell = Assets.manager.get(Assets.artillery_icon);
 	
 	public ArtillerySubWeapon(int ammo) {
 		super("Artillery", artilleryShell, ammo);

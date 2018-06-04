@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class RocketSubWeapon extends SubWeapon {
 	
-	private static Texture rocketTexture = Assets.manager.get(Assets.rocket);
+	private static Texture rocketTexture = Assets.manager.get(Assets.rocket_icon);
 	
 	public RocketSubWeapon(int ammo) {
 		super("Rocket", rocketTexture, ammo);
