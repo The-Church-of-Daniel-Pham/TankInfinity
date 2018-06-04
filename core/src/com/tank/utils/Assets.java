@@ -10,8 +10,8 @@ public class Assets {
 	public static final AssetManager manager = new AssetManager();
 
 	// For animation
-	public static final AssetDescriptor<Texture> explosionSheet = new AssetDescriptor<Texture>(
-			"animation/explosion_atlas.png", Texture.class);
+	public static final AssetDescriptor<Texture> death_explosion = new AssetDescriptor<Texture>(
+			"animation/death_explosion.png", Texture.class);
 	public static final AssetDescriptor<Texture> burstSheet = new AssetDescriptor<Texture>(
 			"animation/burstSheet.png", Texture.class);
 	public static final AssetDescriptor<Texture> airBombSheet = new AssetDescriptor<Texture>(
@@ -184,7 +184,7 @@ public class Assets {
 
 
     public static void loadTextures() {
-        manager.load(explosionSheet);
+        manager.load(death_explosion);
         manager.load(burstSheet);
         manager.load(airBombSheet);
         // System.out.println("Animation loaded");

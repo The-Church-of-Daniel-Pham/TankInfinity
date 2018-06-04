@@ -8,7 +8,6 @@ package com.tank.actor.vehicles;
  * AI.
  */
 import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -18,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.ui.MovingText;
-import com.tank.animations.Explosion;
+import com.tank.animations.DeathExplosion;
 import com.tank.interfaces.Collidable;
 import com.tank.interfaces.Destructible;
 import com.tank.interfaces.Teamable;
@@ -443,7 +442,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	 */
 	public void destroy() {
 		//damageSound.play();
-		getStage().addActor(new Explosion(getX(), getY()));
+		getStage().addActor(new DeathExplosion(getX(), getY()));
 		vehicleList.remove(this);
 		remove();
 	}

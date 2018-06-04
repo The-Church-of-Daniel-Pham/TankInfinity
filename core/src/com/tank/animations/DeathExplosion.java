@@ -7,19 +7,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.utils.Assets;
 
-public class Explosion extends Actor {
+public class DeathExplosion extends Actor {
     private static Animation<TextureRegion> explosionAnimation;
-    private static Texture explosionSheet = Assets.manager.get(Assets.explosionSheet);
-    private static final int FRAMES_ROWS = 4;
-    private static final int FRAMES_COLS = 4;
+    private static Texture death_explosion = Assets.manager.get(Assets.death_explosion);
+    private static final int FRAMES_ROWS = 10;
+    private static final int FRAMES_COLS = 9;
     private static final int FPS = 30;
-    private static final int FRAME_WIDTH = explosionSheet.getWidth() / FRAMES_COLS;
-    private static final int FRAME_HEIGHT = explosionSheet.getHeight() / FRAMES_ROWS;
+    private static final int FRAME_WIDTH = death_explosion.getWidth() / FRAMES_COLS;
+    private static final int FRAME_HEIGHT = death_explosion.getHeight() / FRAMES_ROWS;
 	
 	static {
-		TextureRegion[][] textureRegions = TextureRegion.split(explosionSheet,
-				explosionSheet.getWidth() / FRAMES_COLS,
-				explosionSheet.getHeight() / FRAMES_ROWS);
+		TextureRegion[][] textureRegions = TextureRegion.split(death_explosion,
+				death_explosion.getWidth() / FRAMES_COLS,
+				death_explosion.getHeight() / FRAMES_ROWS);
 
         TextureRegion[] explosionFrames = new TextureRegion[FRAMES_COLS * FRAMES_ROWS];
         int index = 0;
@@ -34,7 +34,7 @@ public class Explosion extends Actor {
 
     private float stateTime;
 
-    public Explosion(float x, float y) {
+    public DeathExplosion(float x, float y) {
         stateTime = 0f;
         setX(x);
         setY(y);
