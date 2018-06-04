@@ -41,8 +41,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		videoTable = new VideoSettings();
 		audioTable = new AudioSettings();
 		controlsTable = new ControlsSettings(game);
-		controlsScroll = new ScrollPane(controlsTable, new ScrollPane.ScrollPaneStyle());
-		controlsScroll.setScrollPercentY(100f);
+		controlsScroll = new ScrollPane(controlsTable);
 
 		uiTable = new Table();
 		buildTable();
