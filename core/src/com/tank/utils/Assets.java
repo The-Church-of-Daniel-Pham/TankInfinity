@@ -75,7 +75,7 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> fang = new AssetDescriptor<Texture>("projectiles/fang.png",
             Texture.class);
-    public static final AssetDescriptor<Texture> pelletIcon = new AssetDescriptor<Texture>("projectiles/pelletIcon.png",
+    public static final AssetDescriptor<Texture> caltrop = new AssetDescriptor<Texture>("projectiles/caltrop.png",
             Texture.class);
     public static final AssetDescriptor<Texture> mooseIcon = new AssetDescriptor<Texture>("projectiles/mooseIcon.png",
             Texture.class);
@@ -122,6 +122,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> repairbox = new AssetDescriptor<Texture>("item/repairbox.png",
             Texture.class);
     //UI
+	public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/uiskin.json", Skin.class);
     public static final AssetDescriptor<Texture> crosshairs_red = new AssetDescriptor<Texture>("ui/cursor/crosshairs_red.png",
             Texture.class);
     public static final AssetDescriptor<Texture> crosshairs_blue = new AssetDescriptor<Texture>("ui/cursor/crosshairs_blue.png",
@@ -149,6 +150,24 @@ public class Assets {
     public static final AssetDescriptor<Texture> tank_preview_green = new AssetDescriptor<Texture>("ui/tank/tank_preview_green.png",
             Texture.class);
     public static final AssetDescriptor<Texture> tank_preview_yellow = new AssetDescriptor<Texture>("ui/tank/tank_preview_yellow.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> rocket_icon = new AssetDescriptor<Texture>("ui/icon/sub/rocket_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> chakram_icon = new AssetDescriptor<Texture>("ui/icon/sub/chakram_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> landmine_icon = new AssetDescriptor<Texture>("ui/icon/sub/landmine_icon.png",
+			Texture.class);
+    public static final AssetDescriptor<Texture> boomerang_icon = new AssetDescriptor<Texture>("ui/icon/sub/boomerang_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> pellet_icon = new AssetDescriptor<Texture>("ui/icon/sub/pellet_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> laser_icon = new AssetDescriptor<Texture>("ui/icon/sub/laser_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> artillery_icon = new AssetDescriptor<Texture>("ui/icon/sub/artillery_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> fang_icon = new AssetDescriptor<Texture>("ui/icon/sub/fang_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> caltrop_icon = new AssetDescriptor<Texture>("ui/icon/sub/caltrop_icon.png",
             Texture.class);
     // Menu
     public static final AssetDescriptor<Texture> backdrop = new AssetDescriptor<Texture>("menu/loading/backdrop.png",
@@ -178,8 +197,6 @@ public class Assets {
 	public static final AssetDescriptor<Sound> tank_damage = new AssetDescriptor<Sound>("audio/damage_sound.wav",
 			Sound.class);
 
-	// UI
-	public static final AssetDescriptor<Skin> skin = new AssetDescriptor<Skin>("menu/skin/uiskin.json", Skin.class);
 
 	public static void loadLoading() {
 		// load first
@@ -219,10 +236,10 @@ public class Assets {
         manager.load(landmine);
         manager.load(pellet);
         manager.load(artilleryShell);
-        manager.load(pelletIcon);
         manager.load(laser);
         manager.load(fang);
         manager.load(mooseIcon);
+        manager.load(caltrop);
         // System.out.println("Projectile textures loaded");
         manager.load(tread_red);
         manager.load(gun_red);
@@ -260,6 +277,15 @@ public class Assets {
         manager.load(tank_preview_blue);
         manager.load(tank_preview_green);
         manager.load(tank_preview_yellow);
+        manager.load(rocket_icon);
+        manager.load(chakram_icon);
+        manager.load(boomerang_icon);
+        manager.load(landmine_icon);
+        manager.load(pellet_icon);
+        manager.load(artillery_icon);
+        manager.load(laser_icon);
+        manager.load(fang_icon);
+        manager.load(caltrop_icon);
         // System.out.println("UI textures loaded");
         manager.load(title);
         manager.load(black);

@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class ChakramSubWeapon extends SubWeapon {
 	
-	private static Texture chakramTexture = Assets.manager.get(Assets.chakram);
+	private static Texture chakramTexture = Assets.manager.get(Assets.chakram_icon);
 	
 	public ChakramSubWeapon(int ammo) {
 		super("Chakram", chakramTexture, ammo);
