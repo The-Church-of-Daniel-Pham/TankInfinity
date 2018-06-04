@@ -20,6 +20,7 @@ public class UpgradeMenuScreen implements Screen {
 	@Override
 	public void show() {
 		game.addInput(uMenu);
+		uMenu.resetTable();
 	}
 
 	@Override
