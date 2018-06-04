@@ -213,7 +213,7 @@ public class PlayerTank extends FreeTank {
 		if (player.controls.firePressed() && reloadTime < 0.01 && bulletCount < stats.getStatValue("Max Projectile")) {
 			// if almost done reloading, allow for rounding
 			int fireRate = stats.getStatValue("Fire Rate");
-			setReloadTime(1.5f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
+			setReloadTime(1.75f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 			shoot();
 		} else if (player.controls.subPressed() && reloadTime < 0.01) {
 			if (getCurrentSubWeapon() != null) {
