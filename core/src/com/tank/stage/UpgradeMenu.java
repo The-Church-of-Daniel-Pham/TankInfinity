@@ -81,6 +81,7 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 		uiTable.row();
 		for (int i = 0; i < pUpgradeMenus.size(); i++) {
 			if (game.players.get(i).isEnabled()) {
+				pUpgradeMenus.get(i).select(-1);
 				uiTable.add(pUpgradeMenus.get(i)).expand();
 				pUpgradeMenus.get(i).refreshMenu();
 			}
