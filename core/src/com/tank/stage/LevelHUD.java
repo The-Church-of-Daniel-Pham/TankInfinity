@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.screen.PlayScreen;
+import com.tank.table.LevelInfo;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
@@ -70,6 +72,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
+		LevelInfo levelinfo = new LevelInfo(game);
 		TextButton pauseButton = new TextButton("Pause", skin);
 		Table placeholder = new Table();
 
@@ -81,8 +84,9 @@ public class LevelHUD extends Stage implements InputProcessor {
 			}
 		});
 
-		uiTable.add(fpsLabel).width(200).height(100).colspan(2).expand().top().left();
-		uiTable.add(pauseButton).width(200).height(100).colspan(2).expand().top().right();
+		uiTable.add(fpsLabel).width(200).height(100).expand().top().left();
+		uiTable.add(levelinfo).colspan(2).expand().top().center();
+		uiTable.add(pauseButton).width(200).height(100).expand().top().right();
 		uiTable.row();
 
 		for (Player p : game.players) {
