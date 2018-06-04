@@ -116,7 +116,7 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean firePressed() {
-		 testButtons();
+		//testButtons();
 		if (controller == null) {
 			return false;
 		}
