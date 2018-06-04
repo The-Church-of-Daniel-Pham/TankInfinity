@@ -84,6 +84,11 @@ public class Player {
 				tank.heal(null, heal);
 				tank.setupTank(row, col, rotation);
 			}
+			else {
+				int heal = -tank.getHealth() + (tank.getMaxHealth() / 10);
+				tank.heal(null, heal);
+				tank.setupTank(row, col, rotation);
+			}
 		}
 	}
 	

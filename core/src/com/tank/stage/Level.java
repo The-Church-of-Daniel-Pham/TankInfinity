@@ -182,7 +182,7 @@ public class Level extends Stage {
 					p.initializeTank(map.getSpawnPoint()[0] - 1, map.getSpawnPoint()[1] + 1, 270, first);
 				}
 			}
-			addActor(p.tank);
+			super.addActor(p.tank);
 		}
 	}
 
