@@ -16,6 +16,11 @@ public class SettingsMenuScreen implements Screen {
 		settingsMenu = new SettingsMenu(this.game);
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
+
+	public SettingsMenu getSettingsMenu()
+	{
+		return settingsMenu;
+	}
 	
 	@Override
 	public void show() {
