@@ -49,6 +49,7 @@ public class PlayerUpgradeMenu extends Table {
 		super.setDebug(false);
 		super.defaults().width(75).height(75).space(15).center();
 		
+		heldButtons = new ArrayList<Boolean>();
 		for (int i = 0; i < 4; i++) {
 			heldButtons.add(false);
 		}
