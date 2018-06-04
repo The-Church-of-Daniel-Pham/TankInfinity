@@ -149,6 +149,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> tank_preview_yellow = new AssetDescriptor<Texture>("ui/tank/tank_preview_yellow.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> blank_icon = new AssetDescriptor<Texture>("ui/icon/sub/blank_icon.png",
+            Texture.class);
     public static final AssetDescriptor<Texture> rocket_icon = new AssetDescriptor<Texture>("ui/icon/sub/rocket_icon.png",
             Texture.class);
     public static final AssetDescriptor<Texture> chakram_icon = new AssetDescriptor<Texture>("ui/icon/sub/chakram_icon.png",
@@ -274,6 +276,7 @@ public class Assets {
         manager.load(tank_preview_blue);
         manager.load(tank_preview_green);
         manager.load(tank_preview_yellow);
+        manager.load(blank_icon);
         manager.load(rocket_icon);
         manager.load(chakram_icon);
         manager.load(boomerang_icon);
