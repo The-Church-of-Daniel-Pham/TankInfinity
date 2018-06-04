@@ -130,13 +130,13 @@ public class Level extends Stage {
 			}
 		}
 		
-		super.addActor((subSkyLevel = new Actor()));
-		super.addActor((skyLevel = new Actor()));
-		
 		if (levelNum == 1)
 			spawnInPlayers(true);
 		else
 			spawnInPlayers(false);
+		
+		super.addActor((subSkyLevel = new Actor()));
+		super.addActor((skyLevel = new Actor()));
 
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
