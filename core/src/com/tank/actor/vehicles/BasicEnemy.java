@@ -18,6 +18,7 @@ import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
 import com.tank.stage.Level;
+import com.tank.stats.Stats;
 
 public class BasicEnemy extends FixedTank {
 	
@@ -51,6 +52,7 @@ public class BasicEnemy extends FixedTank {
 	public BasicEnemy(float x, float y, int level) {
 		super(x, y, Assets.manager.get(Assets.fixed_tan));
 		initializeStats();
+		stats.mergeStats(levelStats(level));
 		initializePathfinding();
 		initializeHitbox();
 		setRotation((float)(Math.random() * 360f));
@@ -64,6 +66,8 @@ public class BasicEnemy extends FixedTank {
 		reverseTimeThreshold = 0.5f;
 		timeSinceLastPathfind = 0f;
 		cooldownLastShot = 0.5f;
+		
+		health = getMaxHealth();
 	}
 	
 	protected void initializeStats() {
@@ -73,12 +77,11 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Stability", 50);
 		stats.addStat("Max Bounce", 1);
 		stats.addStat("Projectile Speed", 75);
-		stats.addStat("Lifetime", 80);
+		stats.addStat("Lifetime", 50);
 		stats.addStat("Fire Rate", 30);
 		stats.addStat("Max Projectile", 6);
 		
 		stats.addStat("Max Health", 60);
-		health = 60;
 		stats.addStat("Armor", 15);
 		
 		stats.addStat("Traction", 100);
@@ -86,6 +89,24 @@ public class BasicEnemy extends FixedTank {
 		stats.addStat("Angular Acceleration", 120);
 		
 		stats.addStat("Projectile Durability", 1);
+	}
+	
+	protected Stats levelStats(int levelNum) {
+		Stats levelUps = new Stats();
+		
+		levelUps.addStat("Damage", (int)(1.5 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Spread", (int)(3.2 * Math.pow(levelNum - 1, 0.5)));
+		levelUps.addStat("Accuracy", (int)(4.5 * Math.pow(levelNum - 1, 0.8)));
+		levelUps.addStat("Stability", (int)(4 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Max Bounce", (int)(0.3 * Math.pow(levelNum - 1, 0.3)));
+		levelUps.addStat("Fire Rate", (int)(2 * Math.pow(levelNum - 1, 0.6)));
+		
+		levelUps.addStat("Max Health", (int)(5 * Math.pow(levelNum - 1, 1.2)));
+		levelUps.addStat("Armor", (int)(1 * Math.pow(levelNum - 1, 0.9)));
+		
+		levelUps.addStat("Projectile Durability", (int)(0.4 * Math.pow(levelNum - 1, 0.5)));
+		
+		return levelUps;
 	}
 	
 	public void initializePathfinding() {
