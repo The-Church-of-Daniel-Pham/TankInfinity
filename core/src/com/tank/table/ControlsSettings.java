@@ -17,7 +17,7 @@ public class ControlsSettings extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
 
-	private static String keyForward = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("UP").getKeyCode());
+	private String keyForward = getKeyboardInputString("UP");
 	private static String keyBack = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("DOWN").getKeyCode());
 	private static String keyTurnRight = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RIGHT").getKeyCode());
 	private static String keyTurnLeft = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LEFT").getKeyCode());
@@ -38,21 +38,37 @@ public class ControlsSettings extends Table{
 	private TextButton pauseText;
 
 	private Thread settingKey;
+	
+	private String getKeyboardInputString(String key)
+	{
+		KeyControl control = game.players.get(0).controls.getKeyControl(key);
+		int keyCode = control.getKeyCode();
+		
+		if(control.getKeyType() == 0)
+		{
+			return Input.Keys.toString(keyCode);
+		}
+		else
+		{
+			switch(control.getKeyCode())
+			{
+				case 0: return "Left Click";
+				case 1: return "Right Click";
+				case 2: return "Center Click";
+				case 3: return "Back Click";
+				case 4: return "Forward Click";
+				default: return "Error";
+			}
+				
+		}
+		
+		
+	}
 
 	public ControlsSettings(final TankInfinity game) {
 		this.game = game;
 		super.setFillParent(false);
 		super.setDebug(false);
-
-		if(keyShoot.equalsIgnoreCase("unknown"))
-		{
-			keyShoot = "Left Click";
-		}
-
-		if(keySubShoot.equalsIgnoreCase("soft left"))
-		{
-			keySubShoot = "Right Click";
-		}
 
 		Label forwardLabel = new Label("Move Forward", skin, STYLE_NAME);
 		forwardText = new TextButton(keyForward, skin, STYLE_NAME);
@@ -531,17 +547,7 @@ public class ControlsSettings extends Table{
 
 	private void updateButton(TextButton b, String key)
 	{
-		String input = Input.Keys.toString(game.players.get(0).controls.getKey(key));
-		if(input.equalsIgnoreCase("unknown"))
-		{
-			input = "Left Click";
-		}
-
-		else if(input.equalsIgnoreCase("soft left"))
-		{
-			input = "Right Click";
-		}
-
+		String input = getKeyboardInputString(key);
 		b.setText(input);
 	}
 }
