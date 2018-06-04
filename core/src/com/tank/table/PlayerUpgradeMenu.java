@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
 import com.tank.stats.Upgrade;
 import com.tank.utils.Assets;
@@ -38,6 +39,7 @@ public class PlayerUpgradeMenu extends Table {
 	private Label description;
 	
 	private int selected;
+	private ArrayList<Boolean> heldButtons;
 
 	public PlayerUpgradeMenu(final Player player) {
 		this.player = player;
@@ -46,6 +48,10 @@ public class PlayerUpgradeMenu extends Table {
 
 		super.setDebug(false);
 		super.defaults().width(75).height(75).space(15).center();
+		
+		for (int i = 0; i < 4; i++) {
+			heldButtons.add(false);
+		}
 
 		buildTable();
 	}
@@ -57,28 +63,46 @@ public class PlayerUpgradeMenu extends Table {
 		} else {
 			topIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 0) topBack.setDrawable(skin, "round-light-gray"); else topBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 0) {
+			topBack.setDrawable(skin, "round-light-gray");
+			description.setText(u.get(0).getName() + "\n" + u.get(0).getDescription());
+		}
+		else topBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 1) {
 			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(1).getIcon())));
 		} else {
 			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 1) leftBack.setDrawable(skin, "round-light-gray"); else leftBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 1) {
+			leftBack.setDrawable(skin, "round-light-gray");
+			description.setText(u.get(1).getName() + "\n" + u.get(1).getDescription());
+		}
+		else leftBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 2) {
 			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(2).getIcon())));
 		} else {
 			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 2) rightBack.setDrawable(skin, "round-light-gray"); else rightBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 2) {
+			rightBack.setDrawable(skin, "round-light-gray");
+			description.setText(u.get(2).getName() + "\n" + u.get(2).getDescription());
+		}
+		else rightBack.setDrawable(skin, "round-dark-gray");
 		
 		if (u != null && u.size() > 3) {
 			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(3).getIcon())));
 		} else {
 			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
 		}
-		if (selected == 3) bottomBack.setDrawable(skin, "round-light-gray"); else bottomBack.setDrawable(skin, "round-dark-gray");
+		if (selected == 3) {
+			bottomBack.setDrawable(skin, "round-light-gray");
+			description.setText(u.get(3).getName() + "\n" + u.get(3).getDescription());
+		}
+		else bottomBack.setDrawable(skin, "round-dark-gray");
+		
+		if (selected == -1) description.setText("");
 	}
 	
 	public void select(int index) {
@@ -94,21 +118,16 @@ public class PlayerUpgradeMenu extends Table {
 
 	public void buildTable() {
 		//super.clearChildren();
-		if (player == null || !player.isEnabled() || player.tank == null || player.tank.isDestroyed())
-			return;
+		//if (player == null || !player.isEnabled() || player.tank == null || player.tank.isDestroyed())
+		//	return;
 		super.setSkin(skin);
 		playerName = new Label(player.getName(), skin);
 		add(playerName).colspan(3).width(250);
 		row();
-		ArrayList<Upgrade> u = player.tank.getSelectableUpgrades();
 
 		add("").fill();
 		
-		if (u != null && u.size() > 0) {
-			topIcon = new Image(u.get(0).getIcon());
-		} else {
-			topIcon = new Image(empty);
-		}
+		topIcon = new Image(empty);
 		topIcon.setSize(75, 75);
 		topBack = new Image(skin.getDrawable("round-dark-gray"));
 		topBack.setSize(75, 75);
@@ -121,11 +140,7 @@ public class PlayerUpgradeMenu extends Table {
 		add("").fill();
 		row();
 		
-		if (u != null && u.size() > 1) {
-			leftIcon = new Image(u.get(1).getIcon());
-		} else {
-			leftIcon = new Image(empty);
-		}
+		leftIcon = new Image(empty);
 		leftIcon.setSize(75, 75);
 		leftBack = new Image(skin.getDrawable("round-dark-gray"));
 		leftBack.setSize(75, 75);
@@ -137,11 +152,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		add("").fill();
 		
-		if (u != null && u.size() > 2) {
-			rightIcon = new Image(u.get(2).getIcon());
-		} else {
-			rightIcon = new Image(empty);
-		}
+		rightIcon = new Image(empty);
 		rightIcon.setSize(75, 75);
 		rightBack = new Image(skin.getDrawable("round-dark-gray"));
 		rightBack.setSize(75, 75);
@@ -154,11 +165,7 @@ public class PlayerUpgradeMenu extends Table {
 		row();
 		add("").fill();
 		
-		if (u != null && u.size() > 3) {
-			bottomIcon = new Image(u.get(3).getIcon());
-		} else {
-			bottomIcon = new Image(empty);
-		}
+		bottomIcon = new Image(empty);
 		bottomIcon.setSize(75, 75);
 		bottomBack = new Image(skin.getDrawable("round-dark-gray"));
 		bottomBack.setSize(75, 75);
@@ -172,12 +179,37 @@ public class PlayerUpgradeMenu extends Table {
 		row();
 		
 		description = new Label("", skin);
-		add(description).colspan(3).width(250);
+		description.setFontScale(0.5f);
+		description.setPosition(-100, 0, Align.left);
+		Group descLabel = new Group();
+		descLabel.addActor(description);
+		add(descLabel).colspan(3).width(300);
 	}
 
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if (player.controls.upPressed() && !heldButtons.get(0)) {
+			select(0);
+			refreshMenu();
+		}
+		if (player.controls.leftPressed() && !heldButtons.get(1)) {
+			select(1);
+			refreshMenu();
+		}
+		if (player.controls.rightPressed() && !heldButtons.get(2)) {
+			select(2);
+			refreshMenu();
+		}
+		if (player.controls.downPressed() && !heldButtons.get(3)) {
+			select(3);
+			refreshMenu();
+		}
+		
+		heldButtons.set(0, player.controls.upPressed());
+		heldButtons.set(1, player.controls.leftPressed());
+		heldButtons.set(2, player.controls.rightPressed());
+		heldButtons.set(3, player.controls.downPressed());
 	}
 
 }
