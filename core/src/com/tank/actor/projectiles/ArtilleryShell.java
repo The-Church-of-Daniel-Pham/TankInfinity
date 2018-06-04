@@ -80,7 +80,7 @@ public class ArtilleryShell extends Actor{
 	public void draw(Batch batch, float a) {
 		TextureRegion currentFrame = artilleryAnimation.getKeyFrame(timePassed, true);
 		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
-				super.getOriginY(), 128, 128, super.getScaleX(), super.getScaleY(), getRotation());
+				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
 		//drawVertices(batch, a);
 	}
 }
