@@ -20,6 +20,7 @@ public class DamageExplosion extends AbstractProjectile{
 	private int currentSize;
 	private float lifeTime;
 	private float maxLifeTime;
+	private boolean finished;
 	private ArrayList<AbstractVehicle> vehiclesHit;
 	
 	private static Animation<TextureRegion> damageExplosionAnimation;
@@ -58,20 +59,27 @@ public class DamageExplosion extends AbstractProjectile{
 		vehiclesHit = new ArrayList<AbstractVehicle>();
 		
 		// 1/fps, where col*row = total frames, maxlifetime is time alloted to finish animation
-		damageExplosionAnimation.setFrameDuration(1 / (FRAMES_COLS * FRAMES_ROWS / maxLifeTime));
+		//damageExplosionAnimation.setFrameDuration(1 / (FRAMES_COLS * FRAMES_ROWS / maxLifeTime));
 	}
 	
 	public void act(float delta) {
 		lifeTime += delta;
 		currentSize = (int)(Math.pow(lifeTime / maxLifeTime, 0.5) * (endSize - startingSize)) + startingSize;
-		setScale((float)currentSize / (float)normalSize);
-		if (lifeTime >= maxLifeTime) {
+		setScale((float)endSize / (float)normalSize);
+		if (lifeTime >= maxLifeTime + 1) {
 			destroy();
 			return;
 		}
 		else {
-			initializeHitbox();
-			explode();
+			if (lifeTime < maxLifeTime) {
+				initializeHitbox();
+				explode();
+			}
+			else {
+				if (!finished) {
+					AbstractProjectile.projectileList.remove(this);
+				}
+			}
 		}
 	}
 	
@@ -85,7 +93,7 @@ public class DamageExplosion extends AbstractProjectile{
 //		batch.setColor(NumberUtils.intToFloatColor(Color.toIntBits(255, 255, 255, 255)));
 		//drawVertices(batch, a);
 		
-		TextureRegion currentFrame = damageExplosionAnimation.getKeyFrame(lifeTime, false);
+		TextureRegion currentFrame = damageExplosionAnimation.getKeyFrame(lifeTime * (3.0f / maxLifeTime), false);
 		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
 	}
