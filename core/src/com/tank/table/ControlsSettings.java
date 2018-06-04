@@ -41,7 +41,7 @@ public class ControlsSettings extends Table{
 
 	public ControlsSettings(final TankInfinity game) {
 		this.game = game;
-		super.setFillParent(true);
+		super.setFillParent(false);
 		super.setDebug(false);
 
 		if(keyShoot.equalsIgnoreCase("unknown"))
