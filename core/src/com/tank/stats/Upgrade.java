@@ -18,11 +18,11 @@ public class Upgrade {
 		 */
 		//Attack Power increase
 		Stats damageIncrease = new Stats();
-		damageIncrease.addStat("Damage", 5);
+		damageIncrease.addStat("Damage", 7);
 		upgrades.add(new Upgrade("Damage Up", null, damageIncrease, "Increase tank damage by small amount"));
 		//Armor increase
 		Stats armorIncrease = new Stats();
-		armorIncrease.addStat("Armor", 4);
+		armorIncrease.addStat("Armor", 6);
 		upgrades.add(new Upgrade("Armor Up", null, armorIncrease, "Increase tank defense by small amount"));
 		//Health increase
 		Stats healthIncrease = new Stats();
@@ -30,19 +30,19 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Health Up", null, healthIncrease, "Increase max tank health by small amount"));
 		//Accuracy increase
 		Stats accuracyIncrease = new Stats();
-		accuracyIncrease.addStat("Accuracy", 6);
+		accuracyIncrease.addStat("Accuracy", 8);
 		upgrades.add(new Upgrade("Accuracy Up", null, accuracyIncrease, "Increase tank accuracy by small amount"));
 		//Spread decrease
 		Stats spreadDecrease = new Stats();
-		spreadDecrease.addStat("Spread", 6);
+		spreadDecrease.addStat("Spread", 8);
 		upgrades.add(new Upgrade("Spread Down", null, spreadDecrease, "Decreases tank bullet spread by small amount"));
 		//Stability increase
 		Stats stabilityUp = new Stats();
-		stabilityUp.addStat("Stability", 5);
+		stabilityUp.addStat("Stability", 8);
 		upgrades.add(new Upgrade("Stability Up", null, stabilityUp, "Decreases tank's accuracy loss when moving by small amount"));
 		//Fire Rate
 		Stats fireUp = new Stats();
-		fireUp.addStat("Fire Rate", 5);
+		fireUp.addStat("Fire Rate", 6);
 		upgrades.add(new Upgrade("Fire Rate Up", null, fireUp, "Increases tank's rate of fire by small amount"));
 		//Lifetime Increase
 		Stats lifetimeUp = new Stats();
@@ -55,12 +55,12 @@ public class Upgrade {
 		Stats bounceUp = new Stats();
 		bounceUp.addStat("Max Bounce", 1);
 		bounceUp.addStat("Damage", -3);
-		upgrades.add(new Upgrade("Bounce Up", null, bounceUp, "Increases maximum projectile bounce, but decreases tank damage by a miniscule amount"));
+		upgrades.add(new Upgrade("Bounce Up", null, bounceUp, "Increases maximum bounce, but decreases tank damage by a miniscule amount"));
 		//Projectile Speed increase (down Stability)
 		Stats projectileSpeedUp = new Stats();
 		projectileSpeedUp.addStat("Projectile Speed", 6);
 		projectileSpeedUp.addStat("Stability", -2);
-		upgrades.add(new Upgrade("Projectile Speed Up", null, projectileSpeedUp, "Increases projectile speed, but decreases tank stability by a miniscule amount"));
+		//upgrades.add(new Upgrade("Projectile Speed Up", null, projectileSpeedUp, "Increases projectile speed, but decreases tank stability by a miniscule amount"));
 		//Max Projectile increase (down Fire Rate)
 		Stats maxProjectileUp = new Stats();
 		maxProjectileUp.addStat("Max Projectile", 1);
@@ -71,16 +71,16 @@ public class Upgrade {
 		accelerationUp.addStat("Acceleration", 7);
 		accelerationUp.addStat("Angular Acceleration", 7);
 		accelerationUp.addStat("Armor", -3);
-		upgrades.add(new Upgrade("Acceleration Up", null, accelerationUp, "Increases acceleration of tank, but decreases tank armor by a miniscule amount"));
+		//upgrades.add(new Upgrade("Acceleration Up", null, accelerationUp, "Increases acceleration of tank, but decreases tank armor by a miniscule amount"));
 		//Traction increase (Speed decrease)
 		Stats tractionUp = new Stats();
 		tractionUp.addStat("Traction", 8);
-		upgrades.add(new Upgrade("Traction Up", null, tractionUp, "Increases traction of tank, but decreases tank speed by a miniscule amount"));
+		//upgrades.add(new Upgrade("Traction Up", null, tractionUp, "Increases traction of tank, but decreases tank speed by a miniscule amount"));
 		//Projectile Durability increase (down Projectile Speed)
 		Stats projectileDurabilityUp = new Stats();
 		projectileDurabilityUp.addStat("Projectile Durability Up", 1);
-		projectileDurabilityUp.addStat("Projectile Speed", -3);
-		upgrades.add(new Upgrade("Projectile Durability Up", null, projectileDurabilityUp, "Increases projectile durability, but decreases projectile speed by a miniscule amount"));
+		projectileDurabilityUp.addStat("Armor", -3);
+		upgrades.add(new Upgrade("Projectile Durability Up", null, projectileDurabilityUp, "Increases projectile durability, but decreases armor by a miniscule amount"));
 	}
 	
 	public Upgrade(String n, Texture i, Stats c, String d) {
