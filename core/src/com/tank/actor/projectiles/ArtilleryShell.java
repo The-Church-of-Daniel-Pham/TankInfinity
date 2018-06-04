@@ -66,7 +66,7 @@ public class ArtilleryShell extends Actor{
 		timeUntilHit -= delta;
 		timePassed += delta;
 		if (timeUntilHit <= 0f) {
-			getStage().addActor(new RadialExplosion(source, stats, getX(), getY()));
+			getStage().addActor(new DamageExplosion(source, stats, getX(), getY()));
 			remove();
 		}
 		else {
