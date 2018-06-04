@@ -17,7 +17,7 @@ public class ControlsSettings extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
 
-	private String keyForward = getKeyboardInputString("UP");
+	private String keyForward = "";//getKeyboardInputString("UP");
 	private static String keyBack = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("DOWN").getKeyCode());
 	private static String keyTurnRight = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("RIGHT").getKeyCode());
 	private static String keyTurnLeft = Input.Keys.toString(ControlConstants.DEFAULT_KEYBOARD_CONTROLS.get("LEFT").getKeyCode());
