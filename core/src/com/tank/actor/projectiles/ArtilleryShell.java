@@ -13,9 +13,9 @@ import com.tank.utils.Assets;
 public class ArtilleryShell extends Actor{
 	
 	protected static Texture artilleryShell =  Assets.manager.get(Assets.artilleryShell);
-	protected static Texture artillerySheet =  Assets.manager.get(Assets.airBombSheet);
+	protected static Texture artillerySheet =  Assets.manager.get(Assets.air_bomb);
 	protected static Animation<TextureRegion> artilleryAnimation;
-	protected static final int FRAMES_ROWS = 1;
+	protected static final int FRAMES_ROWS = 4;
 	protected static final int FRAMES_COLS = 4;
 	protected static final int FPS = 30;
 	protected static final int FRAME_WIDTH = artillerySheet.getWidth() / FRAMES_COLS;
