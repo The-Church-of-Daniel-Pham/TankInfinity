@@ -8,10 +8,10 @@ import com.tank.utils.Assets;
 
 public class LandMineSubWeapon extends SubWeapon{
 	
-	private static Texture landMineTexture = Assets.manager.get(Assets.landMine);
+	private static Texture landmineTexture = Assets.manager.get(Assets.landmine);
 	
 	public LandMineSubWeapon(int ammo) {
-		super("Land Mine", landMineTexture, ammo);
+		super("Land Mine", landmineTexture, ammo);
 	}
 
 	@Override
