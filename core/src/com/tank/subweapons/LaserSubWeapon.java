@@ -9,7 +9,7 @@ import com.tank.utils.Assets;
 
 public class LaserSubWeapon extends SubWeapon{
 	
-	private static Texture laserTexture = Assets.manager.get(Assets.laser);
+	private static Texture laserTexture = Assets.manager.get(Assets.laser_icon);
 	
 	public LaserSubWeapon(int ammo) {
 		super("Laser", laserTexture, ammo);
