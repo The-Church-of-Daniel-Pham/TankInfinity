@@ -1,6 +1,5 @@
 package com.tank.animations;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,53 +8,51 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.utils.Assets;
 
 public class Explosion extends Actor {
-    private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
-    private static final float FRAME_DURATION = 0.025F;
-    private float x, y;
+    private static Animation<TextureRegion> explosionAnimation;
+    private static Texture explosionSheet = Assets.manager.get(Assets.explosionSheet);
+    private static final int FRAMES_ROWS = 4;
+    private static final int FRAMES_COLS = 4;
+    private static final int FPS = 30;
+    private static final int FRAME_WIDTH = explosionSheet.getWidth() / FRAMES_COLS;
+    private static final int FRAME_HEIGHT = explosionSheet.getHeight() / FRAMES_ROWS;
+	
+	static {
+		TextureRegion[][] textureRegions = TextureRegion.split(explosionSheet,
+				explosionSheet.getWidth() / FRAMES_COLS,
+				explosionSheet.getHeight() / FRAMES_ROWS);
 
-    Animation<TextureRegion> explosionAnimation;
-    Texture explosionSheet;
+        TextureRegion[] explosionFrames = new TextureRegion[FRAMES_COLS * FRAMES_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAMES_ROWS; i++) {
+            for (int j = 0; j < FRAMES_COLS; j++) {
+                explosionFrames[index++] = textureRegions[i][j];
+            }
+        }
 
-    float stateTime;
+        explosionAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
+	}
+
+    private float stateTime;
 
     public Explosion(float x, float y) {
-        explosionSheet = Assets.manager.get(Assets.explosionSheet);
         stateTime = 0f;
-        this.x = x;
-        this.y = y;
-        create();
+        setX(x);
+        setY(y);
+        setOriginX(FRAME_WIDTH / 2);
+		setOriginY(FRAME_HEIGHT / 2);
     }
 
     @Override
     public void act(float delta) {
-
+    	stateTime += delta;
+    	if (stateTime >= (float)(FRAMES_ROWS * FRAMES_COLS + 1) / FPS) {
+    		remove();
+    	}
     }
 
-    public void create() {
-        TextureRegion[][] tmp = TextureRegion.split(explosionSheet,
-                explosionSheet.getWidth() / FRAME_COLS,
-                explosionSheet.getHeight() / FRAME_ROWS);
-
-        TextureRegion[] explosionFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                explosionFrames[index++] = tmp[i][j];
-            }
-        }
-
-        explosionAnimation = new Animation<TextureRegion>(FRAME_DURATION, explosionFrames);
-
-    }
-
-    public void draw(Batch spriteBatch, float a) {
-        stateTime += Gdx.graphics.getDeltaTime();
-
-        TextureRegion currentFrame = explosionAnimation.getKeyFrame(stateTime, false);
-        spriteBatch.draw(currentFrame, x, y);
-    }
-
-    public void dispose() {
-        explosionSheet.dispose();
+    public void draw(Batch batch, float a) {
+    	TextureRegion currentFrame = explosionAnimation.getKeyFrame(stateTime, true);
+		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
+				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
     }
 }
