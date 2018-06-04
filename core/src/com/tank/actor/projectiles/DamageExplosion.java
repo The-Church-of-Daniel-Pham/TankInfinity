@@ -66,7 +66,7 @@ public class DamageExplosion extends AbstractProjectile{
 		lifeTime += delta;
 		currentSize = (int)(Math.pow(lifeTime / maxLifeTime, 0.5) * (endSize - startingSize)) + startingSize;
 		setScale((float)endSize / (float)normalSize);
-		if (lifeTime >= maxLifeTime + 1) {
+		if (lifeTime >= maxLifeTime + (maxLifeTime / 3.0f)) {
 			destroy();
 			return;
 		}
