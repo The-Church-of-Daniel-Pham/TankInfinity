@@ -24,7 +24,7 @@ public class PelletsSubWeapon extends SubWeapon{
 			source.getStage().addActor(
 					new Pellet(source, createStats(source), source.getX() + v.x, source.getY() + v.y, source.getGunRotation() + randomAngle));
 		}
-		source.applySecondaryForce(12.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
+		source.applySecondaryForce(15.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
 		int fireRate = source.getStatValue("Fire Rate");
 		source.setReloadTime(3.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 	}
