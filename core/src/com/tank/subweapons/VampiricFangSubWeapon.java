@@ -22,7 +22,7 @@ public class VampiricFangSubWeapon extends SubWeapon {
 		v.setAngle(source.getGunRotation());
 		source.getStage().addActor(
 				new VampiricFang(source, createStats(source), source.getX() + v.x, source.getY() + v.y, source.getGunRotation() + randomAngle));
-		source.applySecondaryForce(60.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
+		source.applySecondaryForce(12.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
 		int fireRate = source.getStatValue("Fire Rate");
 		source.setReloadTime(2.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 	}

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.subweapons.ArtillerySubWeapon;
 import com.tank.subweapons.BoomerangSubWeapon;
+import com.tank.subweapons.CaltropSubWeapon;
 import com.tank.subweapons.ChakramSubWeapon;
 import com.tank.subweapons.LandMineSubWeapon;
 import com.tank.subweapons.LaserSubWeapon;
@@ -87,7 +88,7 @@ public class SubWeaponItem extends AbstractItem{
 	}
 	
 	public static SubWeapon randomSubWeapon() {
-		int random = (int)(Math.random() * 9);
+		int random = (int)(Math.random() * 10);
 		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
@@ -107,6 +108,8 @@ public class SubWeaponItem extends AbstractItem{
 				return new VampiricFangSubWeapon(2);
 			case 8:
 				return new MooseStampedeSubWeapon(1);
+			case 9:
+				return new CaltropSubWeapon(3);
 		}
 		return null;
 	}

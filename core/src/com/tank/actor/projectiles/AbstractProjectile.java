@@ -332,24 +332,26 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		// add all vehicles not on team to neighbors
 		// add all bullets not on team to neighbors, then remove this instance
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
-		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
-		ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
-		for (AbstractMapTile m : a) {
-			if (m instanceof WallTile) {
-				neighbors.add((WallTile) m);
+		if (!isDestroyed()) {
+			int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
+			ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
+			for (AbstractMapTile m : a) {
+				if (m instanceof WallTile) {
+					neighbors.add((WallTile) m);
+				}
 			}
+			for (AbstractVehicle v : AbstractVehicle.vehicleList) {
+				boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
+				if (canCollide)
+					neighbors.add(v);
+			}
+			for (AbstractProjectile p : AbstractProjectile.projectileList) {
+				boolean canCollide = !(p.getTeam() != null && getTeam() != null && getTeam().equals(p.getTeam()));
+				if (canCollide)
+					neighbors.add(p);
+			}
+			neighbors.remove(this);
 		}
-		for (AbstractVehicle v : AbstractVehicle.vehicleList) {
-			boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
-			if (canCollide)
-				neighbors.add(v);
-		}
-		for (AbstractProjectile p : AbstractProjectile.projectileList) {
-			boolean canCollide = !(p.getTeam() != null && getTeam() != null && getTeam().equals(p.getTeam()));
-			if (canCollide)
-				neighbors.add(p);
-		}
-		neighbors.remove(this);
 		return neighbors;
 	}
 
