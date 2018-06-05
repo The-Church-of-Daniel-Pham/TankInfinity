@@ -8,7 +8,7 @@ import com.tank.utils.Assets;
 
 public class MooseStampedeSubWeapon extends SubWeapon{
 	
-	private static Texture mooseTexture = Assets.manager.get(Assets.mooseIcon);
+	private static Texture mooseTexture = Assets.manager.get(Assets.moose_icon);
 	
 	public MooseStampedeSubWeapon(int ammo) {
 		super("Moose Stampede", mooseTexture, ammo);

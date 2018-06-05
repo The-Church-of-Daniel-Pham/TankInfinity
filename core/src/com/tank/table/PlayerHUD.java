@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
@@ -35,6 +36,7 @@ public class PlayerHUD extends Table{
 	protected Table infoTable;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
+	private Drawable blankSub;
 	
 	private final Image leftSubImage;
 	private Label leftSubAmmo;
@@ -66,31 +68,37 @@ public class PlayerHUD extends Table{
 		icon.addActor(iconImage);
 		icon.addActor(nameLabel);	
 		
-		leftSubImage = new Image(skin.getDrawable("round-light-gray"));
+		blankSub = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_icon)));
+		
+		leftSubImage = new Image(blankSub);
+		leftSubImage.setSize(30, 30);
 		leftSubAmmo = new Label("", skin, "small");
 		leftSubAmmo.setAlignment(Align.right);
 		leftSubAmmo.setPosition(2, 2, Align.bottomRight);
-		leftSubAmmo.setWidth(44f);
+		leftSubAmmo.setWidth(leftSubImage.getWidth());
 		leftSubAmmo.setFontScale(0.6f);
 		leftSub = new Group();
 		leftSub.addActor(leftSubImage);
 		leftSub.addActor(leftSubAmmo);
 		
-		centerSubImage = new Image(skin.getDrawable("round-light-gray"));
+		
+		centerSubImage = new Image(blankSub);
+		centerSubImage.setSize(60, 60);
 		centerSubAmmo = new Label("", skin, "small");
 		centerSubAmmo.setAlignment(Align.right);
 		centerSubAmmo.setPosition(2, 2, Align.bottomRight);
-		centerSubAmmo.setWidth(44f);
+		centerSubAmmo.setWidth(centerSubImage.getWidth());
 		centerSubAmmo.setFontScale(0.6f);
 		centerSub = new Group();
 		centerSub.addActor(centerSubImage);
 		centerSub.addActor(centerSubAmmo);
 		
-		rightSubImage = new Image(skin.getDrawable("round-light-gray"));
+		rightSubImage = new Image(blankSub);
+		rightSubImage.setSize(30, 30);
 		rightSubAmmo = new Label("", skin, "small");
 		rightSubAmmo.setAlignment(Align.right);
 		rightSubAmmo.setPosition(2, 2, Align.bottomRight);
-		rightSubAmmo.setWidth(44f);
+		rightSubAmmo.setWidth(rightSubImage.getWidth());
 		rightSubAmmo.setFontScale(0.6f);
 		rightSub = new Group();
 		rightSub.addActor(rightSubImage);
@@ -124,13 +132,13 @@ public class PlayerHUD extends Table{
 		infoTable.setDebug(false);	
 		infoTable.defaults().space(10).left();
 		
-		infoTable.add(health).width(120).height(40).colspan(3);
+		infoTable.add(health).width(140).height(40).colspan(3);
 		infoTable.row();
-		infoTable.add(exp).width(120).height(40).colspan(3);
+		infoTable.add(exp).width(140).height(40).colspan(3);
 		infoTable.row();
-		infoTable.add(leftSub).width(40).height(40).center();
-		infoTable.add(centerSub).width(40).height(40).center();
-		infoTable.add(rightSub).width(40).height(40).center();
+		infoTable.add(leftSub).width(30).height(60).center();
+		infoTable.add(centerSub).width(60).height(60).center();
+		infoTable.add(rightSub).width(30).height(60).center();
 		
 		super.add(icon).width(140).height(140);
 		super.add(infoTable);
@@ -150,11 +158,11 @@ public class PlayerHUD extends Table{
 				leftSubAmmo.setText("" + player.tank.getNextSubWeapon().getAmmo());
 			}
 			else {
-				centerSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				centerSubImage.setDrawable(blankSub);
 				centerSubAmmo.setText("");
-				leftSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				leftSubImage.setDrawable(blankSub);
 				leftSubAmmo.setText("");
-				rightSubImage.setDrawable(skin.getDrawable("round-light-gray"));
+				rightSubImage.setDrawable(blankSub);
 				rightSubAmmo.setText("");
 			}
 			lastCenterSubWeapon = player.tank.getCurrentSubWeapon();
