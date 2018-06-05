@@ -253,4 +253,12 @@ public class GamepadController extends TankController {
 	public KeyControl getKeyControl(String key) {
 		return keyMap.get(key);
 	}
+	
+	public Controller getController() {
+		return (controllers.get(index));
+	}
+	
+	public static int getControllerAmount() {
+		return controllers.size;
+	}
 }

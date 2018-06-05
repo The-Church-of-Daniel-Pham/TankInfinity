@@ -2,19 +2,12 @@ package com.tank.table;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.tank.controls.ControlConstants;
-import com.tank.controls.GamepadController;
-import com.tank.controls.KeyControl;
-import com.tank.controls.KeyboardMouseController;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
-import com.tank.stage.KeyBindsMenu;
 import com.tank.utils.Assets;
 
 public class ControlsSettings extends Table{
@@ -25,15 +18,14 @@ public class ControlsSettings extends Table{
 	private Skin skin = Assets.manager.get(Assets.skin);
 	
 	private ArrayList<ControlsSettingPlayer> playerControlSettings;
-	private ArrayList<ScrollPane> playerScrollPane;
+	private ArrayList<TextButton> playerButtons;
 	
 	public ControlsSettings(TankInfinity game){
 		this.game = game;
 		playerControlSettings = new ArrayList<ControlsSettingPlayer>();
-		playerScrollPane = new ArrayList<ScrollPane>();
+		playerButtons = new ArrayList<TextButton>();
 		for (Player player : game.players) {
 			playerControlSettings.add(new ControlsSettingPlayer(game, player));
-			playerScrollPane.add(new ScrollPane(playerControlSettings.get(playerControlSettings.size() - 1)));
 		}
 		titleTable = new Table();
 		settingsTable = new Table();
@@ -45,15 +37,6 @@ public class ControlsSettings extends Table{
 		setFillParent(false);
 		setDebug(false); // This is optional, but enables debug lines for tables.
 		top();
-
-		TextButton backButton = new TextButton("Back", skin);
-		backButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				game.setScreen(game.previousScreen);
-				event.stop();
-			}
-		});
 
 		add(titleTable);
 		row();
@@ -100,6 +83,10 @@ public class ControlsSettings extends Table{
 				changeToPlayer(3);
 			}
 		});
+		playerButtons.add(player1);
+		playerButtons.add(player2);
+		playerButtons.add(player3);
+		playerButtons.add(player4);
 
 
 		titleTable.add(player1);
@@ -125,7 +112,19 @@ public class ControlsSettings extends Table{
 		settingsTable.clearChildren();
 		settingsTable.setFillParent(false);
 		playerControlSettings.get(player).refreshMenu();
-		settingsTable.add(playerScrollPane.get(player));
+		settingsTable.add(playerControlSettings.get(player));
 		settingsTable.layout();
+		for (int i = 0; i < playerControlSettings.size(); i++) {
+			if (i != player) {
+				playerControlSettings.get(i).disableButtons();
+				playerButtons.get(i).setColor(Color.WHITE);
+				playerButtons.get(i).setText("Player " + (i + 1));
+			}
+			else {
+				playerControlSettings.get(i).enableButtons();
+				playerButtons.get(i).setColor(Color.RED);
+				playerButtons.get(i).setText("<" + "Player " + (i + 1) + ">");
+			}
+		}
 	}
 }
