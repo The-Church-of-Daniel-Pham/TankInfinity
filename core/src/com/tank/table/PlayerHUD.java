@@ -76,7 +76,7 @@ public class PlayerHUD extends Table{
 		leftSubAmmo.setAlignment(Align.right);
 		leftSubAmmo.setPosition(2, 2, Align.bottomRight);
 		leftSubAmmo.setWidth(leftSubImage.getWidth());
-		leftSubAmmo.setFontScale(0.6f);
+		leftSubAmmo.setFontScale(0.75f);
 		leftSub = new Group();
 		leftSub.addActor(leftSubImage);
 		leftSub.addActor(leftSubAmmo);
@@ -88,7 +88,7 @@ public class PlayerHUD extends Table{
 		centerSubAmmo.setAlignment(Align.right);
 		centerSubAmmo.setPosition(2, 2, Align.bottomRight);
 		centerSubAmmo.setWidth(centerSubImage.getWidth());
-		centerSubAmmo.setFontScale(0.6f);
+		centerSubAmmo.setFontScale(0.75f);
 		centerSub = new Group();
 		centerSub.addActor(centerSubImage);
 		centerSub.addActor(centerSubAmmo);
@@ -99,7 +99,7 @@ public class PlayerHUD extends Table{
 		rightSubAmmo.setAlignment(Align.right);
 		rightSubAmmo.setPosition(2, 2, Align.bottomRight);
 		rightSubAmmo.setWidth(rightSubImage.getWidth());
-		rightSubAmmo.setFontScale(0.6f);
+		rightSubAmmo.setFontScale(0.75f);
 		rightSub = new Group();
 		rightSub.addActor(rightSubImage);
 		rightSub.addActor(rightSubAmmo);
