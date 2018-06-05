@@ -41,6 +41,8 @@ public class ControlsSettingPlayer extends Table{
 	private TextButton lShiftText;
 	private TextButton pauseText;
 	
+	private TextButton defaultButton;
+	
 	private Table keysTable;
 	private Table left;
 	private Table right;
@@ -54,8 +56,11 @@ public class ControlsSettingPlayer extends Table{
 		
 		createControllerTitle();
 		createKeysTable();
+		createDefaultButton();
 		
 		super.add(keysScroll).colspan(4);
+		super.row();
+		super.add(defaultButton).colspan(4);
 	}
 	
 	public void createControllerTitle() {
@@ -106,6 +111,17 @@ public class ControlsSettingPlayer extends Table{
 
 		keysTable.add(left);
 		keysTable.add(right);
+	}
+	
+	public void createDefaultButton() {
+		defaultButton = new TextButton("Reset to Default Controls", skin, STYLE_NAME);
+		defaultButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				player.controls.setToDefault();
+				refreshMenu();
+			}
+		});
 	}
 	
 	public TextButton rowCreator(String labelText, final String key) {

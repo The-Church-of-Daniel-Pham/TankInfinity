@@ -107,4 +107,8 @@ public class KeyboardMouseController extends TankController {
 	}
 	
 	public KeyControl getKeyControl(String key){return keyMap.get(key);}
+	
+	public void setToDefault() {
+		keyMap.putAll(ControlConstants.DEFAULT_KEYBOARD_CONTROLS);
+	}
 }

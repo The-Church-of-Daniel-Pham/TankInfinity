@@ -18,6 +18,13 @@ public class Constants {
 	public static int DEFAULT_HEIGHT = 1080;
 	public static final int LEVEL1_WIDTH = 40;
 	public static final int LEVEL1_HEIGHT = 40;
+	
+	public static void createResolutionsCycleList() {
+		RESOLUTIONS = new CycleList<Integer>(
+				new Integer[] { 1280, 720, 1366, 768, 1600, 900, 1680, 1050, 1920, 1080, 1920, 1200, 2560, 1440, 3840, 2160,
+						Gdx.graphics.getWidth(), Gdx.graphics.getHeight() },
+				16, true);
+	}
 
 	public static void updateVideo() {
 		switch (WINDOW_MODES.getIndex()) {

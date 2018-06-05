@@ -15,4 +15,5 @@ public abstract class TankController {
 	public abstract Vector3 getCursor(Vector3 oldCursor);
 	public abstract void setKey(String key, KeyControl control);
 	public abstract KeyControl getKeyControl(String key);
+	public abstract void setToDefault();
 }

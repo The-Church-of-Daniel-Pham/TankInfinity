@@ -271,4 +271,8 @@ public class GamepadController extends TankController {
 	public static int getControllerAmount() {
 		return controllers.size;
 	}
+	
+	public void setToDefault() {
+		keyMap.putAll(ControlConstants.DEFAULT_GAMEPAD_CONTROLS);
+	}
 }
