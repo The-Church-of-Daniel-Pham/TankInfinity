@@ -523,6 +523,7 @@ public class ControlsSettingPlayer extends Table{
 		updateButton(subShootText, "SUB");
 		updateButton(rShiftText, "RSHIFT");
 		updateButton(lShiftText, "LSHIFT");
+		updateButton(pauseText, "PAUSE");
 	}
 
 	private void updateButton(TextButton b, String key)
