@@ -87,7 +87,7 @@ public class ControlsSettingPlayer extends Table{
 						while(true) {
 							KeyControl control = pressedControls();
 							if (control != null) {
-								saveKey("UP", control);
+								saveKey(key, control);
 								updateButton(button, key);
 								return;
 							}
