@@ -27,8 +27,8 @@ public class SettingsMenu extends Stage implements InputProcessor {
 	protected VideoSettings videoTable;
 	protected AudioSettings audioTable;
 	protected ControlsSettings controlsTable;
-	protected ScrollPane controlsScroll;
-	private Skin skin = Assets.manager.get(Assets.skin);;
+	//protected ScrollPane controlsScroll;
+	private Skin skin = Assets.manager.get(Assets.skin);
 
 	public SettingsMenu(TankInfinity game) {
 		super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -41,7 +41,7 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		videoTable = new VideoSettings();
 		audioTable = new AudioSettings();
 		controlsTable = new ControlsSettings(game);
-		controlsScroll = new ScrollPane(controlsTable);
+		//controlsScroll = new ScrollPane(controlsTable);
 
 		uiTable = new Table();
 		buildTable();
@@ -100,7 +100,8 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		controlsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				changeSettingsTo(controlsScroll);
+				controlsTable.refreshMenu();
+				changeSettingsTo(controlsTable);
 			}
 		});
 

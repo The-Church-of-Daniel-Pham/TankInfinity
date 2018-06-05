@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.tank.game.Player;
 import com.tank.utils.Assets;
 
-public class PlayerCustomizationMenu  extends Table{
+public class PlayerCustomizationMenu extends Table{
 	protected final Player player;
 	protected TextField playerNameTextField;
 	protected boolean changed = false;
