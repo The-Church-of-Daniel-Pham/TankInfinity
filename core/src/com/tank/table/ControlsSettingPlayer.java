@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
+import com.tank.controls.ControlConstants;
 import com.tank.controls.GamepadController;
 import com.tank.controls.KeyControl;
 import com.tank.controls.KeyboardMouseController;
+import com.tank.controls.TankController;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.utils.Assets;
@@ -22,6 +25,11 @@ public class ControlsSettingPlayer extends Table{
 	private Player player;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private static final String STYLE_NAME = "medium";
+	
+	private Label controllerType;
+	private int controllerSelected;
+	private TextButton nextController;
+	private TextButton previousController;
 
 	private TextButton forwardText;
 	private TextButton backText;
@@ -44,6 +52,37 @@ public class ControlsSettingPlayer extends Table{
 		this.game = game;
 		this.player = player;
 		
+		createControllerTitle();
+		createKeysTable();
+		
+		super.add(keysScroll).colspan(4);
+	}
+	
+	public void createControllerTitle() {
+		controllerType = new Label("", skin, STYLE_NAME);
+		controllerType.setAlignment(Align.center);
+		nextController = new TextButton(">", skin, STYLE_NAME);
+		nextController.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				selectNextController(1);
+			}
+		});
+		
+		previousController = new TextButton("<", skin, STYLE_NAME);
+		previousController.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				selectNextController(-1);
+			}
+		});
+		super.add(previousController).height(50).width(50);
+		super.add(controllerType).height(50).width(400).colspan(2);
+		super.add(nextController).height(50).width(50);
+		super.row();
+	}
+	
+	public void createKeysTable() {
 		keysTable = new Table();
 		keysTable.setFillParent(false);
 		keysScroll = new ScrollPane(keysTable);
@@ -67,8 +106,6 @@ public class ControlsSettingPlayer extends Table{
 
 		keysTable.add(left);
 		keysTable.add(right);
-		
-		super.add(keysScroll);
 	}
 	
 	public TextButton rowCreator(String labelText, final String key) {
@@ -125,6 +162,27 @@ public class ControlsSettingPlayer extends Table{
 	private void saveKey(String key, KeyControl input)
 	{
 		player.controls.setKey(key, input);
+	}
+	
+	public void selectNextController(int change) {
+		int nextController = controllerSelected + change;
+		if (nextController <= -2) nextController = GamepadController.getControllerAmount() - 1;
+		if (nextController >= GamepadController.getControllerAmount()) nextController = -1;
+		
+		if (nextController != controllerSelected) {
+			controllerSelected = nextController;
+			if (controllerSelected == -1) {
+				TankController keyboardController = new KeyboardMouseController();
+				ControlConstants.setPlayerController(player.getNumber(), keyboardController);
+				player.setControls(keyboardController);
+			}
+			else {
+				TankController gamepadController = new GamepadController(controllerSelected);
+				ControlConstants.setPlayerController(player.getNumber(), gamepadController);
+				player.setControls(gamepadController);
+			}
+		}
+		refreshMenu();
 	}
 
 	public KeyControl pressedControls() {
@@ -195,6 +253,7 @@ public class ControlsSettingPlayer extends Table{
 	}
 	
 	public void refreshMenu() {
+		updateControlType();
 		updateButton(forwardText, "UP");
 		updateButton(backText, "DOWN");
 		updateButton(rTurnText, "RIGHT");
@@ -228,6 +287,17 @@ public class ControlsSettingPlayer extends Table{
 		rShiftText.setDisabled(false);
 		lShiftText.setDisabled(false);
 		pauseText.setDisabled(false);
+	}
+	
+	private void updateControlType() {
+		if (player.controls instanceof KeyboardMouseController) {
+			controllerSelected = -1;
+			controllerType.setText("Keyboard & Mouse");
+		}
+		else if (player.controls instanceof GamepadController) {
+			controllerSelected = ((GamepadController)player.controls).getIndex();
+			controllerType.setText("Gamepad " + (controllerSelected + 1));
+		}
 	}
 
 	private void updateButton(TextButton b, String key)

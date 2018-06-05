@@ -53,6 +53,10 @@ public class ControlConstants {
 		playerControls.put(num, new KeyboardMouseController());
 	}
 	
+	public static void setPlayerController(int num, TankController controller) {
+		playerControls.put(new Integer(num), controller);
+	}
+	
 	private static void makeDefaultPlayer1() {
 		playerControls.put(1, new KeyboardMouseController());
 	}

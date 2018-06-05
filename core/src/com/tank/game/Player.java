@@ -40,6 +40,10 @@ public class Player {
 		return name;
 	}
 	
+	public int getNumber() {
+		return playerNumber;
+	}
+	
 	public void enable(boolean e) {
 		enabled = e;
 	}
@@ -94,5 +98,9 @@ public class Player {
 	
 	public void initializeCursor() {
 		cursor = new Cursor(this, tank.getStage());
+	}
+	
+	public void setControls(TankController controller) {
+		controls = controller;
 	}
 }

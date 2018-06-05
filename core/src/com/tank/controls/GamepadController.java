@@ -29,6 +29,12 @@ public class GamepadController extends TankController {
 		}
 		if (index == -1) throw new Exception("No more controllers");
 	}
+	
+	public GamepadController(int index) {
+		this.index = index;
+		keyMap = new LinkedHashMap<String, KeyControl>();
+		keyMap.putAll(ControlConstants.DEFAULT_GAMEPAD_CONTROLS);
+	}
 
 	public void setDeadzone(float d) {
 		deadzone = d;
@@ -252,6 +258,10 @@ public class GamepadController extends TankController {
 
 	public KeyControl getKeyControl(String key) {
 		return keyMap.get(key);
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	public Controller getController() {
