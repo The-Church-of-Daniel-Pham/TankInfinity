@@ -74,6 +74,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	private static float DAMAGE_VOLUME = 1f;
 	
 	protected int bulletCount;
+	protected float speedModifier;
 
 	/**
 	 * 
@@ -94,6 +95,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		vehicleList.add(this);
 		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
+		speedModifier = 1.0f;
 	}
 	
 	public void makeBaselineStats() {
@@ -242,6 +244,9 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		velocity.scl((float) Math.pow(0.05f * (1.0f - ((traction) / (traction + 70.0f))), delta));
 		secondaryVelocity.scl((float) Math.pow(0.1f * (1.0f - ((traction) / (traction + 70.0f))), delta));
 		angularVelocity *= (float) Math.pow(0.025f * (1.0f - ((traction) / (traction + 70.0f))), delta);
+		
+		if (speedModifier > 1.0f) speedModifier = Math.max(speedModifier - 0.025f * delta, 1.0f);
+		else if (speedModifier < 1.0f) speedModifier = Math.min(speedModifier + 0.025f * delta, 1.0f);
 	}
 
 	public void applyForce(Vector2 acceleration) {
@@ -317,19 +322,28 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	}
 	
 	public void accelerateForward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation());
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3) * speedModifier  * 330f, getRotation());
 	}
 	
 	public void accelerateBackward(float delta) {
-		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3)  * 330f, getRotation() + 180);
+		applyForce(delta * (float)Math.pow(stats.getStatValue("Acceleration"), 0.3) * speedModifier  * 330f, getRotation() + 180);
 	}
 	
 	public void turnLeft(float delta) {
-		applyAngularForce(delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+		applyAngularForce(delta * stats.getStatValue("Angular Acceleration") * speedModifier  * 2.5f);
 	}
 	
 	public void turnRight(float delta) {
-		applyAngularForce(-1 * delta * stats.getStatValue("Angular Acceleration")  * 2.5f);
+		applyAngularForce(-1 * delta * stats.getStatValue("Angular Acceleration") * speedModifier  * 2.5f);
+	}
+	
+	public void applySlow(float amount) {
+		speedModifier -= amount;
+		if (speedModifier < 0.025f) speedModifier = 0.025f;
+	}
+	
+	public void applySpeedUp(float amount) {
+		speedModifier += amount;
 	}
 	
 	public float randomShootAngle() {
