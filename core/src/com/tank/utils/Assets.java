@@ -114,6 +114,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> fixed_big = new AssetDescriptor<Texture>("tank/tank_fixed_big_rocket.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> fixed_artillery = new AssetDescriptor<Texture>("tank/tank_fixed_artillery.png",
+            Texture.class);
     //Items
     public static final AssetDescriptor<Texture> mysterybox = new AssetDescriptor<Texture>("item/mysterybox.png",
             Texture.class);
@@ -260,6 +262,7 @@ public class Assets {
         manager.load(fixed_tan);
         manager.load(fixed_gray);
         manager.load(fixed_big);
+        manager.load(fixed_artillery);
         // System.out.println("Tank textures loaded");
         manager.load(mysterybox);
         manager.load(repairbox);

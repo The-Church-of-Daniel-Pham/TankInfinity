@@ -16,6 +16,7 @@ import com.tank.actor.projectiles.Caltrop;
 import com.tank.actor.projectiles.LandMine;
 import com.tank.actor.ui.AbstractUI;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.actor.vehicles.ArtilleryEnemy;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;
 import com.tank.actor.vehicles.RocketEnemy;
@@ -110,7 +111,7 @@ public class Level extends Stage {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-				switch ((int)(Math.random() * 5)) {
+				switch ((int)(Math.random() * 6)) {
 					case 0: case 2:
 						super.addActor(new BasicEnemy(pos[0], pos[1], levelNum));
 						break;
@@ -119,6 +120,9 @@ public class Level extends Stage {
 						break;
 					case 4:
 						super.addActor(new RocketEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 5:
+						super.addActor(new ArtilleryEnemy(pos[0], pos[1], levelNum));
 						break;
 				}
 			}
