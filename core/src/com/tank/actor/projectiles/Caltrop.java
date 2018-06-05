@@ -49,7 +49,7 @@ public class Caltrop extends AbstractProjectile{
 		batch.draw(tex, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), tex.getWidth(), tex.getHeight(), super.getScaleX(), super.getScaleY(),
 				rotation, 0, 0, tex.getWidth(), tex.getHeight(), false, false);
-		drawVertices(batch, a);
+		//drawVertices(batch, a);
 	}
 
 	protected void initializeHitbox() {
