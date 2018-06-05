@@ -63,7 +63,7 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> chakram = new AssetDescriptor<Texture>("projectiles/chakram.png",
             Texture.class);
-    public static final AssetDescriptor<Texture> landmine = new AssetDescriptor<Texture>("projectiles/landmine.png",
+    public static final AssetDescriptor<Texture> landmine = new AssetDescriptor<Texture>("projectiles/landMine.png",
 			Texture.class);
     public static final AssetDescriptor<Texture> boomerang = new AssetDescriptor<Texture>("projectiles/boomerang.png",
             Texture.class);
