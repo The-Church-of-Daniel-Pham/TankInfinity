@@ -29,10 +29,10 @@ public class RocketSubWeapon extends SubWeapon {
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 3));
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 2) + 30);
 		stats.addStat("Projectile Speed", (int)(60 * Math.sqrt(source.getStatValue("Projectile Speed"))));
-		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 5);
-		stats.addStat("Lifetime", source.getStatValue("Lifetime") * 5);
+		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 2 + 4);
+		stats.addStat("Lifetime", source.getStatValue("Lifetime") * 4);
 		return stats;
 	}
 }

@@ -31,7 +31,7 @@ public class VampiricFangSubWeapon extends SubWeapon {
 		Stats stats = new Stats();
 		stats.addStat("Damage", (int)(source.getStatValue("Damage") / 2));
 		stats.addStat("Projectile Speed", (int)(200 * Math.sqrt(source.getStatValue("Projectile Speed"))));
-		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 2);
+		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") + 1);
 		stats.addStat("Lifetime", source.getStatValue("Lifetime"));
 		return stats;
 	}

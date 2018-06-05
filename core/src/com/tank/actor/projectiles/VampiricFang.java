@@ -49,6 +49,7 @@ public class VampiricFang extends AbstractProjectile{
 				int damage = (int)Math.pow(((AbstractVehicle)e.getCollidable()).getStatValue("Armor"), 0.8) + getStat("Damage");
 				((AbstractVehicle)e.getCollidable()).damage(this, damage);
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(0.2f));
+				((AbstractVehicle)e.getCollidable()).applySlow(0.3f);
 				source.heal(this, getStat("Damage"));
 			}
 		}

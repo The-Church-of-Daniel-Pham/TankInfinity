@@ -28,10 +28,9 @@ public class MooseStampedeSubWeapon extends SubWeapon{
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.25));
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.5) + 40);
 		stats.addStat("Projectile Speed", (int)(((Math.random() * 50) + 75) * Math.sqrt(source.getStatValue("Projectile Speed"))));
-		stats.addStat("Projectile Durability", Math.max(source.getStatValue("Projectile Durability") * 3, 1));
-		stats.addStat("Lifetime", source.getStatValue("Lifetime"));
+		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 3 + 1);
 		return stats;
 	}
 }

@@ -29,7 +29,7 @@ public class BoomerangSubWeapon extends SubWeapon{
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.2));
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.2) + 10);
 		stats.addStat("Projectile Speed", (int)(85 * Math.sqrt(source.getStatValue("Projectile Speed"))));
 		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") + 2);
 		stats.addStat("Max Bounce", source.getStatValue("Max Bounce") + 1);
