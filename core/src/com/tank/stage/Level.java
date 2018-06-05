@@ -1,9 +1,6 @@
 package com.tank.stage;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,7 +15,6 @@ import com.tank.actor.projectiles.AbstractProjectile;
 import com.tank.actor.projectiles.Caltrop;
 import com.tank.actor.projectiles.LandMine;
 import com.tank.actor.ui.AbstractUI;
-import com.tank.actor.ui.MovingText;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;
@@ -36,7 +32,6 @@ public class Level extends Stage {
 	protected int mapHeight;
 	protected Map map;
 	protected LevelCamera camera;
-	protected float timePlayed;
 	protected int enemyCount;
 
 	/**
@@ -141,8 +136,6 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
-		
-		timePlayed = 0f;
 	}
 
 	private void spawnInPlayers(boolean first) {
@@ -255,15 +248,5 @@ public class Level extends Stage {
 		}
 		AbstractItem.items.clear();
 		super.dispose();
-	}
-	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		timePlayed += delta;
-	}
-	
-	public float getTimePlayed() {
-		return timePlayed;
 	}
 }

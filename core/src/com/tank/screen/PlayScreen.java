@@ -25,6 +25,7 @@ public class PlayScreen implements Screen {
 	protected boolean gameOver;
 	protected boolean counting;
 	protected int levelNum;
+	protected float timePlayed;
 
 	public PlayScreen(TankInfinity game) {
 		this.game = game;
@@ -36,6 +37,7 @@ public class PlayScreen implements Screen {
 		gameOverMenu = new GameOverMenu(this.game);
 		countdown = new Countdown(this.game);
 		gameOver = false;
+		timePlayed = 0f;
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
 	
@@ -158,6 +160,10 @@ public class PlayScreen implements Screen {
 		if (countdown.isFinished()) {
 			counting = false;
 		}
+		
+		if (!paused && !gameOver && !counting) {
+			timePlayed += delta;
+		}
 	}
 
 	public boolean isGameOver() {  	//game is over if all player tanks are destroyed
@@ -227,5 +233,9 @@ public class PlayScreen implements Screen {
 			game.removeInput(pauseMenu);
 			game.removeInput(gameOverMenu);
 		}
+	}
+	
+	public float getTimePlayed() {
+		return timePlayed;
 	}
 }
