@@ -100,7 +100,6 @@ public class SettingsMenu extends Stage implements InputProcessor {
 		controlsButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				controlsTable.refreshMenu();
 				changeSettingsTo(controlsTable);
 			}
 		});
