@@ -182,9 +182,9 @@ public class ControlsSettingPlayer extends Table{
 	
 	public KeyControl controllerAxisMoved(Controller controller) {
 		for (int input = 0; input < 30; input++) {
-			if (controller.getAxis(input) > 0.3)
+			if (controller.getAxis(input) > 0.4)
 				return new KeyControl(input, 1, 1);
-			if (controller.getAxis(input) < 0.3)
+			if (controller.getAxis(input) < -0.4)
 				return new KeyControl(input, 1, -1);
 		}
 		return null;
