@@ -65,6 +65,7 @@ public class Moose extends AbstractProjectile{
 		setHeight(15);
 		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
 		hasRunThroughField = false;
+		stateTime = (float)Math.random() * (21f / 30f);
 		vehiclesHit = new ArrayList<AbstractVehicle>();
 		//source.changeBulletCount(1);
 		initializeHitbox();

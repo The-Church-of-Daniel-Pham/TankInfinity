@@ -44,9 +44,9 @@ public class LevelCamera extends OrthographicCamera {
 		}
 
 		if (count > 0) {
-			super.zoom = Math.max(1.0f,
+			super.zoom = Math.min(Math.max(1.0f,
 					Math.max((maxX - minX) / (super.viewportWidth), (maxY - minY) / (super.viewportHeight))
-							+ BORDER_ZOOM);
+							+ BORDER_ZOOM), Math.min(width * AbstractMapTile.SIZE / super.viewportWidth, height * AbstractMapTile.SIZE / super.viewportHeight));
 			super.position.x = MathUtils.clamp((minX + maxX) / 2, (super.viewportWidth * zoom) / 2f,
 					width * AbstractMapTile.SIZE - (super.viewportWidth * zoom) / 2f);
 			super.position.y = MathUtils.clamp((minY + maxY) / 2, (super.viewportHeight * zoom) / 2f,
