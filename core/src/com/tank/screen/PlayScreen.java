@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
+import com.tank.stage.Countdown;
 import com.tank.stage.GameOverMenu;
 import com.tank.stage.Level;
 import com.tank.stage.LevelHUD;
@@ -17,10 +18,12 @@ public class PlayScreen implements Screen {
 	public LevelHUD levelhud;
 	public PauseMenu pauseMenu;
 	public GameOverMenu gameOverMenu;
+	public Countdown countdown;
 	protected boolean paused;
 	protected boolean pausedState;
 	protected boolean pauseHeld;
 	protected boolean gameOver;
+	protected boolean counting;
 	protected int levelNum;
 
 	public PlayScreen(TankInfinity game) {
@@ -31,6 +34,7 @@ public class PlayScreen implements Screen {
 		levelhud = new LevelHUD(this.game, this);
 		pauseMenu = new PauseMenu(this.game);
 		gameOverMenu = new GameOverMenu(this.game);
+		countdown = new Countdown(this.game);
 		gameOver = false;
 		resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	}
@@ -111,38 +115,48 @@ public class PlayScreen implements Screen {
 		}
 
 		// Update the stage even if game is over
-		if (!paused) {
+		if (!paused && !counting) {
 			level.act(delta);
 		}
 		level.getViewport().apply();
 		level.draw();
 
 		// update the hud
-		if (!paused && !gameOver) {
+		if (!paused && !gameOver && !counting) {
 			levelhud.act(delta);
 			levelhud.getViewport().apply();
 			levelhud.draw();
 		}
 
 		// update the pause menu
-		if (paused) {
+		if (paused && !counting) {
 			pauseMenu.act(delta);
 			pauseMenu.getViewport().apply();
 			pauseMenu.draw();
 		}
 		
 		//update the gameOver menu
-		if (gameOver) {
+		if (gameOver && !counting) {
 			gameOverMenu.act(delta);
 			gameOverMenu.getViewport().apply();
 			gameOverMenu.draw();
 		}
 		
-		if (!paused && !gameOver) {
+		if (!paused && !gameOver && !counting) {
 			if (isReadyForNextLevel()) {
 				setupNextLevel();
 				game.setScreen(game.screens.get("Upgrades Menu"));
 			}
+		}
+		
+		if (counting) {
+			countdown.act(delta);
+			countdown.getViewport().apply();
+			countdown.draw();
+		}
+		
+		if (countdown.isFinished()) {
+			counting = false;
 		}
 	}
 
@@ -202,7 +216,12 @@ public class PlayScreen implements Screen {
 			pausedState = false;
 			return;
 		}
-		if (paused) {
+		if (game.previousScreen instanceof UpgradeMenuScreen) {
+			countdown.setTime(3.0f);
+			counting = true;
+			paused = false;
+		}
+		else if (paused) {
 			paused = false;
 			game.addInput(levelhud);
 			game.removeInput(pauseMenu);
