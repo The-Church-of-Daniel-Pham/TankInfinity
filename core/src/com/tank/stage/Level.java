@@ -36,6 +36,7 @@ public class Level extends Stage {
 	protected int mapHeight;
 	protected Map map;
 	protected LevelCamera camera;
+	protected float timePlayed;
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -143,6 +144,8 @@ public class Level extends Stage {
 		// replace default stage OrthographicCamera with LevelCamera
 		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
 		super.getViewport().setCamera(camera);
+		
+		timePlayed = 0f;
 	}
 
 	private void spawnInPlayers(boolean first) {
@@ -231,6 +234,10 @@ public class Level extends Stage {
 			super.addActor(a);
 		}
 	}
+	
+	public int getEnemyCount() {
+		return 0;	//rewrite later
+	}
 
 	@Override
 	public void dispose() {
@@ -247,5 +254,15 @@ public class Level extends Stage {
 		}
 		AbstractItem.items.clear();
 		super.dispose();
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		timePlayed += delta;
+	}
+	
+	public float getTimePlayed() {
+		return timePlayed;
 	}
 }

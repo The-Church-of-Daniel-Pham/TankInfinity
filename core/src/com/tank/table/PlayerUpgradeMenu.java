@@ -1,14 +1,13 @@
 package com.tank.table;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
@@ -18,7 +17,7 @@ import com.tank.utils.Assets;
 public class PlayerUpgradeMenu extends Table {
 	protected final Player player;
 	private static Skin skin = Assets.manager.get(Assets.skin);
-	private static Texture empty = Assets.manager.get(Assets.vertex);
+	private static Drawable empty;
 	private Label playerName;
 	private Group topImage;
 	private Image topIcon;
@@ -53,7 +52,8 @@ public class PlayerUpgradeMenu extends Table {
 		for (int i = 0; i < 4; i++) {
 			heldButtons.add(false);
 		}
-
+		
+		empty = skin.getDrawable("round-dark-gray");
 		buildTable();
 	}
 

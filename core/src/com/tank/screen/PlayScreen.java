@@ -28,7 +28,7 @@ public class PlayScreen implements Screen {
 		//level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
 		levelNum = 1;
 		level = new Level(this.game, levelNum);
-		levelhud = new LevelHUD(this.game);
+		levelhud = new LevelHUD(this.game, this);
 		pauseMenu = new PauseMenu(this.game);
 		gameOverMenu = new GameOverMenu(this.game);
 		gameOver = false;
@@ -37,6 +37,10 @@ public class PlayScreen implements Screen {
 	
 	public Level getLevel() {
 		return level;
+	}
+	
+	public int getLevelNum() {
+		return levelNum;
 	}
 
 	@Override

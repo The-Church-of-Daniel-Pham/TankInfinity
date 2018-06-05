@@ -19,15 +19,17 @@ import com.tank.utils.Constants;
 
 public class LevelHUD extends Stage implements InputProcessor {
 	protected TankInfinity game;
+	protected PlayScreen playscreen;
 	protected Table uiTable;
 	private Label fpsLabel;
 	private static float sinceChange;
 
 	private Skin skin = Assets.manager.get(Assets.skin);
 
-	public LevelHUD(TankInfinity game) {
+	public LevelHUD(TankInfinity game, PlayScreen playscreen) {
 		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
+		this.playscreen = playscreen;
 		// cursors
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
@@ -68,11 +70,11 @@ public class LevelHUD extends Stage implements InputProcessor {
 
 		uiTable.setFillParent(true);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
-		uiTable.defaults().pad(25).center();
+		uiTable.defaults().pad(25);
 
 		// Add widgets to the table here.
 		fpsLabel = new Label("0 FPS", skin);
-		LevelInfo levelinfo = new LevelInfo(game);
+		LevelInfo levelinfo = new LevelInfo(playscreen);
 		TextButton pauseButton = new TextButton("Pause", skin);
 		Table placeholder = new Table();
 
@@ -85,7 +87,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		});
 
 		uiTable.add(fpsLabel).width(200).height(100).expand().top().left();
-		uiTable.add(levelinfo).colspan(2).expand().top().center();
+		uiTable.add(levelinfo).colspan(2).expand().top();
 		uiTable.add(pauseButton).width(200).height(100).expand().top().right();
 		uiTable.row();
 
