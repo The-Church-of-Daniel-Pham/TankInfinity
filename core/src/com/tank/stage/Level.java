@@ -88,9 +88,6 @@ public class Level extends Stage {
 
 		map = new Map(mapWidth, mapHeight, this);
 		super.addActor(map);
-
-		Vector2 spawnCenter = map.getCenterOfTilePos(map.getSpawnPoint()[0], map.getSpawnPoint()[1]);
-		super.addActor(new MovingText("LEVEL " + levelNum, Color.WHITE, 15.0f, new Vector2(0, 0), spawnCenter.x, spawnCenter.y, 4, true, 5.0f));
 		
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
 		int minItems = (int) (2.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 0.7));
@@ -113,8 +110,6 @@ public class Level extends Stage {
 		int minEnemies = (int) (2.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1) / 2) + 1;
 		int maxEnemies = (int) (3.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 1.1) / 2);
 		int enemyCount = (int) (Math.random() * (maxEnemies - minEnemies)) + minEnemies;
-		super.addActor(new MovingText("Enemies: " + enemyCount, Color.WHITE, 15.0f, new Vector2(0, 0),
-				spawnCenter.x, spawnCenter.y - AbstractMapTile.SIZE, 2, true, 5.0f));
 		for (int i = 0; i < enemyCount; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
