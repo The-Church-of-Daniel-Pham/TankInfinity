@@ -116,12 +116,10 @@ public class ControlsSettings extends Table{
 		settingsTable.layout();
 		for (int i = 0; i < playerControlSettings.size(); i++) {
 			if (i != player) {
-				playerControlSettings.get(i).disableButtons();
 				playerButtons.get(i).setColor(Color.WHITE);
 				playerButtons.get(i).setText("Player " + (i + 1));
 			}
 			else {
-				playerControlSettings.get(i).enableButtons();
 				playerButtons.get(i).setColor(Color.RED);
 				playerButtons.get(i).setText("<" + "Player " + (i + 1) + ">");
 			}

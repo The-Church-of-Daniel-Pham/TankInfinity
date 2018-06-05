@@ -40,6 +40,10 @@ public class ControlsSettingPlayer extends Table{
 	private TextButton rShiftText;
 	private TextButton lShiftText;
 	private TextButton pauseText;
+	private TextButton cursorUp;
+	private TextButton cursorDown;
+	private TextButton cursorRight;
+	private TextButton cursorLeft;
 	
 	private TextButton defaultButton;
 	
@@ -108,6 +112,10 @@ public class ControlsSettingPlayer extends Table{
 		rShiftText = rowCreator("Shift Subs Right", "RSHIFT");
 		lShiftText = rowCreator("Shift Subs Left", "LSHIFT");
 		pauseText = rowCreator("Pause", "PAUSE");
+		cursorUp = rowCreatorCursor("Cursor Up", "CURSOR-UP");
+		cursorDown = rowCreatorCursor("Cursor Down", "CURSOR-DOWN");
+		cursorRight = rowCreatorCursor("Cursor Right", "CURSOR-RIGHT");
+		cursorLeft = rowCreatorCursor("Cursor Left", "CURSOR-LEFT");
 
 		keysTable.add(left);
 		keysTable.add(right);
@@ -163,6 +171,59 @@ public class ControlsSettingPlayer extends Table{
 				};
 				settingKey.start();
 				event.stop();
+			}
+		});
+		
+		right.add(button);
+		left.add(label);
+
+		right.row();
+		left.row();
+		
+		return button;
+	}
+	
+	public TextButton rowCreatorCursor(String labelText, final String key) {
+		Label label = new Label(labelText, skin, STYLE_NAME);
+		final TextButton button = new TextButton("", skin, STYLE_NAME);
+		button.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (player.controls instanceof GamepadController) {
+					if (settingKey != null && settingKey.isAlive()) {
+						settingKey.interrupt();
+					}
+					settingKey = new Thread() {
+						@Override
+						public void run() {
+							int loops = 0;
+							while(true) {
+								KeyControl control = pressedControls();
+								if (control != null) {
+									saveKey(key, control);
+									updateButton(button, key);
+									return;
+								}
+								loops++;
+								try {
+									Thread.sleep(10);
+								} catch (InterruptedException e) {
+									return;
+								}
+								if (isInterrupted())
+								{
+									return;
+								}
+								if (loops == 1000) {
+									return; //10 seconds
+								}
+	
+							}
+						}
+					};
+					settingKey.start();
+					event.stop();
+				}
 			}
 		});
 		
@@ -279,30 +340,10 @@ public class ControlsSettingPlayer extends Table{
 		updateButton(rShiftText, "RSHIFT");
 		updateButton(lShiftText, "LSHIFT");
 		updateButton(pauseText, "PAUSE");
-	}
-	
-	public void disableButtons() {
-		forwardText.setDisabled(true);
-		backText.setDisabled(true);
-		rTurnText.setDisabled(true);
-		lTurnText.setDisabled(true);
-		shootText.setDisabled(true);
-		subShootText.setDisabled(true);
-		rShiftText.setDisabled(true);
-		lShiftText.setDisabled(true);
-		pauseText.setDisabled(true);
-	}
-	
-	public void enableButtons() {
-		forwardText.setDisabled(false);
-		backText.setDisabled(false);
-		rTurnText.setDisabled(false);
-		lTurnText.setDisabled(false);
-		shootText.setDisabled(false);
-		subShootText.setDisabled(false);
-		rShiftText.setDisabled(false);
-		lShiftText.setDisabled(false);
-		pauseText.setDisabled(false);
+		updateCursorButton(cursorUp, "CURSOR-UP");
+		updateCursorButton(cursorDown, "CURSOR-DOWN");
+		updateCursorButton(cursorLeft, "CURSOR-LEFT");
+		updateCursorButton(cursorRight, "CURSOR-RIGHT");
 	}
 	
 	private void updateControlType() {
@@ -321,6 +362,15 @@ public class ControlsSettingPlayer extends Table{
 		String input = "";
 		if (player.controls instanceof KeyboardMouseController)
 			input = getKeyboardInputString(key);
+		else if (player.controls instanceof GamepadController)
+			input = getGamepadInputString(key);
+		b.setText(input);
+	}
+	
+	private void updateCursorButton(TextButton b, String key) {
+		String input = "";
+		if (player.controls instanceof KeyboardMouseController)
+			input = "<Mouse>";
 		else if (player.controls instanceof GamepadController)
 			input = getGamepadInputString(key);
 		b.setText(input);

@@ -45,180 +45,54 @@ public class GamepadController extends TankController {
 	}
 
 	public boolean upPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl up = keyMap.get("UP");
-		if (up.getKeyType() == 0) {
-			return controllers.get(index).getButton(up.getKeyCode());
-		}
-		else {
-			if (up.getDirection() < 0) {
-				return (controllers.get(index).getAxis(up.getKeyCode()) <= -deadzone);
-			}
-			else if (up.getDirection() > 0) {
-				return (controllers.get(index).getAxis(up.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("UP")));
 	}
 
 	public boolean downPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl down = keyMap.get("DOWN");
-		if (down.getKeyType() == 0) {
-			return controllers.get(index).getButton(down.getKeyCode());
-		}
-		else {
-			if (down.getDirection() < 0) {
-				return (controllers.get(index).getAxis(down.getKeyCode()) <= -deadzone);
-			}
-			else if (down.getDirection() > 0) {
-				return (controllers.get(index).getAxis(down.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("DOWN")));
 	}
 
 	public boolean rightPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl right = keyMap.get("RIGHT");
-		if (right.getKeyType() == 0) {
-			return controllers.get(index).getButton(right.getKeyCode());
-		}
-		else {
-			if (right.getDirection() < 0) {
-				return (controllers.get(index).getAxis(right.getKeyCode()) <= -deadzone);
-			}
-			else if (right.getDirection() > 0) {
-				return (controllers.get(index).getAxis(right.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("RIGHT")));
 	}
 
 	public boolean leftPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl left = keyMap.get("LEFT");
-		if (left.getKeyType() == 0) {
-			return controllers.get(index).getButton(left.getKeyCode());
-		}
-		else {
-			if (left.getDirection() < 0) {
-				return (controllers.get(index).getAxis(left.getKeyCode()) <= -deadzone);
-			}
-			else if (left.getDirection() > 0) {
-				return (controllers.get(index).getAxis(left.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("LEFT")));
 	}
 
 	public boolean firePressed() {
-		//testButtons();
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl shoot = keyMap.get("SHOOT");
-		if (shoot.getKeyType() == 0) {
-			return controllers.get(index).getButton(shoot.getKeyCode());
-		}
-		else {
-			if (shoot.getDirection() < 0) {
-				return (controllers.get(index).getAxis(shoot.getKeyCode()) <= -deadzone);
-			}
-			else if (shoot.getDirection() > 0) {
-				return (controllers.get(index).getAxis(shoot.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("SHOOT")));
 	}
 
 	public boolean subPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl sub = keyMap.get("SUB");
-		if (sub.getKeyType() == 0) {
-			return controllers.get(index).getButton(sub.getKeyCode());
-		}
-		else {
-			if (sub.getDirection() < 0) {
-				return (controllers.get(index).getAxis(sub.getKeyCode()) <= -deadzone);
-			}
-			else if (sub.getDirection() > 0) {
-				return (controllers.get(index).getAxis(sub.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("SUB")));
 	}
 
 	public boolean subRightPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl rSwitch = keyMap.get("RSHIFT");
-		if (rSwitch.getKeyType() == 0) {
-			return controllers.get(index).getButton(rSwitch.getKeyCode());
-		}
-		else {
-			if (rSwitch.getDirection() < 0) {
-				return (controllers.get(index).getAxis(rSwitch.getKeyCode()) <= -deadzone);
-			}
-			else if (rSwitch.getDirection() > 0) {
-				return (controllers.get(index).getAxis(rSwitch.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("RSHIFT")));
 	}
 
 	public boolean subLeftPressed() {
-		if (index >= controllers.size || controllers.get(index) == null) {
-			return false;
-		}
-		KeyControl lSwitch = keyMap.get("LSHIFT");
-		if (lSwitch.getKeyType() == 0) {
-			return controllers.get(index).getButton(lSwitch.getKeyCode());
-		}
-		else {
-			if (lSwitch.getDirection() < 0) {
-				return (controllers.get(index).getAxis(lSwitch.getKeyCode()) <= -deadzone);
-			}
-			else if (lSwitch.getDirection() > 0) {
-				return (controllers.get(index).getAxis(lSwitch.getKeyCode()) >= deadzone);
-			}
-				
-		}
-		return false;
+		return (keyControlPressed(keyMap.get("LSHIFT")));
 	}
 	
 	public boolean pausePressed() {
+		return (keyControlPressed(keyMap.get("PAUSE")));
+	}
+	
+	public boolean keyControlPressed(KeyControl key) {
 		if (index >= controllers.size || controllers.get(index) == null) {
 			return false;
 		}
-		KeyControl pause = keyMap.get("PAUSE");
-		if (pause.getKeyType() == 0) {
-			return controllers.get(index).getButton(pause.getKeyCode());
+		if (key.getKeyType() == 0) {
+			return controllers.get(index).getButton(key.getKeyCode());
 		}
 		else {
-			if (pause.getDirection() < 0) {
-				return (controllers.get(index).getAxis(pause.getKeyCode()) <= -deadzone);
+			if (key.getDirection() < 0) {
+				return (controllers.get(index).getAxis(key.getKeyCode()) <= -deadzone);
 			}
-			else if (pause.getDirection() > 0) {
-				return (controllers.get(index).getAxis(pause.getKeyCode()) >= deadzone);
+			else if (key.getDirection() > 0) {
+				return (controllers.get(index).getAxis(key.getKeyCode()) >= deadzone);
 			}
 				
 		}
@@ -243,13 +117,63 @@ public class GamepadController extends TankController {
 	public Vector3 getCursor(Vector3 oldCursor) {
 		if (index >= controllers.size || controllers.get(index) == null) 
 			return oldCursor;
-		KeyControl vertical = keyMap.get("CURSOR-V");
-		KeyControl horizontal = keyMap.get("CURSOR-H");
 		float newX = oldCursor.x;
 		float newY = oldCursor.y;
-		if (Math.abs(controllers.get(index).getAxis(horizontal.getKeyCode())) > deadzone) newX += sensitivity * controllers.get(index).getAxis(horizontal.getKeyCode());
-		if (Math.abs(controllers.get(index).getAxis(vertical.getKeyCode())) > deadzone) newY += sensitivity * controllers.get(index).getAxis(vertical.getKeyCode());
+		newX = cursorLeft(newX); newX = cursorRight(newX);
+		newY = cursorUp(newY); newY = cursorDown(newY);
+		
 		return new Vector3(newX, newY, 0);
+	}
+	
+	public float cursorUp(float y) {
+		KeyControl cursorUp = keyMap.get("CURSOR-UP");
+		return cursorMoved(cursorUp, -1, y);
+	}
+	
+	public float cursorDown(float y) {
+		KeyControl cursorDown = keyMap.get("CURSOR-DOWN");
+		return cursorMoved(cursorDown, 1, y);
+	}
+	
+	public float cursorLeft(float x) {
+		KeyControl cursorLeft = keyMap.get("CURSOR-LEFT");
+		return cursorMoved(cursorLeft, -1, x);
+	}
+	
+	public float cursorRight(float x) {
+		KeyControl cursorRight = keyMap.get("CURSOR-RIGHT");
+		return cursorMoved(cursorRight, 1, x);
+	}
+	
+	public float cursorMoved (KeyControl key, int direction, float pos) {
+		if (key.getKeyType() == 0) {
+			if (controllers.get(index).getButton(key.getKeyCode())) {
+				return pos + sensitivity * direction;
+			}
+			else {
+				return pos;
+			}
+		}
+		else {
+			if (key.getDirection() < 0) {
+				if (controllers.get(index).getAxis(key.getKeyCode()) < -deadzone) {
+					return pos + Math.abs(controllers.get(index).getAxis(key.getKeyCode())) * sensitivity * direction;
+				}
+				else {
+					return pos;
+				}
+			}
+			else if (key.getDirection() > 0) {
+				if (controllers.get(index).getAxis(key.getKeyCode()) > deadzone) {
+					return pos + Math.abs(controllers.get(index).getAxis(key.getKeyCode())) * sensitivity * direction;
+				}
+				else {
+					return pos;
+				}
+			}
+				
+		}
+		return pos;
 	}
 	
 	public void setKey(String key, KeyControl control) {

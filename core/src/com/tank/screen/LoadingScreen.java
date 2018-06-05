@@ -36,6 +36,7 @@ public class LoadingScreen implements Screen {
     	
 		if (Assets.manager.update()) {
 			// create rest of screens
+			Constants.createResolutionsCycleList();
 			game.screens.put("Main Menu", new MainMenuScreen(game));
 			game.screens.put("Customization Menu", new CustomizationMenuScreen(game));
 			game.screens.put("Settings Menu", new SettingsMenuScreen(game));
