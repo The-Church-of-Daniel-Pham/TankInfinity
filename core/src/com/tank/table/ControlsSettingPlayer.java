@@ -3,6 +3,7 @@ package com.tank.table;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -278,6 +279,9 @@ public class ControlsSettingPlayer extends Table{
 			KeyControl axis = controllerAxisMoved(((GamepadController)player.controls).getController());
 			if (axis != null)
 				return axis;
+			KeyControl pov = controllerPOVMoved(((GamepadController)player.controls).getController());
+			if (pov != null)
+				return pov;
 		}
 		return null;
 	}
@@ -321,6 +325,18 @@ public class ControlsSettingPlayer extends Table{
 				return new KeyControl(input, 1, 1);
 			if (controller.getAxis(input) < -0.4)
 				return new KeyControl(input, 1, -1);
+		}
+		return null;
+	}
+	
+	public KeyControl controllerPOVMoved(Controller controller) {
+		PovDirection[] directions = PovDirection.values();
+		for (int input = 0; input < 30; input++) {
+			for (int direction = 1; direction <= 4; direction++) {
+				if (controller.getPov(input).equals(directions[direction])) {
+					return new KeyControl(input, 2, direction);
+				}
+			}
 		}
 		return null;
 	}
@@ -407,13 +423,16 @@ public class ControlsSettingPlayer extends Table{
 		{
 			return "Button " + control.getKeyCode();
 		}
-		else
+		else if (control.getKeyType() == 1)
 		{
 			if (control.getDirection() > 0)
 				return "Positive Axis " + control.getKeyCode();
 			else
 				return "Negative Axis " + control.getKeyCode();
 				
+		}
+		else {
+			return "POV " + control.getKeyCode() + " - " + PovDirection.values()[control.getDirection()].toString();
 		}
 	}
 }

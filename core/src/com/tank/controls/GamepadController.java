@@ -87,7 +87,7 @@ public class GamepadController extends TankController {
 		if (key.getKeyType() == 0) {
 			return controllers.get(index).getButton(key.getKeyCode());
 		}
-		else {
+		else if (key.getKeyType() == 1){
 			if (key.getDirection() < 0) {
 				return (controllers.get(index).getAxis(key.getKeyCode()) <= -deadzone);
 			}
@@ -95,6 +95,33 @@ public class GamepadController extends TankController {
 				return (controllers.get(index).getAxis(key.getKeyCode()) >= deadzone);
 			}
 				
+		}
+		else if (key.getKeyType() == 2) {
+			return generalPovClicked(key.getKeyCode(), key.getDirection());
+		}
+		return false;
+	}
+	
+	public boolean generalPovClicked(int index, int direction) {
+		if (direction == 1) {
+			return controllers.get(index).getPov(index).equals(PovDirection.values()[1]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[5]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[7]);
+		}
+		if (direction == 2) {
+			return controllers.get(index).getPov(index).equals(PovDirection.values()[2]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[6]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[8]);
+		}
+		if (direction == 3) {
+			return controllers.get(index).getPov(index).equals(PovDirection.values()[3]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[5]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[6]);
+		}
+		if (direction == 4) {
+			return controllers.get(index).getPov(index).equals(PovDirection.values()[4]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[7]) ||
+					 controllers.get(index).getPov(index).equals(PovDirection.values()[8]);
 		}
 		return false;
 	}
@@ -154,7 +181,7 @@ public class GamepadController extends TankController {
 				return pos;
 			}
 		}
-		else {
+		else if (key.getKeyType() == 1){
 			if (key.getDirection() < 0) {
 				if (controllers.get(index).getAxis(key.getKeyCode()) < -deadzone) {
 					return pos + Math.abs(controllers.get(index).getAxis(key.getKeyCode())) * sensitivity * direction;
@@ -172,6 +199,14 @@ public class GamepadController extends TankController {
 				}
 			}
 				
+		}
+		else if (key.getKeyType() == 2) {
+			if (generalPovClicked(key.getKeyCode(), key.getDirection())) {
+				return pos + sensitivity * direction;
+			}
+			else {
+				return pos;
+			}
 		}
 		return pos;
 	}
