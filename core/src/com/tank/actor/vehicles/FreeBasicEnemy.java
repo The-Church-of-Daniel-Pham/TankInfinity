@@ -331,12 +331,12 @@ public class FreeBasicEnemy extends FreeTank{
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 10) direction = 1;
-		else if (rotationDifference < -10) direction = -1;
+		if (rotationDifference > rotateThreshold) direction = 1;
+		else if (rotationDifference < -rotateThreshold) direction = -1;
 		
 		int moveForward = 0;
 		if (!(onTile(getTileAt(targetPos.x, targetPos.y)))) {
-			if (Math.abs(rotationDifference) < 25f) moveForward = 1;
+			if (Math.abs(rotationDifference) < rotateThreshold * 2.5f) moveForward = 1;
 		}
 		else {
 			if (!(onTile(endTargetTile))) {
@@ -423,7 +423,7 @@ public class FreeBasicEnemy extends FreeTank{
 	}
 	
 	public void shoot() {
-		Vector2 v = new Vector2(160, 0);
+		Vector2 v = new Vector2(gunLength, 0);
 		float randomAngle = randomShootAngle();
 		v.setAngle(getGunRotation());
 		getStage().addActor(new Bullet(this, createBulletStats(), getX() + v.x, getY() + v.y, getGunRotation() + randomAngle));

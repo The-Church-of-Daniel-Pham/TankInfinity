@@ -42,7 +42,7 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Stability Up", null, stabilityUp, "Decreases tank's accuracy loss when moving by small amount"));
 		//Fire Rate
 		Stats fireUp = new Stats();
-		fireUp.addStat("Fire Rate", 8);
+		fireUp.addStat("Fire Rate", 6);
 		upgrades.add(new Upgrade("Fire Rate Up", null, fireUp, "Increases tank's rate of fire by small amount"));
 		//Lifetime Increase
 		Stats lifetimeUp = new Stats();
@@ -54,8 +54,8 @@ public class Upgrade {
 		//Bounce Count increase (down Attack)
 		Stats bounceUp = new Stats();
 		bounceUp.addStat("Max Bounce", 1);
-		bounceUp.addStat("Damage", -3);
-		upgrades.add(new Upgrade("Bounce Up", null, bounceUp, "Increases maximum bounce, but decreases tank damage by a miniscule amount"));
+		bounceUp.addStat("Armor", -3);
+		upgrades.add(new Upgrade("Bounce Up", null, bounceUp, "Increases maximum bounce, but decreases armor by a miniscule amount"));
 		//Projectile Speed increase (down Stability)
 		Stats projectileSpeedUp = new Stats();
 		projectileSpeedUp.addStat("Projectile Speed", 6);
@@ -78,9 +78,9 @@ public class Upgrade {
 		//upgrades.add(new Upgrade("Traction Up", null, tractionUp, "Increases traction of tank, but decreases tank speed by a miniscule amount"));
 		//Projectile Durability increase (down Projectile Speed)
 		Stats projectileDurabilityUp = new Stats();
-		projectileDurabilityUp.addStat("Projectile Durability Up", 1);
-		projectileDurabilityUp.addStat("Armor", -3);
-		upgrades.add(new Upgrade("Projectile Durability Up", null, projectileDurabilityUp, "Increases projectile durability, but decreases armor by a miniscule amount"));
+		projectileDurabilityUp.addStat("Projectile Durability", 1);
+		projectileDurabilityUp.addStat("Damage", -3);
+		upgrades.add(new Upgrade("Projectile Durability Up", null, projectileDurabilityUp, "Increases projectile durability, but decreases damage by a miniscule amount"));
 	}
 	
 	public Upgrade(String n, Texture i, Stats c, String d) {

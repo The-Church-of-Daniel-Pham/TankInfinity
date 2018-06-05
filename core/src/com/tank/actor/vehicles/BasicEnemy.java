@@ -311,12 +311,12 @@ public class BasicEnemy extends FixedTank {
 			rotationDifference -= 360f;
 		}
 		int direction = 0;
-		if (rotationDifference > 10) direction = 1;
-		else if (rotationDifference < -10) direction = -1;
+		if (rotationDifference > rotateThreshold) direction = 1;
+		else if (rotationDifference < -rotateThreshold) direction = -1;
 		
 		int moveForward = 0;
 		if (!(onTile(getTileAt(targetPos.x, targetPos.y)))) {
-			if (Math.abs(rotationDifference) < 25f) moveForward = 1;
+			if (Math.abs(rotationDifference) < rotateThreshold * 2.5f) moveForward = 1;
 		}
 		else {
 			if (!(onTile(endTargetTile))) {
