@@ -15,7 +15,7 @@ import com.tank.utils.Assets;
 
 public class ArtilleryMark extends Label {
 	private static Skin skin = Assets.manager.get(Assets.skin);
-	private static Texture tex;
+	private Texture tex;
 	private AbstractVehicle source;
 	private Stats stats;
 	private float countdown;

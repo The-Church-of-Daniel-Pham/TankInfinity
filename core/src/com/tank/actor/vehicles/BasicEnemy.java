@@ -46,13 +46,14 @@ public class BasicEnemy extends FixedTank {
 	protected float reloadTime = 3.8f;
 	protected float gunLength = 125;
 	protected float rotateThreshold = 6f;
-	protected int onTileThreshold = 120;
+	protected int onTileThreshold = 110;
 	
 	protected float cooldownLastShot;
 	
 	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
 	
 	protected int expGive;
+	
 	
 	public BasicEnemy(float x, float y, int level) {
 		super(x, y, Assets.manager.get(Assets.fixed_tan));
@@ -154,6 +155,7 @@ public class BasicEnemy extends FixedTank {
 			}
 			else if (!reversing && !forwarding && reverseTime >= reverseTimeChanges * 2) {
 				reversing = true;
+				forwarding = true;
 				if (reverseTime < reverseTimeChanges * 5) {
 					reverseTimeThreshold += reverseTimeChanges;
 					if (reverseTimeThreshold >= reverseTimeChanges * 3) {
@@ -279,7 +281,7 @@ public class BasicEnemy extends FixedTank {
 				backingUp(delta);
 			}
 			else if (forwarding) {
-				super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, getRotation());
+				accelerateForward(delta);
 				reverseTime += delta;
 				if (reverseTime >= reverseTimeChanges + (reverseTimeThreshold / 3)) {
 					forwarding = false;
@@ -337,6 +339,7 @@ public class BasicEnemy extends FixedTank {
 		//requestPathfinding();
 		if (direction == 1) turnLeft(delta); else if (direction == -1) turnRight(delta);
 		if (moveForward == 1) accelerateForward(delta);
+		
 	}
 	
 	public boolean rotateTowardsTarget(float delta, float x, float y) {

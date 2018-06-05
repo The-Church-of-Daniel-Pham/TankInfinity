@@ -30,6 +30,7 @@ public class FreeBasicEnemy extends FreeTank{
 	protected boolean reversing;
 	protected boolean randomTurnReverse;
 	protected float reverseTime;
+	protected float reverseTimeChanges;
 	protected float reverseTimeThreshold;
 	
 	protected boolean patrolling;
@@ -48,7 +49,7 @@ public class FreeBasicEnemy extends FreeTank{
 	protected float gunLength = 125;
 	protected float rotateThreshold = 10f;
 	protected float gunRotateThreshold = 6f;
-	protected int onTileThreshold = 120;
+	protected int onTileThreshold = 110;
 	
 	protected float cooldownLastShot;
 	
@@ -166,9 +167,10 @@ public class FreeBasicEnemy extends FreeTank{
 			}
 			else if (!reversing && !forwarding && reverseTime >= 1.0f) {
 				reversing = true;
-				if (reverseTime < 2.5f) {
-					reverseTimeThreshold += 0.5f;
-					if (reverseTimeThreshold >= 1.5f) {
+				forwarding = true;
+				if (reverseTime < reverseTimeChanges * 5) {
+					reverseTimeThreshold += reverseTimeChanges;
+					if (reverseTimeThreshold >= reverseTimeChanges * 3) {
 						randomTurnReverse = (Math.random() < 0.5);
 					}
 				}
