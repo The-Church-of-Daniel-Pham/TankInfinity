@@ -57,6 +57,6 @@ public class LevelInfo extends Table {
 		updateLevel();
 		levelNumLabel.setText("Level " + playscreen.getLevelNum());
 		enemyCountLabel.setText(level.getEnemyCount() + " Enemies");
-		timePlayedLabel.setText(formatTime(level.getTimePlayed()));
+		timePlayedLabel.setText(formatTime(playscreen.getTimePlayed()));
 	}
 }
