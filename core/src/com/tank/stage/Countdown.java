@@ -57,10 +57,13 @@ public class Countdown extends Stage implements InputProcessor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		remainingTime -=delta;
+		remainingTime -= delta;
 		if (remainingTime < 0) {
 			remainingTime = 0;
+			timeLabel.setText("0");
 		}
-		timeLabel.setText("" + (int) remainingTime);
+		else{
+			timeLabel.setText("" + ((int) remainingTime + 1));
+		}
 	}
 }

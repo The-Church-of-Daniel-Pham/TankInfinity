@@ -63,7 +63,7 @@ public class PlayScreen implements Screen {
 		game.removeInput(levelhud);
 		game.removeInput(pauseMenu);
 		game.removeInput(gameOverMenu);
-		paused = true; // when leaving this screen, pause automatically for return
+		//paused = true; // when leaving this screen, pause automatically for return
 	}
 
 	@Override
@@ -146,6 +146,8 @@ public class PlayScreen implements Screen {
 			if (isReadyForNextLevel()) {
 				setupNextLevel();
 				game.setScreen(game.screens.get("Upgrades Menu"));
+				countdown.setTime(3.0f);
+				counting = true;
 			}
 		}
 		
@@ -215,11 +217,6 @@ public class PlayScreen implements Screen {
 		if (pausedState) {
 			pausedState = false;
 			return;
-		}
-		if (game.previousScreen instanceof UpgradeMenuScreen) {
-			countdown.setTime(3.0f);
-			counting = true;
-			paused = false;
 		}
 		else if (paused) {
 			paused = false;
