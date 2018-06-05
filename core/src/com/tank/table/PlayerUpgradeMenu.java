@@ -18,7 +18,6 @@ import com.tank.utils.Assets;
 public class PlayerUpgradeMenu extends Table {
 	protected final Player player;
 	private static Skin skin = Assets.manager.get(Assets.skin);
-	private static Texture empty = Assets.manager.get(Assets.vertex);
 	private Label playerName;
 	private Group topImage;
 	private Image topIcon;
@@ -47,7 +46,7 @@ public class PlayerUpgradeMenu extends Table {
 		selected = -1;
 
 		super.setDebug(false);
-		super.defaults().width(75).height(75).space(15).center();
+		super.defaults().width(60).height(60).space(10).center();
 		
 		heldButtons = new ArrayList<Boolean>();
 		for (int i = 0; i < 4; i++) {
@@ -62,7 +61,7 @@ public class PlayerUpgradeMenu extends Table {
 		if (u != null && u.size() > 0) {
 			topIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(0).getIcon())));
 		} else {
-			topIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
+			topIcon.setDrawable(null);
 		}
 		if (selected == 0) {
 			topBack.setDrawable(skin, "round-light-gray");
@@ -73,7 +72,7 @@ public class PlayerUpgradeMenu extends Table {
 		if (u != null && u.size() > 1) {
 			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(1).getIcon())));
 		} else {
-			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
+			leftIcon.setDrawable(null);
 		}
 		if (selected == 1) {
 			leftBack.setDrawable(skin, "round-light-gray");
@@ -84,7 +83,7 @@ public class PlayerUpgradeMenu extends Table {
 		if (u != null && u.size() > 2) {
 			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(2).getIcon())));
 		} else {
-			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
+			rightIcon.setDrawable(null);
 		}
 		if (selected == 2) {
 			rightBack.setDrawable(skin, "round-light-gray");
@@ -95,7 +94,7 @@ public class PlayerUpgradeMenu extends Table {
 		if (u != null && u.size() > 3) {
 			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(3).getIcon())));
 		} else {
-			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(empty)));
+			bottomIcon.setDrawable(null);
 		}
 		if (selected == 3) {
 			bottomBack.setDrawable(skin, "round-light-gray");
@@ -136,57 +135,57 @@ public class PlayerUpgradeMenu extends Table {
 		//	return;
 		super.setSkin(skin);
 		playerName = new Label(player.getName(), skin);
-		add(playerName).colspan(3).width(250);
+		add(playerName).colspan(3).width(200);
 		row();
 
 		add("").fill();
 		
-		topIcon = new Image(empty);
-		topIcon.setSize(75, 75);
+		topIcon = new Image();
+		topIcon.setSize(60, 60);
 		topBack = new Image(skin.getDrawable("round-dark-gray"));
-		topBack.setSize(75, 75);
+		topBack.setSize(60, 60);
 		topImage = new Group();
 		topImage.addActor(topBack);
 		topImage.addActor(topIcon);
-		topImage.setSize(75, 75);
+		topImage.setSize(60, 60);
 		add(topImage).fill();
 		
 		add("").fill();
 		row();
 		
-		leftIcon = new Image(empty);
-		leftIcon.setSize(75, 75);
+		leftIcon = new Image();
+		leftIcon.setSize(60, 60);
 		leftBack = new Image(skin.getDrawable("round-dark-gray"));
-		leftBack.setSize(75, 75);
+		leftBack.setSize(60, 60);
 		leftImage = new Group();
 		leftImage.addActor(leftBack);
 		leftImage.addActor(leftIcon);
-		leftImage.setSize(75, 75);
+		leftImage.setSize(60, 60);
 		add(leftImage).fill();
 		
 		add("").fill();
 		
-		rightIcon = new Image(empty);
-		rightIcon.setSize(75, 75);
+		rightIcon = new Image();
+		rightIcon.setSize(60, 60);
 		rightBack = new Image(skin.getDrawable("round-dark-gray"));
-		rightBack.setSize(75, 75);
+		rightBack.setSize(60, 60);
 		rightImage = new Group();
 		rightImage.addActor(rightBack);
 		rightImage.addActor(rightIcon);
-		rightImage.setSize(75, 75);
+		rightImage.setSize(60, 60);
 		add(rightImage);
 		
 		row();
 		add("").fill();
 		
-		bottomIcon = new Image(empty);
-		bottomIcon.setSize(75, 75);
+		bottomIcon = new Image();
+		bottomIcon.setSize(60, 60);
 		bottomBack = new Image(skin.getDrawable("round-dark-gray"));
-		bottomBack.setSize(75, 75);
+		bottomBack.setSize(60, 60);
 		bottomImage = new Group();
 		bottomImage.addActor(bottomBack);
 		bottomImage.addActor(bottomIcon);
-		bottomImage.setSize(75, 75);
+		bottomImage.setSize(60, 60);
 		add(bottomImage).fill();
 		
 		add("").fill();
@@ -197,7 +196,7 @@ public class PlayerUpgradeMenu extends Table {
 		description.setPosition(-200, 0, Align.left);
 		Group descLabel = new Group();
 		descLabel.addActor(description);
-		add(descLabel).colspan(3).width(300);
+		add(descLabel).colspan(3).width(200);
 	}
 
 	@Override
