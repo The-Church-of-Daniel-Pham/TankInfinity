@@ -16,7 +16,7 @@ public class RocketEnemy extends BasicEnemy{
 		distanceForShoot = 7f;
 		reloadTime = 5.0f;
 		rotateThreshold = 4.0f;
-		onTileThreshold = 100;
+		onTileThreshold = 90;
 		gunLength = 110;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
@@ -63,7 +63,7 @@ public class RocketEnemy extends BasicEnemy{
 	}
 	
 	public void shoot() {
-		Vector2 v = new Vector2(160, 0);
+		Vector2 v = new Vector2(gunLength, 0);
 		float randomAngle = randomShootAngle() * 0.75f;
 		v.setAngle(getRotation());
 		getStage().addActor(new Rocket(this, createBulletStats(), getX() + v.x, getY() + v.y, getRotation() + randomAngle));

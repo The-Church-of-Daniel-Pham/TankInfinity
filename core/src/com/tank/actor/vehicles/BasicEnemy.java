@@ -240,7 +240,7 @@ public class BasicEnemy extends FixedTank {
 			else if (forwarding) {
 				accelerateForward(delta);
 				reverseTime += delta;
-				if (reverseTime >= reverseTimeChanges) {
+				if (reverseTime >= reverseTimeChanges + (reverseTimeThreshold / 3)) {
 					forwarding = false;
 					reverseTime = -delta;
 				}
@@ -255,7 +255,7 @@ public class BasicEnemy extends FixedTank {
 			}
 		}
 		else {
-			if (distanceToTarget <= AbstractMapTile.SIZE * 12) {
+			if (distanceToTarget <= AbstractMapTile.SIZE * distanceForTrack) {
 				attackMode = false;
 				honeInMode = true;
 				endTargetTile = getTileAt(target.getX(), target.getY());
@@ -281,7 +281,7 @@ public class BasicEnemy extends FixedTank {
 			else if (forwarding) {
 				super.applyForce(delta * stats.getStatValue("Acceleration") * 10f, getRotation());
 				reverseTime += delta;
-				if (reverseTime >= 0.5f) {
+				if (reverseTime >= reverseTimeChanges + (reverseTimeThreshold / 3)) {
 					forwarding = false;
 					reverseTime = -delta;
 				}
