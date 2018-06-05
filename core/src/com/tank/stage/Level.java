@@ -36,6 +36,7 @@ public class Level extends Stage {
 	protected int mapHeight;
 	protected Map map;
 	protected LevelCamera camera;
+	protected int enemyCount;
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -131,6 +132,7 @@ public class Level extends Stage {
 				}
 			}
 		}
+		this.enemyCount = enemyCount;
 		
 		if (levelNum == 1)
 			spawnInPlayers(true);
@@ -206,6 +208,14 @@ public class Level extends Stage {
 
 	public TankInfinity getGame() {
 		return game;
+	}
+	
+	public int getEnemyCount() {
+		return enemyCount;
+	}
+	
+	public void changeEnemyCount(int change) {
+		enemyCount += change;
 	}
 	
 	@Override
