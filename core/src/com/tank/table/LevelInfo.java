@@ -24,13 +24,13 @@ public class LevelInfo extends Table {
 		
 		super.setFillParent(false);
 		super.setDebug(false); // This is optional, but enables debug lines for tables.
-		super.defaults().width(250).height(75).space(25).center();
+		super.defaults().width(150).height(50).space(20).center();
 		
-		levelNumLabel = new Label("Level 0", skin);
+		levelNumLabel = new Label("Level 0", skin, "medium");
 		levelNumLabel.setAlignment(Align.left);
-		enemyCountLabel = new Label("0 Enemies", skin);
+		enemyCountLabel = new Label("0 Enemies", skin, "medium");
 		enemyCountLabel.setAlignment(Align.right);
-		timePlayedLabel = new Label("0", skin);
+		timePlayedLabel = new Label("0", skin, "medium");
 		timePlayedLabel.setAlignment(Align.center);
 		
 		super.add(levelNumLabel);
