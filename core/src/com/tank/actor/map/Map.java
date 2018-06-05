@@ -82,7 +82,8 @@ public class Map extends Group {
 				super.addActor(tile);// kinda redundant, but may come in handy later
 			}
 		}
-		FloorTile portalSpawn = getRandomFloorTile();
+		ArrayList<FloorTile> possibleSpawns = getEmptyNonSpawnFloorTiles();
+		FloorTile portalSpawn = possibleSpawns.get((int)(Math.random() * possibleSpawns.size()));
 		portal = new PortalTile(portalSpawn.getRow(), portalSpawn.getCol(), this);
 		super.addActor(portal);
 	}
