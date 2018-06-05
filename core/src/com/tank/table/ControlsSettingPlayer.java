@@ -113,8 +113,8 @@ public class ControlsSettingPlayer extends Table{
 			}
 		});
 		
-		right.add(label);
-		left.add(button);
+		right.add(button);
+		left.add(label);
 
 		right.row();
 		left.row();
