@@ -37,6 +37,7 @@ public class Level extends Stage {
 	protected Map map;
 	protected LevelCamera camera;
 	protected float timePlayed;
+	protected int enemyCount;
 
 	/**
 	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
@@ -132,6 +133,7 @@ public class Level extends Stage {
 				}
 			}
 		}
+		this.enemyCount = enemyCount;
 		
 		if (levelNum == 1)
 			spawnInPlayers(true);
@@ -211,6 +213,14 @@ public class Level extends Stage {
 		return game;
 	}
 	
+	public int getEnemyCount() {
+		return enemyCount;
+	}
+	
+	public void changeEnemyCount(int change) {
+		enemyCount += change;
+	}
+	
 	@Override
 	public void addActor(Actor a) {
 		if (a instanceof AbstractProjectile || a instanceof DeathExplosion) {
@@ -233,10 +243,6 @@ public class Level extends Stage {
 		else {
 			super.addActor(a);
 		}
-	}
-	
-	public int getEnemyCount() {
-		return 0;	//rewrite later
 	}
 
 	@Override

@@ -576,6 +576,7 @@ public class FreeBasicEnemy extends FreeTank{
 						getX() + (float)(100f * Math.random()) - 50f,
 						getY() + (float)(100f * Math.random()) - 50f));
 			if (health <= 0 && !isDestroyed()) {
+				((Level)getStage()).changeEnemyCount(-1);
 				destroy();
 				if (source instanceof AbstractProjectile) {
 					AbstractVehicle tankSource = ((AbstractProjectile)source).getSource();

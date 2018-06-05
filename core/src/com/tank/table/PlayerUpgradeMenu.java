@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
@@ -17,7 +16,6 @@ import com.tank.utils.Assets;
 public class PlayerUpgradeMenu extends Table {
 	protected final Player player;
 	private static Skin skin = Assets.manager.get(Assets.skin);
-	private static Drawable empty;
 	private Label playerName;
 	private Group topImage;
 	private Image topIcon;
@@ -53,7 +51,6 @@ public class PlayerUpgradeMenu extends Table {
 			heldButtons.add(false);
 		}
 		
-		empty = skin.getDrawable("round-dark-gray");
 		buildTable();
 	}
 
@@ -141,7 +138,7 @@ public class PlayerUpgradeMenu extends Table {
 
 		add("").fill();
 		
-		topIcon = new Image(empty);
+		topIcon = new Image();
 		topIcon.setSize(60, 60);
 		topBack = new Image(skin.getDrawable("round-dark-gray"));
 		topBack.setSize(60, 60);
@@ -154,7 +151,7 @@ public class PlayerUpgradeMenu extends Table {
 		add("").fill();
 		row();
 		
-		leftIcon = new Image(empty);
+		leftIcon = new Image();
 		leftIcon.setSize(60, 60);
 		leftBack = new Image(skin.getDrawable("round-dark-gray"));
 		leftBack.setSize(60, 60);
@@ -166,7 +163,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		add("").fill();
 		
-		rightIcon = new Image(empty);
+		rightIcon = new Image();
 		rightIcon.setSize(60, 60);
 		rightBack = new Image(skin.getDrawable("round-dark-gray"));
 		rightBack.setSize(60, 60);
@@ -179,7 +176,7 @@ public class PlayerUpgradeMenu extends Table {
 		row();
 		add("").fill();
 		
-		bottomIcon = new Image(empty);
+		bottomIcon = new Image();
 		bottomIcon.setSize(60, 60);
 		bottomBack = new Image(skin.getDrawable("round-dark-gray"));
 		bottomBack.setSize(60, 60);
