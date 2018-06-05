@@ -26,7 +26,7 @@ public class ArtillerySubWeapon extends SubWeapon{
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 2.5));
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 2.5) + 20);
 		stats.addStat("Explosion Size", 512);
 		stats.addStat("Lifetime", 15);
 		return stats;

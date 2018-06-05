@@ -245,8 +245,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		secondaryVelocity.scl((float) Math.pow(0.1f * (1.0f - ((traction) / (traction + 70.0f))), delta));
 		angularVelocity *= (float) Math.pow(0.025f * (1.0f - ((traction) / (traction + 70.0f))), delta);
 		
-		if (speedModifier > 1.0f) speedModifier = Math.max(speedModifier - 0.025f * delta, 1.0f);
-		else if (speedModifier < 1.0f) speedModifier = Math.min(speedModifier + 0.025f * delta, 1.0f);
+		if (speedModifier > 1.0f) speedModifier = Math.max(speedModifier - 0.05f * delta, 1.0f);
+		else if (speedModifier < 1.0f) speedModifier = Math.min(speedModifier + 0.05f * delta, 1.0f);
 	}
 
 	public void applyForce(Vector2 acceleration) {

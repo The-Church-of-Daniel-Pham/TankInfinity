@@ -15,6 +15,7 @@ import com.tank.actor.map.Map;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.FloorTile;
 import com.tank.actor.projectiles.AbstractProjectile;
+import com.tank.actor.projectiles.Caltrop;
 import com.tank.actor.projectiles.LandMine;
 import com.tank.actor.ui.AbstractUI;
 import com.tank.actor.ui.MovingText;
@@ -22,6 +23,7 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.BasicEnemy;
 import com.tank.actor.vehicles.FreeBasicEnemy;
 import com.tank.actor.vehicles.RocketEnemy;
+import com.tank.animations.DeathExplosion;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 
@@ -208,8 +210,8 @@ public class Level extends Stage {
 	
 	@Override
 	public void addActor(Actor a) {
-		if (a instanceof AbstractProjectile) {
-			if (!(a instanceof LandMine)) {
+		if (a instanceof AbstractProjectile || a instanceof DeathExplosion) {
+			if (!(a instanceof LandMine) && !(a instanceof Caltrop)) {
 				getRoot().addActorBefore(subSkyLevel, a);
 			}
 			else {

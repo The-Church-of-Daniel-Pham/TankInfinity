@@ -29,11 +29,11 @@ public class ChakramSubWeapon extends SubWeapon {
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.1));
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.1) + 5);
 		stats.addStat("Projectile Speed", (int)(90 * Math.sqrt(source.getStatValue("Projectile Speed"))));
-		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 3);
-		stats.addStat("Max Bounce", source.getStatValue("Max Bounce") * 4);
-		stats.addStat("Lifetime", source.getStatValue("Lifetime") * 2);
+		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 2 + 1);
+		stats.addStat("Max Bounce", (int)(source.getStatValue("Max Bounce") * 2.5) + 3);
+		stats.addStat("Lifetime", (int)(source.getStatValue("Lifetime") * 2.5));
 		return stats;
 	}
 }

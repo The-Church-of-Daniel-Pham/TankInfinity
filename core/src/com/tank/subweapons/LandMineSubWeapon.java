@@ -24,8 +24,8 @@ public class LandMineSubWeapon extends SubWeapon{
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.5));
-		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 3);
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 1.5) + 15);
+		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 5);
 		stats.addStat("Lifetime", source.getStatValue("Lifetime") * 10);
 		return stats;
 	}
