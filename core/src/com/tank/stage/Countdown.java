@@ -41,7 +41,7 @@ public class Countdown extends Stage implements InputProcessor {
 		uiTable.defaults().width(100).height(50).space(25).center();
 		
 		// Add widgets to the table here.
-		timeLabel = new Label("", skin);
+		timeLabel = new Label("", skin, "title");
 		timeLabel.setAlignment(Align.center);
 		uiTable.add(timeLabel);
 	}
