@@ -5,9 +5,9 @@ import com.tank.actor.projectiles.Rocket;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
-public class BigShotEnemy extends PeashooterEnemy{
+public class RocketEnemy extends BasicEnemy{
 
-	public BigShotEnemy(float x, float y, int level) {
+	public RocketEnemy(float x, float y, int level) {
 		super(x, y, level);
 		tankTexture = Assets.manager.get(Assets.enemy_big_shot_fixed);
 		
@@ -17,6 +17,7 @@ public class BigShotEnemy extends PeashooterEnemy{
 		rotateThreshold = 4.0f;
 		onTileThreshold = 90;
 		gunLength = 110;
+		diagonalLength = 120;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	
