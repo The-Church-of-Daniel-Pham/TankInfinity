@@ -45,7 +45,7 @@ public class PeashooterEnemy extends FixedTank {
 	protected float distanceForShoot = 6f;
 	
 	protected float reloadTime = 3.8f;
-	protected float gunLength = 125;
+	protected float gunLength = 118;
 	protected float rotateThreshold = 6f;
 	protected int onTileThreshold = 110;
 	
