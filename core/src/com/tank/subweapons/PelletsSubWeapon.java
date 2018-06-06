@@ -19,7 +19,8 @@ public class PelletsSubWeapon extends SubWeapon{
 	public void shoot(PlayerTank source) {
 		Vector2 v = new Vector2(PlayerTank.TANK_GUN_LENGTH, 0);
 		v.setAngle(source.getGunRotation());
-		for (int i = 0; i < 10; i++) {
+		int count = 6 + source.getStatValue("Max Projectile") * 4;
+		for (int i = 0; i < count; i++) {
 			float randomAngle = source.randomShootAngle() * 1.5f;
 			source.getStage().addActor(
 					new Pellet(source, createStats(source), source.getX() + v.x, source.getY() + v.y, source.getGunRotation() + randomAngle));
