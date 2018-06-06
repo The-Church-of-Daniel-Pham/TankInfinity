@@ -23,6 +23,7 @@ public class PlayScreen implements Screen {
 	protected boolean pausedState;
 	protected boolean pauseHeld;
 	protected boolean gameOver;
+	protected float timeAfterGameOver;
 	protected boolean counting;
 	protected int levelNum;
 	protected float timePlayed;
@@ -115,6 +116,9 @@ public class PlayScreen implements Screen {
 				game.addInput(gameOverMenu);
 			}
 		}
+		else {
+			timeAfterGameOver += delta;
+		}
 
 		// Update the stage even if game is over
 		if (!paused && !counting) {
@@ -138,7 +142,7 @@ public class PlayScreen implements Screen {
 		}
 		
 		//update the gameOver menu
-		if (gameOver && !counting) {
+		if (gameOver && timeAfterGameOver >= 3.0f && !counting) {
 			gameOverMenu.act(delta);
 			gameOverMenu.getViewport().apply();
 			gameOverMenu.draw();
