@@ -21,7 +21,14 @@ public class GamepadController extends TankController {
 		keyMap.putAll(ControlConstants.DEFAULT_GAMEPAD_CONTROLS);
 		index = -1;
 		for (int i = 0; i < controllers.size; i++) {
-			if (!inUse.contains(index)) {
+			boolean using = false;
+			for (Integer integer : inUse) {
+				if (integer.intValue() == i) {
+					using = true;
+					break;
+				}
+			}
+			if (!using) {
 				this.index = i;
 				inUse.add(index);
 				break;

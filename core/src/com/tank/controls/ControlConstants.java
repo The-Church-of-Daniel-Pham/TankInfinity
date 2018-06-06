@@ -27,7 +27,7 @@ public class ControlConstants {
 		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-RIGHT", new KeyControl(XboxMapping.AXIS_RIGHT_X, 1, 1));
 		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-UP", new KeyControl(XboxMapping.AXIS_RIGHT_Y, 1, -1));
 		DEFAULT_GAMEPAD_CONTROLS.put("CURSOR-DOWN", new KeyControl(XboxMapping.AXIS_RIGHT_Y, 1, 1));
-		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", new KeyControl(XboxMapping.AXIS_RIGHT_TRIGGER, 1, -1));
+		DEFAULT_GAMEPAD_CONTROLS.put("SHOOT", new KeyControl(XboxMapping.AXIS_RIGHT_TRIGGER, 1, 1));
 		DEFAULT_GAMEPAD_CONTROLS.put("SUB", new KeyControl(XboxMapping.AXIS_LEFT_TRIGGER, 1, 1));
 		DEFAULT_GAMEPAD_CONTROLS.put("RSHIFT", new KeyControl(XboxMapping.BUTTON_RB, 0));
 		DEFAULT_GAMEPAD_CONTROLS.put("LSHIFT", new KeyControl(XboxMapping.BUTTON_LB, 0));
