@@ -33,7 +33,7 @@ public class FreePeashooterEnemy extends FreeTank{
 	protected float reverseTimeChanges;
 	protected float reverseTimeThreshold;
 	
-	protected float diagonalLength = 100;
+	protected float diagonalLength = 105;
 	
 	protected boolean patrolling;
 	protected boolean patrolGunRotateDirection;
@@ -66,6 +66,7 @@ public class FreePeashooterEnemy extends FreeTank{
 		initializePathfinding();
 		initializeHitbox();
 		setRotation((float)(Math.random() * 360f));
+		setGunRotation(getRotation());
 		super.setGunOffsetX(-8);
 		super.setGunPivotX(gunTexture.getWidth() / 2 - 12);
 		forwarding = false;
@@ -76,6 +77,7 @@ public class FreePeashooterEnemy extends FreeTank{
 		expGive = (int)Math.pow(1 + level, 1.1);;
 		
 		reverseTimeThreshold = 0.5f;
+		reverseTimeChanges = 0.5f;
 		timeSinceLastPathfind = 0f;
 		cooldownLastShot = 0.5f;
 		
@@ -158,9 +160,10 @@ public class FreePeashooterEnemy extends FreeTank{
 		if (!super.move(delta)){
 			if (attackMode && cooldownLastShot > 0f && !reversing && !forwarding) {
 				reversing = true;
-				if (reverseTime < 2.5f) {
-					reverseTimeThreshold += 0.5f;
-					if (reverseTimeThreshold >= 1.5f) {
+				forwarding = true;
+				if (reverseTime < reverseTimeChanges * 5) {
+					reverseTimeThreshold += reverseTimeChanges;
+					if (reverseTimeThreshold >= reverseTimeChanges * 3) {
 						randomTurnReverse = (Math.random() < 0.5);
 					}
 				}
@@ -436,7 +439,7 @@ public class FreePeashooterEnemy extends FreeTank{
 	
 	public void backingUp(float delta) {
 		accelerateBackward(delta);
-		if (reverseTimeThreshold >= 1.5f) {
+		if (reverseTimeThreshold >= reverseTimeChanges * 3.0f) {
 			if (randomTurnReverse) 
 				turnLeft(delta);
 			else
@@ -445,7 +448,7 @@ public class FreePeashooterEnemy extends FreeTank{
 		reverseTime += delta;
 		if (reverseTime >= reverseTimeThreshold) {
 			reversing = false;
-			if (reverseTimeThreshold >= 2.5f) {
+			if (reverseTimeThreshold >= reverseTimeChanges * 5.0f) {
 				if (patrolling) {
 					selectNewEndTargetTile();
 					requestPathfinding();
@@ -455,7 +458,7 @@ public class FreePeashooterEnemy extends FreeTank{
 				}
 				forwarding = true;
 			}
-			else if(reverseTime >= 1.5f) {
+			else if(reverseTime >= reverseTimeChanges * 3.0f) {
 				if (patrolling) {
 					selectNewEndTargetTile();
 					requestPathfinding();

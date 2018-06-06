@@ -32,7 +32,7 @@ public class PeashooterEnemy extends FixedTank {
 	protected float reverseTimeThreshold;
 	protected float reverseTimeChanges = 0.5f;
 	
-	protected float diagonalLength = 100;
+	protected float diagonalLength = 105;
 	
 	protected boolean patrolling;
 	protected float timeSinceLastPathfind;
