@@ -35,7 +35,7 @@ public class PlayScreen implements Screen {
 		level = new Level(this.game, levelNum);
 		levelhud = new LevelHUD(this.game, this);
 		pauseMenu = new PauseMenu(this.game);
-		gameOverMenu = new GameOverMenu(this.game);
+		gameOverMenu = new GameOverMenu(this.game, this);
 		countdown = new Countdown(this.game);
 		gameOver = false;
 		timePlayed = 0f;
