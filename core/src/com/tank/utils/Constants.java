@@ -1,5 +1,7 @@
 package com.tank.utils;
 
+import java.util.concurrent.TimeUnit;
+
 import com.badlogic.gdx.Gdx;
 
 public class Constants {
@@ -60,4 +62,11 @@ public class Constants {
 			break;
 		}
 	}
+	
+	public static String formatTime(float time) {
+		long t = (long) (1000 * time);	// to ms
+        final long min = TimeUnit.MILLISECONDS.toMinutes(t);
+        final long sec = TimeUnit.MILLISECONDS.toSeconds(t - TimeUnit.MINUTES.toMillis(min));
+        return String.format("%02d:%02d", min, sec);
+    }
 }
