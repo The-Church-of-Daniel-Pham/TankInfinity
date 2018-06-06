@@ -16,7 +16,7 @@ public class MooseStampedeSubWeapon extends SubWeapon{
 
 	@Override
 	public void shoot(PlayerTank source) {
-		int mooseCount = (source.getStatValue("Max Projectile") * 3) + 8;
+		int mooseCount = (source.getStatValue("Max Projectile") * 5) + 10;
 		for (int i = 0; i < mooseCount; i++) {
 			source.getStage().addActor(
 					new Moose(source, createStats(source),source.getPlayer().cursor.getStagePos().x,
@@ -28,7 +28,7 @@ public class MooseStampedeSubWeapon extends SubWeapon{
 	
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.5) + 40);
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.5) + 30);
 		stats.addStat("Projectile Speed", (int)(((Math.random() * 50) + 75) * Math.sqrt(source.getStatValue("Projectile Speed"))));
 		stats.addStat("Projectile Durability", source.getStatValue("Projectile Durability") * 3 + 1);
 		return stats;
