@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.game.TankInfinity;
+import com.tank.screen.PlayScreen;
 import com.tank.actor.ui.Background;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
@@ -39,6 +40,8 @@ public class PauseMenu extends Stage implements InputProcessor {
 		// Add widgets to the table here.
 		TextButton resumeButton = new TextButton("Resume", skin);
 		resumeButton.getLabel().setAlignment(Align.left);
+		TextButton restartButton = new TextButton("Restart", skin);
+		restartButton.getLabel().setAlignment(Align.left);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		settingsButton.getLabel().setAlignment(Align.left);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
@@ -50,6 +53,17 @@ public class PauseMenu extends Stage implements InputProcessor {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
 	        	 game.getScreen().resume();
+	        	 event.stop();
+	         }
+	      });
+		
+		restartButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.screens.get("Play").dispose();	//delete current game
+	        	 game.screens.remove("Play");	//remove from screens
+	        	 game.screens.put("Play", new PlayScreen(game)); // creates or replaces with a new game
+	        	 game.setScreen(game.screens.get("Play"));
 	        	 event.stop();
 	         }
 	      });
@@ -81,6 +95,8 @@ public class PauseMenu extends Stage implements InputProcessor {
 	      });
 		
 		uiTable.add(resumeButton);
+		uiTable.row();
+		uiTable.add(restartButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
 		uiTable.row(); 

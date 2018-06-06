@@ -47,10 +47,24 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		gameOverNotif.setAlignment(Align.left);
 		statsLabel = new Label("Reached level " + " in " + " minutes", skin, "medium");
 		statsLabel.setAlignment(Align.left);
+		TextButton restartButton = new TextButton("Restart", skin);
+		restartButton.getLabel().setAlignment(Align.left);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
 		mainMenuButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
 		quitButton.getLabel().setAlignment(Align.left);
+		
+		restartButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.screens.get("Play").dispose();	//delete current game
+	        	 game.screens.remove("Play");	//remove from screens
+	        	 game.screens.put("Play", new PlayScreen(game)); // creates or replaces with a new game
+	        	 game.setScreen(game.screens.get("Play"));
+	        	 event.stop();
+	         }
+	      });
+
 		
 		mainMenuButton.addListener(new ClickListener() {
 	         @Override
@@ -61,7 +75,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	        	 event.stop();
 	         }
 	      });
-
+		
 		quitButton.addListener(new ClickListener() {
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
@@ -72,6 +86,8 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		uiTable.add(gameOverNotif).height(150);
 		uiTable.row();
 		uiTable.add(statsLabel).width(500);
+		uiTable.row();
+		uiTable.add(restartButton);
 		uiTable.row();
 		uiTable.add(mainMenuButton);
 		uiTable.row(); 
