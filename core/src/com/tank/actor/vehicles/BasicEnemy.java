@@ -56,7 +56,7 @@ public class BasicEnemy extends FixedTank {
 	
 	
 	public BasicEnemy(float x, float y, int level) {
-		super(x, y, Assets.manager.get(Assets.fixed_tan));
+		super(x, y, Assets.manager.get(Assets.fixed_dome_tan));
 		initializeStats();
 		stats.mergeStats(levelStats(level));
 		initializePathfinding();
