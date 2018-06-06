@@ -266,9 +266,9 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> laser_fire = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> laser_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> laser_bounce = new AssetDescriptor<Sound>("audio/laser_bounce.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> laser_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> laser_hit = new AssetDescriptor<Sound>("audio/laser_hit.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> rocket_fire = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
@@ -278,9 +278,9 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> chakram_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> chakram_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> chakram_hit = new AssetDescriptor<Sound>("audio/chakram_hit.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> boomerang_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> boomerang_fire = new AssetDescriptor<Sound>("audio/boomerang_fire.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> boomerang_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
@@ -290,7 +290,7 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> pellet_hit = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> landmine_deploy = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> landmine_deploy = new AssetDescriptor<Sound>("audio/landmine_deploy.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> caltrop_fire = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
@@ -298,7 +298,7 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> artillery_fire = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> artillery_countdown = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> artillery_countdown = new AssetDescriptor<Sound>("audio/artillery_countdown.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> artillery_falling = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
