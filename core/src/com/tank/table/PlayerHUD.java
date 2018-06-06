@@ -20,6 +20,7 @@ public class PlayerHUD extends Table{
 	
 	protected Label nameLabel;
 	protected Image iconImage;
+	protected Label levelLabel;
 	protected Group icon;
 	
 	protected ProgressBar reloadBar;
@@ -64,9 +65,13 @@ public class PlayerHUD extends Table{
 		iconImage.setSize(140, 140);
 		nameLabel = new Label(player.getName(), skin, "medium");
 		nameLabel.setPosition(2, 2);
+		levelLabel = new Label("LV 1", skin, "medium");
+		levelLabel.setPosition(2, 125);
+		levelLabel.setFontScale(0.7f);
 		icon = new Group();
 		icon.addActor(iconImage);
 		icon.addActor(nameLabel);	
+		icon.addActor(levelLabel);	
 		
 		blankSub = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_icon)));
 		
@@ -195,6 +200,7 @@ public class PlayerHUD extends Table{
 			healthBlinkingTime = 1.5f;
 			healthLabel.setColor(Color.WHITE);
 		}
+		levelLabel.setText("LV " + player.tank.getLevel());
 		expBar.setValue(((float) player.tank.getCurrentExp()) / player.tank.getNextExp());
 		expLabel.setText(player.tank.getCurrentExp() + " EXP");
 		
