@@ -58,6 +58,8 @@ public class SettingsMenu extends Stage implements InputProcessor {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				game.setScreen(game.previousScreen);
+				changeSettingsTo(videoTable);
+				controlsTable.changeToPlayer(0);
 				event.stop();
 			}
 		});
