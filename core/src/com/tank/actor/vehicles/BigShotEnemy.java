@@ -56,7 +56,7 @@ public class BigShotEnemy extends PeashooterEnemy{
 		levelUps.addStat("Fire Rate", (int)(1 * Math.pow(levelNum - 1, 0.6)));
 		
 		levelUps.addStat("Max Health", (int)(6 * Math.pow(levelNum - 1, 1.2)));
-		levelUps.addStat("Armor", (int)(3 * Math.pow(levelNum - 1, 0.95)));
+		levelUps.addStat("Armor", (int)(2.5 * Math.pow(levelNum - 1, 1.15)));
 		
 		levelUps.addStat("Projectile Durability", (int)(0.7 * Math.pow(levelNum - 1, 0.75)));
 		
