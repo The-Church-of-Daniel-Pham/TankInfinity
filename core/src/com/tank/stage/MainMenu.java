@@ -44,6 +44,8 @@ public class MainMenu extends Stage implements InputProcessor{
 		// Add widgets to the table here.
 		TextButton playButton = new TextButton("Play", skin);
 		playButton.getLabel().setAlignment(Align.left);
+		TextButton tutorialButton = new TextButton("Tutorial", skin);
+		tutorialButton.getLabel().setAlignment(Align.left);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		settingsButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
@@ -53,6 +55,14 @@ public class MainMenu extends Stage implements InputProcessor{
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
 	        	 game.setScreen(game.screens.get("Customization Menu"));	//go here first
+	        	 event.stop();
+	         }
+	      });
+		
+		tutorialButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.setScreen(game.screens.get("Tutorial"));
 	        	 event.stop();
 	         }
 	      });
@@ -73,8 +83,9 @@ public class MainMenu extends Stage implements InputProcessor{
 	         }
 	      });
 		
-		uiTable.row();
 		uiTable.add(playButton);
+		uiTable.row();
+		uiTable.add(tutorialButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
 		uiTable.row(); 

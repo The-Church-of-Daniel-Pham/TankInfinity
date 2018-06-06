@@ -256,6 +256,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: round-white
 		over: round-gray
 	}
+	defaultLight: {
+		font: bison72
+		fontColor: black
+		downFontColor: white
+		down: round-gray
+		over: round-white
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {

@@ -38,6 +38,10 @@ public class Background extends Actor {
 		}
 	}
 	
+	public void setTexture(Texture t) {
+		texture = t;
+	}
+	
 	@Override
 	public void draw(Batch batch, float alpha) {
 		if (fill) {
