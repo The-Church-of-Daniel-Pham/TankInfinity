@@ -19,6 +19,7 @@ public class TutorialScreen implements Screen {
 	
 	@Override
 	public void show() {
+		tutorial.goToFirstSlide();
 		game.addInput(tutorial);
 	}
 	

@@ -79,4 +79,9 @@ public class Tutorial extends Stage implements InputProcessor {
 		uiTable.add(previousButton).expandX().bottom().left();
 		uiTable.add(nextButton).expandX().bottom().right();
 	}
+	
+	public void goToFirstSlide() {
+		slides.setIndex(0);
+		tutorial.setTexture(slides.getCurrent());
+	}
 }
