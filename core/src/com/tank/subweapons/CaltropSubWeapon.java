@@ -19,8 +19,9 @@ public class CaltropSubWeapon extends SubWeapon{
 	public void shoot(PlayerTank source) {
 		Vector2 v = new Vector2(PlayerTank.TANK_GUN_LENGTH, 0);
 		v.setAngle(source.getGunRotation());
-		for (int i = 0; i < 12; i++) {
-			float randomAngle = source.randomShootAngle() * 2.0f;
+		int count = 10 + source.getStatValue("Max Projectile") * 2;
+		for (int i = 0; i < count; i++) {
+			float randomAngle = source.randomShootAngle() * 3.0f;
 			source.getStage().addActor(
 					new Caltrop(source, createStats(source), source.getX() + v.x, source.getY() + v.y, source.getGunRotation() + randomAngle));
 		}

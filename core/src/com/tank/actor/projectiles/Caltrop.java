@@ -35,7 +35,7 @@ public class Caltrop extends AbstractProjectile{
 		lifeTime += delta;
 		rotation += (velocity.len() * delta) / 50f;
 		while (rotation >= 360f) rotation -= 360f;
-		velocity.scl((float)Math.pow(0.3f, delta));
+		velocity.scl((float)Math.pow(0.1f, delta));
 		
 		if (lifeTime >= stats.getStatValue("Lifetime") / 10.0f) {
 			destroy();
