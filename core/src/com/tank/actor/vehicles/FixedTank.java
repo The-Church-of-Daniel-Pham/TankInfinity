@@ -9,7 +9,7 @@ public abstract class FixedTank extends AbstractVehicle {
 
 	public FixedTank(float x, float y) {
 		super(x, y);
-		tankTexture = Assets.manager.get(Assets.fixed_gray);
+		tankTexture = Assets.manager.get(Assets.enemy_peashooter_fixed);
 		initiliazeHitbox();
 		super.setOrigin(tankTexture.getWidth() / 2, tankTexture.getHeight() / 2);
 	}

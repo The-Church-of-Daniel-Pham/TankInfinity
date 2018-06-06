@@ -1,7 +1,6 @@
 package com.tank.actor.vehicles;
 
 import com.badlogic.gdx.math.Vector2;
-import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.projectiles.Rocket;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -10,7 +9,7 @@ public class RocketEnemy extends BasicEnemy{
 
 	public RocketEnemy(float x, float y, int level) {
 		super(x, y, level);
-		tankTexture = Assets.manager.get(Assets.fixed_big);
+		tankTexture = Assets.manager.get(Assets.enemy_rocket_fixed);
 		
 		reverseTimeChanges = 0.3f;
 		distanceForShoot = 7f;

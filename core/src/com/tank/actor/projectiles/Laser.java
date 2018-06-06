@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
