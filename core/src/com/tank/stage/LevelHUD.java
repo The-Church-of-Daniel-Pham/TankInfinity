@@ -73,7 +73,7 @@ public class LevelHUD extends Stage implements InputProcessor {
 		uiTable.defaults().pad(25);
 
 		// Add widgets to the table here.
-		fpsLabel = new Label("0 FPS", skin);
+		fpsLabel = new Label(" FPS", skin);
 		LevelInfo levelinfo = new LevelInfo(playscreen);
 		TextButton pauseButton = new TextButton("Pause", skin);
 		Table placeholder = new Table();
