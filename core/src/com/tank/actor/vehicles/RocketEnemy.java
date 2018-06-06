@@ -17,6 +17,7 @@ public class RocketEnemy extends BasicEnemy{
 		rotateThreshold = 4.0f;
 		onTileThreshold = 90;
 		gunLength = 110;
+		diagonalLength = 120;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	

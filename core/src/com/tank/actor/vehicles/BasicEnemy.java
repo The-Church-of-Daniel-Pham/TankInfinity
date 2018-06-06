@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -32,6 +33,8 @@ public class BasicEnemy extends FixedTank {
 	protected float reverseTime;
 	protected float reverseTimeThreshold;
 	protected float reverseTimeChanges = 0.5f;
+	
+	protected float diagonalLength = 100;
 	
 	protected boolean patrolling;
 	protected float timeSinceLastPathfind;
@@ -533,7 +536,7 @@ public class BasicEnemy extends FixedTank {
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (super.tankTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2((float) diagonalLength, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 

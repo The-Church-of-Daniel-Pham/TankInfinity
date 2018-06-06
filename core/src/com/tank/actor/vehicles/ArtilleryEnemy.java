@@ -18,6 +18,7 @@ public class ArtilleryEnemy extends BasicEnemy{
 		rotateThreshold = 6.0f;
 		onTileThreshold = 80;
 		gunLength = 110;
+		diagonalLength = 120;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	

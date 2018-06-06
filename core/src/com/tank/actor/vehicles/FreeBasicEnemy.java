@@ -33,6 +33,8 @@ public class FreeBasicEnemy extends FreeTank{
 	protected float reverseTimeChanges;
 	protected float reverseTimeThreshold;
 	
+	protected float diagonalLength = 100;
+	
 	protected boolean patrolling;
 	protected boolean patrolGunRotateDirection;
 	protected float timeGunPatrol;
@@ -598,7 +600,7 @@ public class FreeBasicEnemy extends FreeTank{
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (super.treadTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2((float) diagonalLength, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 
