@@ -230,6 +230,28 @@ public class Assets {
     public static final AssetDescriptor<Texture> black = new AssetDescriptor<Texture>("ui/menu/pause/black.png",
             Texture.class);
     public static final AssetDescriptor<Texture> red = new AssetDescriptor<Texture>("ui/menu/gameover/red.png", Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_1 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_1.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_2 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_2.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_3 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_3.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_4 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_4.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_5 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_5.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_6 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_6.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_7 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_7.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_8 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_8.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_9 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_9.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_10 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_10.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> tutorial_11 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_11.png",
+            Texture.class);
     	// Debug
     public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
             Texture.class);
@@ -357,6 +379,17 @@ public class Assets {
         manager.load(title);
         manager.load(black);
         manager.load(red);
+        manager.load(tutorial_1);
+        manager.load(tutorial_2);
+        manager.load(tutorial_3);
+        manager.load(tutorial_4);
+        manager.load(tutorial_5);
+        manager.load(tutorial_6);
+        manager.load(tutorial_7);
+        manager.load(tutorial_8);
+        manager.load(tutorial_9);
+        manager.load(tutorial_10);
+        manager.load(tutorial_11);
         // System.out.println("Menu textures loaded");
         manager.load(vertex);
         // System.out.println("Debug textures loaded");
