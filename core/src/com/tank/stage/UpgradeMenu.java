@@ -94,7 +94,7 @@ public class UpgradeMenu extends Stage implements InputProcessor {
 
 	@Override
 	public void act(float delta) {
-		//super.act(delta);
+		super.act(delta);
 		for (int i = 0; i < game.players.size(); i++) {
 			if (game.players.get(i).isEnabled()) {
 				pUpgradeMenus.get(i).act(delta);
