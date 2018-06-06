@@ -59,6 +59,7 @@ public class PlayerTank extends FreeTank {
 	private final int GUN_PIVOT = -12;
 
 	private boolean markedForNextLevel; // Used to progress to next level
+	private float timeSinceLastReady;
 
 	protected float reloadTime;
 	protected float lastReloadTime;
@@ -237,7 +238,17 @@ public class PlayerTank extends FreeTank {
 		subLeftHeld = player.controls.subLeftPressed();
 		
 		if (!markedForNextLevel) {
-			markedForNextLevel = isMarkedForNextLvl();
+			if (isMarkedForNextLvl()) {
+				markedForNextLevel = true;
+				getStage().addActor(new MovingText("Ready for\nnext level!", player.custom.getColor(), 1.5f, new Vector2(0, 220), getX(), getY(), 1.3f));
+			}
+		}
+		else {
+			timeSinceLastReady += delta;
+			if (timeSinceLastReady > 6.0f) {
+				getStage().addActor(new MovingText("Ready for\nnext level!", player.custom.getColor(), 1.5f, new Vector2(0, 220), getX(), getY(), 1.3f));
+				timeSinceLastReady = 0f;
+			}
 		}
 		playSoundEffects();
 	}
