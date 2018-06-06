@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -15,6 +16,12 @@ public class Boomerang extends AbstractProjectile {
 	private int bounceCount = 0;
 	private float lifeTime = 0f;
 	private float rotateTime = 0f;
+	
+	private static final float BOUNCE_VOLUME = 0.5f;
+    private static final float HIT_VOLUME = 0.5f;
+    private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.boomerang_bounce), BOUNCE_VOLUME);
+    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.boomerang_hit), HIT_VOLUME);
+    
 	private float animationRotation;
 	
 	public Boomerang(AbstractVehicle src, Stats stats, float x, float y, float direction, float angularVelocity) {
@@ -68,22 +75,28 @@ public class Boomerang extends AbstractProjectile {
 	
 	@Override
 	public void bounce(Vector2 wall) {
-		damageNeighbors();
+		boolean hit = damageNeighbors();
 		bounceCount += 1;
-		if (bounceCount <= stats.getStatValue("Max Bounce"))
+		if (bounceCount <= stats.getStatValue("Max Bounce")) {
+			if (!hit) bounceSound.play();
 			super.bounce(wall);
+		}
 		else {
 			destroy();
 		}
 	}
 	
-	public void damageNeighbors() {
+	public boolean damageNeighbors() {
+		boolean hit = false;
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(0.5f));
+				if (!hit) hitSound.play();
+				hit = true;
 			}
 		}
+		return hit;
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -14,6 +15,9 @@ public class VampiricFang extends AbstractProjectile{
 	private static Texture fangTexture = Assets.manager.get(Assets.fang);
 	private float lifeTime;
 	private float angle;
+	
+	private static float HIT_VOLUME = 0.5f;
+	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.fang_hit), HIT_VOLUME);
 	
 	public VampiricFang(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(fangTexture, src, stats, x, y);
@@ -50,6 +54,7 @@ public class VampiricFang extends AbstractProjectile{
 				((AbstractVehicle)e.getCollidable()).damage(this, damage);
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(0.2f));
 				((AbstractVehicle)e.getCollidable()).applySlow(0.3f);
+				hitSound.play();
 				source.heal(this, getStat("Damage"));
 			}
 		}

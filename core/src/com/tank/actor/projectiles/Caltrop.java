@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -15,6 +16,9 @@ public class Caltrop extends AbstractProjectile{
 	private static float angle;	//angle between diagonal of rectangle and its base
 	private float lifeTime = 0f;
 	private float rotation;
+	
+    private static final float HIT_VOLUME = 0.5f;
+    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.caltrop_hit), HIT_VOLUME);
 	
 	public Caltrop(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(caltropTexture, src, stats, x, y);
@@ -66,6 +70,7 @@ public class Caltrop extends AbstractProjectile{
 			if(e.getCollidable() instanceof AbstractVehicle) {
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 				((AbstractVehicle)e.getCollidable()).applySlow(0.2f);
+				hitSound.play();
 				destroy();
 				return;
 			}

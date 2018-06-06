@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
+import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -52,6 +53,13 @@ public class Moose extends AbstractProjectile{
 	private float angle;
 	private float stateTime;
 	private boolean hasRunThroughField;
+	
+	private static final float MOVING_VOLUME = 0.5f;
+    private static final float MOO_VOLUME = 0.5f;
+    private static final float HIT_VOLUME = 0.5f;
+    private static MediaSound moveSound = new MediaSound(Assets.manager.get(Assets.moose_moving), MOVING_VOLUME);
+    private static MediaSound mooSound = new MediaSound(Assets.manager.get(Assets.moose_moo), MOO_VOLUME);
+    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.moose_hit), HIT_VOLUME);
 	
 	public Moose(AbstractVehicle src, Stats stats, float x, float y) {
 		super(moose, src, stats, x, y);
@@ -118,6 +126,7 @@ public class Moose extends AbstractProjectile{
 					((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 					((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(2));
 					vehiclesHit.add((AbstractVehicle)e.getCollidable());
+					hitSound.play();
 				}
 			}
 		}

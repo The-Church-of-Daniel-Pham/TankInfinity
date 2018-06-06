@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
+import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -20,6 +21,11 @@ public class Laser extends AbstractProjectile {
     private float trailTime;
     private float timeBetweenTrails;
     private ArrayList<AbstractVehicle> vehiclesHit;
+    
+    private static final float BOUNCE_VOLUME = 0.5f;
+    private static final float HIT_VOLUME = 0.5f;
+    private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.laser_bounce), BOUNCE_VOLUME);
+    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.laser_hit), HIT_VOLUME);
 
 	public Laser(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(laserTexture, src, stats, x, y);
@@ -60,6 +66,7 @@ public class Laser extends AbstractProjectile {
 	public void bounce(Vector2 wall) {
 		bounceCount += 1;
 		if (bounceCount <= stats.getStatValue("Max Bounce")) {
+			bounceSound.play();
 			vehiclesHit.clear();
 			super.bounce(wall);
 		}
@@ -115,6 +122,7 @@ public class Laser extends AbstractProjectile {
 		for(AbstractVehicle e: nearbyVehicles) {
 			if (!vehiclesHit.contains(e)) {
 				e.damage(this, stats.getStatValue("Damage"));
+				hitSound.play();
 				vehiclesHit.add(e);
 			}
 		}

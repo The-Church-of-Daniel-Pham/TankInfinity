@@ -262,6 +262,62 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> bullet_bounce = new AssetDescriptor<Sound>("audio/bullet_bounce.wav",
 			Sound.class);
+	public static final AssetDescriptor<Sound> bullet_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> laser_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> laser_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> laser_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> rocket_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> rocket_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> chakram_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> chakram_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> chakram_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> boomerang_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> boomerang_bounce = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> boomerang_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> pellet_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> pellet_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> landmine_deploy = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> caltrop_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> caltrop_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> artillery_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> artillery_countdown = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> artillery_falling = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> fang_shoot = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> fang_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> moose_shoot = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> moose_moving = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> moose_moo = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> moose_hit = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> explosion_damage_sound = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> death_explosion_sound = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
 		// Tank
 	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
 			Sound.class);
@@ -398,6 +454,34 @@ public class Assets {
 	public static void loadAudio() {
 		manager.load(bullet_fire);
 		manager.load(bullet_bounce);
+		manager.load(bullet_hit);
+		manager.load(laser_fire);
+		manager.load(laser_bounce);
+		manager.load(laser_hit);
+		manager.load(rocket_fire);
+		manager.load(rocket_hit);
+		manager.load(chakram_fire);
+		manager.load(chakram_bounce);
+		manager.load(chakram_hit);
+		manager.load(boomerang_fire);
+		manager.load(boomerang_bounce);
+		manager.load(boomerang_hit);
+		manager.load(pellet_fire);
+		manager.load(pellet_hit);
+		manager.load(landmine_deploy);
+		manager.load(caltrop_fire);
+		manager.load(caltrop_hit);
+		manager.load(artillery_fire);
+		manager.load(artillery_countdown);
+		manager.load(artillery_falling);
+		manager.load(fang_shoot);
+		manager.load(fang_hit);
+		manager.load(moose_shoot);
+		manager.load(moose_moving);
+		manager.load(moose_moo);
+		manager.load(moose_hit);
+		manager.load(explosion_damage_sound);
+		manager.load(death_explosion_sound);
 		// System.out.println("Bullet audio loaded");
 		manager.load(tank_engine);
 		manager.load(tank_tread);

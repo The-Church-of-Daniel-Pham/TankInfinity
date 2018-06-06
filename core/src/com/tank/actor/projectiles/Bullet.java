@@ -15,7 +15,9 @@ public class Bullet extends AbstractProjectile {
 	private static float angle;	//angle between diagonal of rectangle and its base
 
     private static final float BOUNCE_VOLUME = 0.5f;
+    private static final float HIT_VOLUME = 0.5f;
     private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.bullet_bounce), BOUNCE_VOLUME);
+    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.bullet_hit), HIT_VOLUME);
     private int bounceCount = 0;
     private float lifeTime;
 
@@ -49,12 +51,15 @@ public class Bullet extends AbstractProjectile {
 	@Override
 	public void bounce(Vector2 wall) {
 		damageNeighbors();
-		bounceCount += 1;
-		bounceSound.play();
-		if (bounceCount <= stats.getStatValue("Max Bounce"))
-			super.bounce(wall);
-		else {
-			destroy();
+		if (!isDestroyed()) {
+			bounceCount += 1;
+			if (bounceCount <= stats.getStatValue("Max Bounce")) {
+				bounceSound.play();
+				super.bounce(wall);
+			}
+			else {
+				destroy();
+			}
 		}
 	}
 	
@@ -62,6 +67,7 @@ public class Bullet extends AbstractProjectile {
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
 				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+				hitSound.play();
 				destroy();
 				break;
 			}

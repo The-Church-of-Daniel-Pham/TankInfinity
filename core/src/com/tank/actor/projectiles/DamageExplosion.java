@@ -11,6 +11,7 @@ import com.tank.actor.map.tiles.BorderTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
+import com.tank.media.MediaSound;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
@@ -25,6 +26,9 @@ public class DamageExplosion extends AbstractProjectile{
 	private float maxLifeTime;
 	private boolean finished;
 	private ArrayList<AbstractVehicle> vehiclesHit;
+	
+	private static final float EXPLODE_VOLUME = 0.5f;
+    private static MediaSound explosionSound = new MediaSound(Assets.manager.get(Assets.explosion_damage_sound), EXPLODE_VOLUME);
 	
 	private static Animation<TextureRegion> damageExplosionAnimation;
 	static Texture damage_explosion = Assets.manager.get(Assets.damage_explosion);
@@ -61,6 +65,7 @@ public class DamageExplosion extends AbstractProjectile{
 		setOriginX(FRAME_WIDTH / 2);
 		setOriginY(FRAME_HEIGHT / 2);
 		vehiclesHit = new ArrayList<AbstractVehicle>();
+		explosionSound.play();
 		
 		// 1/fps, where col*row = total frames, maxlifetime is time alloted to finish animation
 		//damageExplosionAnimation.setFrameDuration(1 / (FRAMES_COLS * FRAMES_ROWS / maxLifeTime));
