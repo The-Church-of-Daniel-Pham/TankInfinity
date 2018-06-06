@@ -3,7 +3,6 @@ package com.tank.actor.vehicles;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +31,8 @@ public class PeashooterEnemy extends FixedTank {
 	protected float reverseTime;
 	protected float reverseTimeThreshold;
 	protected float reverseTimeChanges = 0.5f;
+	
+	protected float diagonalLength = 100;
 	
 	protected boolean patrolling;
 	protected float timeSinceLastPathfind;
@@ -533,7 +534,7 @@ public class PeashooterEnemy extends FixedTank {
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
-		Vector2 v = new Vector2((float) (super.tankTexture.getWidth()) / 2, 0);
+		Vector2 v = new Vector2((float) diagonalLength, 0);
 		v.setAngle(direction);
 		v.rotate(45);
 
