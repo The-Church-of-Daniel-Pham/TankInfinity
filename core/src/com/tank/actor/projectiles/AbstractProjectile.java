@@ -1,3 +1,7 @@
+/** @author Daniel
+ * Description: Encapsulates information about projectiles in this game. All bullets and subweapons extend this class.
+ */
+
 package com.tank.actor.projectiles;
 
 /**
@@ -60,7 +64,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	protected ArrayList<CollisionEvent> collisions;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
-	//private MediaSound bounce_sound;
+	// private MediaSound bounce_sound;
 
 	/**
 	 * The AbstractProjectile constructor to define all the standard instance
@@ -103,6 +107,14 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 			move(delta);
 	}
 
+	/**
+	 * Attempts to move the bullet to its next position, based on its velocity. If
+	 * it cannot move, it will handle the collision and bounce, destroy another
+	 * object, or destroy itself as neccessary
+	 * 
+	 * @param delta
+	 *            time since last frame
+	 */
 	public void move(float delta) {
 		float tAngle = getRotation() + delta * angularVelocity;
 		float tX = getX() + velocity.x * delta;
@@ -125,13 +137,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 						((AbstractProjectile) e.getCollidable()).destroy();
 						stats.addStat("Projectile Durability", durability - otherDurability);
 						return;
-					}
-					else if (otherDurability > durability || e.getCollidable() instanceof DamageExplosion) {
+					} else if (otherDurability > durability || e.getCollidable() instanceof DamageExplosion) {
 						destroy();
-						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability, "Projectile Durability");
+						((AbstractProjectile) e.getCollidable()).setStat(otherDurability - durability,
+								"Projectile Durability");
 						return;
-					}
-					else{
+					} else {
 						((AbstractProjectile) e.getCollidable()).destroy();
 						destroy();
 						return;
@@ -158,7 +169,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 				bounce(velocity.cpy().rotate(90)); // move backwards
 			} else { // head on corner or side corner graze
 				float[] f = testHitbox.getVertices();
-				if (cornerE.getWall() != null && cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head on
+				if (cornerE.getWall() != null && cornerE.getWall().isCollinear(new Vector2(f[0] - f[6], f[1] - f[7]))) { // head
+																															// on
 					bounce(velocity.cpy().rotate(90)); // move backwards
 				} else { // graze, use different algorithm to find wall
 					bounce(CollisionEvent.getWallVector(cornerE.getCollidable().getHitbox(),
@@ -168,6 +180,17 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		}
 	}
 
+	/**
+	 * Used for detecting collisions
+	 * 
+	 * @param x
+	 *            test x pos
+	 * @param y
+	 *            test y pos
+	 * @param orientation
+	 *            direction projectile is facing
+	 * @return true if there are no collisions, otherwise false
+	 */
 	public boolean canMoveTo(float x, float y, float orientation) {
 		testHitbox = getHitboxAt(x, y, orientation);
 		checkCollisions(getNeighbors());
@@ -213,7 +236,11 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public void updateVelocityAndMove() {
 
 	}
-	
+
+	/**
+	 * 
+	 * @return The AbstractVehicle that fired this projectile
+	 */
 	public AbstractVehicle getSource() {
 		return source;
 	}
@@ -266,7 +293,15 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	public int getStat(String stat) {
 		return stats.getStatValue(stat);
 	}
-	
+
+	/**
+	 * Used to modify the stats of the projectile.
+	 * 
+	 * @param value
+	 *            the new value of the stat
+	 * @param stat
+	 *            the name of the stat
+	 */
 	public void setStat(int value, String stat) {
 		stats.addStat(stat, value);
 	}
@@ -326,6 +361,12 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		}
 	}
 
+	/**
+	 * Gets all relevant objects that projectiles may collide with. Uses the current
+	 * position to get nearby WallTiles.
+	 * 
+	 * @return the array of Collidable objects that may collide with this instance
+	 */
 	public ArrayList<Collidable> getNeighbors() {
 		// get neighboring bricks. instances of WallTile get added to neighbors
 		// add all vehicles not on team to neighbors
@@ -350,6 +391,9 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		return neighbors;
 	}
 
+	/**
+	 * @return the hitbox at the current position
+	 */
 	public Polygon getHitbox() {
 		return hitbox;
 	}
@@ -399,6 +443,11 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		return (getStage() == null);
 	}
 
+	/**
+	 * From the Teamable interface.
+	 * 
+	 * @return the name of the team this instance belongs to
+	 */
 	public String getTeam() {
 		if (source != null)
 			return source.getTeam();
