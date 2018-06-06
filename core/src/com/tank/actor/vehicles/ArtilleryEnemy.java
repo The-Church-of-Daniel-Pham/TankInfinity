@@ -9,7 +9,7 @@ public class ArtilleryEnemy extends BasicEnemy{
 	
 	public ArtilleryEnemy(float x, float y, int level) {
 		super(x, y, level);
-		tankTexture = Assets.manager.get(Assets.fixed_artillery);
+		tankTexture = Assets.manager.get(Assets.enemy_artillery_fixed);
 		
 		reverseTimeChanges = 0.2f;
 		distanceForShoot = 10f;
