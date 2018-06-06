@@ -1,3 +1,8 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as the primary weapon of tanks, 
+ * the bullet is the default weapon. It deals damage upon impact and bounces.
+ */
 package com.tank.actor.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -10,16 +15,39 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class Bullet extends AbstractProjectile {
+	/**
+	 * texture of the bullet
+	 */
 	private static Texture playerTexture = Assets.manager.get(Assets.bullet);
-	//private static Texture enemyTexture;
-	private static float angle;	//angle between diagonal of rectangle and its base
-
-    private static final float BOUNCE_VOLUME = 0.5f;
-    private static final float HIT_VOLUME = 0.5f;
-    private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.bullet_bounce), BOUNCE_VOLUME);
-    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.bullet_hit), HIT_VOLUME);
-    private int bounceCount = 0;
-    private float lifeTime;
+	/**
+	 * used for calculating the hitbox
+	 */
+	private static float angle; // angle between diagonal of rectangle and its base
+	/**
+	 * volume of the bounce sound (max = 1)
+	 */
+	private static final float BOUNCE_VOLUME = 0.5f;
+	/**
+	 * the sound of the bounce
+	 */
+	private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.bullet_bounce), BOUNCE_VOLUME);
+	
+	/**
+	 * volume of the hit sound (max = 1)
+	 */
+	private static final float HIT_VOLUME = 0.5f;
+	/**
+	 * the sound of the hit
+	 */
+	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.bullet_hit), HIT_VOLUME);
+	/**
+	 * the number of times the bullet has bounced
+	 */
+	private int bounceCount = 0;
+	/**
+	 * the max lifetime of the bullet in seconds
+	 */
+	private float lifeTime;
 
 	public Bullet(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(playerTexture, src, stats, x, y);
@@ -31,10 +59,14 @@ public class Bullet extends AbstractProjectile {
 		setScale(1.5f);
 		setWidth(25 * getScaleX());
 		setHeight(6 * getScaleY());
-		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		angle = (float) Math.toDegrees(Math.atan((double) getHeight() / getWidth()));
 		source.changeBulletCount(1);
 	}
-	
+
+	/**
+	 * checks if bullet's lifetime is reached (then it destroys itself), otherwise
+	 * it moves
+	 */
 	public void act(float delta) {
 		lifeTime += delta;
 		if (lifeTime >= stats.getStatValue("Lifetime") / 10.0f) {
@@ -44,11 +76,19 @@ public class Bullet extends AbstractProjectile {
 		super.act(delta);
 	}
 
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
-	
+
 	@Override
+	/**
+	 * bounces the bullet based on the direction of the given wall and deals the
+	 * proper damage to its enemy tanks. If max bounces is reached, the bullet
+	 * despawns
+	 */
 	public void bounce(Vector2 wall) {
 		damageNeighbors();
 		if (!isDestroyed()) {
@@ -62,7 +102,9 @@ public class Bullet extends AbstractProjectile {
 			}
 		}
 	}
-	
+	/**
+	 * damages AbstractVehicles it has collided with (source's enemy teams' tanks)
+	 */
 	public void damageNeighbors() {
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
@@ -75,25 +117,32 @@ public class Bullet extends AbstractProjectile {
 	}
 
 	@Override
+	/**
+	 * @return the hitbox at the given location
+	 */
 	public Polygon getHitboxAt(float x, float y, float direction) {
 		float[] f = new float[8];
 		Vector2 v = new Vector2(getWidth(), getHeight());
 		v.setAngle(direction);
 		v.rotate(angle);
-		f[0] = x+ v.x;
-		f[1] = y +v.y;
-		v.rotate(180-2*angle);
+		f[0] = x + v.x;
+		f[1] = y + v.y;
+		v.rotate(180 - 2 * angle);
 		f[2] = x + v.x;
 		f[3] = y + v.y;
-		v.rotate(2*angle);
+		v.rotate(2 * angle);
 		f[4] = x + v.x;
 		f[5] = y + v.y;
-		v.rotate(180-2*angle);
+		v.rotate(180 - 2 * angle);
 		f[6] = x + v.x;
 		f[7] = y + v.y;
 		return new Polygon(f);
 	}
+
 	@Override
+	/**
+	 * called when the bullet needs to be destroyed
+	 */
 	public void destroy() {
 		source.changeBulletCount(-1);
 		super.destroy();

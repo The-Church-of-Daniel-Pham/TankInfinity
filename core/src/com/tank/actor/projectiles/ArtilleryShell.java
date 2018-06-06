@@ -1,3 +1,9 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks, 
+ * the artillery shell allows placement of a delayed 
+ * explosion onto the level's map.
+ */
 package com.tank.actor.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -10,47 +16,80 @@ import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
-public class ArtilleryShell extends Actor{
-	
-	protected static Texture artilleryShell =  Assets.manager.get(Assets.artilleryShell);
-	protected static Texture artillerySheet =  Assets.manager.get(Assets.air_bomb);
+public class ArtilleryShell extends Actor {
+
+	/**
+	 * The texture which contains every frame of the artillery animation
+	 */
+	protected static Texture artillerySheet = Assets.manager.get(Assets.air_bomb);
+	/**
+	 * Animation for the artillery
+	 */
 	protected static Animation<TextureRegion> artilleryAnimation;
+	/**
+	 * number of rows in the texture sheet
+	 */
 	protected static final int FRAMES_ROWS = 4;
+	/**
+	 * number of columns in the texture sheet
+	 */
 	protected static final int FRAMES_COLS = 4;
+	/**
+	 * framerate for the animation
+	 */
 	protected static final int FPS = 30;
+	/**
+	 * used to properly size each frame from the texture sheet
+	 */
 	protected static final int FRAME_WIDTH = artillerySheet.getWidth() / FRAMES_COLS;
+	/**
+	 * used to properly size each frame from the texture sheet
+	 */
 	protected static final int FRAME_HEIGHT = artillerySheet.getHeight() / FRAMES_ROWS;
-	
+
+	// create the array used to animate the artillery
 	static {
-		TextureRegion[][] textureRegions = TextureRegion.split(artillerySheet,
-				artillerySheet.getWidth() / FRAMES_COLS,
+		TextureRegion[][] textureRegions = TextureRegion.split(artillerySheet, artillerySheet.getWidth() / FRAMES_COLS,
 				artillerySheet.getHeight() / FRAMES_ROWS);
 
-        TextureRegion[] explosionFrames = new TextureRegion[FRAMES_COLS * FRAMES_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAMES_ROWS; i++) {
-            for (int j = 0; j < FRAMES_COLS; j++) {
-                explosionFrames[index++] = textureRegions[i][j];
-            }
-        }
+		TextureRegion[] explosionFrames = new TextureRegion[FRAMES_COLS * FRAMES_ROWS];
+		int index = 0;
+		for (int i = 0; i < FRAMES_ROWS; i++) {
+			for (int j = 0; j < FRAMES_COLS; j++) {
+				explosionFrames[index++] = textureRegions[i][j];
+			}
+		}
 
-        artilleryAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
+		artilleryAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
 	}
-	
-	
+	/**
+	 * The AbstractVehicle that fired the artillery shell
+	 */
 	protected AbstractVehicle source;
+	/**
+	 * The stats of the projectile, which includes damage and such
+	 */
 	protected Stats stats;
+	/**
+	 * The velocity of the projectile, giving direction and speed
+	 */
 	protected Vector2 velocity;
+	/**
+	 * The delay of the explosion
+	 */
 	protected float timeUntilHit;
+	/**
+	 * Used to calculate if delay is over
+	 */
 	protected float timePassed;
-	
+
 	public ArtilleryShell(AbstractVehicle src, Stats stats, float x, float y) {
 		source = src;
 		this.stats = stats;
 		timeUntilHit = 1.0f;
-		timePassed = (float)(Math.random());
+		timePassed = (float) (Math.random());
 		Vector2 randomDistance = new Vector2(128, 0);
-		randomDistance.rotate((float)(Math.random() * 360));
+		randomDistance.rotate((float) (Math.random() * 360));
 		setX(x + randomDistance.x);
 		setY(y + randomDistance.y);
 		velocity = randomDistance.cpy().rotate(180).scl(0.5f);
@@ -58,8 +97,12 @@ public class ArtilleryShell extends Actor{
 		setOriginX(FRAME_WIDTH / 2);
 		setOriginY(FRAME_HEIGHT / 2);
 	}
-	
+
 	@Override
+	/**
+	 * moves the artillery shell for the illusion of perspective and checks if the
+	 * explosion delay has been reached yet
+	 */
 	public void act(float delta) {
 		setX(getX() + velocity.x * delta);
 		setY(getY() + velocity.y * delta);
@@ -68,17 +111,20 @@ public class ArtilleryShell extends Actor{
 		if (timeUntilHit <= 0f) {
 			getStage().addActor(new DamageExplosion(source, stats, getX(), getY()));
 			remove();
-		}
-		else {
+		} else {
 			setScale((2.5f * timeUntilHit) + 1.0f);
 		}
 	}
-	
+
 	@Override
+	/**
+	 * draws and properly animates the artillery
+	 */
 	public void draw(Batch batch, float a) {
 		TextureRegion currentFrame = artilleryAnimation.getKeyFrame(timePassed, true);
-		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
-				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
-		//drawVertices(batch, a);
+		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(),
+				super.getOriginX(), super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(),
+				getRotation());
+		// drawVertices(batch, a);
 	}
 }
