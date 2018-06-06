@@ -334,12 +334,8 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
 		if (!isDestroyed()) {
 			int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
-			ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
-			for (AbstractMapTile m : a) {
-				if (m instanceof WallTile) {
-					neighbors.add((WallTile) m);
-				}
-			}
+			ArrayList<WallTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
+			neighbors.addAll(a);
 			for (AbstractVehicle v : AbstractVehicle.vehicleList) {
 				boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
 				if (canCollide)

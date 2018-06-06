@@ -385,12 +385,8 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	public ArrayList<Collidable> getNeighbors() {
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
 		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
-		ArrayList<AbstractMapTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
-		for (AbstractMapTile m : a) {
-			if (m instanceof WallTile) {
-				neighbors.add((WallTile) m);
-			}
-		}
+		ArrayList<WallTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1]);
+		neighbors.addAll(a);
 		neighbors.addAll(vehicleList);
 		neighbors.remove(this);
 		// get AbstractMapTiles from current row/col with radius 1

@@ -196,14 +196,32 @@ public class Map extends Group {
 	 * @return an ArrayList of MapTiles of all bricks within two tiles of the given
 	 *         tile
 	 */
-	public ArrayList<AbstractMapTile> getWallNeighbors(int row, int col) {
-		ArrayList<AbstractMapTile> brickNeighbors = new ArrayList<AbstractMapTile>();
+	public ArrayList<WallTile> getWallNeighbors(int row, int col) {
+		ArrayList<WallTile> brickNeighbors = new ArrayList<WallTile>();
 		for (int yOffset = -1; yOffset <= 1; yOffset++) {
 			for (int xOffset = -1; xOffset <= 1; xOffset++) {
-				int tempRow = MathUtils.clamp(row + yOffset, 0, map.length - 1);
-				int tempCol = MathUtils.clamp(col + xOffset, 0, map[0].length - 1);
-				if (map[tempRow][tempCol] instanceof WallTile) {
-					brickNeighbors.add(map[tempRow][tempCol]);
+				int tempRow = row + yOffset;
+				int tempCol = col + xOffset;
+				if (tempRow >= 0 && tempRow < map.length && tempCol >= 0 && tempCol < map[0].length) {
+					if (map[tempRow][tempCol] instanceof WallTile) {
+						brickNeighbors.add((WallTile)map[tempRow][tempCol]);
+					}
+				}
+			}
+		}
+		return brickNeighbors;
+	}
+	
+	public ArrayList<WallTile> getWallNeighbors(int row, int col, int size) {
+		ArrayList<WallTile> brickNeighbors = new ArrayList<WallTile>();
+		for (int yOffset = -size; yOffset <= size; yOffset++) {
+			for (int xOffset = -size; xOffset <= size; xOffset++) {
+				int tempRow = row + yOffset;
+				int tempCol = col + xOffset;
+				if (tempRow >= 0 && tempRow < map.length && tempCol >= 0 && tempCol < map[0].length) {
+					if (map[tempRow][tempCol] instanceof WallTile) {
+						brickNeighbors.add((WallTile)map[tempRow][tempCol]);
+					}
 				}
 			}
 		}
