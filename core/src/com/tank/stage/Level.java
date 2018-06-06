@@ -74,7 +74,7 @@ public class Level extends Stage {
 	 * @param mapHeight
 	 *            the height of the map in tiles
 	 */
-	public Level(TankInfinity game, int levelNum) {
+	public Level(TankInfinity game, int levelNum, float timePlayed) {
 		// world is first scaled to fit within the viewport, then the shorter dimension
 		// is lengthened to fill the viewport
 		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
@@ -86,9 +86,9 @@ public class Level extends Stage {
 		super.addActor(map);
 		
 		ArrayList<FloorTile> emptySpaces = map.getEmptyNonSpawnFloorTiles();
-		int minItems = (int) (2.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 0.7));
-		int maxItems = (int) (5.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 0.7));
-		int itemCount = (int) (Math.random() * (maxItems - minItems)) + minItems;
+		int minItems = (int) (2.5 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 0.5));
+		int maxItems = (int) (5.0 * Math.pow(levelNum, 0.25) + Math.pow(levelNum, 0.5));
+		int itemCount = (int) (Math.random() * (maxItems - minItems)) + minItems - (int)(Math.max(0, (timePlayed / 60) - levelNum));
 		for (int i = 0; i < itemCount + 1; i++) {
 			if (!emptySpaces.isEmpty()) {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));

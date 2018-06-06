@@ -32,7 +32,7 @@ public class PlayScreen implements Screen {
 		this.game = game;
 		//level = new Level(this.game, Constants.LEVEL1_WIDTH, Constants.LEVEL1_HEIGHT);
 		levelNum = 1;
-		level = new Level(this.game, levelNum);
+		level = new Level(this.game, levelNum, 0f);
 		levelhud = new LevelHUD(this.game, this);
 		pauseMenu = new PauseMenu(this.game);
 		gameOverMenu = new GameOverMenu(this.game, this);
@@ -193,7 +193,7 @@ public class PlayScreen implements Screen {
 	public void setupNextLevel() {
 		levelNum++;
 		level.dispose();
-		level = new Level(this.game, levelNum);
+		level = new Level(this.game, levelNum, timePlayed);
 		for (Player p : game.players) {
 			if (p.isEnabled() && !p.tank.isDestroyed()) {
 				p.cursor.setupCursor(level);
