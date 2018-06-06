@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.NumberUtils;
 import com.tank.actor.projectiles.ArtilleryShell;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.actor.vehicles.PlayerTank;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
@@ -19,6 +20,9 @@ public class ArtilleryMark extends Label {
 	private AbstractVehicle source;
 	private Stats stats;
 	private float countdown;
+	private int lastCountdown;
+	private static final float COUNTDOWN_VOLUME = 0.5f;
+	private static MediaSound countdownSound = new MediaSound(Assets.manager.get(Assets.artillery_countdown), COUNTDOWN_VOLUME);
 
 	public ArtilleryMark(AbstractVehicle src, Stats stats, float countdown, float x, float y) {
 		super("" + ((int) countdown), skin);
@@ -37,6 +41,7 @@ public class ArtilleryMark extends Label {
 		setWidth(tex.getWidth());
 		setHeight(tex.getHeight());
 		this.countdown = countdown;
+		lastCountdown = (int)countdown;
 	}
 
 	@Override
@@ -49,6 +54,10 @@ public class ArtilleryMark extends Label {
 			remove();
 		} else {
 			setText("" + (((int) countdown) + 1));
+			if ((int)countdown < lastCountdown) {
+				lastCountdown = (int)countdown;
+				countdownSound.play();
+			}
 		}
 	}
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.tank.actor.vehicles.AbstractVehicle;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
@@ -82,6 +83,14 @@ public class ArtilleryShell extends Actor {
 	 * Used to calculate if delay is over
 	 */
 	protected float timePassed;
+	/**
+	 * The volume of the sound
+	 */
+	private static final float FALL_VOLUME = 0.6f;
+	/**
+	 * The falling sound
+	 */
+	private static MediaSound fallSound = new MediaSound(Assets.manager.get(Assets.artillery_falling), FALL_VOLUME);
 
 	public ArtilleryShell(AbstractVehicle src, Stats stats, float x, float y) {
 		source = src;
@@ -96,6 +105,7 @@ public class ArtilleryShell extends Actor {
 		setRotation(velocity.angle());
 		setOriginX(FRAME_WIDTH / 2);
 		setOriginY(FRAME_HEIGHT / 2);
+		fallSound.loop();
 	}
 
 	@Override
@@ -110,6 +120,7 @@ public class ArtilleryShell extends Actor {
 		timePassed += delta;
 		if (timeUntilHit <= 0f) {
 			getStage().addActor(new DamageExplosion(source, stats, getX(), getY()));
+			fallSound.dispose();
 			remove();
 		} else {
 			setScale((2.5f * timeUntilHit) + 1.0f);

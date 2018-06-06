@@ -11,7 +11,7 @@ import com.tank.utils.Assets;
 public class PelletsSubWeapon extends SubWeapon{
 	
 	private static Texture pelletsTexture = Assets.manager.get(Assets.pellet_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.pellet_fire), SHOOT_VOLUME);
 	
 	public PelletsSubWeapon(int ammo) {

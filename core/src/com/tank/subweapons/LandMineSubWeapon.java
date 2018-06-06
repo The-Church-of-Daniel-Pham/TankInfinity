@@ -10,7 +10,7 @@ import com.tank.utils.Assets;
 public class LandMineSubWeapon extends SubWeapon{
 	
 	private static Texture landmineTexture = Assets.manager.get(Assets.landmine_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.landmine_deploy), SHOOT_VOLUME);
 	
 	public LandMineSubWeapon(int ammo) {

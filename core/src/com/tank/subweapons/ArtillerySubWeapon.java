@@ -10,7 +10,7 @@ import com.tank.utils.Assets;
 public class ArtillerySubWeapon extends SubWeapon{
 	
 	private static Texture artilleryShell = Assets.manager.get(Assets.artillery_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.artillery_fire), SHOOT_VOLUME);
 	
 	public ArtillerySubWeapon(int ammo) {

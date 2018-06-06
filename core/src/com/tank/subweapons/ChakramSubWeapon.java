@@ -11,7 +11,7 @@ import com.tank.utils.Assets;
 public class ChakramSubWeapon extends SubWeapon {
 	
 	private static Texture chakramTexture = Assets.manager.get(Assets.chakram_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.chakram_fire), SHOOT_VOLUME);
 	
 	public ChakramSubWeapon(int ammo) {

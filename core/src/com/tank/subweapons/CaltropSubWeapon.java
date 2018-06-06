@@ -11,7 +11,7 @@ import com.tank.utils.Assets;
 public class CaltropSubWeapon extends SubWeapon{
 	
 	private static Texture caltropTexture = Assets.manager.get(Assets.caltrop_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.caltrop_fire), SHOOT_VOLUME);
 	
 	public CaltropSubWeapon(int ammo) {

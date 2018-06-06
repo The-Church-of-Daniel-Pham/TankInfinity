@@ -11,7 +11,7 @@ import com.tank.utils.Assets;
 public class VampiricFangSubWeapon extends SubWeapon {
 	
 	private static Texture fangTexture = Assets.manager.get(Assets.fang_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.fang_shoot), SHOOT_VOLUME);
 	
 	public VampiricFangSubWeapon(int ammo) {

@@ -10,7 +10,7 @@ import com.tank.utils.Assets;
 public class MooseStampedeSubWeapon extends SubWeapon{
 	
 	private static Texture mooseTexture = Assets.manager.get(Assets.moose_icon);
-	private static final float SHOOT_VOLUME = 6.0f;
+	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.moose_shoot), SHOOT_VOLUME);
 	
 	public MooseStampedeSubWeapon(int ammo) {
