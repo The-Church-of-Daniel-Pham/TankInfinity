@@ -1,5 +1,8 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	bison144: {
+		file: bison144.fnt
+	}
 	bison36: {
 		file: bison36.fnt
 	}
@@ -150,6 +153,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: bison36
 		fontColor: white
 		background: round-dark-gray
+	}
+	title: {
+		font: bison144
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {

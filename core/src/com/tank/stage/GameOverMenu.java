@@ -39,14 +39,14 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	private Table buildTable() {
 		Table uiTable = new Table();
 		uiTable.setFillParent(true);
-		uiTable.setDebug(true); // This is optional, but enables debug lines for tables.
+		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(300).height(100).space(25).center();
 		
 		// Add widgets to the table here.
-		Label gameOverNotif = new Label("Game Over!", skin);
-		gameOverNotif.setAlignment(Align.left);
+		Label gameOverNotif = new Label("Game Over!", skin, "title");
+		gameOverNotif.setAlignment(Align.center);
 		statsLabel = new Label("Reached level " + " in " + " minutes", skin, "medium");
-		statsLabel.setAlignment(Align.left);
+		statsLabel.setAlignment(Align.center);
 		TextButton restartButton = new TextButton("Restart", skin);
 		restartButton.getLabel().setAlignment(Align.left);
 		TextButton mainMenuButton = new TextButton("Main Menu", skin);
