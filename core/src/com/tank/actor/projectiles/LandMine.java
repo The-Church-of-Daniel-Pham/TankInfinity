@@ -69,7 +69,6 @@ public class LandMine extends AbstractProjectile {
 	
 	public void checkDetonation() {
 		checkCollisions(getNeighbors());
-		boolean markForDeletion = false;
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
 				/*
@@ -82,16 +81,20 @@ public class LandMine extends AbstractProjectile {
 				((AbstractVehicle)e.getCollidable()).applySecondaryForce(knockback);
 				markForDeletion = true;
 				*/
-				Stats explosionStats = new Stats();
-				explosionStats.addStat("Damage", getStat("Damage"));
-				explosionStats.addStat("Explosion Size", 1024);
-				explosionStats.addStat("Lifetime", 10);
-				getStage().addActor(new DamageExplosion(source, explosionStats, getX(), getY()));
 				destroy();
 				break;
 			}
 		}
-		if (markForDeletion) destroy();
+	}
+	
+	@Override
+	public void destroy() {
+		Stats explosionStats = new Stats();
+		explosionStats.addStat("Damage", getStat("Damage"));
+		explosionStats.addStat("Explosion Size", 1024);
+		explosionStats.addStat("Lifetime", 10);
+		getStage().addActor(new DamageExplosion(source, explosionStats, getX(), getY()));
+		super.destroy();
 	}
 	
 	@Override
