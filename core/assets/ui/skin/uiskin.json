@@ -3,9 +3,6 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	bison144: {
 		file: bison144.fnt
 	}
-	bison36: {
-		file: bison36.fnt
-	}
 	bison48: {
 		file: bison48.fnt
 	}
@@ -140,23 +137,19 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: bison48
 		fontColor: white
 	}
-	small: {
-		font: bison36
-		fontColor: white
-	}
 	mediumWithBackground: {
 		font: bison48
-		fontColor: white
-		background: round-dark-gray
-	}
-	smallWithBackground: {
-		font: bison36
 		fontColor: white
 		background: round-dark-gray
 	}
 	title: {
 		font: bison144
 		fontColor: white
+	}
+	titleWithBackground: {
+		font: bison144
+		fontColor: white
+		background: round-dark-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
@@ -168,12 +161,6 @@ com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	}
 	medium: {
 		font: bison48
-		fontColorSelected: white
-		fontColorUnselected: light-gray
-		selection: selection
-	}
-	small: {
-		font: bison36
 		fontColorSelected: white
 		fontColorUnselected: light-gray
 		selection: selection
@@ -223,13 +210,6 @@ com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 		scrollStyle: default
 		listStyle: default
 	}
-	small: {
-		font: bison36
-		fontColor: white
-		disabledFontColor: light-gray
-		scrollStyle: default
-		listStyle: default
-	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: {
@@ -256,13 +236,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: round-white
 		over: round-gray
 	}
-	small: {
-		font: bison36
-		fontColor: white
-		downFontColor: black
-		down: round-white
-		over: round-gray
-	}
 	defaultLight: {
 		font: bison72
 		fontColor: black
@@ -283,15 +256,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	}
 	medium: {
 		font: bison48
-		fontColor: white
-		focusedFontColor: black
-		background: textfield-dark-gray
-		focusedBackground: textfield
-		cursor: cursor
-		selection: gray
-	}
-	small: {
-		font: bison36
 		fontColor: white
 		focusedFontColor: black
 		background: textfield-dark-gray
