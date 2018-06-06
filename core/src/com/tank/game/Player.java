@@ -70,6 +70,7 @@ public class Player {
 	}
 	
 	public void initializeTank() {
+		if (tank != null) tank.remove();
 		tank = new PlayerTank(playerNumber, this);
 		tank.setMapPosition(defaultRow, defaultCol);
 		hud = new PlayerHUD(this);
