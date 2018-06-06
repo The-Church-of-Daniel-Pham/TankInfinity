@@ -20,7 +20,7 @@ import com.tank.utils.Assets;
 import com.tank.utils.lineofsight.LineOfSight;
 import com.tank.utils.pathfinding.PathfindingUtil;
 
-public class FreeBasicEnemy extends FreeTank{
+public class FreePeashooterEnemy extends FreeTank{
 	
 	protected Vector2 targetPos = new Vector2(1500, 1500);
 	protected LinkedList<Vector2> path;
@@ -57,7 +57,7 @@ public class FreeBasicEnemy extends FreeTank{
 	
 	protected int expGive;
 	
-	public FreeBasicEnemy(float x, float y, int level) {
+	public FreePeashooterEnemy(float x, float y, int level) {
 		super(x, y, Assets.manager.get(Assets.enemy_peashooter_tread), Assets.manager.get(Assets.enemy_peashooter_gun));
 		initializeStats();
 		stats.mergeStats(levelStats(level));

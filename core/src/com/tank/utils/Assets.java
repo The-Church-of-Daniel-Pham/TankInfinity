@@ -121,7 +121,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> enemy_peashooter_fixed = new AssetDescriptor<Texture>("tank/enemy/enemy_peashooter_fixed.png",
             Texture.class);
     
-    public static final AssetDescriptor<Texture> enemy_rocket_fixed = new AssetDescriptor<Texture>("tank/enemy/enemy_rocket_fixed.png",
+    public static final AssetDescriptor<Texture> enemy_big_shot_fixed = new AssetDescriptor<Texture>("tank/enemy/enemy_big_shot_fixed.png",
             Texture.class);
     public static final AssetDescriptor<Texture> enemy_artillery_fixed = new AssetDescriptor<Texture>("tank/enemy/enemy_artillery_fixed.png",
             Texture.class);
@@ -308,7 +308,7 @@ public class Assets {
         manager.load(player_tank_gun_lime);
         manager.load(player_tank_gun_orange);
         manager.load(enemy_peashooter_fixed);
-        manager.load(enemy_rocket_fixed);
+        manager.load(enemy_big_shot_fixed);
         manager.load(enemy_artillery_fixed);
         manager.load(enemy_peashooter_tread);
         manager.load(enemy_peashooter_gun);   

@@ -20,7 +20,7 @@ import com.tank.utils.pathfinding.PathfindingUtil;
 import com.tank.stage.Level;
 import com.tank.stats.Stats;
 
-public class BasicEnemy extends FixedTank {
+public class PeashooterEnemy extends FixedTank {
 	
 	protected Vector2 targetPos = new Vector2(1500, 1500);
 	protected LinkedList<Vector2> path;
@@ -55,7 +55,7 @@ public class BasicEnemy extends FixedTank {
 	protected int expGive;
 	
 	
-	public BasicEnemy(float x, float y, int level) {
+	public PeashooterEnemy(float x, float y, int level) {
 		super(x, y, Assets.manager.get(Assets.enemy_peashooter_fixed));
 		initializeStats();
 		stats.mergeStats(levelStats(level));

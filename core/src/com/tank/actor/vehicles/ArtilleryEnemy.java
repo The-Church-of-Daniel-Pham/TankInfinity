@@ -5,7 +5,7 @@ import com.tank.actor.ui.ArtilleryMark;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
-public class ArtilleryEnemy extends BasicEnemy{
+public class ArtilleryEnemy extends PeashooterEnemy{
 	
 	public ArtilleryEnemy(float x, float y, int level) {
 		super(x, y, level);
