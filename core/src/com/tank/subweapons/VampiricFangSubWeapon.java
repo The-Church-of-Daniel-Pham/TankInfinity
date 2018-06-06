@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.VampiricFang;
 import com.tank.actor.vehicles.PlayerTank;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class VampiricFangSubWeapon extends SubWeapon {
 	
 	private static Texture fangTexture = Assets.manager.get(Assets.fang_icon);
+	private static final float SHOOT_VOLUME = 6.0f;
+	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.fang_shoot), SHOOT_VOLUME);
 	
 	public VampiricFangSubWeapon(int ammo) {
 		super("Vampiric Fang", fangTexture, ammo);
@@ -25,6 +28,7 @@ public class VampiricFangSubWeapon extends SubWeapon {
 		source.applySecondaryForce(12.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
 		int fireRate = source.getStatValue("Fire Rate");
 		source.setReloadTime(2.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
+		shootSound.play();
 	}
 	
 	public Stats createStats(PlayerTank source) {

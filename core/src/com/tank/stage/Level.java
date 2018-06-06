@@ -36,43 +36,7 @@ public class Level extends Stage {
 	protected int enemyCount;
 
 	/**
-	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
-	 * 
-	 * @param mapWidth
-	 *            the width of the map in tiles
-	 * @param mapHeight
-	 *            the height of the map in tiles
-	 */
-	/*public Level(TankInfinity game, int mapWidth, int mapHeight) {
-		// world is first scaled to fit within the viewport, then the shorter dimension
-		// is lengthened to fill the viewport
-		super(new ExtendViewport(15 * AbstractMapTile.SIZE, 9 * AbstractMapTile.SIZE));
-		this.game = game;
-		this.mapWidth = mapWidth;
-		this.mapHeight = mapHeight;
-
-		map = new Map(mapWidth, mapHeight, this);
-		addActor(map);
-		spawnInPlayers(true);
-		for (int i = 0; i < 4; i++) {
-			AbstractMapTile randomFloor = map.getRandomFloorTile();
-			int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
-					randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-			addActor(new BasicEnemy(pos[0], pos[1], 1));
-		}
-
-		// replace default stage OrthographicCamera with LevelCamera
-		camera = new LevelCamera(mapWidth, mapHeight, this.game.players);
-		super.getViewport().setCamera(camera);
-	}*/
-
-	/**
-	 * Creates a new level of mapWidth number of tiles and mapHeight number of tiles
-	 * 
-	 * @param mapWidth
-	 *            the width of the map in tiles
-	 * @param mapHeight
-	 *            the height of the map in tiles
+	 * Creates a new level depending on the level number
 	 */
 	public Level(TankInfinity game, int levelNum, float timePlayed) {
 		// world is first scaled to fit within the viewport, then the shorter dimension

@@ -4,12 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Rocket;
 import com.tank.actor.vehicles.PlayerTank;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class RocketSubWeapon extends SubWeapon {
 	
 	private static Texture rocketTexture = Assets.manager.get(Assets.rocket_icon);
+	private static final float SHOOT_VOLUME = 6.0f;
+	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.rocket_fire), SHOOT_VOLUME);
 	
 	public RocketSubWeapon(int ammo) {
 		super("Rocket", rocketTexture, ammo);
@@ -25,6 +28,7 @@ public class RocketSubWeapon extends SubWeapon {
 		source.applySecondaryForce(60.0f * (float) Math.sqrt(source.getStatValue("Projectile Speed")), source.getGunRotation() + 180);
 		int fireRate = source.getStatValue("Fire Rate");
 		source.setReloadTime(5.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
+		shootSound.play();
 	}
 	
 	public Stats createStats(PlayerTank source) {
