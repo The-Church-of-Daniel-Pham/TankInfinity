@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.tank.actor.map.tiles.BorderTile;
+import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
 import com.tank.interfaces.Collidable;
+import com.tank.stage.Level;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -52,6 +55,7 @@ public class DamageExplosion extends AbstractProjectile{
 		startingSize = 1;
 		currentSize = 1;
 		endSize = stats.getStatValue("Explosion Size");
+		setScale(((float)endSize / (float)normalSize) * 1.1f);
 		maxLifeTime = stats.getStatValue("Lifetime") / 10.0f;
 		lifeTime = 0f;
 		setOriginX(FRAME_WIDTH / 2);
@@ -64,8 +68,7 @@ public class DamageExplosion extends AbstractProjectile{
 	
 	public void act(float delta) {
 		lifeTime += delta;
-		currentSize = (int)(Math.pow(lifeTime / maxLifeTime, 0.5) * (endSize - startingSize)) + startingSize;
-		setScale((float)endSize / (float)normalSize);
+		currentSize = (int)(Math.pow(lifeTime / maxLifeTime, 0.3) * (endSize - startingSize)) + startingSize;
 		if (lifeTime >= maxLifeTime + (maxLifeTime / 3.0f)) {
 			destroy();
 			return;
@@ -97,6 +100,7 @@ public class DamageExplosion extends AbstractProjectile{
 		TextureRegion currentFrame = damageExplosionAnimation.getKeyFrame(lifeTime * (3.0f / maxLifeTime), false);
 		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
+		//drawVertices(batch, a);
 	}
 	
 	@Override
@@ -118,12 +122,22 @@ public class DamageExplosion extends AbstractProjectile{
 				vehiclesHit.add((AbstractVehicle)e.getCollidable());
 				((AbstractVehicle)e.getCollidable()).damage(this, (int)Math.min(stats.getStatValue("Damage") * (1.35 - 1.1 * ((double)currentSize / endSize)), stats.getStatValue("Damage")));
 			}
+			if (lifeTime < maxLifeTime * 0.5f) {
+				if (e.getCollidable() instanceof WallTile && !(e.getCollidable() instanceof BorderTile)) {
+					((WallTile)e.getCollidable()).destroyWall();
+				}
+			}
 		}
 	}
 	
 	@Override
 	public ArrayList<Collidable> getNeighbors() {
 		ArrayList<Collidable> neighbors = new ArrayList<Collidable>();
+		
+		int[] gridCoords = ((Level) getStage()).getMap().getTileAt(getX(), getY());
+		ArrayList<WallTile> a = ((Level) getStage()).getMap().getWallNeighbors(gridCoords[0], gridCoords[1], (currentSize / 128) + 1);
+		neighbors.addAll(a);
+		
 		for (AbstractVehicle v : AbstractVehicle.vehicleList) {
 			boolean canCollide = !(v.getTeam() != null && getTeam() != null && getTeam().equals(v.getTeam()));
 			if (canCollide)
