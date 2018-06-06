@@ -19,6 +19,7 @@ public class ArtilleryEnemy extends PeashooterEnemy{
 		onTileThreshold = 80;
 		gunLength = 110;
 		diagonalLength = 120;
+		mass = 250f;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	

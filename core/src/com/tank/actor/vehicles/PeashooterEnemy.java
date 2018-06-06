@@ -74,6 +74,8 @@ public class PeashooterEnemy extends FixedTank {
 		timeSinceLastPathfind = 0f;
 		cooldownLastShot = 0.5f;
 		
+		mass = 150f;
+		
 		health = getMaxHealth();
 	}
 	

@@ -81,6 +81,8 @@ public class FreePeashooterEnemy extends FreeTank{
 		timeSinceLastPathfind = 0f;
 		cooldownLastShot = 0.5f;
 		
+		mass = 150f;
+		
 		health = getMaxHealth();
 	}
 	

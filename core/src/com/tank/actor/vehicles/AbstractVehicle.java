@@ -74,6 +74,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	
 	protected int bulletCount;
 	protected float speedModifier;
+	protected float mass;
 
 	/**
 	 * 
@@ -95,6 +96,7 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 		bulletCount = 0;
 		collisions = new ArrayList<CollisionEvent>();
 		speedModifier = 1.0f;
+		mass = 200;
 	}
 	
 	public void makeBaselineStats() {
@@ -305,6 +307,13 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 					// create new wall collision event
 					collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 							new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+					if (c instanceof AbstractVehicle) {
+						((AbstractVehicle)c).applySecondaryForce(getTotalVelocity().scl(
+								(mass / ((AbstractVehicle)c).getMass()) * 0.15f
+								));
+						velocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.15f);
+						secondaryVelocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.15f);
+					}
 					break;
 				}
 				// check for corner collision by checking if the corners of another Collidable
@@ -314,6 +323,13 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 					Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
 					collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 							new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+					if (c instanceof AbstractVehicle) {
+						((AbstractVehicle)c).applySecondaryForce(getTotalVelocity().scl(
+								(mass / ((AbstractVehicle)c).getMass()) * 0.15f
+								));
+						velocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.15f);
+						secondaryVelocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.15f);
+					}
 					break;
 				}
 			}
@@ -343,6 +359,10 @@ public abstract class AbstractVehicle extends Actor implements Collidable, Destr
 	
 	public void applySpeedUp(float amount) {
 		speedModifier += amount;
+	}
+	
+	public float getMass() {
+		return mass;
 	}
 	
 	public float randomShootAngle() {

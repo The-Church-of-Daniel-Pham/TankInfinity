@@ -409,6 +409,14 @@ public class PlayerTank extends FreeTank {
 						// create new wall collision event
 						collisions.add(new CollisionEvent(c, CollisionEvent.WALL_COLLISION, wall,
 								new Vector2(testVertices[i * 2], testVertices[i * 2 + 1])));
+						if (c instanceof AbstractVehicle) {
+							((AbstractVehicle)c).applySecondaryForce(getTotalVelocity().scl(
+									(mass / ((AbstractVehicle)c).getMass()) * 0.1f
+									));
+							velocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.1f);
+							secondaryVelocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.1f);
+						}
+						break;
 					}
 					// check for corner collision by checking if the corners of another Collidable
 					// object are contained within this instance
@@ -417,6 +425,14 @@ public class PlayerTank extends FreeTank {
 						Vector2 wall = CollisionEvent.getWallVector(c.getHitbox(), testHitbox, i * 2);
 						collisions.add(new CollisionEvent(c, CollisionEvent.CORNER_COLLISION, wall,
 								new Vector2(cTestVertices[i * 2], cTestVertices[i * 2 + 1])));
+						if (c instanceof AbstractVehicle) {
+							((AbstractVehicle)c).applySecondaryForce(getTotalVelocity().scl(
+									(mass / ((AbstractVehicle)c).getMass()) * 0.1f
+									));
+							velocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.1f);
+							secondaryVelocity.scl(1.0f - (mass / ((AbstractVehicle)c).getMass()) * 0.1f);
+						}
+						break;
 					}
 				}
 			}

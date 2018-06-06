@@ -18,6 +18,7 @@ public class BigShotEnemy extends PeashooterEnemy{
 		onTileThreshold = 90;
 		gunLength = 100;
 		diagonalLength = 110;
+		mass = 200;
 		expGive = (int)Math.pow(2 + level, 1.1);
 	}
 	
