@@ -111,7 +111,7 @@ public class SubWeaponItem extends AbstractItem{
 				return new MooseStampedeSubWeapon(1);
 			case 9:
 				return new CaltropSubWeapon(3);
-			case 11:
+			case 10:
 				return new AntiBulletWallSubWeapon(1);
 		}
 		return null;
