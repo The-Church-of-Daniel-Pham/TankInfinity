@@ -1,5 +1,12 @@
 package com.tank.stage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,13 +28,13 @@ public class Loading extends Stage implements InputProcessor {
 	private Background tankLoadingBackground;
 	private float distance;
 	private float percent;
-	
+
 	protected Skin skin = Assets.manager.get(Assets.skin);
 	protected Texture backdrop = Assets.manager.get(Assets.backdrop);
 	protected Texture loading_tank = Assets.manager.get(Assets.loading_tank);
-	
+
 	public Loading(TankInfinity game) {
-		//super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		// super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
 		this.game = game;
 		Background backdropBackground = new Background(backdrop);
@@ -41,7 +48,7 @@ public class Loading extends Stage implements InputProcessor {
 		super.addActor(tankLoadingBackground);
 		super.addActor(uiTable);
 	}
-	
+
 	@Override
 	public void act(float delta) {
 		percent = Interpolation.linear.apply(percent, Assets.manager.getProgress(), 0.1f);
@@ -55,8 +62,50 @@ public class Loading extends Stage implements InputProcessor {
 		uiTable.bottom().padBottom(100).right().padRight(50);
 
 		// Add widgets to the table here.
-		Label tipLabel = new Label("Git gud", skin, "mediumWithBackground");
+		Label tipLabel = new Label(getTip(), skin, "mediumWithBackground");
 		tipLabel.setAlignment(Align.topLeft);
-		uiTable.add(tipLabel).width(500).height(150).right();
+		tipLabel.setFontScale(0.75f);
+		tipLabel.setWrap(true);
+		uiTable.add(tipLabel).width(600).height(150).right();
 	}
+
+	private String getTip() {
+		 // The name of the file to open.
+        String fileName = "ui/menu/loading/canada_facts.txt";
+        
+        // This will reference one line at a time
+        String line = null;
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            //select a random line number, where first number of file is number of lines
+            int rand = (int) (Math.random() *  Integer.parseInt(bufferedReader.readLine()));
+            int count = 0;
+            
+            while((line = bufferedReader.readLine()) != null) {
+            	if (count++ == rand) {
+            		return line;
+            	}
+            }   
+
+            // Always close files.
+            bufferedReader.close();
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                fileName + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + fileName + "'");
+        }
+        return "";
+    }
 }
