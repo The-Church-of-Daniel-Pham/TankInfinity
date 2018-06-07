@@ -80,7 +80,7 @@ public class PeashooterEnemy extends FixedTank {
 	}
 	
 	protected void initializeStats() {
-		stats.addStat("Damage", 35);
+		stats.addStat("Damage", 30);
 		stats.addStat("Spread", 40);
 		stats.addStat("Accuracy", 50);
 		stats.addStat("Stability", 50);
