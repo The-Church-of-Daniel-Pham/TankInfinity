@@ -17,7 +17,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bison36
+bison72
   rotate: false
   xy: 1, 1
   size: 512, 512
@@ -30,7 +30,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bison72
+bison1441
   rotate: false
   xy: 1, 1
   size: 512, 512
@@ -43,29 +43,16 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bison1441
-  rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-uiskin5.png
-size: 1024,1024
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 bison1442
   rotate: false
-  xy: 1, 107
+  xy: 1, 155
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 45, 84
+  xy: 559, 646
   size: 4, 7
   split: 1, 1, 2, 2
   pad: 0, 0, 0, 0
@@ -74,7 +61,16 @@ cursor
   index: -1
 list
   rotate: false
-  xy: 1, 93
+  xy: 1, 141
+  size: 51, 12
+  split: 2, 2, 2, 2
+  pad: 5, 5, 5, 5
+  orig: 51, 12
+  offset: 0, 0
+  index: -1
+list-red
+  rotate: false
+  xy: 515, 655
   size: 51, 12
   split: 2, 2, 2, 2
   pad: 5, 5, 5, 5
@@ -83,7 +79,7 @@ list
   index: -1
 progress-bar
   rotate: false
-  xy: 515, 573
+  xy: 1, 93
   size: 46, 46
   split: 10, 10, 10, 10
   pad: 6, 6, 6, 6
@@ -92,21 +88,21 @@ progress-bar
   index: -1
 progress-bar-fill
   rotate: false
-  xy: 559, 537
+  xy: 49, 105
   size: 1, 34
   orig: 1, 34
   offset: 0, 0
   index: -1
 progress-bar-fill-vert
   rotate: false
-  xy: 54, 104
+  xy: 54, 152
   size: 34, 1
   orig: 34, 1
   offset: 0, 0
   index: -1
 round-gray
   rotate: false
-  xy: 1, 49
+  xy: 515, 611
   size: 42, 42
   split: 13, 13, 13, 13
   pad: 9, 9, 5, 5
@@ -115,7 +111,7 @@ round-gray
   index: -1
 round-white
   rotate: false
-  xy: 515, 529
+  xy: 1, 49
   size: 42, 42
   split: 13, 13, 13, 13
   pad: 9, 9, 5, 5
@@ -124,7 +120,7 @@ round-white
   index: -1
 selection
   rotate: false
-  xy: 607, 610
+  xy: 515, 556
   size: 9, 9
   split: 2, 1, 2, 1
   pad: 4, 3, 4, 3
@@ -133,7 +129,7 @@ selection
   index: -1
 slider-horizontal
   rotate: false
-  xy: 515, 517
+  xy: 568, 657
   size: 20, 10
   split: 4, 4, 4, 4
   pad: 1, 2, 2, 2
@@ -158,16 +154,9 @@ slider-vertical
   index: -1
 textfield
   rotate: false
-  xy: 563, 577
+  xy: 515, 567
   size: 42, 42
   split: 8, 8, 8, 8
   orig: 42, 42
-  offset: 0, 0
-  index: -1
-white
-  rotate: false
-  xy: 563, 574
-  size: 1, 1
-  orig: 1, 1
   offset: 0, 0
   index: -1

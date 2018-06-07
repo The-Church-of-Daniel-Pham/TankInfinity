@@ -77,11 +77,11 @@ public class PlayerHUD extends Table{
 		
 		leftSubImage = new Image(blankSub);
 		leftSubImage.setSize(30, 30);
-		leftSubAmmo = new Label("", skin, "small");
+		leftSubAmmo = new Label("", skin, "medium");
 		leftSubAmmo.setAlignment(Align.right);
 		leftSubAmmo.setPosition(2, 2, Align.bottomRight);
 		leftSubAmmo.setWidth(leftSubImage.getWidth());
-		leftSubAmmo.setFontScale(0.75f);
+		leftSubAmmo.setFontScale(0.6f);
 		leftSub = new Group();
 		leftSub.addActor(leftSubImage);
 		leftSub.addActor(leftSubAmmo);
@@ -89,22 +89,22 @@ public class PlayerHUD extends Table{
 		
 		centerSubImage = new Image(blankSub);
 		centerSubImage.setSize(60, 60);
-		centerSubAmmo = new Label("", skin, "small");
+		centerSubAmmo = new Label("", skin, "medium");
 		centerSubAmmo.setAlignment(Align.right);
 		centerSubAmmo.setPosition(2, 2, Align.bottomRight);
 		centerSubAmmo.setWidth(centerSubImage.getWidth());
-		centerSubAmmo.setFontScale(0.75f);
+		centerSubAmmo.setFontScale(0.6f);
 		centerSub = new Group();
 		centerSub.addActor(centerSubImage);
 		centerSub.addActor(centerSubAmmo);
 		
 		rightSubImage = new Image(blankSub);
 		rightSubImage.setSize(30, 30);
-		rightSubAmmo = new Label("", skin, "small");
+		rightSubAmmo = new Label("", skin, "medium");
 		rightSubAmmo.setAlignment(Align.right);
 		rightSubAmmo.setPosition(2, 2, Align.bottomRight);
 		rightSubAmmo.setWidth(rightSubImage.getWidth());
-		rightSubAmmo.setFontScale(0.75f);
+		rightSubAmmo.setFontScale(0.6f);
 		rightSub = new Group();
 		rightSub.addActor(rightSubImage);
 		rightSub.addActor(rightSubAmmo);
@@ -112,15 +112,17 @@ public class PlayerHUD extends Table{
 		reloadBar = new ProgressBar(0.0f, 1.0f, 0.01f, true, skin, "yellow-vertical");
 		
 		healthBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin, "green-horizontal");
-		healthLabel = new Label("0 HP", skin, "small");
-		healthLabel.setPosition(2, 2);
+		healthLabel = new Label(" HP", skin, "medium");
+		healthLabel.setPosition(8, 0);
+		healthLabel.setFontScale(0.75f);
 		health = new Group();
 		health.addActor(healthBar);
 		health.addActor(healthLabel);
 		
 		expBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin, "blue-horizontal");
-		expLabel = new Label("0 EXP", skin, "small");
-		expLabel.setPosition(2, 2);
+		expLabel = new Label(" EXP", skin, "medium");
+		expLabel.setPosition(8, 0);
+		expLabel.setFontScale(0.75f);
 		exp = new Group();
 		exp.addActor(expBar);
 		exp.addActor(expLabel);
@@ -149,7 +151,7 @@ public class PlayerHUD extends Table{
 		super.add(infoTable);
 		super.add(reloadBar).width(40).height(140);
 		
-		super.setBackground(skin.newDrawable("list", 1.0f, 1.0f, 1.0f, 0.75f));
+		super.setBackground(skin.getDrawable("list"));
 	}
 	
 	public void update(float delta) {
@@ -204,6 +206,12 @@ public class PlayerHUD extends Table{
 		expBar.setValue(((float) player.tank.getCurrentExp()) / player.tank.getNextExp());
 		expLabel.setText(player.tank.getCurrentExp() + " EXP");
 		
+		if (player.tank.isDestroyed()) {
+			super.setBackground(skin.getDrawable("list-red"));
+		}
+		else {
+			super.setBackground(skin.getDrawable("list"));
+		}
 	}
 	
 	public boolean subChanged() {
