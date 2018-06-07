@@ -90,7 +90,7 @@ public class SubWeaponItem extends AbstractItem{
 	
 	public static SubWeapon randomSubWeapon() {
 		int random = (int)(Math.random() * 11);
-		switch (8){
+		switch (random){
 			case 0:
 				return new RocketSubWeapon(2);
 			case 1:

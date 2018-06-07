@@ -57,7 +57,7 @@ public class ArtilleryEnemy extends PeashooterEnemy{
 		levelUps.addStat("Fire Rate", (int)(1.5 * Math.pow(levelNum - 1, 0.8)));
 		
 		levelUps.addStat("Max Health", (int)(5 * Math.pow(levelNum - 1, 1.1)));
-		levelUps.addStat("Armor", (int)(2 * Math.pow(levelNum - 1, 1.05)));
+		levelUps.addStat("Armor", (int)(2.2 * Math.pow(levelNum - 1, 1.05)));
 		
 		//levelUps.addStat("Projectile Durability", (int)(0 * Math.pow(levelNum - 1, 0.75)));
 		

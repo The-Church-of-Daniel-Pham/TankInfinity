@@ -30,11 +30,11 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Health Up", Assets.manager.get(Assets.health_icon), healthIncrease, "Increase max tank health by small amount"));
 		//Accuracy increase
 		Stats accuracyIncrease = new Stats();
-		accuracyIncrease.addStat("Accuracy", 9);
+		accuracyIncrease.addStat("Accuracy", 10);
 		upgrades.add(new Upgrade("Accuracy Up", Assets.manager.get(Assets.accuracy_icon), accuracyIncrease, "Increase tank accuracy by small amount"));
 		//Spread decrease
 		Stats spreadDecrease = new Stats();
-		spreadDecrease.addStat("Spread", 9);
+		spreadDecrease.addStat("Spread", 10);
 		upgrades.add(new Upgrade("Spread Down", Assets.manager.get(Assets.spread_icon), spreadDecrease, "Decreases tank bullet spread by small amount"));
 		//Stability increase
 		Stats stabilityUp = new Stats();
