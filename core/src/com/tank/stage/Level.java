@@ -20,6 +20,7 @@ import com.tank.actor.vehicles.ArtilleryEnemy;
 import com.tank.actor.vehicles.PeashooterEnemy;
 import com.tank.actor.vehicles.BigShotEnemy;
 import com.tank.actor.vehicles.FreePeashooterEnemy;
+import com.tank.actor.vehicles.LandminerEnemy;
 import com.tank.animations.DeathExplosion;
 import com.tank.game.Player;
 import com.tank.game.TankInfinity;
@@ -75,7 +76,7 @@ public class Level extends Stage {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-				switch ((int)(Math.random() * 6)) {
+				switch ((int)(Math.random() * 7)) {
 					case 0: case 2:
 						super.addActor(new PeashooterEnemy(pos[0], pos[1], levelNum));
 						break;
@@ -87,6 +88,9 @@ public class Level extends Stage {
 						break;
 					case 5:
 						super.addActor(new ArtilleryEnemy(pos[0], pos[1], levelNum));
+						break;
+					case 6:
+						super.addActor(new LandminerEnemy(pos[0], pos[1], levelNum));
 						break;
 				}
 			}

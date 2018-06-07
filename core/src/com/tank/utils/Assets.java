@@ -129,8 +129,12 @@ public class Assets {
     				// Tread
     public static final AssetDescriptor<Texture> enemy_peashooter_tread = new AssetDescriptor<Texture>("tank/enemy/enemy_peashooter_tread.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> enemy_landminer_tread = new AssetDescriptor<Texture>("tank/enemy/enemy_landminer_tread.png",
+            Texture.class);
     				// Gun
     public static final AssetDescriptor<Texture> enemy_peashooter_gun = new AssetDescriptor<Texture>("tank/enemy/enemy_peashooter_gun.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> enemy_landminer_gun = new AssetDescriptor<Texture>("tank/enemy/enemy_landminer_gun.png",
             Texture.class);
     
     	// Items
@@ -391,7 +395,9 @@ public class Assets {
         manager.load(enemy_big_shot_fixed);
         manager.load(enemy_artillery_fixed);
         manager.load(enemy_peashooter_tread);
-        manager.load(enemy_peashooter_gun);   
+        manager.load(enemy_peashooter_gun);
+        manager.load(enemy_landminer_tread);
+        manager.load(enemy_landminer_gun);   
         // System.out.println("Tank textures loaded");
         manager.load(mysterybox);
         manager.load(repairbox);

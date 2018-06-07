@@ -67,8 +67,7 @@ public class FreePeashooterEnemy extends FreeTank{
 		initializeHitbox();
 		setRotation((float)(Math.random() * 360f));
 		setGunRotation(getRotation());
-		super.setGunOffsetX(-8);
-		super.setGunPivotX(gunTexture.getWidth() / 2 - 12);
+		super.setGunPivotX(gunTexture.getWidth() / 2);
 		forwarding = false;
 		reversing = false;
 		randomTurnReverse = false;
