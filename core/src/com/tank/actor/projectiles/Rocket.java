@@ -1,3 +1,9 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks, 
+ * the rocket is a slow moving, large projectile that 
+ * deals large amounts of damage
+ */
 package com.tank.actor.projectiles;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -13,11 +19,25 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class Rocket extends AbstractProjectile {
+	/**
+	 * the texture of the rocket
+	 */
 	private static Texture rocketTexture = Assets.manager.get(Assets.rocket);
+	/**
+	 * how long the laser has existed for, in seconds
+	 */
 	private float lifeTime;
+	/**
+	 * used for calculating hitboxes
+	 */
 	private float angle;
-	
+	/**
+	 * the volume of the hit sound
+	 */
 	private static float HIT_VOLUME = 0.5f;
+	/**
+	 * the hit sound
+	 */
 	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.rocket_hit), HIT_VOLUME);
 	
 	public Rocket(AbstractVehicle src, Stats stats, float x, float y, float direction) {
@@ -33,7 +53,9 @@ public class Rocket extends AbstractProjectile {
 		//source.changeBulletCount(1);
 		initializeHitbox();
 	}
-	
+	/**
+	 * checks if max lifetime is reached (destroying it if so) and attempts the move the rocket
+	 */
 	public void act(float delta) {
 		lifeTime += delta;
 		if (lifeTime >= stats.getStatValue("Lifetime") / 10.0f) {
@@ -44,12 +66,17 @@ public class Rocket extends AbstractProjectile {
 	}
 	
 	@Override
+	/**
+	 * rockets don't bounce, so upon "bounce," the rocket explodes and is destroyed
+	 */
 	public void bounce(Vector2 wall) {
 		damageNeighbors();
 		hitSound.play();
 		destroy();
 	}
-	
+	/**
+	 * deals damage to colliding AbstractVehicles and destroys colliding WallTiles
+	 */
 	public void damageNeighbors() {
 		for(CollisionEvent e: collisions) {
 			if(e.getCollidable() instanceof AbstractVehicle) {
@@ -63,6 +90,9 @@ public class Rocket extends AbstractProjectile {
 	}
 	
 	@Override
+	/**
+	 * creates an damage-dealing explosion before destroying
+	 */
 	public void destroy() {
 		Stats explosionStats = new Stats();
 		explosionStats.addStat("Damage", getStat("Damage") / 3);
@@ -78,6 +108,9 @@ public class Rocket extends AbstractProjectile {
 	}
 
 	@Override
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}

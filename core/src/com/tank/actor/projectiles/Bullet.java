@@ -1,7 +1,8 @@
 /**
  * Author: Daniel P., Samuel H., Edmond F., Gokul S.
- * Description: Used as the primary weapon of tanks, 
- * the bullet is the default weapon. It deals damage upon impact and bounces.
+ * Description: Used as a subweapon of tanks, 
+ * the boomerang is a rotating projectile larger than the regular bullet.
+ * It also moves in an arc based on the angular velocity of its source when it was fired
  */
 package com.tank.actor.projectiles;
 
@@ -31,7 +32,7 @@ public class Bullet extends AbstractProjectile {
 	 * the sound of the bounce
 	 */
 	private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.bullet_bounce), BOUNCE_VOLUME);
-	
+
 	/**
 	 * volume of the hit sound (max = 1)
 	 */
@@ -96,19 +97,20 @@ public class Bullet extends AbstractProjectile {
 			if (bounceCount <= stats.getStatValue("Max Bounce")) {
 				bounceSound.play();
 				super.bounce(wall);
-			}
-			else {
+			} else {
 				destroy();
 			}
 		}
 	}
+
 	/**
 	 * damages AbstractVehicles it has collided with (source's enemy teams' tanks)
+	 * using the CollisionEvents created by the last call of checkCollisions()
 	 */
 	public void damageNeighbors() {
-		for(CollisionEvent e: collisions) {
-			if(e.getCollidable() instanceof AbstractVehicle) {
-				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+		for (CollisionEvent e : collisions) {
+			if (e.getCollidable() instanceof AbstractVehicle) {
+				((AbstractVehicle) e.getCollidable()).damage(this, stats.getStatValue("Damage"));
 				hitSound.play();
 				destroy();
 				break;

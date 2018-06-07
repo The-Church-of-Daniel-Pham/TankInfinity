@@ -1,3 +1,7 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Several LaserTrail are used by Laser to form the illusion of a laser
+ */
 package com.tank.actor.projectiles;
 
 import com.badlogic.gdx.graphics.Color;
@@ -9,8 +13,17 @@ import com.tank.utils.Assets;
 
 public class LaserTrail extends Actor{
 	
+	/**
+	 * the texture of the laser trail
+	 */
 	private static Texture laserTexture = Assets.manager.get(Assets.laser);
+	/**
+	 * how long the laser has existed for, in seconds
+	 */
 	private float lifeTime;
+	/**
+	 * the max lifetime of the explosion, in seconds
+	 */
 	private float maxLifeTime;
 	
 	public LaserTrail(float x, float y, float rotation) {
@@ -22,6 +35,9 @@ public class LaserTrail extends Actor{
 	}
 	
 	@Override
+	/**
+	 * checks if lifetime has been exceeded
+	 */
 	public void act(float delta) {
 		lifeTime += delta;
 		if (lifeTime >= maxLifeTime) {

@@ -2,7 +2,7 @@
  * Author: Daniel P., Samuel H., Edmond F., Gokul S.
  * Description: Used as a subweapon of tanks, 
  * the boomerang is a rotating projectile larger than the regular bullet.
- * It also moves in an arc based on the angular velocity of its source when it was fired
+ * It also moves in an arc based on the angular velocity of its source when it was fired.
  */
 package com.tank.actor.projectiles;
 
@@ -37,11 +37,22 @@ public class Boomerang extends AbstractProjectile {
 	 * used for animating the boomerang's rotation
 	 */
 	private float rotateTime = 0f;
-	
+	/**
+	 * the volume of the boomerang bounce
+	 */
 	private static final float BOUNCE_VOLUME = 0.5f;
-    private static final float HIT_VOLUME = 0.5f;
-    private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.boomerang_bounce), BOUNCE_VOLUME);
-    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.boomerang_hit), HIT_VOLUME);
+	/**
+	 * the volume of the boomerang hit
+	 */
+	private static final float HIT_VOLUME = 0.5f;
+	/**
+	 * the sound of the bounce
+	 */
+	private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.boomerang_bounce), BOUNCE_VOLUME);
+	/**
+	 * the sound of the hit
+	 */
+	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.boomerang_hit), HIT_VOLUME);
 	/**
 	 * boomerang's rotation in degrees; used for drawing
 	 */
@@ -108,30 +119,36 @@ public class Boomerang extends AbstractProjectile {
 
 	@Override
 	/**
-	 * bounces off the given wall and changes its velocity while dealing damage to nearby
-	 * objects. If max bounces is reached, the boomerang is destroyed.
+	 * The bounce method is used to deflect the direction of the projectile when it bounces off a wall/tank
+	 * bounces off the given wall and changes its velocity while dealing damage to
+	 * nearby objects. If max bounces is reached, the boomerang is destroyed.
 	 */
 	public void bounce(Vector2 wall) {
 		boolean hit = damageNeighbors();
 		bounceCount += 1;
 		if (bounceCount <= stats.getStatValue("Max Bounce")) {
-			if (!hit) bounceSound.play();
+			if (!hit)
+				bounceSound.play();
 			super.bounce(wall);
-		}
-		else {
+		} else {
 			destroy();
 		}
 	}
+
 	/**
 	 * damages AbstractVehicles it has collided with (source's enemy teams' tanks)
+	 * using the CollisionEvents created by the last call of checkCollisions()
+	 * 
+	 * @return true if damage was dealt, otherwise false
 	 */
 	public boolean damageNeighbors() {
 		boolean hit = false;
-		for(CollisionEvent e: collisions) {
-			if(e.getCollidable() instanceof AbstractVehicle) {
-				((AbstractVehicle)e.getCollidable()).damage(this, stats.getStatValue("Damage"));
-				((AbstractVehicle)e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(0.5f));
-				if (!hit) hitSound.play();
+		for (CollisionEvent e : collisions) {
+			if (e.getCollidable() instanceof AbstractVehicle) {
+				((AbstractVehicle) e.getCollidable()).damage(this, stats.getStatValue("Damage"));
+				((AbstractVehicle) e.getCollidable()).applySecondaryForce(getVelocity().cpy().scl(0.5f));
+				if (!hit)
+					hitSound.play();
 				hit = true;
 			}
 		}

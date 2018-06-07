@@ -1,3 +1,8 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks, 
+ * the landmine is a non-moving projectile that explodes when triggered by nearby enemy tanks
+ */
 package com.tank.actor.projectiles;
 
 import java.util.ArrayList;
@@ -13,7 +18,13 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class LandMine extends AbstractProjectile {
+	/**
+	 * the texture of the landmine
+	 */
 	private static Texture landmineTexture = Assets.manager.get(Assets.landmine);
+	/**
+	 * the amount of time the landmine has existed for, in seconds
+	 */
 	private float lifeTime = 0f;
 
 	public LandMine(AbstractVehicle src, Stats stat, float x, float y) {
@@ -27,6 +38,9 @@ public class LandMine extends AbstractProjectile {
 	}
 
 	@Override
+/**
+ * checks if the landmine has been triggered or if its lifetime exceeds its max lifetime. 
+ */
 	public void act(float delta) {
 		lifeTime += delta;
 		checkDetonation();
@@ -43,6 +57,9 @@ public class LandMine extends AbstractProjectile {
 	}
 
 	@Override
+	/**
+	 * do nothing
+	 */
 	public void move(float delta) {
 		// mines don't move
 	}
@@ -66,7 +83,9 @@ public class LandMine extends AbstractProjectile {
 	public void bounce(Vector2 wall) {
 		// nothing
 	}
-	
+	/**
+	 * checks if it is detoning by seeing if it has collided with any enemy tanks
+	 */
 	public void checkDetonation() {
 		checkCollisions(getNeighbors());
 		for(CollisionEvent e: collisions) {
@@ -88,6 +107,9 @@ public class LandMine extends AbstractProjectile {
 	}
 	
 	@Override
+	/**
+	 * removes object from the stage, but not before creating an explosion to damage nearby enemies
+	 */
 	public void destroy() {
 		Stats explosionStats = new Stats();
 		explosionStats.addStat("Damage", getStat("Damage"));
@@ -109,6 +131,9 @@ public class LandMine extends AbstractProjectile {
 	}
 	 
 	@Override
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	protected void initializeHitbox() {
 		testHitbox = hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
