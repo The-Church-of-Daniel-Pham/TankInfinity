@@ -73,7 +73,7 @@ public class PlayerHUD extends Table{
 		icon.addActor(nameLabel);	
 		icon.addActor(levelLabel);	
 		
-		blankSub = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_icon)));
+		blankSub = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_sub_icon)));
 		
 		leftSubImage = new Image(blankSub);
 		leftSubImage.setSize(30, 30);

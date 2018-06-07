@@ -202,7 +202,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> player_tank_preview_orange = new AssetDescriptor<Texture>("ui/preview/player_tank_preview_orange.png",
             Texture.class);
     	// Sub icon
-    public static final AssetDescriptor<Texture> blank_icon = new AssetDescriptor<Texture>("ui/icon/sub/blank_icon.png",
+    public static final AssetDescriptor<Texture> blank_sub_icon = new AssetDescriptor<Texture>("ui/icon/sub/blank_icon.png",
             Texture.class);
     public static final AssetDescriptor<Texture> rocket_icon = new AssetDescriptor<Texture>("ui/icon/sub/rocket_icon.png",
             Texture.class);
@@ -223,6 +223,29 @@ public class Assets {
     public static final AssetDescriptor<Texture> caltrop_icon = new AssetDescriptor<Texture>("ui/icon/sub/caltrop_icon.png",
             Texture.class);
     public static final AssetDescriptor<Texture> moose_icon = new AssetDescriptor<Texture>("ui/icon/sub/moose_icon.png",
+            Texture.class);
+    	// Upgrade icon
+    public static final AssetDescriptor<Texture> blank_upgrade_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/blank_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> damage_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/damage_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> armor_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/armor_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> spread_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/spread_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> accuracy_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/accuracy_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> stability_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/stability_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> fire_rate_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/fire_rate_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> lifetime_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/lifetime_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> durability_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/durability_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> bounce_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/bounce_icon.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> max_projectile_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/max_projectile_icon.png",
             Texture.class);
     	// Menu
     public static final AssetDescriptor<Texture> backdrop = new AssetDescriptor<Texture>("ui/menu/loading/backdrop.png",
@@ -428,7 +451,7 @@ public class Assets {
         manager.load(player_tank_preview_cyan);
         manager.load(player_tank_preview_lime);
         manager.load(player_tank_preview_orange);
-        manager.load(blank_icon);
+        manager.load(blank_sub_icon);
         manager.load(rocket_icon);
         manager.load(chakram_icon);
         manager.load(boomerang_icon);
@@ -439,6 +462,17 @@ public class Assets {
         manager.load(fang_icon);
         manager.load(caltrop_icon);
         manager.load(moose_icon);
+        manager.load(blank_upgrade_icon);
+        manager.load(damage_icon);
+        manager.load(armor_icon);
+        manager.load(spread_icon);
+        manager.load(accuracy_icon);
+        manager.load(stability_icon);
+        manager.load(fire_rate_icon);
+        manager.load(lifetime_icon);
+        manager.load(durability_icon);
+        manager.load(bounce_icon);
+        manager.load(max_projectile_icon);
         // System.out.println("UI textures loaded");
         manager.load(title);
         manager.load(black);
