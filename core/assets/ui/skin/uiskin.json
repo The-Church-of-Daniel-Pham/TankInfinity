@@ -41,6 +41,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.702353
 		a: 1
 	}
+	red: {
+		r: 0.9607843
+		g: 0.24313726
+		b: 0.1882353
+		a: 1
+	}
 	white: {
 		r: 1
 		g: 1
@@ -149,12 +155,14 @@ com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 		fontColorSelected: white
 		fontColorUnselected: light-gray
 		selection: selection
+		background: list-red
 	}
 	medium: {
 		font: bison48
 		fontColorSelected: white
 		fontColorUnselected: light-gray
 		selection: selection
+		background: list
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -231,8 +239,8 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: bison72
 		fontColor: black
 		downFontColor: white
-		down: round-gray
-		over: round-white
+		down: round-dark-gray
+		over: round-light-gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

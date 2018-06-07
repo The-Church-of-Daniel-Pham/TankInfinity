@@ -151,7 +151,7 @@ public class PlayerHUD extends Table{
 		super.add(infoTable);
 		super.add(reloadBar).width(40).height(140);
 		
-		super.setBackground(skin.newDrawable("list", 1.0f, 1.0f, 1.0f, 0.75f));
+		super.setBackground(skin.getDrawable("list"));
 	}
 	
 	public void update(float delta) {
@@ -206,6 +206,12 @@ public class PlayerHUD extends Table{
 		expBar.setValue(((float) player.tank.getCurrentExp()) / player.tank.getNextExp());
 		expLabel.setText(player.tank.getCurrentExp() + " EXP");
 		
+		if (player.tank.isDestroyed()) {
+			super.setBackground(skin.getDrawable("list-red"));
+		}
+		else {
+			super.setBackground(skin.getDrawable("list"));
+		}
 	}
 	
 	public boolean subChanged() {
