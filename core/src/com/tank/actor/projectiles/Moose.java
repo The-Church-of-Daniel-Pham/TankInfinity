@@ -1,3 +1,9 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks,
+ * the moose subweapon actually creates multiple instances of Moose 
+ * which move through the map, causing unspeakable amounts of damage to enemy tanks
+ */
 package com.tank.actor.projectiles;
 
 import java.util.ArrayList;
@@ -19,13 +25,37 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 
 public class Moose extends AbstractProjectile{
+	/**
+	 * animation of the mooose
+	 */
 	private static Animation<TextureRegion> mooseAnimation;
+	/**
+	 * texture sheet of the moose
+	 */
     private static Texture moose = Assets.manager.get(Assets.moose);
+	/**
+	 * number of rows in the texture sheet
+	 */
     private static final int FRAMES_ROWS = 6;
+	/**
+	 * number of cols in the texture sheet
+	 */
     private static final int FRAMES_COLS = 4;
+	/**
+	 * number of empty frames in the texture sheet
+	 */
     private static final int EMPTY_FRAMES = 3;
+	/**
+	 * framerate of the explosion animation
+	 */
     private static final int FPS = 30;
+	/**
+	 * used to properly size each frame from the texture sheet
+	 */
     private static final int FRAME_WIDTH = moose.getWidth() / FRAMES_COLS;
+	/**
+	 * used to properly size each frame from the texture sheet
+	 */
     private static final int FRAME_HEIGHT = moose.getHeight() / FRAMES_ROWS;
 	
 	static {
@@ -48,17 +78,45 @@ public class Moose extends AbstractProjectile{
         mooseAnimation = new Animation<TextureRegion>(1.0f / FPS, mooseFrames);
         mooseAnimation.setPlayMode(PlayMode.LOOP);
 	}
-	
+	/**
+	 * stores the Vehicles that were hit by this explosion
+	 */
 	private ArrayList<AbstractVehicle> vehiclesHit;
+	/**
+	 * used for calculating the hitbox
+	 */
 	private float angle;
+	/**
+	 * 
+	 */
 	private float stateTime;
+	/**
+	 * whether or not the moose has crossed the map
+	 */
 	private boolean hasRunThroughField;
-	
+	/**
+	 * volume of the moose moving sound
+	 */
 	private static final float MOVING_VOLUME = 0.5f;
+	/**
+	 * volume of the moo sound
+	 */
     private static final float MOO_VOLUME = 0.5f;
+    /**
+     * volume of the hit sound
+     */
     private static final float HIT_VOLUME = 0.5f;
+    /**
+     * the move sound
+     */
     private static MediaSound moveSound = new MediaSound(Assets.manager.get(Assets.moose_moving), MOVING_VOLUME);
+    /**
+     * the moo sound
+     */
     private static MediaSound mooSound = new MediaSound(Assets.manager.get(Assets.moose_moo), MOO_VOLUME);
+    /**
+     * the hit sound
+     */
     private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.moose_hit), HIT_VOLUME);
 	
 	public Moose(AbstractVehicle src, Stats stats, float x, float y) {
@@ -80,6 +138,9 @@ public class Moose extends AbstractProjectile{
 	}
 	
 	@Override
+	/**
+	 * checks if moose has run through screen, checks and deals with collisions with other Collidables
+	 */
 	public void act(float delta) {
 		stateTime += delta;
 		
@@ -132,7 +193,11 @@ public class Moose extends AbstractProjectile{
 		}
 		
 	}
-	
+	/**
+	 * Uses the current position to determine whether the moose is off the map, using a threshhold
+	 * @param thresh the number of tiles away from the edge of the screen the moose needs to be
+	 * @return true if the moose is off the screen, otherwise false
+	 */
 	public boolean isOffscreen(int thresh) {
 		int levelWidth = ((Level)getStage()).getMapWidth();
 		int levelHeight = ((Level)getStage()).getMapHeight();
@@ -141,7 +206,9 @@ public class Moose extends AbstractProjectile{
 		if (currentTile[1] < -thresh || currentTile[1] > levelWidth + thresh - 1) return true;
 		return false;
 	}
-	
+	/**
+	 * positions the moose at a random place at the edge of the map
+	 */
 	public void setOffscreen() {
 		int levelWidth = ((Level)source.getStage()).getMapWidth();
 		int levelHeight = ((Level)source.getStage()).getMapHeight();
@@ -192,6 +259,9 @@ public class Moose extends AbstractProjectile{
     }
 	
 	@Override
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	protected void initializeHitbox() {
 		testHitbox = hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}

@@ -1,3 +1,8 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks, 
+ * the laser is a rapid series of small, short-lived projectiles that create the illusion of a laser
+ */
 package com.tank.actor.projectiles;
 
 import java.util.ArrayList;
@@ -13,19 +18,50 @@ import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class Laser extends AbstractProjectile {
-	
+	/**
+	 * the texture of the laser
+	 */
 	private static Texture laserTexture = Assets.manager.get(Assets.laser);
-	private static float angle;	//angle between diagonal of rectangle and its base
-    private int bounceCount = 0;
-    private float lifeTime;
-    private float trailTime;
-    private float timeBetweenTrails;
-    private ArrayList<AbstractVehicle> vehiclesHit;
-    
-    private static final float BOUNCE_VOLUME = 0.5f;
-    private static final float HIT_VOLUME = 0.5f;
-    private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.laser_bounce), BOUNCE_VOLUME);
-    private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.laser_hit), HIT_VOLUME);
+	/**
+	 * used for calculating hitbox
+	 */
+	private static float angle; // angle between diagonal of rectangle and its base
+	/**
+	 * total number of bounces
+	 */
+	private int bounceCount = 0;
+	/**
+	 * how long the laser has existed for, in seconds
+	 */
+	private float lifeTime;
+	/**
+	 * how long the trail exists
+	 */
+	private float trailTime;
+	/**
+	 * the time before the next laser trail is created
+	 */
+	private float timeBetweenTrails;
+	/**
+	 * the array of the vehicles that have collided with a/the trail(s)
+	 */
+	private ArrayList<AbstractVehicle> vehiclesHit;
+	/**
+	 * the volume of the bounce sound
+	 */
+	private static final float BOUNCE_VOLUME = 0.5f;
+	/**
+	 * the volume of the hit sound
+	 */
+	private static final float HIT_VOLUME = 0.5f;
+	/**
+	 * the sound of the bounce
+	 */
+	private static MediaSound bounceSound = new MediaSound(Assets.manager.get(Assets.laser_bounce), BOUNCE_VOLUME);
+	/**
+	 * the sound of the hit
+	 */
+	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.laser_hit), HIT_VOLUME);
 
 	public Laser(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(laserTexture, src, stats, x, y);
@@ -38,9 +74,12 @@ public class Laser extends AbstractProjectile {
 		setWidth(60);
 		setHeight(7);
 		vehiclesHit = new ArrayList<AbstractVehicle>();
-		angle = (float)Math.toDegrees(Math.atan((double)getHeight()/getWidth()));
+		angle = (float) Math.toDegrees(Math.atan((double) getHeight() / getWidth()));
 	}
-	
+
+	/**
+	 * checks if max lifetime is exceeded and creates new trails
+	 */
 	public void act(float delta) {
 		lifeTime += delta;
 		trailTime += delta;
@@ -53,15 +92,19 @@ public class Laser extends AbstractProjectile {
 			trailTime -= timeBetweenTrails;
 			createTrail = true;
 		}
-		if (createTrail) getStage().getRoot().addActorBefore(this, new LaserTrail(getX(), getY(), getRotation()));
+		if (createTrail)
+			getStage().getRoot().addActorBefore(this, new LaserTrail(getX(), getY(), getRotation()));
 		damageNeighbors();
 		super.act(delta);
 	}
 
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
-	
+
 	@Override
 	public void bounce(Vector2 wall) {
 		bounceCount += 1;
@@ -69,12 +112,11 @@ public class Laser extends AbstractProjectile {
 			bounceSound.play();
 			vehiclesHit.clear();
 			super.bounce(wall);
-		}
-		else {
+		} else {
 			destroy();
 		}
 	}
-	
+
 	public ArrayList<Collidable> getNeighbors() {
 		// get neighboring bricks. instances of WallTile get added to neighbors
 		// add all vehicles not on team to neighbors
@@ -91,7 +133,11 @@ public class Laser extends AbstractProjectile {
 		neighbors.remove(this);
 		return neighbors;
 	}
-	
+
+	/**
+	 * damages AbstractVehicles it has collided with (source's enemy teams' tank)
+	 * the method also calculates which vehicles collided
+	 */
 	public void damageNeighbors() {
 		ArrayList<AbstractVehicle> nearbyVehicles = new ArrayList<AbstractVehicle>();
 		float[] testVertices = hitbox.getVertices(); // vertices of this instance's hitbox
@@ -117,9 +163,8 @@ public class Laser extends AbstractProjectile {
 				}
 			}
 		}
-		
-		
-		for(AbstractVehicle e: nearbyVehicles) {
+
+		for (AbstractVehicle e : nearbyVehicles) {
 			if (!vehiclesHit.contains(e)) {
 				e.damage(this, stats.getStatValue("Damage"));
 				hitSound.play();
@@ -134,15 +179,15 @@ public class Laser extends AbstractProjectile {
 		Vector2 v = new Vector2(getWidth(), getHeight());
 		v.setAngle(direction);
 		v.rotate(angle);
-		f[0] = x+ v.x;
-		f[1] = y +v.y;
-		v.rotate(180-2*angle);
+		f[0] = x + v.x;
+		f[1] = y + v.y;
+		v.rotate(180 - 2 * angle);
 		f[2] = x + v.x;
 		f[3] = y + v.y;
-		v.rotate(2*angle);
+		v.rotate(2 * angle);
 		f[4] = x + v.x;
 		f[5] = y + v.y;
-		v.rotate(180-2*angle);
+		v.rotate(180 - 2 * angle);
 		f[6] = x + v.x;
 		f[7] = y + v.y;
 		return new Polygon(f);
