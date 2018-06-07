@@ -114,7 +114,7 @@ public class PlayerHUD extends Table{
 		healthBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin, "green-horizontal");
 		healthLabel = new Label(" HP", skin, "medium");
 		healthLabel.setPosition(8, 0);
-		healthLabel.setFontScale(0.8f);
+		healthLabel.setFontScale(0.75f);
 		health = new Group();
 		health.addActor(healthBar);
 		health.addActor(healthLabel);
@@ -122,7 +122,7 @@ public class PlayerHUD extends Table{
 		expBar = new ProgressBar(0.0f, 1.0f, 0.01f, false, skin, "blue-horizontal");
 		expLabel = new Label(" EXP", skin, "medium");
 		expLabel.setPosition(8, 0);
-		expLabel.setFontScale(0.8f);
+		expLabel.setFontScale(0.75f);
 		exp = new Group();
 		exp.addActor(expBar);
 		exp.addActor(expLabel);
