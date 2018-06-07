@@ -151,10 +151,3 @@ textfield
   orig: 42, 42
   offset: 0, 0
   index: -1
-white
-  rotate: false
-  xy: 563, 574
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1

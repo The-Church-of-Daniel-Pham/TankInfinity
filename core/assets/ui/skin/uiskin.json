@@ -73,15 +73,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 			a: 1
 		}
 	}
-	gray: {
-		name: white
-		color: {
-			r: 0.59
-			g: 0.59
-			b: 0.59
-			a: 1
-		}
-	}
 	textfield-dark-gray: {
 		name: textfield
 		color: dark-gray
@@ -252,7 +243,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		background: textfield-dark-gray
 		focusedBackground: textfield
 		cursor: cursor
-		selection: gray
 	}
 	medium: {
 		font: bison48
@@ -261,7 +251,6 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		background: textfield-dark-gray
 		focusedBackground: textfield
 		cursor: cursor
-		selection: gray
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
