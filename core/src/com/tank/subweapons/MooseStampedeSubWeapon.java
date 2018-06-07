@@ -15,7 +15,7 @@ public class MooseStampedeSubWeapon extends SubWeapon{
 	/**
 	 * the volume of the shoot sound, out of 1.0
 	 */
-	private static final float SHOOT_VOLUME = 0.6f;
+	private static final float SHOOT_VOLUME = 1.0f;
 	/**
 	 * the sound used upon shooting
 	 */
