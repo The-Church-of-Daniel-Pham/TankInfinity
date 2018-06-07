@@ -39,13 +39,15 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.setFillParent(false);
 		uiTable.setDebug(false); // This is optional, but enables debug lines for tables.
 		uiTable.defaults().width(250).height(100).space(25).left();
-		uiTable.bottom().padBottom(100).left().padLeft(150);
+		uiTable.bottom().padBottom(50).left().padLeft(150);
 
 		// Add widgets to the table here.
 		TextButton playButton = new TextButton("Play", skin);
 		playButton.getLabel().setAlignment(Align.left);
 		TextButton tutorialButton = new TextButton("Tutorial", skin);
 		tutorialButton.getLabel().setAlignment(Align.left);
+		TextButton creditsButton = new TextButton("Credits", skin);
+		creditsButton.getLabel().setAlignment(Align.left);
 		TextButton settingsButton = new TextButton("Settings", skin);
 		settingsButton.getLabel().setAlignment(Align.left);
 		TextButton quitButton = new TextButton("Quit", skin);
@@ -63,6 +65,14 @@ public class MainMenu extends Stage implements InputProcessor{
 	         @Override
 	         public void clicked(InputEvent event, float x, float y) {
 	        	 game.setScreen(game.screens.get("Tutorial"));
+	        	 event.stop();
+	         }
+	      });
+		
+		creditsButton.addListener(new ClickListener() {
+	         @Override
+	         public void clicked(InputEvent event, float x, float y) {
+	        	 game.setScreen(game.screens.get("Credits"));
 	        	 event.stop();
 	         }
 	      });
@@ -86,6 +96,8 @@ public class MainMenu extends Stage implements InputProcessor{
 		uiTable.add(playButton);
 		uiTable.row();
 		uiTable.add(tutorialButton);
+		uiTable.row();
+		uiTable.add(creditsButton);
 		uiTable.row();
 		uiTable.add(settingsButton);
 		uiTable.row(); 

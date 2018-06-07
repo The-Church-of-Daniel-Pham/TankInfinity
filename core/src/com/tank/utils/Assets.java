@@ -252,6 +252,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> tutorial_11 = new AssetDescriptor<Texture>("ui/menu/tutorial/tutorial_11.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> credits = new AssetDescriptor<Texture>("ui/menu/credits/credits.png",
+            Texture.class);
     	// Debug
     public static final AssetDescriptor<Texture> vertex = new AssetDescriptor<Texture>("debug/vertex.png",
             Texture.class);
@@ -446,6 +448,7 @@ public class Assets {
         manager.load(tutorial_9);
         manager.load(tutorial_10);
         manager.load(tutorial_11);
+        manager.load(credits);
         // System.out.println("Menu textures loaded");
         manager.load(vertex);
         // System.out.println("Debug textures loaded");

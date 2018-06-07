@@ -40,6 +40,7 @@ public class LoadingScreen implements Screen {
 			game.screens.put("Main Menu", new MainMenuScreen(game));
 			game.screens.put("Customization Menu", new CustomizationMenuScreen(game));
 			game.screens.put("Tutorial", new TutorialScreen(game));
+			game.screens.put("Credits", new CreditsScreen(game));
 			game.screens.put("Settings Menu", new SettingsMenuScreen(game));
 			game.screens.put("Upgrades Menu", new UpgradeMenuScreen(game));
 			game.setScreen(game.screens.get("Main Menu"));
