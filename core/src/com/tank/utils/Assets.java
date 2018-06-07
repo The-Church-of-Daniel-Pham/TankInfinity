@@ -79,6 +79,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> caltrop = new AssetDescriptor<Texture>("projectiles/caltrop.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> bulletWall = new AssetDescriptor<Texture>("projectiles/bulletWall.png",
+            Texture.class);
     	// Tank
     		// Player
     			// Tread
@@ -351,6 +353,8 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> death_explosion_sound = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
+	public static final AssetDescriptor<Sound> bulletWall_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
 		// Tank
 	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
 			Sound.class);
@@ -401,6 +405,7 @@ public class Assets {
         manager.load(laser);
         manager.load(fang);
         manager.load(caltrop);
+        manager.load(bulletWall);
         // System.out.println("Projectile textures loaded");
         manager.load(player_tank_tread_red);
         manager.load(player_tank_tread_blue);
@@ -531,6 +536,7 @@ public class Assets {
 		manager.load(moose_hit);
 		manager.load(explosion_damage_sound);
 		manager.load(death_explosion_sound);
+		manager.load(bulletWall_fire);
 		// System.out.println("Bullet audio loaded");
 		manager.load(tank_engine);
 		manager.load(tank_tread);
