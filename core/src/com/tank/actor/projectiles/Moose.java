@@ -8,6 +8,7 @@ package com.tank.actor.projectiles;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -105,19 +106,24 @@ public class Moose extends AbstractProjectile{
     /**
      * volume of the hit sound
      */
-    private static final float HIT_VOLUME = 0.5f;
+    private static final float HIT_VOLUME = 1.0f;
     /**
      * the move sound
      */
-    private static MediaSound moveSound = new MediaSound(Assets.manager.get(Assets.moose_moving), MOVING_VOLUME);
+    private MediaSound moveSound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.moose_moving.fileName)), MOVING_VOLUME);
     /**
      * the moo sound
      */
-    private static MediaSound mooSound = new MediaSound(Assets.manager.get(Assets.moose_moo), MOO_VOLUME);
+    private MediaSound mooSound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.moose_moo.fileName)), MOO_VOLUME);
     /**
      * the hit sound
      */
     private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.moose_hit), HIT_VOLUME);
+    
+    private float randomSoundOffset;
+    private boolean moveSoundPlaying;
+    
+    private float timeTillNextMoo;
 	
 	public Moose(AbstractVehicle src, Stats stats, float x, float y) {
 		super(moose, src, stats, x, y);
@@ -135,6 +141,8 @@ public class Moose extends AbstractProjectile{
 		vehiclesHit = new ArrayList<AbstractVehicle>();
 		//source.changeBulletCount(1);
 		initializeHitbox();
+		randomSoundOffset = (float)Math.random() * 3f;
+		timeTillNextMoo = (float)Math.random() * 3f + 2;
 	}
 	
 	@Override
@@ -143,16 +151,30 @@ public class Moose extends AbstractProjectile{
 	 */
 	public void act(float delta) {
 		stateTime += delta;
+		timeTillNextMoo -= delta;
+		if (timeTillNextMoo < 0) {
+			mooSound.play();
+			timeTillNextMoo = (float)Math.random() * 4f + 1;
+		}
 		
 		if (!isDestroyed()) {
 			if (hasRunThroughField) {
+				if (randomSoundOffset > 0) {
+					randomSoundOffset -= delta;
+				}
+				else if(!moveSoundPlaying) {
+					moveSound.loop();
+					moveSoundPlaying = true;
+				}
 				if (isOffscreen(2)) {
 					destroy();
 					return;
 				}
 			}
 			else {
-				if (!isOffscreen(2)) hasRunThroughField = true;
+				if (!isOffscreen(2)) {
+					hasRunThroughField = true;
+				}
 				else if (isOffscreen(10)) {
 					destroy();
 					return;
@@ -201,9 +223,10 @@ public class Moose extends AbstractProjectile{
 	public boolean isOffscreen(int thresh) {
 		int levelWidth = ((Level)getStage()).getMapWidth();
 		int levelHeight = ((Level)getStage()).getMapHeight();
-		int[] currentTile = ((Level)getStage()).getMap().getTileAt(getX(), getY());
-		if (currentTile[0] < -thresh || currentTile[0] > levelHeight + thresh - 1) return true;
-		if (currentTile[1] < -thresh || currentTile[1] > levelWidth + thresh - 1) return true;
+		int mapRow = (int) (getY() / AbstractMapTile.SIZE);
+		int mapCol = (int) (getX() / AbstractMapTile.SIZE);
+		if (mapCol < -thresh || mapCol > levelWidth + thresh - 1) return true;
+		if (mapRow < -thresh || mapRow > levelHeight + thresh - 1) return true;
 		return false;
 	}
 	/**
@@ -232,6 +255,15 @@ public class Moose extends AbstractProjectile{
 				setX((levelWidth + 1) * AbstractMapTile.SIZE);
 			}
 		}
+	}
+	
+	@Override
+	public void destroy() {
+		moveSound.stop();
+		moveSound.dispose();
+		mooSound.stop();
+		mooSound.dispose();
+		super.destroy();
 	}
 	
 	@Override

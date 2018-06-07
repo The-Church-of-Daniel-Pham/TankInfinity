@@ -36,7 +36,7 @@ public class Bullet extends AbstractProjectile {
 	/**
 	 * volume of the hit sound (max = 1)
 	 */
-	private static final float HIT_VOLUME = 0.5f;
+	private static final float HIT_VOLUME = 1.0f;
 	/**
 	 * the sound of the hit
 	 */

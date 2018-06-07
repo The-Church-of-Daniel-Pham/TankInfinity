@@ -6,6 +6,7 @@
  */
 package com.tank.actor.projectiles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -90,7 +91,7 @@ public class ArtilleryShell extends Actor {
 	/**
 	 * The falling sound
 	 */
-	private static MediaSound fallSound = new MediaSound(Assets.manager.get(Assets.artillery_falling), FALL_VOLUME);
+	private MediaSound fallSound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.artillery_falling.fileName)), FALL_VOLUME);
 
 	public ArtilleryShell(AbstractVehicle src, Stats stats, float x, float y) {
 		source = src;
