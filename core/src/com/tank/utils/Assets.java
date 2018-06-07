@@ -343,7 +343,7 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> fang_hit = new AssetDescriptor<Sound>("audio/fang_hit.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> moose_shoot = new AssetDescriptor<Sound>("audio/moose_fire.wav",
+	public static final AssetDescriptor<Sound> moose_shoot = new AssetDescriptor<Sound>("audio/o_canada.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> moose_moving = new AssetDescriptor<Sound>("audio/moose_move.wav",
 			Sound.class);
