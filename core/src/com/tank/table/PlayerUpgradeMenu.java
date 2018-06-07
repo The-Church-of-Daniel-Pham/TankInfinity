@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.tank.game.Player;
@@ -16,7 +17,11 @@ import com.tank.utils.Assets;
 public class PlayerUpgradeMenu extends Table {
 	protected final Player player;
 	private static Skin skin = Assets.manager.get(Assets.skin);
+	private Drawable blankIconLight;
+	private Drawable blankIconDark;
+	
 	private Label playerName;
+	
 	private Group topImage;
 	private Image topIcon;
 	private Image topBack;
@@ -51,6 +56,8 @@ public class PlayerUpgradeMenu extends Table {
 			heldButtons.add(false);
 		}
 		
+		blankIconLight = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_upgrade_icon_light)));
+		blankIconDark = new TextureRegionDrawable(new TextureRegion(Assets.manager.get(Assets.blank_upgrade_icon_dark)));
 		buildTable();
 	}
 
@@ -62,10 +69,10 @@ public class PlayerUpgradeMenu extends Table {
 			topIcon.setDrawable(null);
 		}
 		if (selected == 0) {
-			topBack.setDrawable(skin, "round-light-gray");
+			topBack.setDrawable(blankIconLight);
 			description.setText(u.get(0).getName() + "\n" + u.get(0).getDescription());
 		}
-		else topBack.setDrawable(skin, "round-dark-gray");
+		else topBack.setDrawable(blankIconDark);
 		
 		if (u != null && u.size() > 1) {
 			leftIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(1).getIcon())));
@@ -73,10 +80,10 @@ public class PlayerUpgradeMenu extends Table {
 			leftIcon.setDrawable(null);
 		}
 		if (selected == 1) {
-			leftBack.setDrawable(skin, "round-light-gray");
+			leftBack.setDrawable(blankIconLight);
 			description.setText(u.get(1).getName() + "\n" + u.get(1).getDescription());
 		}
-		else leftBack.setDrawable(skin, "round-dark-gray");
+		else leftBack.setDrawable(blankIconDark);
 		
 		if (u != null && u.size() > 2) {
 			rightIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(2).getIcon())));
@@ -84,10 +91,10 @@ public class PlayerUpgradeMenu extends Table {
 			rightIcon.setDrawable(null);
 		}
 		if (selected == 2) {
-			rightBack.setDrawable(skin, "round-light-gray");
+			rightBack.setDrawable(blankIconLight);
 			description.setText(u.get(2).getName() + "\n" + u.get(2).getDescription());
 		}
-		else rightBack.setDrawable(skin, "round-dark-gray");
+		else rightBack.setDrawable(blankIconDark);
 		
 		if (u != null && u.size() > 3) {
 			bottomIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(u.get(3).getIcon())));
@@ -95,10 +102,10 @@ public class PlayerUpgradeMenu extends Table {
 			bottomIcon.setDrawable(null);
 		}
 		if (selected == 3) {
-			bottomBack.setDrawable(skin, "round-light-gray");
+			bottomBack.setDrawable(blankIconLight);
 			description.setText(u.get(3).getName() + "\n" + u.get(3).getDescription());
 		}
-		else bottomBack.setDrawable(skin, "round-dark-gray");
+		else bottomBack.setDrawable(blankIconDark);
 		
 		if (selected == -1) description.setText("Highlight an upgrade with a directional movement key, use same key again to select.");
 		if (u == null || u.isEmpty()) description.setText("No Upgrades To Select!");
@@ -140,7 +147,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		topIcon = new Image();
 		topIcon.setSize(60, 60);
-		topBack = new Image(skin.getDrawable("round-dark-gray"));
+		topBack = new Image(Assets.manager.get(Assets.blank_upgrade_icon_dark));
 		topBack.setSize(60, 60);
 		topImage = new Group();
 		topImage.addActor(topBack);
@@ -153,7 +160,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		leftIcon = new Image();
 		leftIcon.setSize(60, 60);
-		leftBack = new Image(skin.getDrawable("round-dark-gray"));
+		leftBack = new Image(Assets.manager.get(Assets.blank_upgrade_icon_dark));
 		leftBack.setSize(60, 60);
 		leftImage = new Group();
 		leftImage.addActor(leftBack);
@@ -165,7 +172,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		rightIcon = new Image();
 		rightIcon.setSize(60, 60);
-		rightBack = new Image(skin.getDrawable("round-dark-gray"));
+		rightBack = new Image(Assets.manager.get(Assets.blank_upgrade_icon_dark));
 		rightBack.setSize(60, 60);
 		rightImage = new Group();
 		rightImage.addActor(rightBack);
@@ -178,7 +185,7 @@ public class PlayerUpgradeMenu extends Table {
 		
 		bottomIcon = new Image();
 		bottomIcon.setSize(60, 60);
-		bottomBack = new Image(skin.getDrawable("round-dark-gray"));
+		bottomBack = new Image(Assets.manager.get(Assets.blank_upgrade_icon_dark));
 		bottomBack.setSize(60, 60);
 		bottomImage = new Group();
 		bottomImage.addActor(bottomBack);

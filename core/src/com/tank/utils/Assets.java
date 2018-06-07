@@ -225,7 +225,9 @@ public class Assets {
     public static final AssetDescriptor<Texture> moose_icon = new AssetDescriptor<Texture>("ui/icon/sub/moose_icon.png",
             Texture.class);
     	// Upgrade icon
-    public static final AssetDescriptor<Texture> blank_upgrade_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/blank_icon.png",
+    public static final AssetDescriptor<Texture> blank_upgrade_icon_light = new AssetDescriptor<Texture>("ui/icon/upgrade/blank_icon_light.png",
+            Texture.class);
+    public static final AssetDescriptor<Texture> blank_upgrade_icon_dark = new AssetDescriptor<Texture>("ui/icon/upgrade/blank_icon_dark.png",
             Texture.class);
     public static final AssetDescriptor<Texture> damage_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/damage_icon.png",
             Texture.class);
@@ -462,7 +464,8 @@ public class Assets {
         manager.load(fang_icon);
         manager.load(caltrop_icon);
         manager.load(moose_icon);
-        manager.load(blank_upgrade_icon);
+        manager.load(blank_upgrade_icon_light);
+        manager.load(blank_upgrade_icon_dark);
         manager.load(damage_icon);
         manager.load(armor_icon);
         manager.load(spread_icon);
