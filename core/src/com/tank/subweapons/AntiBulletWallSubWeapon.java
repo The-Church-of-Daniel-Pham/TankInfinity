@@ -10,7 +10,7 @@ import com.tank.utils.Assets;
 
 public class AntiBulletWallSubWeapon extends SubWeapon{
 	
-	private static Texture antiBulletWallTexture = Assets.manager.get(Assets.bulletWall);
+	private static Texture antiBulletWallTexture = Assets.manager.get(Assets.bulletWall_icon);
 	private static final float SHOOT_VOLUME = 0.6f;
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.bulletWall_fire), SHOOT_VOLUME);
 	
