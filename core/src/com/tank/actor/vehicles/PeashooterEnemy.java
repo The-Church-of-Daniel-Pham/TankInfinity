@@ -51,7 +51,7 @@ public class PeashooterEnemy extends FixedTank {
 	
 	protected float cooldownLastShot;
 	
-	protected MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
+	protected static MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), 0.5f);
 	
 	protected int expGive;
 	

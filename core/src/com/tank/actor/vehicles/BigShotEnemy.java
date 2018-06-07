@@ -2,11 +2,14 @@ package com.tank.actor.vehicles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.projectiles.Rocket;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class BigShotEnemy extends PeashooterEnemy{
 
+	protected static MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.rocket_fire), 0.5f);
+	
 	public BigShotEnemy(float x, float y, int level) {
 		super(x, y, level);
 		tankTexture = Assets.manager.get(Assets.enemy_big_shot_fixed);
