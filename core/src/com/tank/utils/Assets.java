@@ -235,6 +235,8 @@ public class Assets {
             Texture.class);
     public static final AssetDescriptor<Texture> armor_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/armor_icon.png",
             Texture.class);
+    public static final AssetDescriptor<Texture> health_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/health_icon.png",
+            Texture.class);
     public static final AssetDescriptor<Texture> spread_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/spread_icon.png",
             Texture.class);
     public static final AssetDescriptor<Texture> accuracy_icon = new AssetDescriptor<Texture>("ui/icon/upgrade/accuracy_icon.png",
@@ -473,6 +475,7 @@ public class Assets {
         manager.load(blank_upgrade_icon_dark);
         manager.load(damage_icon);
         manager.load(armor_icon);
+        manager.load(health_icon);
         manager.load(spread_icon);
         manager.load(accuracy_icon);
         manager.load(stability_icon);
