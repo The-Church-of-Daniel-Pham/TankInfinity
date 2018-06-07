@@ -430,7 +430,7 @@ public abstract class AbstractProjectile extends Actor implements Collidable, De
 	 */
 	public void destroy() {
 		projectileList.remove(this);
-		super.remove();
+		remove();
 	}
 
 	/**

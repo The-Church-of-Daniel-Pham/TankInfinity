@@ -260,9 +260,9 @@ public class Moose extends AbstractProjectile{
 	@Override
 	public boolean remove() {
 		if (super.remove()) {
-			moveSound.stop();
+			//moveSound.stop();
 			moveSound.dispose();
-			mooSound.stop();
+			//mooSound.stop();
 			mooSound.dispose();
 			return true;
 		}
