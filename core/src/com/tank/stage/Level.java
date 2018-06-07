@@ -76,14 +76,14 @@ public class Level extends Stage {
 				AbstractMapTile randomFloor = emptySpaces.remove((int) (Math.random() * emptySpaces.size()));
 				int[] pos = new int[] { randomFloor.getCol() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2,
 						randomFloor.getRow() * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2 };
-				switch ((int)(Math.random() * 7)) {
-					case 0: case 2:
+				switch ((int)(Math.random() * 9)) {
+					case 0: case 2: case 7:
 						super.addActor(new PeashooterEnemy(pos[0], pos[1], levelNum));
 						break;
 					case 1: case 3:
 						super.addActor(new FreePeashooterEnemy(pos[0], pos[1], levelNum));
 						break;
-					case 4:
+					case 4: case 8:
 						super.addActor(new BigShotEnemy(pos[0], pos[1], levelNum));
 						break;
 					case 5:
