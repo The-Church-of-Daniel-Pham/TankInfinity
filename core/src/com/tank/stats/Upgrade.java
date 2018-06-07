@@ -26,7 +26,7 @@ public class Upgrade {
 		upgrades.add(new Upgrade("Armor Up", Assets.manager.get(Assets.armor_icon), armorIncrease, "Increase tank defense by small amount"));
 		//Health increase
 		Stats healthIncrease = new Stats();
-		healthIncrease.addStat("Max Health", 20);
+		healthIncrease.addStat("Max Health", 25);
 		upgrades.add(new Upgrade("Health Up", Assets.manager.get(Assets.health_icon), healthIncrease, "Increase max tank health by small amount"));
 		//Accuracy increase
 		Stats accuracyIncrease = new Stats();
