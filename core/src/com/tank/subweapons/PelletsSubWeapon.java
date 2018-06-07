@@ -45,7 +45,7 @@ public class PelletsSubWeapon extends SubWeapon{
 	@Override
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
-		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.6) + 5);
+		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.5) + 2);
 		stats.addStat("Projectile Speed", (int)(((Math.random() * 50) + 100) * Math.sqrt(source.getStatValue("Projectile Speed"))));
 		stats.addStat("Projectile Durability", Math.max(source.getStatValue("Projectile Durability") / 2, 1));
 		stats.addStat("Lifetime", source.getStatValue("Lifetime"));

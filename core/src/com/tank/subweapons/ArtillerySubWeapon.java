@@ -32,7 +32,7 @@ public class ArtillerySubWeapon extends SubWeapon{
 						source.getPlayer().cursor.getStagePos().y));
 		source.applySecondaryForce(150f, source.getGunRotation() + 180);
 		int fireRate = source.getStatValue("Fire Rate");
-		source.setReloadTime(3.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
+		source.setReloadTime(4.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 		shootSound.play();
 	}
 
