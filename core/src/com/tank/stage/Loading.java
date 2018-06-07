@@ -1,12 +1,5 @@
 package com.tank.stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,11 +21,35 @@ public class Loading extends Stage implements InputProcessor {
 	private Background tankLoadingBackground;
 	private float distance;
 	private float percent;
+	private static String [] facts;
 
 	protected Skin skin = Assets.manager.get(Assets.skin);
 	protected Texture backdrop = Assets.manager.get(Assets.backdrop);
 	protected Texture loading_tank = Assets.manager.get(Assets.loading_tank);
 
+	static {
+		facts = new String[] {"Canada is the second largest country in the world, right after Russia.", 
+        		"Canada's lowest recorded temperature was -63  degrees Celcius in 1947.", 
+        		"Canada has more lakes than the rest of the world's lakes combined.", 
+        		"Canada consumes more macaroni and cheese than any other nation in the world.", 
+        		"Residents of Churchill, Canada, leave their cars unlocked to offer an escape for pedestrians who might encounter Polar Bears.", 
+        		"Licence plates in the Canadian Northwest Territories are shaped like polar bears.", 
+        		"Canada has the largest coastline in the world.", 
+        		"In Newfoundland, Canada, the Atlantic Ocean sometimes freezes so people play hockey on it.", 
+        		"With 1,896 km , the Yonge Street in Canada, is the longest street in the world.", 
+        		"The U.S. / Canada Border is the longest international border in the world and it lacks military defense.", 
+        		"Canada has no weapons of mass destruction since 1984 and has signed treaties repudiating their possession.", 
+        		"\"Canada\" is an Iroquoian language word meaning \"Village.\"", 
+        		"Canada's official phone number is 1-800-O-CANADA.", 
+        		"Large parts of Canada have less gravity than the rest of Earth. The phenomenon was discovered in the 1960s.", 
+        		"Police Departments in Canada give out \"positive tickets\" when they see people doing something positive.", 
+        		"Canada consumes the most doughnuts and has the most doughnut shops per capita of any country in the world.", 
+        		"The North American Beaver is the national animal of Canada.", 
+        		"The Hawaiian Pizza was invented in Canada and is the most popular pizza in Australia.", 
+        		"People from Canada can order a portrait of Queen Elizabeth II and have it shipped to them for free.", 
+        		"Canada has a strategic maple syrup reserve to ensure global supply in case of emergency."};
+	}
+	
 	public Loading(TankInfinity game) {
 		// super(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
@@ -70,42 +87,6 @@ public class Loading extends Stage implements InputProcessor {
 	}
 
 	private String getTip() {
-		 // The name of the file to open.
-        String fileName = "ui/menu/loading/canada_facts.txt";
-        
-        // This will reference one line at a time
-        String line = null;
-
-        try {
-            // FileReader reads text files in the default encoding.
-            FileReader fileReader = new FileReader(fileName);
-
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            
-            //select a random line number, where first number of file is number of lines
-            int rand = (int) (Math.random() *  Integer.parseInt(bufferedReader.readLine()));
-            int count = 0;
-            
-            while((line = bufferedReader.readLine()) != null) {
-            	if (count++ == rand) {
-            		return line;
-            	}
-            }   
-
-            // Always close files.
-            bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
-            System.out.println(
-                "Unable to open file '" + 
-                fileName + "'");                
-        }
-        catch(IOException ex) {
-            System.out.println(
-                "Error reading file '" 
-                + fileName + "'");
-        }
-        return "";
+		return facts[(int) (Math.random() *  facts.length)];
     }
 }
