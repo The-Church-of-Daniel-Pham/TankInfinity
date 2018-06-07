@@ -522,6 +522,7 @@ public class PlayerTank extends FreeTank {
 	
 	public void addUpgrade(Upgrade upgrade) {
 		stats.mergeStats(upgrade.getChanges());
+		if (upgrade.getChanges().hasStat("Max Health")) heal(this, upgrade.getChanges().getStatValue("Max Health"));
 	}
 	
 	@Override
