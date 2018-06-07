@@ -139,8 +139,8 @@ public class LandminerEnemy extends FreePeashooterEnemy {
 	public void dropLandMine() {
 		Stats mineStats = new Stats();
 		mineStats.addStat("Damage", (int)(getStatValue("Damage") * 1.5) + 15);
-		mineStats.addStat("Projectile Durability", (int)(getStatValue("Projectile Durability") * 2.5));
-		mineStats.addStat("Lifetime", (int)(getStatValue("Lifetime") * 2.5));
+		mineStats.addStat("Projectile Durability", getStatValue("Projectile Durability") + 2);
+		mineStats.addStat("Lifetime", (int)(getStatValue("Lifetime") * 2.5) + 20);
 		getStage().addActor(new LandMine(this, mineStats, getX(), getY()));
 		int fireRate = getStatValue("Fire Rate");
 		cooldownLastShot = (reloadTime * 1.5f) * (1.0f - ((float) (fireRate) / (fireRate + 60)));
