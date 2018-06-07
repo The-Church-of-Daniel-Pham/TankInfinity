@@ -9,9 +9,17 @@ import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class CaltropSubWeapon extends SubWeapon{
-	
+	/**
+	 * the texture of the subweapon
+	 */
 	private static Texture caltropTexture = Assets.manager.get(Assets.caltrop_icon);
+	/**
+	 * the volume of the shoot sound, out of 1.0
+	 */
 	private static final float SHOOT_VOLUME = 0.6f;
+	/**
+	 * the sound used upon shooting
+	 */
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.caltrop_fire), SHOOT_VOLUME);
 	
 	public CaltropSubWeapon(int ammo) {
@@ -33,7 +41,8 @@ public class CaltropSubWeapon extends SubWeapon{
 		source.setReloadTime(3.5f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 		shootSound.play();
 	}
-	
+
+	@Override
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
 		stats.addStat("Damage", (int)(source.getStatValue("Damage") * 0.4) + 3);

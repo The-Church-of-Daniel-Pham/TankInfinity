@@ -9,9 +9,17 @@ import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class VampiricFangSubWeapon extends SubWeapon {
-	
+	/**
+	 * the texture of the subweapon
+	 */
 	private static Texture fangTexture = Assets.manager.get(Assets.fang_icon);
+	/**
+	 * the volume of the shoot sound, out of 1.0
+	 */
 	private static final float SHOOT_VOLUME = 0.6f;
+	/**
+	 * the sound used upon shooting
+	 */
 	private static MediaSound shootSound = new MediaSound(Assets.manager.get(Assets.fang_shoot), SHOOT_VOLUME);
 	
 	public VampiricFangSubWeapon(int ammo) {
@@ -30,7 +38,8 @@ public class VampiricFangSubWeapon extends SubWeapon {
 		source.setReloadTime(2.0f * (1.0f - ((float) (fireRate) / (fireRate + 60))));
 		shootSound.play();
 	}
-	
+
+	@Override
 	public Stats createStats(PlayerTank source) {
 		Stats stats = new Stats();
 		stats.addStat("Damage", (int)(source.getStatValue("Damage") / 2));
