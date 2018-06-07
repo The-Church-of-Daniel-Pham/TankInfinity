@@ -121,7 +121,6 @@ public class ArtilleryShell extends Actor {
 		timePassed += delta;
 		if (timeUntilHit <= 0f) {
 			getStage().addActor(new DamageExplosion(source, stats, getX(), getY()));
-			fallSound.dispose();
 			remove();
 		} else {
 			setScale((2.5f * timeUntilHit) + 1.0f);
@@ -138,5 +137,14 @@ public class ArtilleryShell extends Actor {
 				super.getOriginX(), super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(),
 				getRotation());
 		// drawVertices(batch, a);
+	}
+	
+	@Override
+	public boolean remove() {
+		if (super.remove()) {
+			fallSound.dispose();
+			return true;
+		}
+		return false;
 	}
 }

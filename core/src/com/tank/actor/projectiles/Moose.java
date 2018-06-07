@@ -258,12 +258,15 @@ public class Moose extends AbstractProjectile{
 	}
 	
 	@Override
-	public void destroy() {
-		moveSound.stop();
-		moveSound.dispose();
-		mooSound.stop();
-		mooSound.dispose();
-		super.destroy();
+	public boolean remove() {
+		if (super.remove()) {
+			moveSound.stop();
+			moveSound.dispose();
+			mooSound.stop();
+			mooSound.dispose();
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
