@@ -1,3 +1,11 @@
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * This class represents a WallTile, the walls with which
+ * tanks typically collide. It also handles textures and
+ * hitboxes (used for collisions). It does not handle
+ * collisions itself.
+ */
 package com.tank.actor.map.tiles;
 
 import java.util.ArrayList;
@@ -10,6 +18,9 @@ import com.tank.interfaces.Collidable;
 import com.tank.utils.Assets;
 
 public class WallTile extends AbstractMapTile implements Collidable {
+	/**
+	 * the hitbox of the tile, used for collisions
+	 */
 	protected final Polygon hitbox;
 	protected Texture debug = Assets.manager.get(Assets.vertex);
 
@@ -18,6 +29,7 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		hitbox = initializeHitbox();
 	}
 
+	// used for debugging
 	public void drawVertices(Batch batch, float a) {
 		for (int i = 0; i < getHitbox().getVertices().length / 2; i++) {
 			batch.draw(debug, getHitbox().getVertices()[i * 2], getHitbox().getVertices()[i * 2 + 1], 0, 0,
@@ -32,7 +44,11 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		// drawVertices(batch, a);
 		// }
 	}
-	
+
+	/**
+	 * Replaces the given tile to a FloorTile in the current location of the given
+	 * tile
+	 */
 	public void destroyWall() {
 		map.removeWall(this);
 	}
@@ -52,6 +68,9 @@ public class WallTile extends AbstractMapTile implements Collidable {
 		}
 	}
 
+	/**
+	 * sets its hitbox based on its current position
+	 */
 	public Polygon initializeHitbox() {
 		float[] f = new float[8];
 		f[0] = getX();
@@ -67,19 +86,19 @@ public class WallTile extends AbstractMapTile implements Collidable {
 
 	@Override
 	public void checkCollisions(ArrayList<Collidable> other) {
-		// TODO Auto-generated method stub
+		// never called; tiles don't handle collisions
 
 	}
 
 	@Override
 	public Polygon getHitboxAt(float x, float y, float direction) {
-		// TODO Auto-generated method stub
+		// never called; tiles don't handle collisions
 		return null;
 	}
 
 	@Override
 	public ArrayList<Collidable> getNeighbors() {
-		// TODO Auto-generated method stub
+		// never called; tiles don't handle collisions
 		return null;
 	}
 

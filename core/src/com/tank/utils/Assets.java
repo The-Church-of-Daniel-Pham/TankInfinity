@@ -357,7 +357,7 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> item_pickup = new AssetDescriptor<Sound>("audio/silent.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> kit_pickup = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> kit_pickup = new AssetDescriptor<Sound>("audio/kit_pickup.wav",
 			Sound.class);
 		// Tank
 	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",

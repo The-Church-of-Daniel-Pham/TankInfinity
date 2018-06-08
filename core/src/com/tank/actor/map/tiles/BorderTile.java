@@ -1,3 +1,8 @@
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * This class implements the textures of a BorderTile
+ */
 package com.tank.actor.map.tiles;
 
 import com.tank.actor.map.Map;

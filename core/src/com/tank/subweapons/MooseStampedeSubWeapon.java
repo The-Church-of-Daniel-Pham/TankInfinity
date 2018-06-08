@@ -1,3 +1,13 @@
+/**
+ * @author Daniel Pham
+ * The subweapon class for the projectile- moose stampede
+ * Description: Implements the given subweapon projectile class and spawns it 
+ * correctly onto the map, giving the 'projectile' its necessary information 
+ * to spawn, as well as stats, playing the necessary projectile sound, setting 
+ * the player's fire rate, and giving recoil to the player upon firing. If 
+ * necessary, gives the spawned projectile a degree of randomness and/or 
+ * spawns multiple projectiles of the given type.
+ */
 package com.tank.subweapons;
 
 import com.badlogic.gdx.graphics.Texture;

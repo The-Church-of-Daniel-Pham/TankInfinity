@@ -1,3 +1,8 @@
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * This class not implemented in the game.
+ */
 package com.tank.actor.map.tiles;
 
 import com.badlogic.gdx.graphics.Texture;
