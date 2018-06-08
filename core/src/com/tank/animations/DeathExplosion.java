@@ -1,10 +1,12 @@
 package com.tank.animations;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tank.media.MediaSound;
 import com.tank.utils.Assets;
 
 public class DeathExplosion extends Actor {
@@ -32,6 +34,7 @@ public class DeathExplosion extends Actor {
 
         deathExplosionAnimation = new Animation<TextureRegion>(1.0f / FPS, explosionFrames);
 	}
+	protected MediaSound death_sound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.death_explosion_sound.fileName)), 0.5f);
 
     public DeathExplosion(float x, float y) {
         stateTime = 0f;
@@ -39,6 +42,7 @@ public class DeathExplosion extends Actor {
         setY(y);
         setOriginX(FRAME_WIDTH / 2);
 		setOriginY(FRAME_HEIGHT / 2);
+		death_sound.play();
     }
 
     @Override
@@ -53,5 +57,14 @@ public class DeathExplosion extends Actor {
     	TextureRegion currentFrame = deathExplosionAnimation.getKeyFrame(stateTime, false);
 		batch.draw(currentFrame, super.getX() - super.getOriginX(), super.getY() - super.getOriginY(), super.getOriginX(),
 				super.getOriginY(), FRAME_WIDTH, FRAME_HEIGHT, super.getScaleX(), super.getScaleY(), getRotation());
+    }
+    
+    @Override
+    public boolean remove() {
+    	if (super.remove()) {
+    		death_sound.dispose();
+    		return true;
+    	}
+    	return false;
     }
 }
