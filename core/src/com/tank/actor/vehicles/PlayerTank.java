@@ -73,6 +73,8 @@ public class PlayerTank extends FreeTank {
 	protected int nextExp;		//Model: 4 + (Level * 2) + (Level ^ 1.5) / 4
 	protected ArrayList<Upgrade> selectableUpgrades;
 	protected int upgradesLeft;
+	
+	protected int killCount;
 
 	public PlayerTank(int playerNumber, Player player) {
 		super(0, 0); // defaults
@@ -522,7 +524,15 @@ public class PlayerTank extends FreeTank {
 	
 	public void addUpgrade(Upgrade upgrade) {
 		stats.mergeStats(upgrade.getChanges());
-		if (upgrade.getChanges().hasStat("Max Health")) heal(this, upgrade.getChanges().getStatValue("Max Health"));
+		if (upgrade.getChanges().hasStat("Max Health")) health += upgrade.getChanges().getStatValue("Max Health");
+	}
+	
+	public int getKillCount() {
+		return killCount;
+	}
+	
+	public void changeKillCount(int change) {
+		killCount += change;
 	}
 	
 	@Override

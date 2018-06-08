@@ -522,11 +522,13 @@ public class PeashooterEnemy extends FixedTank {
 					AbstractVehicle tankSource = ((AbstractProjectile)source).getSource();
 					if (tankSource instanceof PlayerTank) {
 						((PlayerTank)tankSource).gainExp(expGive);
+						((PlayerTank)tankSource).changeKillCount(1);
 					}
 				}
 				else {
 					if (source instanceof PlayerTank) {
 						((PlayerTank)source).gainExp(expGive);
+						((PlayerTank)source).changeKillCount(1);
 					}
 				}
 			}
