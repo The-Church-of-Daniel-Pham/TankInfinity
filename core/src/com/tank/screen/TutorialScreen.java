@@ -1,3 +1,19 @@
+
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * Screens are one of the highest levels of code we
+ * implement using Libgdx, the highest being Game/DesktopLauncher.
+ * The Libgdx framework calls the render(...) method,
+ * and we write the Stages that get called in this method.
+ * Screens essentially implement their non-screen,
+ * Stage counterparts, calling their act(...) and draw()
+ * methods.
+ * 
+ * The Tutorial Screen class is used to invoke the logic
+ * and draw the textures of the tutorial, which include
+ * tutorial images and navigation buttons
+ */
 package com.tank.screen;
 
 import com.badlogic.gdx.Gdx;

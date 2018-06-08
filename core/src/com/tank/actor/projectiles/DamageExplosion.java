@@ -28,11 +28,11 @@ public class DamageExplosion extends AbstractProjectile {
 	 */
 	static int normalSize = 512;
 	/**
-	 * the starting size of the
+	 * the starting size of the explosion
 	 */
 	private int startingSize;
 	/**
-	 * the ending size of the
+	 * the ending size of the explosion
 	 */
 	private int endSize;
 	/**

@@ -1,3 +1,10 @@
+/**
+ * Author: Daniel P., Samuel H., Edmond F., Gokul S.
+ * Description: Used as a subweapon of tanks, 
+ * the anti bullet wall is a stationary 'projectile'
+ * with high durability that "absorbs" enemy bullets
+ * and slows down enemies that attempt to pass it.
+ */
 package com.tank.actor.projectiles;
 
 import java.util.ArrayList;

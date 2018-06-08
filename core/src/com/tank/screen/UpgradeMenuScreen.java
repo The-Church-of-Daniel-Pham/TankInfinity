@@ -1,3 +1,21 @@
+
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * Screens are one of the highest levels of code we
+ * implement using Libgdx, the highest being Game/DesktopLauncher.
+ * The Libgdx framework calls the render(...) method,
+ * and we write the Stages that get called in this method.
+ * Screens essentially implement their non-screen,
+ * Stage counterparts, calling their act(...) and draw()
+ * methods.
+ * 
+ * The Upgrade Menu Screen class is used to invoke the logic
+ * and draw the textures of the upgrade menu, notably the
+ * controls that operate the menu, the navigation button, and
+ * images/text that must be continuously updated as the menu
+ * is navigated.
+ */
 package com.tank.screen;
 
 import com.badlogic.gdx.Gdx;

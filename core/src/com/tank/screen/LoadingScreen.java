@@ -1,3 +1,20 @@
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * Screens are one of the highest levels of code we
+ * implement using Libgdx, the highest being Game/DesktopLauncher.
+ * The Libgdx framework calls the render(...) method,
+ * and we write the Stages that get called in this method.
+ * Screens essentially implement their non-screen,
+ * Stage counterparts, calling their act(...) and draw()
+ * methods.
+ * 
+ * The Loading Screen class is used to invoke the logic
+ * and draw the textures of the loading portion of the game
+ * that is the first thing a user sees. As loading takes some
+ * time, it provides a visual for the user to look at. In
+ * this class every other necessary screen is also loaded.
+ */
 package com.tank.screen;
 
 import com.badlogic.gdx.Gdx;
