@@ -39,7 +39,7 @@ public class PlayerTank extends FreeTank {
 	private final float ENGINE_VOLUME = 0.6f;
 	private final float SHOOT_VOLUME = 0.6f;
 	private final float ITEM_VOLUME = 0.5f;
-	private final float KIT_VOLUME = 0.5f;
+	private final float KIT_VOLUME = 1f;
 
 	// private MediaSound engine_sound = new
 	// MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);

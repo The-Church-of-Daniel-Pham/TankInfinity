@@ -1,40 +1,54 @@
 package com.tank.media;
 
-/**
- * @author Gokul Swaminathan
- * @version 5.29.18
- */
-
 import com.badlogic.gdx.audio.Music;
 
+/**
+ * @author Daniel P., Samuel H., Edmond F., Gokul S.
+ * @description Wrapper class for the music interface.
+ */
 public class MediaMusic {
 
-    private Music music;
-    private float volume;
+    private Music music;	//music instance variable
+    private float volume;	//volume instance variable
 
-    private static float globalSoundVolume = 1.0f;
+    private static float globalSoundVolume = 1.0f;	//volume of the music object
     
     public MediaMusic(Music music, float volume) {
         this.music = music;
         this.volume = volume;
     }
 
+    /**
+     * Disposes the music object
+     */
     public void dispose() {
         music.dispose();
     }
-
+    
+    /**
+     * @return volume of the music object
+     */
     public float getVolume() {
         return volume;
     }
 
+    /**
+     * @return is the music looping?
+     */
     public boolean isLooping() {
         return music.isLooping();
     }
 
+    /**
+     * play the music
+     */
     public void play() {
         music.play();
     }
 
+    /**
+     * @return is the music being played?
+     */
     public boolean isPlaying() {
         return music.isPlaying();
     }
