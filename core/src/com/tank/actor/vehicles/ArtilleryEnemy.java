@@ -2,10 +2,13 @@ package com.tank.actor.vehicles;
 
 import com.tank.actor.map.tiles.AbstractMapTile;
 import com.tank.actor.ui.ArtilleryMark;
+import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 
 public class ArtilleryEnemy extends PeashooterEnemy{
+	
+	protected static MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.artillery_fire), 1.0f);
 	
 	public ArtilleryEnemy(float x, float y, int level) {
 		super(x, y, level);
