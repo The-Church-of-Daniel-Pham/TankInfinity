@@ -1,5 +1,7 @@
 package com.tank.stage;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +28,7 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	protected Label statsLabel;
 	private Skin skin = Assets.manager.get(Assets.skin);
 	private Texture red = Assets.manager.get(Assets.red);
+	private ArrayList<PlayerResults> playerResultsTable;
 	
 	public GameOverMenu(TankInfinity game, PlayScreen playscreen) {
 		super(new ExtendViewport(Constants.DEFAULT_WIDTH, Constants.DEFAULT_HEIGHT));
@@ -91,16 +94,41 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		uiTable.add(statsLabel).width(500).colspan(4);
 		uiTable.row();
 		
+		playerResultsTable = new ArrayList<PlayerResults>();
 		Table placeholder = new Table();
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
-				uiTable.add(new PlayerResults(p)).width(400).height(300);
+				PlayerResults playerResult = new PlayerResults(p);
+				playerResultsTable.add(playerResult);
+				//uiTable.add(playerResult).width(400).height(300);
 			}
 			else {
 				// placeholder scaled to fraction of the width of the entire table width
-				uiTable.add(placeholder).width(400).height(300);
+				//uiTable.add(placeholder).width(400).height(300);
 			}
 		}
+		
+		switch (playerResultsTable.size()) {
+			case 1:
+				uiTable.add(playerResultsTable.get(0)).width(1600).height(300);
+				break;
+			case 2:
+				uiTable.add(playerResultsTable.get(0)).width(800).height(300);
+				uiTable.add(playerResultsTable.get(1)).width(800).height(300);
+				break;
+			case 3:
+				uiTable.add(playerResultsTable.get(0)).width(533).height(300);
+				uiTable.add(playerResultsTable.get(1)).width(534).height(300);
+				uiTable.add(playerResultsTable.get(2)).width(533).height(300);
+				break;
+			case 4:
+				uiTable.add(playerResultsTable.get(0)).width(400).height(300);
+				uiTable.add(playerResultsTable.get(1)).width(400).height(300);
+				uiTable.add(playerResultsTable.get(2)).width(400).height(300);
+				uiTable.add(playerResultsTable.get(3)).width(400).height(300);
+				break;
+		}
+		
 		uiTable.row();
 		
 		uiTable.add(restartButton).colspan(4);
@@ -116,5 +144,8 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	public void act(float delta) {
 		super.act(delta);
 		statsLabel.setText("Reached level " + playscreen.getLevelNum() + " in " + ((int) playscreen.getTimePlayed() / 60) + " minutes");
+		for (PlayerResults playerResult : playerResultsTable) {
+			playerResult.updateMenu();
+		}
 	}
 }

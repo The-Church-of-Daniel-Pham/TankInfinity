@@ -11,6 +11,9 @@ public class PlayerResults extends Table{
 	protected Player player;
 	
 	private Skin skin = Assets.manager.get(Assets.skin);
+	private Label levelLabel;
+	private Label expLabel;
+	private Label killsLabel;
 	
 	public PlayerResults(Player player) {
 		this.player = player;
@@ -30,11 +33,11 @@ public class PlayerResults extends Table{
 		
 		Table right = new Table();
 		right.defaults().height(50).pad(10);
-		Label levelLabel = new Label("LV " + player.tank.getLevel(), skin, "medium");
+		levelLabel = new Label("LV " + player.tank.getLevel(), skin, "medium");
 		levelLabel.setFontScale(0.75f);
-		Label expLabel = new Label(player.tank.getTotalExp() + " Total EXP", skin, "medium");
+		expLabel = new Label(player.tank.getTotalExp() + " Total EXP", skin, "medium");
 		expLabel.setFontScale(0.75f);
-		Label killsLabel = new Label(player.tank.getKillCount() + " Kills", skin, "medium");
+		killsLabel = new Label(player.tank.getKillCount() + " Kills", skin, "medium");
 		killsLabel.setFontScale(0.75f);
 		right.add(levelLabel);
 		right.row();
@@ -46,5 +49,13 @@ public class PlayerResults extends Table{
 		super.add(right).bottom();
 		
 		super.setBackground(skin.getDrawable("list"));
+	}
+	
+	public void updateMenu() {
+		if (player.isEnabled()) {
+			levelLabel.setText("LV " + player.tank.getLevel());
+			expLabel.setText(player.tank.getTotalExp() + " Total EXP");
+			killsLabel.setText(player.tank.getKillCount() + " Kills");
+		}
 	}
 }
