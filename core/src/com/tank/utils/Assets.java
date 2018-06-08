@@ -355,6 +355,10 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> bulletWall_fire = new AssetDescriptor<Sound>("audio/bulletWall_fire.wav",
 			Sound.class);
+	public static final AssetDescriptor<Sound> item_pickup = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
+	public static final AssetDescriptor<Sound> kit_pickup = new AssetDescriptor<Sound>("audio/silent.wav",
+			Sound.class);
 		// Tank
 	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
 			Sound.class);
@@ -541,6 +545,8 @@ public class Assets {
 		manager.load(tank_engine);
 		manager.load(tank_tread);
 		manager.load(tank_damage);
+		manager.load(item_pickup);
+		manager.load(kit_pickup);
 		// System.out.println("Tank audio loaded");
 	}
 

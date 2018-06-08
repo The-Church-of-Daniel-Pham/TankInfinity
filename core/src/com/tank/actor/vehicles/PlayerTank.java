@@ -38,6 +38,8 @@ public class PlayerTank extends FreeTank {
 	private final float TREAD_VOLUME = 0.2f;
 	private final float ENGINE_VOLUME = 0.6f;
 	private final float SHOOT_VOLUME = 0.6f;
+	private final float ITEM_VOLUME = 0.5f;
+	private final float KIT_VOLUME = 0.5f;
 
 	// private MediaSound engine_sound = new
 	// MediaSound(Assets.manager.get(Assets.tank_engine), ENGINE_VOLUME);
@@ -48,6 +50,8 @@ public class PlayerTank extends FreeTank {
 	private MediaSound tread_sound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_tread.wav")),
 			TREAD_VOLUME);
 	private MediaSound shoot_sound = new MediaSound(Assets.manager.get(Assets.bullet_fire), SHOOT_VOLUME);
+	private MediaSound itemPickup = new MediaSound(Assets.manager.get(Assets.item_pickup), ITEM_VOLUME);
+	private MediaSound kitPickup = new MediaSound(Assets.manager.get(Assets.kit_pickup), ITEM_VOLUME);
 
 	private boolean treadSoundOn = false;
 	private boolean engineSoundOn = false;
@@ -445,6 +449,7 @@ public class PlayerTank extends FreeTank {
 						if ((c.getHitbox().contains(testVertices[i * 2], testVertices[i * 2 + 1])) || 
 						(testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1]))){
 							pickUpSubWeapon((SubWeaponItem)c);
+							itemPickup.play();
 							break;
 						}
 					}
@@ -457,6 +462,7 @@ public class PlayerTank extends FreeTank {
 								(testHitbox.contains(cTestVertices[i * 2], cTestVertices[i * 2 + 1]))){
 							if(this.getHealth() < this.getMaxHealth()) {
 								heal(((RepairBoxItem) c), ((RepairBoxItem) c).restoreHealth(this));
+								kitPickup.play();
 								((RepairBoxItem) c).destroy();
 							}
 							break;
