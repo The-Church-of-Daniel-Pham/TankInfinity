@@ -218,10 +218,10 @@ public class Level extends Stage {
 		for (AbstractItem item : AbstractItem.items) {
 			item.remove();
 		}
-		for (Actor actor : super.getActors()) {
+		AbstractItem.items.clear();
+		for (Actor actor : getActors()) {
 			actor.remove();
 		}
-		AbstractItem.items.clear();
 		super.dispose();
 	}
 }

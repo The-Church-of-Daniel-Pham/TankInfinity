@@ -106,7 +106,7 @@ public class ArtilleryShell extends Actor {
 		setRotation(velocity.angle());
 		setOriginX(FRAME_WIDTH / 2);
 		setOriginY(FRAME_HEIGHT / 2);
-		fallSound.loop();
+		fallSound.play();
 	}
 
 	@Override
