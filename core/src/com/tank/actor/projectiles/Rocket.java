@@ -13,7 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.tank.actor.map.tiles.BorderTile;
 import com.tank.actor.map.tiles.WallTile;
 import com.tank.actor.vehicles.AbstractVehicle;
-import com.tank.media.MediaSound;
 import com.tank.stats.Stats;
 import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
@@ -34,11 +33,6 @@ public class Rocket extends AbstractProjectile {
 	/**
 	 * the volume of the hit sound
 	 */
-	private static float HIT_VOLUME = 0.5f;
-	/**
-	 * the hit sound
-	 */
-	private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.rocket_hit), HIT_VOLUME);
 	
 	public Rocket(AbstractVehicle src, Stats stats, float x, float y, float direction) {
 		super(rocketTexture, src, stats, x, y);
@@ -71,7 +65,6 @@ public class Rocket extends AbstractProjectile {
 	 */
 	public void bounce(Vector2 wall) {
 		damageNeighbors();
-		hitSound.play();
 		destroy();
 	}
 	/**

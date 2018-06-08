@@ -62,7 +62,7 @@ public class DamageExplosion extends AbstractProjectile {
 	/**
 	 * the sound of the explosion
 	 */
-	private static MediaSound explosionSound = new MediaSound(Assets.manager.get(Assets.explosion_damage_sound),
+	private static MediaSound explosionSound = new MediaSound(Assets.manager.get(Assets.damage_explosion_sound),
 			EXPLODE_VOLUME);
 	/**
 	 * the animation of the explosion

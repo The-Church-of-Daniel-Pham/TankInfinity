@@ -309,8 +309,6 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> rocket_fire = new AssetDescriptor<Sound>("audio/rocket_fire.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> rocket_hit = new AssetDescriptor<Sound>("audio/silent.wav",
-			Sound.class);
 	public static final AssetDescriptor<Sound> chakram_fire = new AssetDescriptor<Sound>("audio/chakram_fire.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> chakram_bounce = new AssetDescriptor<Sound>("audio/chakram_bounce.wav",
@@ -329,7 +327,7 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> landmine_deploy = new AssetDescriptor<Sound>("audio/landmine_deploy.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> caltrop_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> caltrop_fire = new AssetDescriptor<Sound>("audio/caltrop_fire.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> caltrop_hit = new AssetDescriptor<Sound>("audio/caltrop_hit.wav",
 			Sound.class);
@@ -347,15 +345,15 @@ public class Assets {
 			Sound.class);
 	public static final AssetDescriptor<Sound> moose_moving = new AssetDescriptor<Sound>("audio/moose_move.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> moose_moo = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> moose_moo = new AssetDescriptor<Sound>("audio/moo.wav",
 			Sound.class);
 	public static final AssetDescriptor<Sound> moose_hit = new AssetDescriptor<Sound>("audio/moose_hit.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> explosion_damage_sound = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> damage_explosion_sound = new AssetDescriptor<Sound>("audio/damage_explosion.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> death_explosion_sound = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> death_explosion_sound = new AssetDescriptor<Sound>("audio/death_explosion.wav",
 			Sound.class);
-	public static final AssetDescriptor<Sound> bulletWall_fire = new AssetDescriptor<Sound>("audio/silent.wav",
+	public static final AssetDescriptor<Sound> bulletWall_fire = new AssetDescriptor<Sound>("audio/bulletWall_fire.wav",
 			Sound.class);
 		// Tank
 	public static final AssetDescriptor<Sound> tank_engine = new AssetDescriptor<Sound>("audio/tank_engine.wav",
@@ -516,7 +514,6 @@ public class Assets {
 		manager.load(laser_bounce);
 		manager.load(laser_hit);
 		manager.load(rocket_fire);
-		manager.load(rocket_hit);
 		manager.load(chakram_fire);
 		manager.load(chakram_bounce);
 		manager.load(chakram_hit);
@@ -537,7 +534,7 @@ public class Assets {
 		manager.load(moose_moving);
 		manager.load(moose_moo);
 		manager.load(moose_hit);
-		manager.load(explosion_damage_sound);
+		manager.load(damage_explosion_sound);
 		manager.load(death_explosion_sound);
 		manager.load(bulletWall_fire);
 		// System.out.println("Bullet audio loaded");
