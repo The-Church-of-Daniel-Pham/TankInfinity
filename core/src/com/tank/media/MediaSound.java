@@ -56,6 +56,10 @@ public class MediaSound {
     	}
         return mediaId;
     }
+    
+    public void setPitch(float pitch) {
+    	sound.setPitch(mediaId, pitch);
+    }
 
     public void resume() {
         sound.resume();

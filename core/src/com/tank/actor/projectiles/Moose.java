@@ -96,10 +96,6 @@ public class Moose extends AbstractProjectile{
 	 */
 	private boolean hasRunThroughField;
 	/**
-	 * volume of the moose moving sound
-	 */
-	private static final float MOVING_VOLUME = 0.5f;
-	/**
 	 * volume of the moo sound
 	 */
     private static final float MOO_VOLUME = 0.5f;
@@ -108,10 +104,6 @@ public class Moose extends AbstractProjectile{
      */
     private static final float HIT_VOLUME = 1.0f;
     /**
-     * the move sound
-     */
-    private MediaSound moveSound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.moose_moving.fileName)), MOVING_VOLUME);
-    /**
      * the moo sound
      */
     private MediaSound mooSound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal(Assets.moose_moo.fileName)), MOO_VOLUME);
@@ -119,9 +111,6 @@ public class Moose extends AbstractProjectile{
      * the hit sound
      */
     private static MediaSound hitSound = new MediaSound(Assets.manager.get(Assets.moose_hit), HIT_VOLUME);
-    
-    private float randomSoundOffset;
-    private boolean moveSoundPlaying;
     
     private float timeTillNextMoo;
 	
@@ -141,7 +130,6 @@ public class Moose extends AbstractProjectile{
 		vehiclesHit = new ArrayList<AbstractVehicle>();
 		//source.changeBulletCount(1);
 		initializeHitbox();
-		randomSoundOffset = (float)Math.random() * 3f;
 		timeTillNextMoo = (float)Math.random() * 3f + 2;
 	}
 	
@@ -154,18 +142,12 @@ public class Moose extends AbstractProjectile{
 		timeTillNextMoo -= delta;
 		if (timeTillNextMoo < 0) {
 			mooSound.play();
-			timeTillNextMoo = (float)Math.random() * 4f + 1;
+			mooSound.setPitch((float)(Math.random() * 1.2f) + 0.6f);
+			timeTillNextMoo = (float)Math.random() * 4f + 2;
 		}
 		
 		if (!isDestroyed()) {
 			if (hasRunThroughField) {
-				if (randomSoundOffset > 0) {
-					randomSoundOffset -= delta;
-				}
-				else if(!moveSoundPlaying) {
-					moveSound.loop();
-					moveSoundPlaying = true;
-				}
 				if (isOffscreen(2)) {
 					destroy();
 					return;
@@ -260,8 +242,6 @@ public class Moose extends AbstractProjectile{
 	@Override
 	public boolean remove() {
 		if (super.remove()) {
-			//moveSound.stop();
-			moveSound.dispose();
 			//mooSound.stop();
 			mooSound.dispose();
 			return true;
