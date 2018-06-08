@@ -13,8 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.tank.actor.ui.Background;
+import com.tank.game.Player;
 import com.tank.game.TankInfinity;
 import com.tank.screen.PlayScreen;
+import com.tank.table.PlayerResults;
 import com.tank.utils.Assets;
 import com.tank.utils.Constants;
 
@@ -83,15 +85,29 @@ public class GameOverMenu extends Stage implements InputProcessor {
 	        	 event.stop();
 	         }
 	      });
-		uiTable.add(gameOverNotif).height(150);
+		
+		uiTable.add(gameOverNotif).width(600).height(150).colspan(4);
 		uiTable.row();
-		uiTable.add(statsLabel).width(500);
+		uiTable.add(statsLabel).width(500).colspan(4);
 		uiTable.row();
-		uiTable.add(restartButton);
+		
+		Table placeholder = new Table();
+		for (Player p : game.players) {
+			if (p.isEnabled()) {
+				uiTable.add(new PlayerResults(p)).width(400).height(300);
+			}
+			else {
+				// placeholder scaled to fraction of the width of the entire table width
+				uiTable.add(placeholder).width(400).height(300);
+			}
+		}
 		uiTable.row();
-		uiTable.add(mainMenuButton);
+		
+		uiTable.add(restartButton).colspan(4);
+		uiTable.row();
+		uiTable.add(mainMenuButton).colspan(4);
 		uiTable.row(); 
-		uiTable.add(quitButton);
+		uiTable.add(quitButton).colspan(4);
 		
 		return uiTable;
 	}
