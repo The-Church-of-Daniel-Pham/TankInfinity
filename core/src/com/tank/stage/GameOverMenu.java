@@ -95,40 +95,13 @@ public class GameOverMenu extends Stage implements InputProcessor {
 		uiTable.row();
 		
 		playerResultsTable = new ArrayList<PlayerResults>();
-		Table placeholder = new Table();
 		for (Player p : game.players) {
 			if (p.isEnabled()) {
 				PlayerResults playerResult = new PlayerResults(p);
 				playerResultsTable.add(playerResult);
-				//uiTable.add(playerResult).width(400).height(300);
+				uiTable.add(playerResult).width(400).height(300);
 			}
-			else {
-				// placeholder scaled to fraction of the width of the entire table width
-				//uiTable.add(placeholder).width(400).height(300);
-			}
-		}
-		
-		switch (playerResultsTable.size()) {
-			case 1:
-				uiTable.add(playerResultsTable.get(0)).width(1600).height(300);
-				break;
-			case 2:
-				uiTable.add(playerResultsTable.get(0)).width(800).height(300);
-				uiTable.add(playerResultsTable.get(1)).width(800).height(300);
-				break;
-			case 3:
-				uiTable.add(playerResultsTable.get(0)).width(533).height(300);
-				uiTable.add(playerResultsTable.get(1)).width(534).height(300);
-				uiTable.add(playerResultsTable.get(2)).width(533).height(300);
-				break;
-			case 4:
-				uiTable.add(playerResultsTable.get(0)).width(400).height(300);
-				uiTable.add(playerResultsTable.get(1)).width(400).height(300);
-				uiTable.add(playerResultsTable.get(2)).width(400).height(300);
-				uiTable.add(playerResultsTable.get(3)).width(400).height(300);
-				break;
-		}
-		
+		}	
 		uiTable.row();
 		
 		uiTable.add(restartButton).colspan(4);
