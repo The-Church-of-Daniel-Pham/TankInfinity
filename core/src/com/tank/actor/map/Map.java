@@ -1,3 +1,11 @@
+/**
+ * @author The Church of Daniel Pham
+ * Description:
+ * This class stores information about the map layout of different
+ * tile types in the level and takes care of creating the maptiles 
+ * themselves, creating their hitboxes, and rendering them.
+ * There are also useful methods that pertain to the map as a whole.
+ */
 package com.tank.actor.map;
 
 import java.util.ArrayList;
@@ -27,10 +35,27 @@ public class Map extends Group {
 	 * origin is in the bottom left corner.
 	 */
 	public AbstractMapTile[][] map;
+	/**
+	 * the FloorTiles generated in this Map
+	 */
 	public ArrayList<FloorTile> floors;
+	/**
+	 * the WallTiles generated in this Map
+	 */
 	public ArrayList<WallTile> walls;
+	/**
+	 * the BorderTiles generated in this Map
+	 */
 	public ArrayList<BorderTile> border;
+	/**
+	 * The single PortalTile contained in this Map
+	 */
 	public PortalTile portal;
+	/**
+	 * An integer array whose first index contains the x coordinate and the second
+	 * index contains the y coordinate of the center of the players' spawn location
+	 * in this Map
+	 */
 	public int[] spawnZone;
 	/**
 	 * Used to point to the higher level object which implements this instance
@@ -54,7 +79,7 @@ public class Map extends Group {
 		MazeMaker mazeGen = new MazeMaker(height - 1, width - 1); // create maze maker object in order to create a maze
 		mazeGen.createMaze(0, 0);// must call createMaze(...) after object creation to generate maze
 		mazeGen.addBorder(1); // give map a border. Vehicles and Projectiles cannot move there
-		//Create the spawn area
+		// Create the spawn area
 		spawnZone = mazeGen.getRandomOpen(4);
 		mazeGen.squareOpener(spawnZone[0], spawnZone[1], 2);
 		floors = new ArrayList<FloorTile>();
@@ -83,14 +108,23 @@ public class Map extends Group {
 			}
 		}
 		ArrayList<FloorTile> possibleSpawns = getEmptyNonSpawnFloorTiles();
-		FloorTile portalSpawn = possibleSpawns.get((int)(Math.random() * possibleSpawns.size()));
+		FloorTile portalSpawn = possibleSpawns.get((int) (Math.random() * possibleSpawns.size()));
 		portal = new PortalTile(portalSpawn.getRow(), portalSpawn.getCol(), this);
 		super.addActor(portal);
 	}
 
+	/**
+	 * Used for efficiency purposes
+	 * 
+	 * @param border
+	 *            the threshold of the distance, in tiles, beyond the screen that
+	 *            tiles should still be rendered
+	 */
 	public void setFrustrumTilesVisible(int border) {
-		int[] bottomLeft = getTileAt(getStage().getCamera().frustum.planePoints[0].x, getStage().getCamera().frustum.planePoints[0].y);
-		int[] topRight =  getTileAt(getStage().getCamera().frustum.planePoints[2].x, getStage().getCamera().frustum.planePoints[2].y);
+		int[] bottomLeft = getTileAt(getStage().getCamera().frustum.planePoints[0].x,
+				getStage().getCamera().frustum.planePoints[0].y);
+		int[] topRight = getTileAt(getStage().getCamera().frustum.planePoints[2].x,
+				getStage().getCamera().frustum.planePoints[2].y);
 		int minRow = MathUtils.clamp(bottomLeft[0] - border, 0, map.length - 1);
 		int maxRow = MathUtils.clamp(topRight[0] + border, 0, map.length - 1);
 		int minCol = MathUtils.clamp(bottomLeft[1] - border, 0, map[0].length - 1);
@@ -101,11 +135,11 @@ public class Map extends Group {
 			}
 		}
 	}
-	
+
 	@Override
 	public void act(float delta) {
-		setFrustrumTilesVisible(2);
-		portal.act(delta);
+		setFrustrumTilesVisible(2); // only render tiles on the screen for efficiency
+		portal.act(delta); // check if any players are touching
 	}
 
 	/**
@@ -123,8 +157,8 @@ public class Map extends Group {
 	public int getSizeY() {
 		return map.length * AbstractMapTile.SIZE;
 	}
-	
-	public int[][] getLayout(){
+
+	public int[][] getLayout() {
 		return layout;
 	}
 
@@ -142,17 +176,36 @@ public class Map extends Group {
 		int mapCol = MathUtils.clamp((int) (x / AbstractMapTile.SIZE), 0, map[0].length - 1);
 		return new int[] { mapRow, mapCol };
 	}
-	
+
+	/**
+	 * Returns x/y coords given the row/col
+	 * 
+	 * @param row
+	 *            the row of the given tile
+	 * @param col
+	 *            the column of the given tile
+	 * @return The Vector2 whose x/y represent the coordinates of the center of the
+	 *         given tile
+	 */
 	public Vector2 getCenterOfTilePos(int row, int col) {
-		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;	//center of tile
+		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2; // center of tile
 		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
 		return new Vector2(x, y);
 	}
-	
+
+	/**
+	 * @return a random FloorTile in this Map instance
+	 */
 	public FloorTile getRandomFloorTile() {
-		return (floors.get((int)(Math.random() * floors.size())));
+		return (floors.get((int) (Math.random() * floors.size())));
 	}
-	public ArrayList<FloorTile> getEmptyNonSpawnFloorTiles(){
+
+	/**
+	 * 
+	 * @return All FloorTiles in this Map, except for any that exist within the 5x5
+	 *         spawn zone
+	 */
+	public ArrayList<FloorTile> getEmptyNonSpawnFloorTiles() {
 		ArrayList<FloorTile> tiles = new ArrayList<FloorTile>();
 		for (FloorTile floorTile : floors) {
 			if (!(floorTile.getRow() >= spawnZone[0] - 2 && floorTile.getRow() <= spawnZone[0] + 2
@@ -161,15 +214,33 @@ public class Map extends Group {
 		}
 		return tiles;
 	}
+
+	/**
+	 * @return a random WallTile in this Map instance
+	 */
 	public WallTile getRandomWallTile() {
-		return (walls.get((int)(Math.random() * walls.size())));
+		return (walls.get((int) (Math.random() * walls.size())));
 	}
+
+	/**
+	 * @return a random BorderTile in this Map instance
+	 */
 	public BorderTile getRandomBorderTile() {
-		return (border.get((int)(Math.random() * border.size())));
+		return (border.get((int) (Math.random() * border.size())));
 	}
+
+	/**
+	 * @return An integer array whose first index contains the x coordinate and the
+	 *         second index contains the y coordinate of the center of the players'
+	 *         spawn location in this Map
+	 */
 	public int[] getSpawnPoint() {
 		return spawnZone;
 	}
+
+	/**
+	 * @return The single PortalTile contained in this Map
+	 */
 	public PortalTile getPortalTile() {
 		return portal;
 	}
@@ -189,12 +260,12 @@ public class Map extends Group {
 
 	/**
 	 * 
-	 * @param a
-	 *            tile's row
-	 * @param a
-	 *            tile's column
-	 * @return an ArrayList of MapTiles of all bricks within two tiles of the given
-	 *         tile
+	 * @param row
+	 *            a tile's row
+	 * @param col
+	 *            a tile's column
+	 * @return an ArrayList of MapTiles of all bricks within one tile of the given
+	 *         tile, i.e. a 3x3 zone
 	 */
 	public ArrayList<WallTile> getWallNeighbors(int row, int col) {
 		ArrayList<WallTile> brickNeighbors = new ArrayList<WallTile>();
@@ -204,14 +275,23 @@ public class Map extends Group {
 				int tempCol = col + xOffset;
 				if (tempRow >= 0 && tempRow < map.length && tempCol >= 0 && tempCol < map[0].length) {
 					if (map[tempRow][tempCol] instanceof WallTile) {
-						brickNeighbors.add((WallTile)map[tempRow][tempCol]);
+						brickNeighbors.add((WallTile) map[tempRow][tempCol]);
 					}
 				}
 			}
 		}
 		return brickNeighbors;
 	}
-	
+
+	/**
+	 * 
+	 * @param row
+	 *            a tile's row
+	 * @param col
+	 *            a tile's column
+	 * @return an ArrayList of MapTiles of all bricks within 'size' tiles of the
+	 *         given tile, i.e. a (size*2+1) square zone
+	 */
 	public ArrayList<WallTile> getWallNeighbors(int row, int col, int size) {
 		ArrayList<WallTile> brickNeighbors = new ArrayList<WallTile>();
 		for (int yOffset = -size; yOffset <= size; yOffset++) {
@@ -220,7 +300,7 @@ public class Map extends Group {
 				int tempCol = col + xOffset;
 				if (tempRow >= 0 && tempRow < map.length && tempCol >= 0 && tempCol < map[0].length) {
 					if (map[tempRow][tempCol] instanceof WallTile) {
-						brickNeighbors.add((WallTile)map[tempRow][tempCol]);
+						brickNeighbors.add((WallTile) map[tempRow][tempCol]);
 					}
 				}
 			}
@@ -228,6 +308,13 @@ public class Map extends Group {
 		return brickNeighbors;
 	}
 
+	/**
+	 * Removal: replaces the given tile to a FloorTile in the current location of
+	 * the given tile
+	 * 
+	 * @param wall
+	 *            The wall to be removed
+	 */
 	public void removeWall(AbstractMapTile wall) {
 		if (wall.getParent() != null && wall.getParent().equals(this)) {
 			layout[wall.getRow()][wall.getCol()] = 0;
