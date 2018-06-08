@@ -1,14 +1,12 @@
 package com.tank.media;
 
 import java.util.ArrayList;
-
-/**
- * @author Gokul Swaminathan
- * @version 5.29.18
- */
-
 import com.badlogic.gdx.audio.Sound;
 
+/**
+ * @author Daniel P., Samuel H., Edmond F., Gokul S.
+ * @description Wrapper class for the sound interface.
+ */
 public class MediaSound {
 
     private Sound sound;
@@ -60,6 +58,7 @@ public class MediaSound {
     public void setPitch(float pitch) {
     	sound.setPitch(mediaId, pitch);
     }
+
 
     public void resume() {
         sound.resume();

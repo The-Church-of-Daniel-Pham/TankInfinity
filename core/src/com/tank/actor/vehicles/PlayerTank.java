@@ -24,6 +24,10 @@ import com.tank.utils.Assets;
 import com.tank.utils.CollisionEvent;
 import com.tank.utils.CycleList;
 
+/**
+ * @author Daniel P., Samuel H., Edmond F., Gokul S.
+ * @description This class is the tank that the player controls.
+ */
 public class PlayerTank extends FreeTank {
 	/**
 	 * used for spawning bullets the correct distance away from Vehicle's center
@@ -38,7 +42,7 @@ public class PlayerTank extends FreeTank {
 	private final float TREAD_VOLUME = 0.2f;
 	private final float ENGINE_VOLUME = 0.6f;
 	private final float SHOOT_VOLUME = 0.6f;
-	private final float ITEM_VOLUME = 0.5f;
+	private final float ITEM_VOLUME = 1f;
 	private final float KIT_VOLUME = 1f;
 
 	// private MediaSound engine_sound = new
@@ -136,6 +140,9 @@ public class PlayerTank extends FreeTank {
 		initializeHitbox();
 	}
 
+	/**
+	 * Initialize tank on map
+	 */
 	public void setupTank(int row, int col, float direction) {
 		engine_sound = new MediaSound(Gdx.audio.newSound(Gdx.files.internal("audio/tank_engine.wav")), ENGINE_VOLUME);
 		engineSoundOn = false;
@@ -153,6 +160,9 @@ public class PlayerTank extends FreeTank {
 	    initializeHitbox();
 	}
 
+	/**
+	 * Add initial stats
+	 */
 	protected void initializeStats() {
 		stats.addStat("Damage", 35);
 		stats.addStat("Spread", 60);
@@ -175,10 +185,16 @@ public class PlayerTank extends FreeTank {
 		stats.addStat("Projectile Durability", 1);
 	}
 
+	/**
+	 * Initialize tank hitbox
+	 */
 	protected void initializeHitbox() {
 		hitbox = getHitboxAt(getX(), getY(), getRotation());
 	}
 	
+	/**
+	 * Initialize experience level
+	 */
 	protected void initializeExpLevel() {
 		level = 1;
 		exp = 0;
@@ -187,6 +203,9 @@ public class PlayerTank extends FreeTank {
 		upgradesLeft = 0;
 	}
 
+	/**
+	 * set the tanks map position
+	 */
 	public void setMapPosition(int row, int col) {
 		int x = col * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2; // center of tile
 		int y = row * AbstractMapTile.SIZE + AbstractMapTile.SIZE / 2;
