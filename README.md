@@ -1,8 +1,41 @@
 # Tank Infinity
 
-APCS Final Project
+*Tank Infinity* is an infinite level progression tank game. Players go through levels fighting tanks, upgrading, and eventually losing. You can find a more detailed tutorial from the main menu.
+
+## [Play the latest release!](https://github.com/The-Church-of-Daniel-Pham/TankInfinity/releases/latest)
+
+![](docs/img/mainmenu.png)
+
+## Features
+
+#### Play locally with up to four players, using mouse and keyboard or controllers
+![](docs/img/4player.png)
+
+#### Customize your controls
+![](docs/img/controls.png)
+
+#### Name your players and select your favorite colors
+![](docs/img/playerselection.png)
+
+#### Face several classes of AI enemies
+![](docs/img/aiclasses.png)
+
+#### Pick up powerful items and cycle between them
+![](docs/img/items.png)
+
+#### Find the portal to escape to the next level
+![](docs/img/portal.png)
+
+#### Upgrade your tank after gaining XP
+![](docs/img/upgrade.png)
+
+#### Track your progress and try to advance as far as you can
+![](docs/img/gameover.png)
+
 
 ## Authors
+
+This game was the final project in our AP Computer Science class in 2018 taught by Mr. Dunlea. It was designed and completed over the span of one month.
 
 * [Samuel Hunter](https://github.com/SamuelHunter)
 * [Edmond Fang](https://github.com/seikurou)
